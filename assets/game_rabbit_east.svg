@@ -21,28 +21,28 @@
        inkscape:vp_x="-9.2437103 : 4.5084587 : 0"
        inkscape:vp_y="-1.2423596e-14 : 67.630908 : 0"
        inkscape:vp_z="9.2437103 : 4.5084587 : 0"
-       inkscape:persp3d-origin="46.407261 : 246.39191 : 1"
+       inkscape:persp3d-origin="73.923945 : 246.39191 : 1"
        id="perspective1170-4-06-71" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="-9.2437103 : 4.5084587 : 0"
        inkscape:vp_y="-1.2423596e-14 : 67.630908 : 0"
        inkscape:vp_z="9.2437103 : 4.5084587 : 0"
-       inkscape:persp3d-origin="36.597361 : 258.5351 : 1"
+       inkscape:persp3d-origin="64.114045 : 258.5351 : 1"
        id="perspective1170-4-6-64-3-0" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="-9.2437103 : 4.5084587 : 0"
        inkscape:vp_y="-1.2423596e-14 : 67.630908 : 0"
        inkscape:vp_z="9.2437103 : 4.5084587 : 0"
-       inkscape:persp3d-origin="34.284001 : 297.0003 : 1"
+       inkscape:persp3d-origin="61.800685 : 297.0003 : 1"
        id="perspective1170-4-6-4-5-9-3-2-1-0" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="-9.2437103 : 4.5084587 : 0"
        inkscape:vp_y="-1.2423596e-14 : 67.630908 : 0"
        inkscape:vp_z="9.2437103 : 4.5084587 : 0"
-       inkscape:persp3d-origin="48.627091 : 289.83946 : 1"
+       inkscape:persp3d-origin="76.143775 : 289.83946 : 1"
        id="perspective1170-4-6-4-5-9-3-2-1-0-9" />
   </defs>
   <sodipodi:namedview
@@ -52,16 +52,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.24748737"
-     inkscape:cx="802.00954"
-     inkscape:cy="300.10927"
+     inkscape:zoom="0.98994948"
+     inkscape:cx="408.16504"
+     inkscape:cy="451.63117"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1530"
      inkscape:window-height="1205"
-     inkscape:window-x="1737"
+     inkscape:window-x="1612"
      inkscape:window-y="97"
      inkscape:window-maximized="0"
      inkscape:snap-nodes="false"
@@ -70,7 +70,10 @@
      inkscape:snap-bbox="true"
      inkscape:bbox-paths="true"
      inkscape:bbox-nodes="true"
-     inkscape:snap-bbox-edge-midpoints="true" />
+     inkscape:snap-bbox-edge-midpoints="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-global="false" />
   <metadata
      id="metadata7987">
     <rdf:RDF>
@@ -89,7 +92,7 @@
      id="layer1">
     <g
        id="g906"
-       transform="translate(-89.585411,-99.715197)">
+       transform="translate(-62.068727,-99.715197)">
       <g
          sodipodi:type="inkscape:box3d"
          id="g1172-4-0-3"
@@ -260,7 +263,7 @@
            style="fill:#353564;fill-rule:evenodd;stroke:none;stroke-width:0.255612;stroke-linejoin:round"
            inkscape:box3dsidetype="6"
            points="129.14023,131.17428 132.93413,129.32387 132.93413,106.87604 129.14023,108.72645 "
-           d="m 129.14023,108.72645 0,22.44783 3.7939,-1.85041 v -22.44783 z" />
+           d="m 129.14023,108.72645 v 22.44783 l 3.7939,-1.85041 v -22.44783 z" />
         <path
            sodipodi:type="inkscape:box3dside"
            id="path1182-1-8-6-7-2-9-0-1-6-0"
