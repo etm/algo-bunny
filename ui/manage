@@ -1,0 +1,70 @@
+#!/usr/bin/ruby
+curpath = __dir__
+require 'rubygems'
+require 'optparse'
+require 'fileutils'
+require 'typhoeus'
+require 'zip'
+
+def wrap(s, width=78, indent=18)
+	lines = []
+	line, s = s[0..indent-2], s[indent..-1]
+  s.split(/\n/).each do |ss|
+    ss.split(/[ \t]+/).each do |word|
+      if line.size + word.size >= width
+        lines << line
+        line = (" " * (indent)) + word
+      else
+        line << " " << word
+      end
+    end
+    lines << line if line
+    line = (" " * (indent-1))
+  end
+	return lines.join "\n"
+end
+
+ARGV.options { |opt|
+  opt.summary_indent = ' ' * 2
+  opt.summary_width = 15
+  opt.banner = "Usage:\n#{opt.summary_indent}#{File.basename($0)} [options] libs\n"
+  opt.on("Options:")
+  opt.on("--help", "-h", "This text") { puts opt; exit }
+	opt.on("")
+  opt.on(wrap("[libs]             cp/update libraries into current directory."))
+  opt.parse!
+}
+if (ARGV.length == 0) ||
+   (ARGV.length == 1  && !(%w(libs).include?(ARGV[0]))) ||
+   (ARGV.length >  1)
+  puts ARGV.options
+  exit
+end
+command = ARGV[0]
+
+def js_libs(cockpit)
+  res = Typhoeus.get('https://cpee.org/js_libs/js_libs.zip')
+  if res.success?
+    File.write(File.join(cockpit,'js_libs.zip'),res.response_body)
+    Zip::File.open(File.join(cockpit,'js_libs.zip')) do |zip_file|
+      zip_file.each do |entry|
+        case entry.ftype
+          when :directory
+            Dir.mkdir(File.join(cockpit,entry.name)) rescue nil
+          when :file
+            File.write(File.join(cockpit,entry.name),entry.get_input_stream.read)
+          when :symlink
+            FileUtils.ln_s(File.join('.',entry.get_input_stream.read),File.join(cockpit,entry.name), force: true)
+        end
+      end
+    end
+    true
+  else
+    puts 'Internet access required to download javascript libs from "http://cpee.org/js_libs/js_libs.zip".'
+    false
+  end
+end
+
+if command == 'libs'
+  js_libs(curpath)
+end
