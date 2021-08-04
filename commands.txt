@@ -6,7 +6,7 @@
 ?_ Hole in front.
 T Take carrot in front.
 E Eat carrot.
-P Put carrot in front.
+P Put (or swap with carrot in mouth) carrot in front.
 L Turn left
 R Turn right
 S Step
@@ -14,6 +14,7 @@ X Loop
 B Break
 RR Run program #
 ME Memorize position #
+J Jump to position #
 
 
 
