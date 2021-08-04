@@ -1,0 +1,10 @@
+TB1
+TT3
+TT6
+TT4
+TT5
+TT2
+---
+Eat the carrots in order - biggest first, smallest last.
+---
+123456

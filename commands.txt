@@ -1,0 +1,19 @@
+?= Mouth carrot same size as carrot in front.
+?> Mouth carrot bigger than carrot in front.
+?< Mouth carrot size smaller than carrot in front.
+?T Empty tile in front.
+?C Carrot tile in front.
+?_ Hole in front.
+T Take carrot in front.
+E Eat carrot.
+P Put carrot in front.
+L Turn left
+R Turn right
+S Step
+X Loop
+B Break
+RR Run program #
+ME Memorize position #
+
+
+
