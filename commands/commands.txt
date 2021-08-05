@@ -4,17 +4,14 @@
 ?T Empty tile in front.
 ?C Carrot tile in front.
 ?_ Hole in front.
-T Take carrot in front.
-E Eat carrot.
-P Put (or swap with carrot in mouth) carrot in front.
-L Turn left
-R Turn right
-S Step
-X Loop
-B Break
-RR Run program #
-ME Memorize position #
-J Jump to position #
-
-
-
+T  Take carrot in front.
+E  Eat carrot.
+P  Put (or swap with carrot in mouth) carrot in front.
+<- Turn left
+-> Turn right
+S  Step
+L  Loop
+B  Break
+R  Run program #
+M  Memorize position #
+J  Jump to position #
