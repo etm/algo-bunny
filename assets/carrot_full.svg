@@ -7,28 +7,28 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="25.411606mm"
+   height="67.553017mm"
+   viewBox="0 0 25.411606 67.553017"
    version="1.1"
    id="svg1420"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="game_carrot_full.svg">
+   sodipodi:docname="carrot_full.svg">
   <defs
      id="defs1414">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-4.6208508 : -2.2537397 : 0"
-       inkscape:vp_y="12.244496 : 221.45863 : 1"
-       inkscape:vp_z="4.6208508 : -2.2537397 : 0"
-       inkscape:persp3d-origin="14.618816 : 255.40785 : 1"
+       inkscape:vp_x="-4.6208511 : -2.2537397 : 0"
+       inkscape:vp_y="12.244497 : -7.9883598 : 1"
+       inkscape:vp_z="4.6208511 : -2.2537397 : 0"
+       inkscape:persp3d-origin="14.618817 : 25.96086 : 1"
        id="perspective1170-9-1-2" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-4.6208508 : -2.2537397 : 0"
-       inkscape:vp_y="12.309716 : 229.20494 : 1"
-       inkscape:vp_z="4.6208508 : -2.2537397 : 0"
-       inkscape:persp3d-origin="14.684066 : 263.15416 : 1"
+       inkscape:vp_x="-4.6208511 : -2.2537397 : 0"
+       inkscape:vp_y="12.309717 : -0.24204982 : 1"
+       inkscape:vp_z="4.6208511 : -2.2537397 : 0"
+       inkscape:persp3d-origin="14.684067 : 33.70717 : 1"
        id="perspective1170-9-1" />
   </defs>
   <sodipodi:namedview
@@ -40,15 +40,15 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.9899495"
      inkscape:cx="341.67988"
-     inkscape:cy="-0.074036066"
+     inkscape:cy="-0.074030833"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1530"
      inkscape:window-height="1016"
-     inkscape:window-x="880"
-     inkscape:window-y="123"
+     inkscape:window-x="820"
+     inkscape:window-y="27"
      inkscape:window-maximized="0"
      inkscape:snap-page="true"
      inkscape:snap-bbox="true"
@@ -66,7 +66,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

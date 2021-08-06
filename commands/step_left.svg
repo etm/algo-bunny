@@ -7,33 +7,33 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="29.10417mm"
-   height="29.396215mm"
-   viewBox="0 0 29.10417 29.396215"
+   width="25.13542mm"
+   height="29.396217mm"
+   viewBox="0 0 25.13542 29.396217"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="if_empty.svg">
+   sodipodi:docname="step_left.svg">
   <defs
      id="defs2">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-9.5681078 : 4.666678 : 0"
+       inkscape:vp_x="-9.5681079 : 4.666678 : 0"
        inkscape:vp_y="-1.2859589e-14 : 70.004339 : 0"
-       inkscape:vp_z="9.5681078 : 4.6666782 : 0"
+       inkscape:vp_z="9.5681079 : 4.6666782 : 0"
        inkscape:persp3d-origin="126.22701 : 216.553 : 1"
        id="perspective1170-3-3" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="-1.2226001 : -0.59630196 : 0"
-       inkscape:vp_y="99.88573 : 558.1567 : 1"
+       inkscape:vp_y="99.885731 : 558.1567 : 1"
        inkscape:vp_z="1.2226001 : -0.59630196 : 0"
        inkscape:persp3d-origin="100.51393 : 567.1391 : 1"
        id="perspective1170-9-1-2" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="-1.2226001 : -0.59630196 : 0"
-       inkscape:vp_y="99.90298 : 560.20624 : 1"
+       inkscape:vp_y="99.902981 : 560.20624 : 1"
        inkscape:vp_z="1.2226001 : -0.59630196 : 0"
        inkscape:persp3d-origin="100.5312 : 569.18864 : 1"
        id="perspective1170-9-1" />
@@ -45,9 +45,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="-17.276827"
-     inkscape:cy="457.1073"
+     inkscape:zoom="3.959798"
+     inkscape:cx="78.269559"
+     inkscape:cy="72.649314"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -63,7 +63,7 @@
      inkscape:snap-object-midpoints="true"
      inkscape:window-width="1762"
      inkscape:window-height="1016"
-     inkscape:window-x="588"
+     inkscape:window-x="549"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
      inkscape:snap-page="true"
@@ -77,10 +77,10 @@
     <inkscape:grid
        type="xygrid"
        id="grid835"
-       originx="-33.072911"
-       originy="44.168785" />
+       originx="6.6146103"
+       originy="122.94809" />
     <sodipodi:guide
-       position="117.13256,202.45091"
+       position="156.82008,123.6716"
        orientation="0,-1"
        id="guide3859" />
   </sodipodi:namedview>
@@ -92,7 +92,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -100,48 +100,16 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-33.072911,44.168788)">
-    <g
-       id="g3870"
-       transform="translate(-56.223961,-45.896893)">
-      <path
-         id="rect833-3-2"
-         style="fill:#98eae0;stroke:#000000;stroke-width:5.00001;stop-color:#000000;fill-opacity:1"
-         d="m 490,520 v 90 l 45,15 45,-15 h 15 v -30 h -15 v -25 h 15 v -35 h -15 l -45,15 z"
-         transform="matrix(0.26458333,0,0,0.26458333,-39.6875,-134.9375)" />
-      <g
-         id="g3857">
-        <g
-           id="g3402">
-          <text
-             xml:space="preserve"
-             style="font-size:10.5833px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;fill:#000000;stroke-width:0.264583"
-             x="94.422318"
-             y="20.353611"
-             id="text839-6-7"><tspan
-               sodipodi:role="line"
-               id="tspan837-7-0"
-               x="94.422318"
-               y="20.353611"
-               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#000000;stroke-width:0.264583">?</tspan></text>
-          <g
-             id="g1715"
-             transform="translate(-49.748047,-68.238021)">
-            <path
-               d="m 148.12943,82.99073 6.648,3.242447 6.6184,-3.22801 -6.648,-3.242447 z"
-               style="fill:#b0dc66;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
-               id="path1698" />
-            <path
-               d="m 154.77743,86.233177 v 3.332574 l 6.6184,-3.228007 v -3.332577 z"
-               style="fill:#a1c35b;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
-               id="path1700" />
-            <path
-               d="m 148.12943,82.99073 6.648,3.242447 v 3.332574 l -6.648,-3.242444 z"
-               style="fill:#3e904b;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
-               id="path1702" />
-          </g>
-        </g>
-      </g>
-    </g>
+     transform="translate(6.614606,122.94809)">
+    <path
+       id="rect833-9-41-4-7"
+       style="fill:#99c1f1;stroke:#000000;stroke-width:1.32292;stop-color:#000000"
+       d="m -5.9531191,-122.11352 11.90625,3.96875 11.9062511,-3.96875 v 23.812507 l -11.9062511,3.96875 -11.90625,-3.96875 z"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       id="path840"
+       style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+       d="m 9.9218813,-102.26978 v -9.26041 H 1.9843811 v 9.26041 m 2.6458328,-2.7553 -2.6458328,2.7553 -2.64583429,-2.7553"
+       sodipodi:nodetypes="ccccccc" />
   </g>
 </svg>
