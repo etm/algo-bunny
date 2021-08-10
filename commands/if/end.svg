@@ -66,9 +66,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="-188.4306"
-     inkscape:cy="-47.517003"
+     inkscape:zoom="3.959798"
+     inkscape:cx="88.848854"
+     inkscape:cy="60.028459"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -76,7 +76,7 @@
      inkscape:snap-bbox="false"
      inkscape:object-paths="true"
      inkscape:snap-intersection-paths="true"
-     inkscape:snap-grids="true"
+     inkscape:snap-grids="false"
      inkscape:snap-smooth-nodes="true"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -104,6 +104,10 @@
        position="332.76798,-30.680279"
        orientation="0,-1"
        id="guide3859" />
+    <sodipodi:guide
+       position="24.473959,4.6659896"
+       orientation="1,0"
+       id="guide841" />
   </sodipodi:namedview>
   <metadata
      id="metadata5">
@@ -133,7 +137,7 @@
       <path
          id="path1323"
          style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.32292;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
-         d="m 66.145829,-105.9407 0,2.7532 h 2.645834 l 11.906249,3.968749 11.90625,-3.968749 v 23.812498 l -26.458333,2e-6 -11.90625,3.96875 -11.90625,-3.96875 0,-26.5657"
+         d="m 66.145829,-111.34168 v 8.15418 h 2.645834 l 11.906249,3.968749 11.90625,-3.968749 v 23.812498 l -26.458333,2e-6 -11.90625,3.96875 -11.90625,-3.96875 v -31.96668"
          sodipodi:nodetypes="cccccccccc" />
     </g>
   </g>
