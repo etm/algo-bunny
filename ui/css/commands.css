@@ -1,0 +1,29 @@
+x-element:not(:first-child) {
+  margin-top: -0.5em;
+}
+x-element.simple {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  display: inline-block;
+  width: 3.3175em;
+  height: 3.675em;
+}
+
+x-element[type=forward]    { background-image: url("../commands/forward.svg"); }
+x-element[type=left]       { background-image: url("../commands/left.svg"); }
+x-element[type=right]      { background-image: url("../commands/right.svg"); }
+x-element[type=step_left]  { background-image: url("../commands/step_left.svg"); }
+x-element[type=step_right] { background-image: url("../commands/step_right.svg"); }
+x-element[type=jump]       { background-image: url("../commands/jump.svg"); }
+
+x-element.complex_two > * {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  display: inline-block;
+  width: 6.45em;
+  height: 3.675em;
+}
+
+
