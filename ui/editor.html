@@ -48,6 +48,7 @@
     <script type="text/javascript" src="js/commands.js"></script>
     <script type="text/javascript" src="js/editor.js"></script>
     <link rel="stylesheet" href="css/editor.css" type="text/css"/>
+    <link rel="stylesheet" href="css/commands.css" type="text/css"/>
   </head>
   <body>
     <template id='x-element'>
@@ -67,9 +68,18 @@
       </div>
       <div class='programs'>
         <x-program>
-           <x-element type='step'></x-element>
-           <x-element type='loop'>
-           <x-element type='step'></x-element>
+           <x-element class='simple' type='forward'></x-element>
+           <x-element class='simple' type='left'></x-element>
+           <x-element class='simple' type='right'></x-element>
+           <x-element class='simple' type='step_left'></x-element>
+           <x-element class='simple' type='step_right'></x-element>
+           <x-element class='simple' type='jump'></x-element>
+           <x-element class='complex_two' type='if_flower'>
+              <x-first></x-first>
+              <x-container></x-container>
+              <x-second></x-second>
+              <x-container></x-container>
+              <x-end></x-end>
            </x-element>
         </x-program>
       </div>

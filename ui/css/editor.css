@@ -1,0 +1,24 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+div.editor {
+  display:flex;
+  flex-direction: row;
+}
+
+div.moreorless {
+  padding: 0.2em 0.5em;
+}
+
+div.programs {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+x-program {
+  padding: 0.2em 0.5em;
+  display:flex;
+  flex-direction: column;
+}
