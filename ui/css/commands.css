@@ -5,7 +5,7 @@ x-element.simple {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
-  display: inline-block;
+  display: block;
   width: 3.3175em;
   height: 3.675em;
 }
@@ -21,9 +21,10 @@ x-element.complex_two > * {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
-  display: inline-block;
+  display: block;
   width: 6.45em;
   height: 3.675em;
 }
 
+x-element.complex_two[type=if_flower] x-first { background-image: url("../commands/if_flower/top.svg"); }
 
