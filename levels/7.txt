@@ -1,10 +1,11 @@
-TB1
-TT3
-TT6
-TT4
-TT5
-TT2
+1111
+1
+1 B1
+1  1
+1111
 ---
-Eat the carrots in order - biggest first, smallest last.
+Eat all carrots.
 ---
-123456
+1111111111111
+---
+eat_carrot,forward,left,right,loop,break,if_empty,if_hole

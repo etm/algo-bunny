@@ -1,7 +1,9 @@
 B11
-__1
-__1
+  1
+  1
 ---
 Eat all carrots.
 ---
 1111
+---
+eat_carrot,forward,left,right

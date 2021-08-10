@@ -1,0 +1,25 @@
+1T___________________
+TTTTTTTTTTTTTT_TTTTT_
+_T_____T___________T_
+_TTTTT_TTTTT_TTTTTTT_
+_T_____T_T___T___T_T_
+_TTT_TTT_TTT_T_T_T_T_
+_T_______T___T_T_____
+_TTT_TTTTT_T_TTTTTTT_
+___T_T_____T_T_T_____
+_T_T_TTT_TTTTT_T_TTT_
+_T___T_T_T___T_T_T___
+_TTT_T_TTT_TTT_TTTTT_
+___T_____T_T_T_T___T_
+_TTT_T_TTT_T_T_TTT_T_
+_T___T_______T___T___
+_TTTTTTT_TTTTTTT_TTT_
+_____T_T___T_____T___
+_TTT_T_TTTTT_T_T_TTT_
+___T_T_T___T_T_T___T_
+_TTTTT_TTT_TTT_TTTTT
+___________________B
+---
+Eat the carrot.
+---
+1
