@@ -8,8 +8,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="51.593758mm"
-   height="53.834385mm"
-   viewBox="0 0 51.593758 53.834384"
+   height="29.417128mm"
+   viewBox="0 0 51.593758 29.417127"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
@@ -18,24 +18,24 @@
      id="defs2">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-9.568108 : 4.6666781 : 0"
-       inkscape:vp_y="-1.2859589e-14 : 70.00434 : 0"
-       inkscape:vp_z="9.568108 : 4.6666783 : 0"
-       inkscape:persp3d-origin="126.22701 : 240.99117 : 1"
+       inkscape:vp_x="-9.5681087 : 4.6666779 : 0"
+       inkscape:vp_y="-1.285959e-14 : 70.004337 : 0"
+       inkscape:vp_z="9.5681087 : 4.6666781 : 0"
+       inkscape:persp3d-origin="126.22702 : 216.5739 : 1"
        id="perspective1170-3-3" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-1.2226001 : -0.59630197 : 0"
-       inkscape:vp_y="99.885732 : 582.59488 : 1"
-       inkscape:vp_z="1.2226001 : -0.59630197 : 0"
-       inkscape:persp3d-origin="100.51393 : 591.57728 : 1"
+       inkscape:vp_x="-1.2226002 : -0.59630194 : 0"
+       inkscape:vp_y="99.88574 : 558.1776 : 1"
+       inkscape:vp_z="1.2226002 : -0.59630194 : 0"
+       inkscape:persp3d-origin="100.51394 : 567.16 : 1"
        id="perspective1170-9-1-2" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-1.2226001 : -0.59630197 : 0"
-       inkscape:vp_y="99.902982 : 584.64442 : 1"
-       inkscape:vp_z="1.2226001 : -0.59630197 : 0"
-       inkscape:persp3d-origin="100.5312 : 593.62682 : 1"
+       inkscape:vp_x="-1.2226002 : -0.59630194 : 0"
+       inkscape:vp_y="99.90299 : 560.22714 : 1"
+       inkscape:vp_z="1.2226002 : -0.59630194 : 0"
+       inkscape:persp3d-origin="100.53121 : 569.20954 : 1"
        id="perspective1170-9-1" />
   </defs>
   <sodipodi:namedview
@@ -45,9 +45,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="170.29472"
-     inkscape:cy="174.03335"
+     inkscape:zoom="1.979899"
+     inkscape:cx="79.663316"
+     inkscape:cy="68.697614"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -77,10 +77,10 @@
     <inkscape:grid
        type="xygrid"
        id="grid835"
-       originx="31.088543"
-       originy="237.71981" />
+       originx="31.088545"
+       originy="237.7198" />
     <sodipodi:guide
-       position="181.29403,33.338046"
+       position="181.29403,8.9207921"
        orientation="0,-1"
        id="guide3859" />
   </sodipodi:namedview>
@@ -103,8 +103,8 @@
      transform="translate(31.088547,237.71981)">
     <path
        id="rect833-3-2-2"
-       style="fill:#98eae0;stroke:#000000;stroke-width:1.32292;stop-color:#000000;fill-opacity:1"
-       d="m -6.614584,-183.88542 -3e-6,-29.10416 h 2.645836 l 11.90625,3.96875 11.90625,-3.96875 v -23.8125 H -6.614587 l -11.90625,3.96875 -11.90625,-3.96875 3e-6,52.91666"
+       style="fill:#98eae0;fill-opacity:1;stroke:#000000;stroke-width:1.32292;stop-color:#000000"
+       d="m -6.6145866,-208.31183 -4e-7,-4.67775 h 2.645836 l 11.90625,3.96875 11.90625,-3.96875 v -23.8125 H -6.614587 l -11.90625,3.96875 -11.90625,-3.96875 v 28.4994"
        sodipodi:nodetypes="cccccccccc" />
   </g>
 </svg>
