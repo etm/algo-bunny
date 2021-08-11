@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="25.13542mm"
-   height="29.396214mm"
-   viewBox="0 0 25.13542 29.396213"
+   width="25.135498mm"
+   height="29.104218mm"
+   viewBox="0 0 25.135498 29.104217"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
@@ -18,24 +18,24 @@
      id="defs2">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-9.5681072 : 4.666678 : 0"
-       inkscape:vp_y="-1.2859588e-14 : 70.004339 : 0"
-       inkscape:vp_z="9.5681072 : 4.6666782 : 0"
-       inkscape:persp3d-origin="126.227 : 216.553 : 1"
+       inkscape:vp_x="-9.5681077 : 4.666678 : 0"
+       inkscape:vp_y="-1.2859589e-14 : 70.004339 : 0"
+       inkscape:vp_z="9.5681077 : 4.6666782 : 0"
+       inkscape:persp3d-origin="126.22701 : 216.261 : 1"
        id="perspective1170-3-3" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-1.2226 : -0.59630196 : 0"
-       inkscape:vp_y="99.885723 : 558.1567 : 1"
-       inkscape:vp_z="1.2226 : -0.59630196 : 0"
-       inkscape:persp3d-origin="100.51392 : 567.1391 : 1"
+       inkscape:vp_x="-1.2226001 : -0.59630196 : 0"
+       inkscape:vp_y="99.885728 : 557.86471 : 1"
+       inkscape:vp_z="1.2226001 : -0.59630196 : 0"
+       inkscape:persp3d-origin="100.51393 : 566.84711 : 1"
        id="perspective1170-9-1-2" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-1.2226 : -0.59630196 : 0"
-       inkscape:vp_y="99.902973 : 560.20624 : 1"
-       inkscape:vp_z="1.2226 : -0.59630196 : 0"
-       inkscape:persp3d-origin="100.53119 : 569.18864 : 1"
+       inkscape:vp_x="-1.2226001 : -0.59630196 : 0"
+       inkscape:vp_y="99.902978 : 559.91425 : 1"
+       inkscape:vp_z="1.2226001 : -0.59630196 : 0"
+       inkscape:persp3d-origin="100.5312 : 568.89665 : 1"
        id="perspective1170-9-1" />
   </defs>
   <sodipodi:namedview
@@ -45,9 +45,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="77.193156"
-     inkscape:cy="69.999322"
+     inkscape:zoom="3.959798"
+     inkscape:cx="-51.546296"
+     inkscape:cy="78.128101"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -61,8 +61,8 @@
      inkscape:guide-bbox="true"
      inkscape:snap-nodes="false"
      inkscape:snap-object-midpoints="true"
-     inkscape:window-width="1762"
-     inkscape:window-height="1016"
+     inkscape:window-width="2077"
+     inkscape:window-height="1341"
      inkscape:window-x="588"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
@@ -77,10 +77,10 @@
     <inkscape:grid
        type="xygrid"
        id="grid835"
-       originx="-190.5"
-       originy="39.979553" />
+       originx="-190.49996"
+       originy="39.7233" />
     <sodipodi:guide
-       position="-40.294538,206.64012"
+       position="-40.294496,206.60438"
        orientation="0,-1"
        id="guide3859" />
   </sodipodi:namedview>
@@ -92,7 +92,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -100,13 +100,13 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-190.50001,39.979554)">
+     transform="translate(-190.49997,39.723301)">
     <g
        id="g7639"
        transform="translate(154.1198,-136.95766)">
       <path
          id="rect833-9-41-4-7-4"
-         style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#ff7800;fill-opacity:1;stroke:#000000;stroke-width:1.32292;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+         style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#ff7800;fill-opacity:1;stroke:#000000;stroke-width:1.323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
          d="m 37.041667,97.895833 11.90625,3.968747 11.906249,-3.968747 v 23.812497 l -11.906249,3.96875 -11.90625,-3.96875 z"
          sodipodi:nodetypes="ccccccc" />
       <path

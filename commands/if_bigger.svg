@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="29.10417mm"
-   height="29.396215mm"
-   viewBox="0 0 29.10417 29.396215"
+   width="29.10425mm"
+   height="29.104246mm"
+   viewBox="0 0 29.10425 29.104246"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
@@ -18,24 +18,24 @@
      id="defs2">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-9.5681085 : 4.666678 : 0"
-       inkscape:vp_y="-1.285959e-14 : 70.004339 : 0"
-       inkscape:vp_z="9.5681085 : 4.6666782 : 0"
-       inkscape:persp3d-origin="126.22702 : 216.553 : 1"
+       inkscape:vp_x="-9.5681089 : 4.6666781 : 0"
+       inkscape:vp_y="-1.2859591e-14 : 70.004341 : 0"
+       inkscape:vp_z="9.5681089 : 4.6666783 : 0"
+       inkscape:persp3d-origin="126.22703 : 216.26104 : 1"
        id="perspective1170-3-3" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-1.2226002 : -0.59630196 : 0"
-       inkscape:vp_y="99.885737 : 558.1567 : 1"
-       inkscape:vp_z="1.2226002 : -0.59630196 : 0"
-       inkscape:persp3d-origin="100.51394 : 567.1391 : 1"
+       inkscape:vp_x="-1.2226003 : -0.59630198 : 0"
+       inkscape:vp_y="99.885741 : 557.86475 : 1"
+       inkscape:vp_z="1.2226003 : -0.59630198 : 0"
+       inkscape:persp3d-origin="100.51394 : 566.84715 : 1"
        id="perspective1170-9-1-2" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-1.2226002 : -0.59630196 : 0"
-       inkscape:vp_y="99.902987 : 560.20624 : 1"
-       inkscape:vp_z="1.2226002 : -0.59630196 : 0"
-       inkscape:persp3d-origin="100.53121 : 569.18864 : 1"
+       inkscape:vp_x="-1.2226003 : -0.59630198 : 0"
+       inkscape:vp_y="99.902991 : 559.91429 : 1"
+       inkscape:vp_z="1.2226003 : -0.59630198 : 0"
+       inkscape:persp3d-origin="100.53121 : 568.89669 : 1"
        id="perspective1170-9-1" />
   </defs>
   <sodipodi:namedview
@@ -45,9 +45,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="-167.27685"
-     inkscape:cy="290.17015"
+     inkscape:zoom="5.6"
+     inkscape:cx="178.85587"
+     inkscape:cy="21.891624"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -61,11 +61,11 @@
      inkscape:guide-bbox="true"
      inkscape:snap-nodes="false"
      inkscape:snap-object-midpoints="true"
-     inkscape:window-width="1762"
-     inkscape:window-height="1016"
-     inkscape:window-x="588"
+     inkscape:window-width="3142"
+     inkscape:window-height="1376"
+     inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:snap-page="true"
      inkscape:snap-others="false"
      inkscape:bbox-paths="true"
@@ -77,10 +77,10 @@
     <inkscape:grid
        type="xygrid"
        id="grid835"
-       originx="8.2182163e-07"
-       originy="-4.1226367e-06" />
+       originx="4.1613748e-05"
+       originy="-0.25623241" />
     <sodipodi:guide
-       position="150.20548,246.61971"
+       position="150.20553,246.58398"
        orientation="0,-1"
        id="guide3859" />
   </sodipodi:namedview>
@@ -99,13 +99,14 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(4.0791925e-5,-0.25622828)">
     <g
        id="g6556"
        transform="translate(-60.99248,-135.18989)">
       <path
          id="rect833-2"
-         style="fill:#98eae0;stroke:#000000;stroke-width:5.00001;stop-color:#000000;fill-opacity:1"
+         style="fill:#98eae0;fill-opacity:1;stroke:#000000;stroke-width:5.00032;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
          d="m 230,520 v 90 l 45,15 45,-15 h 15 v -30 h -15 v -25 h 15 v -35 h -15 l -45,15 z"
          transform="matrix(0.26458333,0,0,0.26458333,0.79977333,-1.4757133)" />
       <text

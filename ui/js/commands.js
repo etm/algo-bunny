@@ -13,6 +13,10 @@ function Commands() {
       }
     });
   }
+  this.load_elements = function(target) { //{{{
+    _.each(self.items,(item) => {
+    });
+  }; //}}}
 
   this.load = function() { //{{{
     _.each(self.items,(item) => {

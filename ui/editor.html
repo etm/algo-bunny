@@ -51,11 +51,52 @@
     <link rel="stylesheet" href="css/commands.css" type="text/css"/>
   </head>
   <body>
-    <div class='elements'>
-    </div>
     <div class='editor'>
-      <div id='graphgrid'>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:x="http://www.w3.org/1999/xlink" id='graphcanvas' width='1' height='1'></svg>
+      <div class='elements'>
+        <div class='group'>
+          <img data-type="forward"           src="commands/forward.svg"/>
+          <img data-type="left"              src="commands/left.svg"/>
+          <img data-type="right"             src="commands/right.svg"/>
+          <img data-type="step_left"         src="commands/step_left.svg"/>
+          <img data-type="step_right"        src="commands/step_right.svg"/>
+          <img data-type="jump"              src="commands/jump.svg"/>
+        </div>
+        <div class='group'>
+          <img data-type="get_carrot"        src="commands/get_carrot.svg"/>
+          <img data-type="put_flower"        src="commands/put_carrot.svg"/>
+          <img data-type="put_flower"        src="commands/put_flower.svg"/>
+          <img data-type="eat_carrot"        src="commands/eat_carrot.svg"/>
+          <img data-type="eat_flower"        src="commands/eat_flower.svg"/>
+        </div>
+        <div class='group'>
+          <img data-type="loop"              src="commands/loop.svg"/>
+          <img data-type="break"             src="commands/break.svg"/>
+        </div>
+        <div class='group'>
+          <img data-type="if_carrot"         src="commands/if_carrot.svg"/>
+          <img data-type="if_empty"          src="commands/if_empty.svg"/>
+          <img data-type="if_flower"         src="commands/if_flower.svg"/>
+          <img data-type="if_hole"           src="commands/if_hole.svg"/>
+          <img data-type="if_same"           src="commands/if_same.svg"/>
+          <img data-type="if_bigger"         src="commands/if_bigger.svg"/>
+          <img data-type="if_smaller"        src="commands/if_smaller.svg"/>
+        </div>
+        <div class='group'>
+          <img data-type="memorize_carrot"   src="commands/memorize_carrot.svg"/>
+          <img data-type="memorize_steps"    src="commands/memorize_steps.svg"/>
+          <img data-type="memorize_position" src="commands/memorize_position.svg"/>
+          <img data-type="memorize_flower"   src="commands/memorize_flower.svg"/>
+        </div>
+        <div class='group'>
+          <img data-type="execute"           src="commands/execute.svg"/>
+        </div>
+      </div>
+      <div class='program'>
+        <img src="assets/start.svg"/>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:x="http://www.w3.org/1999/xlink" id='program' width='1' height='1'></svg>
+      </div>
+      <div class='field'>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:x="http://www.w3.org/1999/xlink" id='field' width='1' height='1'></svg>
       </div>
     </div>
   </body>

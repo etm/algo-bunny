@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="29.10417mm"
-   height="29.396215mm"
-   viewBox="0 0 29.10417 29.396215"
+   width="29.10425mm"
+   height="29.104246mm"
+   viewBox="0 0 29.10425 29.104246"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
@@ -18,24 +18,24 @@
      id="defs2">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-9.5681072 : 4.666678 : 0"
-       inkscape:vp_y="-1.2859588e-14 : 70.004339 : 0"
-       inkscape:vp_z="9.5681072 : 4.6666782 : 0"
-       inkscape:persp3d-origin="126.227 : 216.553 : 1"
+       inkscape:vp_x="-9.5681076 : 4.6666781 : 0"
+       inkscape:vp_y="-1.2859589e-14 : 70.004341 : 0"
+       inkscape:vp_z="9.5681076 : 4.6666783 : 0"
+       inkscape:persp3d-origin="126.22701 : 216.26104 : 1"
        id="perspective1170-3-3" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-1.2226 : -0.59630196 : 0"
-       inkscape:vp_y="99.885723 : 558.1567 : 1"
-       inkscape:vp_z="1.2226 : -0.59630196 : 0"
-       inkscape:persp3d-origin="100.51392 : 567.1391 : 1"
+       inkscape:vp_x="-1.2226001 : -0.59630198 : 0"
+       inkscape:vp_y="99.885727 : 557.86475 : 1"
+       inkscape:vp_z="1.2226001 : -0.59630198 : 0"
+       inkscape:persp3d-origin="100.51392 : 566.84715 : 1"
        id="perspective1170-9-1-2" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-1.2226 : -0.59630196 : 0"
-       inkscape:vp_y="99.902973 : 560.20624 : 1"
-       inkscape:vp_z="1.2226 : -0.59630196 : 0"
-       inkscape:persp3d-origin="100.53119 : 569.18864 : 1"
+       inkscape:vp_x="-1.2226001 : -0.59630198 : 0"
+       inkscape:vp_y="99.902977 : 559.91429 : 1"
+       inkscape:vp_z="1.2226001 : -0.59630198 : 0"
+       inkscape:persp3d-origin="100.53119 : 568.89669 : 1"
        id="perspective1170-9-1" />
   </defs>
   <sodipodi:namedview
@@ -45,9 +45,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="914.69327"
-     inkscape:cy="397.04977"
+     inkscape:zoom="5.6"
+     inkscape:cx="151.1062"
+     inkscape:cy="60.125801"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -61,11 +61,11 @@
      inkscape:guide-bbox="true"
      inkscape:snap-nodes="false"
      inkscape:snap-object-midpoints="true"
-     inkscape:window-width="1762"
-     inkscape:window-height="1016"
-     inkscape:window-x="588"
+     inkscape:window-width="3142"
+     inkscape:window-height="1376"
+     inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:snap-page="true"
      inkscape:snap-others="false"
      inkscape:bbox-paths="true"
@@ -77,10 +77,10 @@
     <inkscape:grid
        type="xygrid"
        id="grid835"
-       originx="31.088569"
-       originy="126.51165" />
+       originx="31.08861"
+       originy="126.25543" />
     <sodipodi:guide
-       position="181.29403,120.10803"
+       position="181.29408,120.07229"
        orientation="0,-1"
        id="guide3859" />
   </sodipodi:namedview>
@@ -92,7 +92,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -100,13 +100,13 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(31.088565,126.51165)">
+     transform="translate(31.088606,126.25543)">
     <g
        id="g7645"
        transform="translate(-33.072939,-223.48976)">
       <path
          id="rect833-9-41-6"
-         style="fill:#ff7800;stroke:#000000;stroke-width:5.00001;stop-color:#000000"
+         style="fill:#ff7800;stroke:#000000;stroke-width:5.00032;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
          d="m 10,370 v 90 l 45,15 45,-15 h 15 v -30 h -15 v -30 h 15 v -30 h -15 l -45,15 z"
          transform="scale(0.26458333)"
          sodipodi:nodetypes="ccccccccccccc" />
