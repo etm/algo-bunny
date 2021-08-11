@@ -116,8 +116,8 @@ function Commands() {
     'label': 'Repeat',
     'desc': 'I do something repeatedly. Please tell me when to stop.',
     'icon': 'commands/loop.svg',
-    'start': 'commands/loop/top.svg',
-    'start_icon': 'commands/if_carrot/y.svg',
+    'first': 'commands/loop/top.svg',
+    'first_icon': 'commands/if_carrot/y.svg',
     'middle': 'commands/loop/middle.svg',
     'end': 'commands/loop/end.svg'
   }; /*}}}*/

@@ -1,11 +1,15 @@
 x-element:not(:first-child) {
   margin-top: -0.5em;
 }
+x-container > x-element {
+  margin-top: -0.5em;
+}
+
 x-element.simple {
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: left center;
   background-size: contain;
-  display: block;
+  display: inline-block;
   width: 3.3175em;
   height: 3.675em;
 }
@@ -19,12 +23,21 @@ x-element[type=jump]       { background-image: url("../commands/jump.svg"); }
 
 x-element.complex_two > * {
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: left center;
   background-size: contain;
   display: block;
   width: 6.45em;
   height: 3.675em;
 }
+x-element.complex_two > x-container {
+  background-repeat: repeat-y;
+  background-size: 3.15em auto;
+  text-align: right;
+  height: auto;
+  min-height: 1em;
+}
 
-x-element.complex_two[type=if_flower] x-first { background-image: url("../commands/if_flower/top.svg"); }
-
+x-element.complex_two[type=if_flower] x-first     { background-image: url("../commands/if_flower/top.svg"); }
+x-element.complex_two[type=if_flower] x-second    { background-image: url("../commands/if_flower/else.svg"); }
+x-element.complex_two[type=if_flower] x-end       { background-image: url("../commands/if_flower/end.svg"); }
+x-element.complex_two[type=if_flower] x-container { background-image: url("../commands/if_flower/middle.svg"); }
