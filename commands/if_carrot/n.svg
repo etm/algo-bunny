@@ -13,7 +13,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="if_carrot_n.svg">
+   sodipodi:docname="n.svg">
   <defs
      id="defs2">
     <inkscape:perspective
@@ -45,9 +45,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="236.24029"
-     inkscape:cy="85.852476"
+     inkscape:zoom="1.979899"
+     inkscape:cx="172.10231"
+     inkscape:cy="99.345784"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -55,7 +55,7 @@
      inkscape:snap-bbox="false"
      inkscape:object-paths="true"
      inkscape:snap-intersection-paths="true"
-     inkscape:snap-grids="true"
+     inkscape:snap-grids="false"
      inkscape:snap-smooth-nodes="true"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -63,8 +63,8 @@
      inkscape:snap-object-midpoints="true"
      inkscape:window-width="1762"
      inkscape:window-height="1016"
-     inkscape:window-x="523"
-     inkscape:window-y="47"
+     inkscape:window-x="825"
+     inkscape:window-y="316"
      inkscape:window-maximized="0"
      inkscape:snap-page="true"
      inkscape:snap-others="false"
@@ -73,7 +73,8 @@
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0">
+     fit-margin-bottom="0"
+     inkscape:snap-to-guides="false">
     <inkscape:grid
        type="xygrid"
        id="grid835"
@@ -92,7 +93,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -102,11 +103,11 @@
      id="layer1"
      transform="translate(169.9948,413.41146)">
     <g
-       id="g5922"
-       transform="translate(-0.02668109,-29.264285)">
+       id="g995"
+       transform="translate(1.4551922,0.58556008)">
       <g
          id="g1190"
-         transform="translate(-215.02491,-227.30566)">
+         transform="translate(-215.05159,-256.56994)">
         <g
            id="g1715-9-7"
            transform="translate(-72.0027,-226.15387)">
@@ -201,7 +202,7 @@
       <path
          id="path1290"
          style="font-variation-settings:normal;vector-effect:none;fill:#57e389;fill-opacity:1;stroke:#000000;stroke-width:1.323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000"
-         d="m -123.00457,-364.88899 -18.52083,-13.22917 m 18.52083,0 -18.52083,13.22917" />
+         d="m -123.03124,-393.60205 -18.52083,-13.22917 m 18.52083,0 -18.52083,13.22917" />
     </g>
   </g>
 </svg>

@@ -24,7 +24,7 @@ class Editor {
        "a1": "forward",
        "a2": "forward",
        "a3": {
-         "item": "if_flower",
+         "item": "if_smaller",
          "first": {
            "a4": "forward",
            "a5": {

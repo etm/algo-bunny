@@ -13,7 +13,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="if_same_y.svg">
+   sodipodi:docname="y.svg">
   <defs
      id="defs2">
     <inkscape:perspective
@@ -151,8 +151,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="236.20633"
-     inkscape:cy="285.99904"
+     inkscape:cx="86.497629"
+     inkscape:cy="60.418717"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -160,7 +160,7 @@
      inkscape:snap-bbox="false"
      inkscape:object-paths="true"
      inkscape:snap-intersection-paths="true"
-     inkscape:snap-grids="true"
+     inkscape:snap-grids="false"
      inkscape:snap-smooth-nodes="true"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -178,7 +178,8 @@
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0">
+     fit-margin-bottom="0"
+     inkscape:snap-to-guides="false">
     <inkscape:grid
        type="xygrid"
        id="grid835"
@@ -197,7 +198,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -208,7 +209,7 @@
      transform="translate(169.9948,413.41146)">
     <g
        id="g7541"
-       transform="translate(-146.9001,-417.19407)">
+       transform="translate(-145.38854,-415.39579)">
       <text
          xml:space="preserve"
          style="font-size:10.5833px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;fill:#000000;stroke-width:0.264583"
