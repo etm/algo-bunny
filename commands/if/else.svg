@@ -45,9 +45,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.5010169"
-     inkscape:cx="-233.15722"
-     inkscape:cy="198.97236"
+     inkscape:zoom="4.2455169"
+     inkscape:cx="23.630574"
+     inkscape:cy="111.68114"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -115,7 +115,7 @@
        id="rect833-3-2-2"
        sodipodi:nodetypes="ccccccccccccc" />
     <path
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.32292;stop-color:#000000"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.323;stop-color:#000000;stroke-miterlimit:4;stroke-dasharray:none;stroke-linejoin:round;stroke-linecap:round"
        d="m -50.932285,-282.31045 -3e-6,-6.21769 h 2.645836 l 11.90625,3.96875 11.90625,-3.96875 v -23.8125 l -11.906252,4.2084 -11.923929,-4.08858 h -2.635801 l -6e-6,-1.57504 m -23.804848,0 3e-6,31.48541"
        id="path854"
        sodipodi:nodetypes="cccccccccccc" />

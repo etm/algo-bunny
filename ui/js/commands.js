@@ -3,46 +3,43 @@ function Commands() {
 
   this.items = {};
 
-  function load_svg(url,item) {
-    $.ajax({
+  function load_svg(url,item,i) {
+    return $.ajax({
       type: "GET",
       dataType: "xml",
-      url: url,
-      success: function(res){
-        item = $(res.documentElement);
-      }
+      url: url
+    }).then(function(res) {
+      item[i] = $(res.documentElement).find('> g');
     });
   }
-  this.load_elements = function(target) { //{{{
-    _.each(self.items,(item) => {
-    });
-  }; //}}}
 
   this.load = function() { //{{{
+    let promises = [];
     _.each(self.items,(item) => {
       if (item.type == 'simple' || item.type == 'position') {
         item.graphics = {};
-        item.graphics.icon = load_svg(item.icon);
+        promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
       }
       if (item.type == 'complex_one') {
         item.graphics = {};
-        load_svg(item.icon,        item.graphics.icon       );
-        load_svg(item.start,       item.graphics.start      );
-        load_svg(item.start_icon,  item.graphics.start_icon );
-        load_svg(item.middle,      item.graphics.middle     );
-        load_svg(item.end,         item.graphics.end        );
+        promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
+        promises.push(load_svg(item.first,       item.graphics, "first"      ));
+        promises.push(load_svg(item.first_icon,  item.graphics, "first_icon" ));
+        promises.push(load_svg(item.middle,      item.graphics, "middle"     ));
+        promises.push(load_svg(item.end,         item.graphics, "end"        ));
       }
       if (item.type == 'complex_two') {
         item.graphics = {};
-        load_svg(item.icon,        item.graphics.icon       );
-        load_svg(item.first,       item.graphics.first      );
-        load_svg(item.first_icon,  item.graphics.first_icon );
-        load_svg(item.middle,      item.graphics.middle     );
-        load_svg(item.second,      item.graphics.second     );
-        load_svg(item.second_icon, item.graphics.second_icon);
-        load_svg(item.end,         item.graphics.end        );
+        promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
+        promises.push(load_svg(item.first,       item.graphics, "first"      ));
+        promises.push(load_svg(item.first_icon,  item.graphics, "first_icon" ));
+        promises.push(load_svg(item.middle,      item.graphics, "middle"     ));
+        promises.push(load_svg(item.second,      item.graphics, "second"     ));
+        promises.push(load_svg(item.second_icon, item.graphics, "second_icon"));
+        promises.push(load_svg(item.end,         item.graphics, "end"        ));
       }
     });
+    return Promise.all(promises);
   }; //}}}
 
   /*------------------------*/
@@ -121,7 +118,7 @@ function Commands() {
     'desc': 'I do something repeatedly. Please tell me when to stop.',
     'icon': 'commands/loop.svg',
     'first': 'commands/loop/top.svg',
-    'first_icon': 'commands/if_carrot/y.svg',
+    'first_icon': 'commands/loop/y.svg',
     'middle': 'commands/loop/middle.svg',
     'end': 'commands/loop/end.svg'
   }; /*}}}*/

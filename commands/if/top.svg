@@ -46,8 +46,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="5.6"
-     inkscape:cx="92.146437"
-     inkscape:cy="128.95116"
+     inkscape:cx="97.556995"
+     inkscape:cy="54.712871"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -61,11 +61,11 @@
      inkscape:guide-bbox="true"
      inkscape:snap-nodes="true"
      inkscape:snap-object-midpoints="true"
-     inkscape:window-width="1762"
-     inkscape:window-height="1016"
-     inkscape:window-x="523"
+     inkscape:window-width="3142"
+     inkscape:window-height="1376"
+     inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:snap-page="true"
      inkscape:snap-others="false"
      inkscape:bbox-paths="true"
@@ -103,8 +103,8 @@
      transform="translate(31.088547,237.71981)">
     <path
        id="rect833-3-2-2"
-       style="fill:#98eae0;fill-opacity:1;stroke:#000000;stroke-width:1.32292;stop-color:#000000"
-       d="m -6.6145866,-207.2535 -4e-7,-5.73608 h 2.645836 l 11.90625,3.96875 11.90625,-3.96875 v -23.8125 H -6.614587 l -11.90625,3.96875 -11.90625,-3.96875 v 29.55773"
+       style="fill:#98eae0;fill-opacity:1;stroke:#000000;stroke-width:1.323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
+       d="m -6.6145866,-207.48975 -4e-7,-5.73608 h 2.645836 l 11.90625,3.96875 11.90625,-3.96875 v -23.8125 H -6.614587 l -11.90625,3.96875 -11.90625,-3.96875 v 29.55773"
        sodipodi:nodetypes="cccccccccc" />
   </g>
 </svg>

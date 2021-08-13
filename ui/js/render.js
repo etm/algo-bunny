@@ -1,6 +1,6 @@
 class Editor {
    constructor(target,commands) {
-      this.commands = target;
+      this.commands = commands;
       this.target = target;
       this.program = [
         "forward",

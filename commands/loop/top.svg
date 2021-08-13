@@ -7,35 +7,35 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="51.593758mm"
-   height="53.834385mm"
-   viewBox="0 0 51.593758 53.834384"
+   width="51.593838mm"
+   height="29.104246mm"
+   viewBox="0 0 51.593838 29.104246"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="loop_top.svg">
+   sodipodi:docname="top.svg">
   <defs
      id="defs2">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-9.568108 : 4.6666781 : 0"
-       inkscape:vp_y="-1.2859589e-14 : 70.00434 : 0"
-       inkscape:vp_z="9.568108 : 4.6666783 : 0"
-       inkscape:persp3d-origin="126.22701 : 240.99117 : 1"
+       inkscape:vp_x="-9.5681079 : 4.6666782 : 0"
+       inkscape:vp_y="-1.2859589e-14 : 70.004341 : 0"
+       inkscape:vp_z="9.5681079 : 4.6666784 : 0"
+       inkscape:persp3d-origin="126.22701 : 216.26103 : 1"
        id="perspective1170-3-3" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-1.2226001 : -0.59630197 : 0"
-       inkscape:vp_y="99.885732 : 582.59488 : 1"
-       inkscape:vp_z="1.2226001 : -0.59630197 : 0"
-       inkscape:persp3d-origin="100.51393 : 591.57728 : 1"
+       inkscape:vp_x="-1.2226001 : -0.59630198 : 0"
+       inkscape:vp_y="99.885731 : 557.86475 : 1"
+       inkscape:vp_z="1.2226001 : -0.59630198 : 0"
+       inkscape:persp3d-origin="100.51393 : 566.84715 : 1"
        id="perspective1170-9-1-2" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-1.2226001 : -0.59630197 : 0"
-       inkscape:vp_y="99.902982 : 584.64442 : 1"
-       inkscape:vp_z="1.2226001 : -0.59630197 : 0"
-       inkscape:persp3d-origin="100.5312 : 593.62682 : 1"
+       inkscape:vp_x="-1.2226001 : -0.59630198 : 0"
+       inkscape:vp_y="99.902981 : 559.91429 : 1"
+       inkscape:vp_z="1.2226001 : -0.59630198 : 0"
+       inkscape:persp3d-origin="100.5312 : 568.89669 : 1"
        id="perspective1170-9-1" />
   </defs>
   <sodipodi:namedview
@@ -45,9 +45,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="-12.102325"
-     inkscape:cy="342.23939"
+     inkscape:zoom="7.9195959"
+     inkscape:cx="115.5657"
+     inkscape:cy="105.10461"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -61,11 +61,11 @@
      inkscape:guide-bbox="true"
      inkscape:snap-nodes="true"
      inkscape:snap-object-midpoints="true"
-     inkscape:window-width="1762"
-     inkscape:window-height="1016"
-     inkscape:window-x="523"
+     inkscape:window-width="3142"
+     inkscape:window-height="1376"
+     inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:snap-page="true"
      inkscape:snap-others="false"
      inkscape:bbox-paths="true"
@@ -77,10 +77,10 @@
     <inkscape:grid
        type="xygrid"
        id="grid835"
-       originx="31.088543"
-       originy="237.71981" />
+       originx="31.088582"
+       originy="237.46358" />
     <sodipodi:guide
-       position="181.29403,33.338046"
+       position="181.29407,8.8641372"
        orientation="0,-1"
        id="guide3859" />
   </sodipodi:namedview>
@@ -92,7 +92,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -100,11 +100,11 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(31.088547,237.71981)">
+     transform="translate(31.088587,237.46358)">
     <path
        id="rect833-3-2-2"
-       style="fill:#ff7800;stroke:#000000;stroke-width:1.32292;stop-color:#000000"
-       d="m -6.614584,-183.88542 -3e-6,-29.10416 h 2.645836 l 11.90625,3.96875 11.90625,-3.96875 v -23.8125 H -6.614587 l -11.90625,3.96875 -11.90625,-3.96875 3e-6,52.91666"
+       style="fill:#ff7800;stroke:#000000;stroke-width:1.323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
+       d="m -6.614584,-204.19958 -3e-6,-8.79 h 2.645836 l 11.90625,3.96875 11.90625,-3.96875 v -23.8125 H -6.614587 l -11.90625,3.96875 -11.90625,-3.96875 3e-6,32.6025"
        sodipodi:nodetypes="cccccccccc" />
   </g>
 </svg>
