@@ -46,19 +46,19 @@ function Commands() {
 
   this.items.forward = { /*{{{*/
     'type': 'simple',
-    'label': 'Forward',
-    'desc': 'I take one step in the direction I am facing.',
+    'label': 'Onwards',
+    'desc': 'I take one step in the direction I am facing. I hope I dont fall into a hole, step on a carrot or a flower.',
     'icon': 'commands/forward.svg'
   }; /*}}}*/
   this.items.left = { /*{{{*/
     'type': 'simple',
-    'label': 'Left',
+    'label': 'Turn Left',
     'desc': 'I turn left.',
     'icon': 'commands/left.svg'
   }; /*}}}*/
   this.items.right = { /*{{{*/
     'type': 'simple',
-    'label': 'Right',
+    'label': 'Turn Right',
     'desc': 'I turn right.',
     'icon': 'commands/right.svg'
   }; /*}}}*/
@@ -122,7 +122,7 @@ function Commands() {
     'middle': 'commands/loop/middle.svg',
     'end': 'commands/loop/end.svg'
   }; /*}}}*/
-  this.items.put_carrot = { /*{{{*/
+  this.items.break = { /*{{{*/
     'type': 'simple',
     'label': 'Stop',
     'desc': 'I stop doing what i was repeatedly doing.',

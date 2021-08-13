@@ -1,12 +1,3 @@
-$(document).ready(async function() {
-  let commands  = new Commands;
-  await commands.load();
-
-  let editor = new Editor($('div.program svg'), commands);
-  editor.render();
-
-});
-
 class Editor {
    #tile_width;
    #tile_height;
@@ -100,7 +91,6 @@ class Editor {
 
    render() {
      let [y,w] = this.#iter(this.program,1,0);
-     console.log(w);
      let hei = y * this.#tile_height * this.#scale_factor + this.#height_shift;
      let wid = w * this.#tile_width * this.#scale_factor;
      this.target.attr('height',   hei);

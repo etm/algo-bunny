@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="25.135498mm"
+   width="25.1355mm"
    height="29.104221mm"
-   viewBox="0 0 25.135498 29.104221"
+   viewBox="0 0 25.1355 29.104221"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
@@ -45,18 +45,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.959798"
-     inkscape:cx="184.3904"
-     inkscape:cy="48.760136"
+     inkscape:zoom="4"
+     inkscape:cx="32.274622"
+     inkscape:cy="27.754727"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="true"
      inkscape:snap-bbox="true"
-     inkscape:object-paths="true"
-     inkscape:snap-intersection-paths="true"
+     inkscape:object-paths="false"
+     inkscape:snap-intersection-paths="false"
      inkscape:snap-grids="true"
-     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-smooth-nodes="false"
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:snap-nodes="false"
@@ -73,14 +73,15 @@
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0">
+     fit-margin-bottom="0"
+     inkscape:object-nodes="true">
     <inkscape:grid
        type="xygrid"
        id="grid835"
-       originx="72.099026"
-       originy="82.08661" />
+       originx="108.47923"
+       originy="131.43972" />
     <sodipodi:guide
-       position="222.30451,164.24109"
+       position="258.68471,114.88798"
        orientation="0,-1"
        id="guide3859" />
   </sodipodi:namedview>
@@ -92,7 +93,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -100,20 +101,29 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(72.09902,82.086611)">
+     transform="translate(108.47923,131.43972)">
+    <path
+       id="rect833-9-41"
+       style="fill:#99c1f1;stroke:#000000;stroke-width:1.323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
+       d="m -107.81773,-130.77825 11.906253,3.96875 11.90625,-3.96875 v 23.8125 l -11.90625,3.96875 -11.906253,-3.96875 z"
+       sodipodi:nodetypes="ccccccc" />
     <g
-       id="g6751"
-       transform="translate(-103.18752,-147.57097)">
+       id="g1079"
+       transform="matrix(-1,0,0,1,-135.50297,13.758326)">
       <path
-         id="rect833-9-41-4"
-         style="fill:#99c1f1;stroke:#000000;stroke-width:1.323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
-         d="m 31.75,66.145833 11.90625,3.968751 11.906249,-3.968751 v 23.8125 L 43.65625,93.927083 31.75,89.958333 Z"
-         sodipodi:nodetypes="ccccccc" />
-      <path
-         id="path5958-0-8"
+         id="path5958-0"
          style="font-variation-settings:normal;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000"
-         d="m 48.838449,80.697916 2.7553,2.645834 -2.755302,2.645833 M 43.65625,76.729167 v 6.614583 h 7.937499"
-         sodipodi:nodetypes="cccccc" />
+         d="m -42.994632,-129.46087 -1.567586,-1.56758 -1.533276,1.53327"
+         sodipodi:nodetypes="ccc"
+         inkscape:transform-center-x="-0.010173997"
+         inkscape:transform-center-y="1.733231" />
+      <ellipse
+         style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+         id="path838"
+         cx="-39.608433"
+         cy="-129.86501"
+         rx="4.9738173"
+         ry="4.9401536" />
     </g>
   </g>
 </svg>
