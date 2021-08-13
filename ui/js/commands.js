@@ -144,7 +144,7 @@ function Commands() {
   this.items.if_empty = { /*{{{*/
     'type': 'complex_two',
     'label': 'Check Empty',
-    'desc': 'I check if there is nothing in front of me.',
+    'desc': 'I check if there is only grass in front of me.',
     'icon': 'commands/if_empty.svg',
     'first': 'commands/if_empty/top.svg',
     'first_icon': 'commands/if_empty/y.svg',
