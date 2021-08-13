@@ -46,7 +46,7 @@ function Commands() {
 
   this.items.forward = { /*{{{*/
     'type': 'simple',
-    'label': 'Onwards',
+    'label': 'Forward',
     'desc': 'I take one step in the direction I am facing. I hope I dont fall into a hole, step on a carrot or a flower.',
     'icon': 'commands/forward.svg'
   }; /*}}}*/
