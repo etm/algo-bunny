@@ -98,6 +98,25 @@ class Editor {
     return [y,width];
   } //}}}
 
+  #remove_item_rec(it,eid){
+    for (const [k,v] of Object.entries(it)) {
+      if (k == eid) { delete it[eid]; }
+      if (typeof(v) == 'object') {
+        this.#remove_item_rec(v.first,eid);
+        if (v.second) {
+          this.#remove_item_rec(v.second,eid);
+        }
+      }
+    }
+  }
+  remove_item(eid) {
+    this.#remove_item_rec(this.program,eid);
+  }
+
+  clear() {
+    this.target.empty();
+  }
+
   render() {
     let [y,w] = this.#iter(this.program,1,0);
     let hei = y * this.#tile_height * this.#scale_factor + this.#height_shift;

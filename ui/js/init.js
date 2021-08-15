@@ -26,5 +26,12 @@ $(document).ready(async function() {
   bunny_one_liner();
 
   $('div.program div.bunny').click(()=>{ bunny_one_liner(); });
-});
 
+  $('div.program').on('click','g[element-id]',(ev)=>{
+    let eid = $(ev.currentTarget).attr('element-id');
+    editor.remove_item(eid);
+    editor.clear();
+    editor.render();
+    return false;
+  });
+});
