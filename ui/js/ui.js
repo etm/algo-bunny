@@ -4,9 +4,9 @@ function bunny_say(text) {
   if (bunny_say_timeout) {
     clearTimeout(bunny_say_timeout);
   }
-  $('div.speech').text(text);
+  $('div.speech').html(text);
   $('div.speech').show();
-  bunny_say_timeout = setTimeout(()=>{$('div.speech').hide();},5000);
+  bunny_say_timeout = setTimeout(()=>{$('div.speech').hide();},8000);
 }
 
 function bunny_one_liner() {

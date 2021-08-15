@@ -97,4 +97,3 @@ class Editor {
      this.target.attr('width',    wid);
    }
 }
-

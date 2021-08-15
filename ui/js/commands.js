@@ -80,35 +80,41 @@ function Commands() {
     'desc': 'I jump to a position on the field. After placing this command, drag a tile onto it to set the position.',
     'icon': 'commands/jump.svg'
    }; /*}}}*/
+  this.items.jump_back = { /*{{{*/
+    'type': 'simple',
+    'label': 'Jump Back',
+    'desc': 'I jump to the origin of the last jump. I automatically remember my last jump, because jumps are exiting.',
+    'icon': 'commands/jump.svg'
+   }; /*}}}*/
 
   this.items.get_carrot = { /*{{{*/
     'type': 'simple',
     'label': 'Get Carrot',
-    'desc': 'I pick up the delicious carrot from in front of me - and carry it.',
+    'desc': 'I pick up the delicious carrot from in front of me - and hold it.',
     'icon': 'commands/get_carrot.svg'
   }; /*}}}*/
   this.items.put_carrot = { /*{{{*/
     'type': 'simple',
     'label': 'Plant Carrot',
-    'desc': 'I plant the carrot I am carrying in front of me (if there is space).',
+    'desc': 'I plant the carrot I hold in front of me (if there is space).<p>If there is already a carrot in front of me I swap it with the one I am holding.',
     'icon': 'commands/put_carrot.svg'
   }; /*}}}*/
   this.items.put_flower = { /*{{{*/
     'type': 'simple',
     'label': 'Plant Flower',
-    'desc': 'I plant a flower in front of me (if there is space). A red flower reminds me of memorized number. A blue flower reminds me of a memorized position on the field.',
+    'desc': 'I plant a flower in front of me (if there is space).<p>A red flower reminds me of memorized number. A blue flower reminds me of a memorized position on the field.',
     'icon': 'commands/put_flower.svg'
   }; /*}}}*/
   this.items.eat_carrot = { /*{{{*/
     'type': 'simple',
     'label': 'Eat Carrot',
-    'desc': 'I eat the carrot I carry, or any one in front of me.',
+    'desc': 'I eat the carrot I hold or the one in front of me.',
     'icon': 'commands/eat_carrot.svg'
   }; /*}}}*/
   this.items.eat_flower = { /*{{{*/
     'type': 'simple',
     'label': 'Eat Flower',
-    'desc': 'I eat any flower in front of me.',
+    'desc': 'I eat the flower in front of me.',
     'icon': 'commands/eat_flower.svg'
   }; /*}}}*/
 
@@ -180,7 +186,7 @@ function Commands() {
   this.items.if_same = { /*{{{*/
     'type': 'complex_two',
     'label': 'Check Equal',
-    'desc': 'I check if the carrot I am carrying (or the carrot I memorized) is the same size as the one in front of me.',
+    'desc': 'I check if the carrot I hold is the same size as the carrot (or flower) in front of me ...<p>... unless I memorized something in my big brain - then I always compare the number I memorized.',
     'icon': 'commands/if_same.svg',
     'first': 'commands/if_same/top.svg',
     'first_icon': 'commands/if_same/y.svg',
@@ -192,7 +198,7 @@ function Commands() {
   this.items.if_smaller = { /*{{{*/
     'type': 'complex_two',
     'label': 'Check Smaller',
-    'desc': 'I check if the carrot I am carrying (or the carrot I memorized) is smaller than the one in front of me.',
+    'desc': 'I check if the carrot I hold is smaller than the carrot (or flower) in front of me ...<p>... unless I memorized syyomething in my big brain - then I always compare the number I memorized.',
     'icon': 'commands/if_smaller.svg',
     'first': 'commands/if_smaller/top.svg',
     'first_icon': 'commands/if_smaller/y.svg',
@@ -204,7 +210,7 @@ function Commands() {
   this.items.if_bigger = { /*{{{*/
     'type': 'complex_two',
     'label': 'Check Bigger',
-    'desc': 'I check if the carrot I am carrying (or the carrot I memorized) is bigger than the one in front of me.',
+    'desc': 'I check if the carrot I hold is bigger than the carrot (or flower) in front of me ...<p> ... unless I memorized syyomething in my big brain - then I always compare the number I memorized.',
     'icon': 'commands/if_bigger.svg',
     'first': 'commands/if_bigger/top.svg',
     'first_icon': 'commands/if_bigger/y.svg',
@@ -217,7 +223,7 @@ function Commands() {
   this.items.memorize_carrot = { /*{{{*/
     'type': 'simple',
     'label': 'Memorize Carrot',
-    'desc': 'I memorize the size of the carrot I am carrying or the size of the carrot in front of me.',
+    'desc': 'I memorize the size of the carrot in front of me.',
     'icon': 'commands/memorize_carrot.svg'
   }; /*}}}*/
   this.items.memorize_steps = { /*{{{*/
@@ -235,7 +241,7 @@ function Commands() {
   this.items.memorize_flower = { /*{{{*/
     'type': 'simple',
     'label': 'Memorize Flower',
-    'desc': 'I memorize the flower in front of me. If it reminds me of a number, i memorize the number. If it reminds me of a position I jump there immediatly.',
+    'desc': 'I memorize the flower in front of me.<p>If it\'s a red flower I memorize its size. If it\'s a blue flower I immediately jump to the position it reminds me of.',
     'icon': 'commands/memorize_flower.svg'
   }; /*}}}*/
 
