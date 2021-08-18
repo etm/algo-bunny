@@ -27,27 +27,7 @@ class Editor {
     this.#width_add = this.#tile_width + 12;
     this.#height_add = this.#tile_height + 8;
 
-    this.program = [
-      ["a1", "forward"],
-      ["a2", "forward"],
-      ["a3", {
-        "item": "if_smaller",
-        "first": [
-          ["a4", "forward"],
-          ["a5", {
-            "item": "loop",
-            "first": [
-              ["a8", "forward"]
-            ]
-          }]
-        ],
-        "second": []
-      }],
-      ["a6", {
-        "item": "loop",
-        "first": []
-      }]
-    ]
+    this.program = [];
   }  //}}}
 
   #draw_asset(id,what,x,y,op,shift_y=0) { //{{{
@@ -171,7 +151,7 @@ class Editor {
     }
   } //}}}
   #newid_rec(it) { //{{{
-    let ids = [];
+    let ids = [0];
     for (const [k,v] of it) {
       ids.push(parseInt(k.replace(/^\w/,'')));
       if (typeof(v) == 'object') {
@@ -185,7 +165,7 @@ class Editor {
 
     }
     return ids;
-  } //}}}
+  }  //}}}
   #newid(){ //{{{
     let ids = this.#newid_rec(this.program);
     return "a" + (_.max(ids) + 1);
