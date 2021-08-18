@@ -2,6 +2,7 @@ function Commands() {
   var self = this;
 
   this.items = {};
+  this.placeholders = {};
 
   function load_svg(url,item,i) {
     return $.ajax({
@@ -15,6 +16,10 @@ function Commands() {
 
   this.load = function() { //{{{
     let promises = [];
+    _.each(self.placeholders,(item) => {
+        item.graphics = {};
+        promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
+    });
     _.each(self.items,(item) => {
       if (item.type == 'simple' || item.type == 'position') {
         item.graphics = {};
@@ -41,6 +46,22 @@ function Commands() {
     });
     return Promise.all(promises);
   }; //}}}
+
+  this.placeholders.add = { /*{{{*/
+    'label': 'Add',
+    'desc': 'Drag here to add.',
+    'icon': 'commands/add.svg'
+  }; /*}}}*/
+  this.placeholders.delete = { /*{{{*/
+    'label': 'Delete',
+    'desc': 'Delete.',
+    'icon': 'commands/delete.svg'
+  }; /*}}}*/
+  this.placeholders.bunny = { /*{{{*/
+    'label': 'Bunny',
+    'desc': 'I am Bunny. Algo Bunny.',
+    'icon': 'assets/start.svg'
+  }; /*}}}*/
 
   /*------------------------*/
 
@@ -137,7 +158,7 @@ function Commands() {
 
   this.items.if_carrot = { /*{{{*/
     'type': 'complex_two',
-    'label': 'Check Carrot',
+    'label': 'Check If Carrot',
     'desc': 'I check if there is a carrot in front of me.',
     'icon': 'commands/if_carrot.svg',
     'first': 'commands/if_carrot/top.svg',
@@ -149,7 +170,7 @@ function Commands() {
   }; /*}}}*/
   this.items.if_empty = { /*{{{*/
     'type': 'complex_two',
-    'label': 'Check Empty',
+    'label': 'Check If Empty',
     'desc': 'I check if there is only grass in front of me.',
     'icon': 'commands/if_empty.svg',
     'first': 'commands/if_empty/top.svg',
@@ -161,7 +182,7 @@ function Commands() {
   }; /*}}}*/
   this.items.if_flower = { /*{{{*/
     'type': 'complex_two',
-    'label': 'Check Flower',
+    'label': 'Check If Flower',
     'desc': 'I check if there is any flower in front of me.',
     'icon': 'commands/if_flower.svg',
     'first': 'commands/if_flower/top.svg',
@@ -173,7 +194,7 @@ function Commands() {
   }; /*}}}*/
   this.items.if_hole = { /*{{{*/
     'type': 'complex_two',
-    'label': 'Check Hole',
+    'label': 'Check If Hole',
     'desc': 'I check if there is a hole in front of me.',
     'icon': 'commands/if_hole.svg',
     'first': 'commands/if_hole/top.svg',
@@ -185,7 +206,7 @@ function Commands() {
   }; /*}}}*/
   this.items.if_same = { /*{{{*/
     'type': 'complex_two',
-    'label': 'Check Equal',
+    'label': 'Check If Equal',
     'desc': 'I check if the carrot I hold is the same size as the carrot (or flower) in front of me ...<p>... unless I memorized something in my big brain - then I always compare the number I memorized.',
     'icon': 'commands/if_same.svg',
     'first': 'commands/if_same/top.svg',
@@ -197,7 +218,7 @@ function Commands() {
   }; /*}}}*/
   this.items.if_smaller = { /*{{{*/
     'type': 'complex_two',
-    'label': 'Check Smaller',
+    'label': 'Check If Smaller',
     'desc': 'I check if the carrot I hold is smaller than the carrot (or flower) in front of me ...<p>... unless I memorized syyomething in my big brain - then I always compare the number I memorized.',
     'icon': 'commands/if_smaller.svg',
     'first': 'commands/if_smaller/top.svg',
@@ -209,7 +230,7 @@ function Commands() {
   }; /*}}}*/
   this.items.if_bigger = { /*{{{*/
     'type': 'complex_two',
-    'label': 'Check Bigger',
+    'label': 'Check If Bigger',
     'desc': 'I check if the carrot I hold is bigger than the carrot (or flower) in front of me ...<p> ... unless I memorized syyomething in my big brain - then I always compare the number I memorized.',
     'icon': 'commands/if_bigger.svg',
     'first': 'commands/if_bigger/top.svg',
@@ -222,13 +243,13 @@ function Commands() {
 
   this.items.memorize_carrot = { /*{{{*/
     'type': 'simple',
-    'label': 'Memorize Carrot',
+    'label': 'Memorize Carrot Size',
     'desc': 'I memorize the size of the carrot in front of me.',
     'icon': 'commands/memorize_carrot.svg'
   }; /*}}}*/
   this.items.memorize_steps = { /*{{{*/
     'type': 'simple',
-    'label': 'Memorize Steps',
+    'label': 'Memorize Steps or Reset',
     'desc': 'I memorize the number of steps I will take from now on.',
     'icon': 'commands/memorize_steps.svg'
   }; /*}}}*/
@@ -240,7 +261,7 @@ function Commands() {
   }; /*}}}*/
   this.items.memorize_flower = { /*{{{*/
     'type': 'simple',
-    'label': 'Memorize Flower',
+    'label': 'Memorize Flower Size or Jump',
     'desc': 'I memorize the flower in front of me.<p>If it\'s a red flower I memorize its size. If it\'s a blue flower I immediately jump to the position it reminds me of.',
     'icon': 'commands/memorize_flower.svg'
   }; /*}}}*/

@@ -1,5 +1,12 @@
 var bunny_say_timeout;
 
+function bunny_say_reset() {
+  if (bunny_say_timeout) {
+    clearTimeout(bunny_say_timeout);
+  }
+  $('div.speech').hide();
+}
+
 function bunny_say(text) {
   if (bunny_say_timeout) {
     clearTimeout(bunny_say_timeout);
@@ -48,4 +55,3 @@ var one_liners = [
   "Carpe diem. Seize the carrot. Make your lives extraordinary.",
   "A million carrots isn't cool. You know what's cool? A billion carrots."
 ];
-
