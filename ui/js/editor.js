@@ -7,8 +7,8 @@ class Editor {
   #width_add;
   #height_add;
 
-  constructor(target,commands) { //{{{
-    this.commands = commands;
+  constructor(target,assets) { //{{{
+    this.assets = assets;
     this.target = target;
 
     let t1 = $X('<g element-group="graph" xmlns="http://www.w3.org/2000/svg"></g>');
@@ -31,7 +31,7 @@ class Editor {
   }  //}}}
 
   #draw_asset(id,what,x,y,op,shift_y=0) { //{{{
-    let item = this.commands.placeholders[what];
+    let item = this.assets.placeholders[what];
     let grax = item.graphics['icon'].clone();
     let g2 = $X('<g element-type="' + what + '" element-op="' + op  + '" element-id="' + id  + '" transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height + shift_y) + ')" xmlns="http://www.w3.org/2000/svg"></g>');
         g2.append(grax);
@@ -42,7 +42,7 @@ class Editor {
     if (typeof(i) == 'object') {
       i = i.item;
     }
-    let item = this.commands.items[i];
+    let item = this.assets.commands[i];
     let grax = item.graphics[what].clone();
     let g1 = $X('<g draggable="true" class="element" element-type="' + i + '" element-id="' + id  + '" xmlns="http://www.w3.org/2000/svg"></g>');
     let g2 = $X('<g transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height) + ')" xmlns="http://www.w3.org/2000/svg"></g>');
@@ -136,7 +136,7 @@ class Editor {
   } //}}}
 
   #insert_rec_item(ety) { //{{{
-    let item = this.commands.items[ety];
+    let item = this.assets.commands[ety];
     if (item.type == 'simple') {
       return ety;
     }

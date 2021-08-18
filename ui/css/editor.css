@@ -1,9 +1,4 @@
 body {
-  padding: 0;
-  margin: 0;
-}
-
-div.editor {
   display:flex;
   flex-direction: row;
 }
@@ -39,6 +34,9 @@ div.elements div.group img {
   padding: 0em 0.2em;
 
   cursor: move;
+}
+img[data-type] {
+  height: 4em;
 }
 
 div.program {
@@ -110,7 +108,3 @@ div.program svg g[element-group=graph] g[element-type] {
   100% { stroke-opacity: 0.00; fill-opacity: 0.00; }
 }
 
-div.field {
-  flex: 1 1 auto;
-  background-color: #98eae0;
-}

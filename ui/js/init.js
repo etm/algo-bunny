@@ -2,14 +2,14 @@ var active_del = '';
 var active_del_timeout;
 
 $(document).ready(async function() {
-  let commands  = new Commands;
-  await commands.load();
+  let assets  = new Assets;
+  await assets.load();
 
   let restrictions = [];
 
   $('div.elements img').each((_,ele) => {
     let iname = $(ele).attr('data-type');
-    let item = commands.items[iname];
+    let item = assets.commands[iname];
     $(ele).attr('title',item.label);
     if (restrictions.length == 0) {
       $(ele).show();
@@ -23,8 +23,14 @@ $(document).ready(async function() {
     });
   });
 
-  let editor = new Editor($('div.program svg'), commands);
+  let q = $.parseQuerySimple();
+  let level = q.level ? q.level : '';
+
+  let editor = new Editor($('div.program svg'), assets);
   editor.render();
+
+  let field = new Field($('div.field svg'), assets, level);
+  field.render();
 
   bunny_one_liner();
 
@@ -46,7 +52,7 @@ $(document).ready(async function() {
       active_del = eid;
       $('div.program svg g[element-group=drop] g[element-type=delete][element-id=' + eid + ']').addClass('active');
       let iname = $(ev.currentTarget).attr('element-type');
-      let item = commands.items[iname];
+      let item = assets.commands[iname];
       bunny_say(item.label);
       active_del_timeout = setTimeout(()=>{
         $('div.program svg g[element-group=drop] g[element-type=delete][element-id].active').removeClass('active');
@@ -68,8 +74,23 @@ $(document).ready(async function() {
   });
 
   // click drag and drop
+  // $('div.program svg').on('mousedown','g[element-group=graph] g[element-id]',(ev)=>{
+  //   ev.type = "dragstart";
+  //   ev.target = $('div.elements img:first')[0];
+  //   ev.dataTransfer = new DataTransfer();
+  //   $('div.elements img[data-type]').trigger(ev);
+  //   ev.preventDefault();
+  //   ev.stopPropagation();
+  // });
   $('div.elements').on('dragstart','img[data-type]',(ev)=>{
-    ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'));
+    if (ev.dataTransfer) { // the forward drag events, can be removed.
+      ev.dataTransfer.effectAllowed = 'uninitialized';
+      ev.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'));
+      ev.dataTransfer.setDragImage(ev.currentTarget, 0, 0);
+    } else {
+      ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'));
+      ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 0, 0);
+    }
   });
   $('div.program').on('drop','g[element-type=add]',(ev)=>{
     ev.preventDefault();
