@@ -1,0 +1,9 @@
+body {
+  font-family: sans-serif;
+  font-size: 1em;
+  margin: 1em;
+}
+.content {
+  max-width: 50em;
+  margin: auto;
+}

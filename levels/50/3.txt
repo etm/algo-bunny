@@ -1,11 +1,12 @@
-111
+B11
 1 1
-11B11
-  1 1
-  111
+111
+---
 ---
 Eat all carrots.
 ---
-111111111111111
+1111111
+---
+25
 ---
 eat_carrot,forward,left,right,loop,break,if_empty

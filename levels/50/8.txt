@@ -1,0 +1,14 @@
+11T1
+1
+1 B1
+1  1
+1111
+---
+---
+Eat all carrots. Avoid trying to eat carrots where no carrots are.
+---
+111111111111
+---
+25
+---
+eat_carrot,forward,left,right,loop,break,if_empty,if_hole,if_carrot,loop,break

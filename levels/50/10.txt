@@ -1,11 +1,14 @@
-TTTT
-TB1T
-TT2T
-TT3T
-TTTT
+TTTTT
+TcBcT
+TcTcT
+TcTcT
+TTTTT
+---
 ---
 Eat the biggest carrot.
 ---
-3
+6
+---
+25
 ---
 eat_carrot,get_carrot,put_carrot,forward,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_carrot,if_same,if_bigger,if_smaller
