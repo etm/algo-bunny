@@ -1,6 +1,8 @@
-TTTTTT TTT
-TBcccT TfT
-TTTTTT TTT
+TTTT
+TTcT  TTT
+TBcT  TfT
+TTcT  TTT
+TTTT
 ---
 2
 ---

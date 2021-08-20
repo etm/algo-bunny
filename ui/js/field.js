@@ -1,3 +1,4 @@
+
 class Field {
   #tile_width;
   #tile_height;
@@ -7,18 +8,21 @@ class Field {
   #width_add;
   #height_add;
 
-  constructor(target,assets,level) { //{{{
+  #get_level(levelurl) {
+    return new Promise( resolve => {
+      $.ajax({
+        type: "GET",
+        url: levelurl,
+        error: () => {}
+      }).then(res => { resolve(res); })
+    });
+  }
+
+  constructor(target,assets,levelurl) { //{{{
     this.assets = assets;
     this.target = target;
-    this.level = level;
+    this.levelurl = levelurl;
 
-    let t1 = $X('<g element-group="graph" xmlns="http://www.w3.org/2000/svg"></g>');
-    let t2 = $X('<g element-group="drop"  xmlns="http://www.w3.org/2000/svg"></g>');
-    target.append(t1);
-    target.append(t2);
-
-    this.target_graph = t1;
-    this.target_drop = t2;
 
     this.#tile_width = 26.4;
     this.#tile_height = 27;
@@ -27,9 +31,36 @@ class Field {
 
     this.#width_add = this.#tile_width + 12;
     this.#height_add = this.#tile_height + 8;
-
-    this.program = [];
   }  //}}}
+
+  async load_level() {
+    let level = await this.#get_level(this.levelurl);
+    let pieces = level.split(/---\s*\r?\n/).map( x => x.trim() );
+    if (pieces.length != 6) {
+      bunny_say('Uh, oh. Level is no good.');
+      return false;
+    }
+    [
+      this.tiles,
+      this.assignments,
+      this.help,
+      this.carrots,
+      this.max_score,
+      this.elements] = pieces;
+    this.x = 0;
+    this.y = 0;
+
+    this.elements = this.elements.split(',');
+    this.tiles = this.tiles.split('\n');
+    this.tiles = this.tiles.map( x => {
+      let s = x.split('');
+      if (this.x < s.length) { this.x = s.length; }
+      return s;
+    });
+    this.y = this.tiles.length;
+
+    return true;
+  }
 
   render() {
     // this.clear();

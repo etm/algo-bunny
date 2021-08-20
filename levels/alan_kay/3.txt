@@ -1,30 +1,17 @@
-1T
-TTTTTTTTTTTTTT TTTTT
- T     T           T
- TTTTT TTTTT TTTTTTT
- T     T T   T   T T
- TTT TTT TTT T T T T
- T       T   T T
- TTT TTTTT T TTTTTTT
-   T T     T T T
- T T TTT TTTTT T TTT
- T   T T T   T T T
- TTT T TTT TTT TTTTT
-   T     T T T T   T
- TTT T TTT T T TTT T
- T   T       T   T
- TTTTTTT TTTTTTT TTT
-     T T   T     T
- TTT T TTTTT T T TTT
-   T T T   T T T   T
- TTTTT TTT TTT TTTTT
-                   B
+TTTTTT
+cBTTT+
+cTTTT-
+cTTTT*
+cTTTT/
+cTTTTT
+cTTTTT
+TTTTTT
 ---
 ---
-Eat the carrot.
+Eat the carrots in order - biggest first, smallest last.
 ---
-1
+123456
 ---
-100
+40
 ---
-eat carrot,get carrot,put carrot,put flower,forward,left,right,step left,step right,jump,loop,break,if empty,if hole,if carrot,if same,if bigger,if smaller,memorize steps,memorize flower,memorize carrot,memorize position
+eat_carrot,eat_flower,get_carrot,put_carrot,put_flower,forward,left,right,step_left,step_right,jump,jump_back,loop,break,if_empty,if_flower,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower,memorize_carrot,memorize_position

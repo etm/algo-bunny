@@ -5,16 +5,28 @@ $(document).ready(async function() {
   let assets  = new Assets;
   await assets.load();
 
-  let restrictions = [];
+  let q = $.parseQuerySimple();
+  let level = q.level ? q.level : '';
 
+  let editor = new Editor($('div.program svg'), assets);
+  editor.render();
+
+  let field = new Field($('div.field svg'), assets, level);
+  if (!(await field.load_level())) {
+    return;
+  }
+  console.log(field.elements);
+  field.render();
+
+  // show some elements
   $('div.elements img').each((_,ele) => {
     let iname = $(ele).attr('data-type');
     let item = assets.commands[iname];
     $(ele).attr('title',item.label);
-    if (restrictions.length == 0) {
+    if (field.elements.length == 0) {
       $(ele).show();
     } else {
-      if (restrictions.includes(iname)) {
+      if (field.elements.includes(iname)) {
         $(ele).show();
       }
     }
@@ -23,15 +35,7 @@ $(document).ready(async function() {
     });
   });
 
-  let q = $.parseQuerySimple();
-  let level = q.level ? q.level : '';
-
-  let editor = new Editor($('div.program svg'), assets);
-  editor.render();
-
-  let field = new Field($('div.field svg'), assets, level);
-  field.render();
-
+  // say initial thing
   bunny_one_liner();
 
   // one liners
