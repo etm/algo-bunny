@@ -1,4 +1,16 @@
 div.field {
   flex: 1 1 auto;
   background-color: #98eae0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
 }
+
+div.field svg {
+  width: 90%;
+  height: auto;
+  max-height: 90%;
+  display: block;
+  margin: auto;
+}
+
