@@ -83,6 +83,41 @@ function Assets() {
       'assets/tile4.svg'
     ]
   }; /*}}}*/
+  this.tiles.carrot = { /*{{{*/
+    'locations': [
+      'assets/carrot.svg',
+    ]
+  }; /*}}}*/
+  this.tiles.flower_blue = { /*{{{*/
+    'locations': [
+      'assets/flower_blue.svg',
+    ]
+  }; /*}}}*/
+  this.tiles.flower_red = { /*{{{*/
+    'locations': [
+      'assets/flower_red.svg',
+    ]
+  }; /*}}}*/
+  this.tiles.bunny_n = { /*{{{*/
+    'locations': [
+      'assets/rabbit_west.svg',
+    ]
+  }; /*}}}*/
+  this.tiles.bunny_s = { /*{{{*/
+    'locations': [
+      'assets/rabbit_east.svg',
+    ]
+  }; /*}}}*/
+  this.tiles.bunny_e = { /*{{{*/
+    'locations': [
+      'assets/rabbit_south.svg',
+    ]
+  }; /*}}}*/
+  this.tiles.bunny_w = { /*{{{*/
+    'locations': [
+      'assets/rabbit_north.svg',
+    ]
+  }; /*}}}*/
 
   /*------------------------*/
 
