@@ -15,7 +15,6 @@ $(document).ready(async function() {
   if (!(await field.load_level())) {
     return;
   }
-  console.log(field.elements);
   field.render();
 
   // show some elements

@@ -1,10 +1,11 @@
 TTTT
 TTcT  TTT
 TBcT  TfT
-TTcT  TTT
+TTcT  TfT
 TTTT
 ---
 2
+1,5,O
 ---
 Eat the carrot the flower reminds you of.
 ---
@@ -12,4 +13,4 @@ Eat the carrot the flower reminds you of.
 ---
 25
 ---
-eat_carrot,get_carrot,put_carrot,put_flower,forward,left,right,step_left,step_right,jump,loop,break,if_empty,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower,memorize_carrot,memorize_position
+eat_carrot,get_carrot,forward,left,right,step_left,step_right,jump,loop,break,if_empty,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower,memorize_carrot,memorize_position

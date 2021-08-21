@@ -4,6 +4,7 @@ function Assets() {
   this.commands = {};
   this.field = {};
   this.placeholders = {};
+  this.tiles = {};
 
   function load_svg(url,item,i) {
     return $.ajax({
@@ -11,12 +12,22 @@ function Assets() {
       dataType: "xml",
       url: url
     }).then(function(res) {
-      item[i] = $(res.documentElement).find('> g');
+      if (i) {
+        item[i] = $(res.documentElement).find('> g');
+      } else {
+        item.push($(res.documentElement).find('> g'));
+      }
     });
   }
 
   this.load = function() { //{{{
     let promises = [];
+    _.each(self.tiles,(item) => {
+        item.graphics = [];
+        _.each(item.locations,(l) => {
+          promises.push(load_svg(l,item.graphics));
+        });
+    });
     _.each(self.placeholders,(item) => {
         item.graphics = {};
         promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
@@ -62,6 +73,15 @@ function Assets() {
     'label': 'Bunny',
     'desc': 'I am Bunny. Algo Bunny.',
     'icon': 'assets/start.svg'
+  }; /*}}}*/
+
+  this.tiles.normal = { /*{{{*/
+    'locations': [
+      'assets/tile1.svg',
+      'assets/tile2.svg',
+      'assets/tile3.svg',
+      'assets/tile4.svg'
+    ]
   }; /*}}}*/
 
   /*------------------------*/
