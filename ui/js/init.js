@@ -92,7 +92,7 @@ $(document).ready(async function() {
       ev.dataTransfer.setDragImage(ev.currentTarget, 0, 0);
     } else {
       ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'));
-      ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 0, 0);
+      ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0);
     }
   });
   $('div.program').on('drop','g[element-type=add]',(ev)=>{

@@ -26,12 +26,10 @@ div.elements div.group {
 
 div.elements div.group img {
   height: 4em;
+  width: auto;
   padding: 0em 0.2em;
 
   cursor: move;
-}
-img[data-type] {
-  height: 4em;
 }
 
 div.program {
