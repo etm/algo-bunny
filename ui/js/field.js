@@ -30,12 +30,15 @@ class Field {
     return list[Math.floor((Math.random()*list.length))];
   } //}}}
 
-  #draw_tile(x,y) { //{{{
-    let grax = this.#get_random(this.assets.tiles.normal.graphics).clone();
+  #tile_base(x,y,klas) { //{{{
     let [nx,ny] = this.#coordinate_transform(x,y);
     let pos_x = nx * (this.#tile_width + this.#tile_width/2) + (this.y * this.#tile_width) - (this.#tile_width / 2) - (this.y * this.#perspective_correction);
     let pos_y = ny * (this.#tile_height - this.#tile_height/2) + this.#height_shift;
-    let g1 = $X('<g transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + pos_x + ',' + pos_y + ')" class="tile" element-x="' + x + '" element-y="' + y  + '" xmlns="http://www.w3.org/2000/svg"></g>');
+    return $X('<g transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + pos_x + ',' + pos_y + ')" class="' + klas + '" element-x="' + x + '" element-y="' + y  + '" xmlns="http://www.w3.org/2000/svg"></g>');
+  } //}}}
+  #draw_tile(x,y) { //{{{
+    let grax = this.#get_random(this.assets.tiles.normal.graphics).clone();
+    let g1 = this.#tile_base(x,y,'tile');
     g1.append(grax);
     this.target.append(g1);
   } //}}}
@@ -70,9 +73,14 @@ class Field {
       grax = this.#get_random(this.assets.tiles.bunny_e.graphics).clone();
     }
     let tar = $('g.tile[element-x='+x+'][element-y='+y+']',this.target);
-    let g1 = $X('<g transform="scale(1,1) translate(0,' + this.#bunny_y_displacement + ')" class="bunny" xmlns="http://www.w3.org/2000/svg"></g>');
-        g1.append(grax)
-    tar.append(g1);
+    let g1 = this.#tile_base(x,y,'tile');
+    let g2 = $X('<g transform="scale(1,1) translate(0,' + this.#bunny_y_displacement + ')" class="bunny" xmlns="http://www.w3.org/2000/svg"></g>');
+        g2.append(grax)
+        g1.append(g2);
+    g1.insertAfter(tar);
+  } // }}}
+  #remove_bunny() { //{{{
+    this.target.find('g.bunny').remove();
   } //}}}
 
   constructor(target,assets,levelurl) { //{{{
@@ -107,9 +115,14 @@ class Field {
     this.x = 0;
     this.y = 0;
 
+
     this.elements = this.elements.split(',');
+    this.state_flowers = [];
+    this.state_carrots = [];
     this.tiles = this.tiles.split(/\r?\n/);
     this.tiles = this.tiles.map( x => {
+      this.state_flowers.push([]);
+      this.state_carrots.push([]);
       let s = x.split('');
       if (this.x < s.length) { this.x = s.length; }
       return s;
@@ -124,12 +137,31 @@ class Field {
     });
     this.carrots = this.carrots.split('').map(x => x.trim()).filter(x => x !== undefined);
     this.max_score = parseInt(this.max_score);
+    this.max_carrots = this.tiles.reduce((total,arr) => {
+      return total + arr.reduce((total,ele) => {
+        return total + (ele.match(/[1-9c]/) ? 1 : 0);
+      },0);
+    },0);
     return true;
-  } //}}}
+  }  //}}}
 
-  render() {
+  bunny_jump(x,y,face) {
+    let [ox,oy,oface] = this.state_bunny;
+    if (ox == x && oy == y && oface != face) {
+      this.#remove_bunny()
+      this.#draw_bunny(x,y,face)
+    }
+    if (ox != x || oy != y) {
+      this.#remove_bunny()
+      this.#draw_bunny(x,y,face)
+    }
+  }
+
+  render() { //{{{
     let counter = 0;
     let flower_count = 0;
+    let generated_carrots = [];
+    for (let i=1; i<=this.max_carrots; i++) { generated_carrots[i-1] = i }
     for (let i=0;i<Math.max(this.x,this.y)*2;i++) {
       for (let j = counter; j >= 0; j--) {
         if (j < this.x && (i-j) < this.y) {
@@ -138,15 +170,21 @@ class Field {
               this.#draw_tile(j,i-j);
             }
             if (this.tiles[i-j][j].match(/[1-9c]/)) {
+              if (this.tiles[i-j][j] == 'c') {
+                this.state_carrots[i-j][i] = generated_carrots.sample();
+                generated_carrots =  generated_carrots.remove(this.state_carrots[i-j][i]);
+              } else {
+                this.state_carrots[i-j][i] = parseInt(this.tiles[i-j][j]);
+              }
               this.#draw_carrot(j,i-j);
             }
             if (this.tiles[i-j][j] == 'f') {
-              this.tiles[i-j][j] = this.assignments[flower_count++];
-              this.#draw_flower(j,i-j,this.tiles[i-j][j].type);
+              this.state_flowers[i-j][i] = this.assignments[flower_count++];
+              this.#draw_flower(j,i-j,this.state_flowers[i-j][j].type);
             }
             if (this.tiles[i-j][j] == 'B') {
-              this.bunny_pos = [j,i-j,'E'];
-              this.#draw_bunny(j,i-j,this.bunny_pos[2]);
+              this.state_bunny = [j,i-j,'E'];
+              this.#draw_bunny(j,i-j,this.state_bunny[2]);
             }
           }
         }
@@ -161,5 +199,5 @@ class Field {
 
     this.target.attr('height', 'auto');
     this.target.attr('viewBox', '0 0 ' + iw + ' ' + ih);
-  }
+  } //}}}
 }

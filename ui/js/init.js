@@ -1,6 +1,8 @@
 var active_del = '';
 var active_del_timeout;
 
+var field;
+
 $(document).ready(async function() {
   let assets  = new Assets;
   await assets.load();
@@ -11,11 +13,12 @@ $(document).ready(async function() {
   let editor = new Editor($('div.program svg'), assets);
   editor.render();
 
-  let field = new Field($('div.field svg'), assets, level);
+  field = new Field($('div.field svg'), assets, level);
   if (!(await field.load_level())) {
     return;
   }
   field.render();
+
 
   // show some elements
   $('div.elements img').each((_,ele) => {
