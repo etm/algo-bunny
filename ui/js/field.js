@@ -26,6 +26,12 @@ class Field {
     return [nx,ny];
   } //}}}
 
+  #tile_rel_pos(x,y) { //{{{
+    let [nx,ny] = this.#coordinate_transform(x,y);
+    let pos_x = nx * (this.#tile_width + this.#tile_width/2);
+    let pos_y = ny * (this.#tile_height - this.#tile_height/2);
+    return [pos_x,pos_y];
+  } //}}}
   #tile_pos(x,y) { //{{{
     let [nx,ny] = this.#coordinate_transform(x,y);
     let pos_x = nx * (this.#tile_width + this.#tile_width/2) + (this.y * this.#tile_width) - (this.#tile_width / 2) - (this.y * this.#perspective_correction);
@@ -73,13 +79,41 @@ class Field {
     } else if (face == 'E') {
       grax = this.assets.tiles.bunny_e.graphics.sample().clone();
     }
+    $(grax).attr('id','elbunnerino')
     let tar = $('g.tile[element-x='+x+'][element-y='+y+']',this.target);
-    let g1 = this.#tile_base(x,y,'tile');
-    let g2 = $X('<g transform="scale(1,1) translate(0,' + this.#bunny_y_displacement + ')" class="bunny" xmlns="http://www.w3.org/2000/svg"></g>');
+    let g1 = this.#tile_base(x,y,'bunny');
+    let g2 = $X('<g transform="scale(1,1) translate(0,' + this.#bunny_y_displacement + ')" xmlns="http://www.w3.org/2000/svg"></g>');
         g2.append(grax)
         g1.append(g2);
     g1.insertAfter(tar);
   } // }}}
+  bunny_hop(tx,ty) {
+    let fx = 0;
+    let fy = 0;
+    let tar = $('g.bunny',this.target);
+    let tar_x = tar.attr('element-x');
+    let tar_y = tar.attr('element-y');
+    let [pos_x,pos_y] = this.#tile_rel_pos(tx-tar_x,ty-tar_y);
+    let g1 = $X('<path id="motionpath" d="M ' + fx + ' ' + fy + ' L ' + pos_x + ' ' + pos_y + '" stroke="red" class="arc" xmlns="http://www.w3.org/2000/svg"></path>');
+    // keySplines is the secret sauce, define motion pattern
+    let g2 = $X('<animateMotion id="bunnyani" x:href="#elbunnerino" begin="indefinite" dur="0.5s" calcMode="spline" keyTimes="0;1" values="1;0" keySplines="0 0.5 1 0.5" repeatCount="1" fill="freeze" xmlns="http://www.w3.org/2000/svg" xmlns:x="http://www.w3.org/1999/xlink"><mpath x:href="#motionpath"/></animateMotion>');
+    tar.append(g1);
+    tar.append(g2);
+    let ntar = $('g.tile[element-x='+tx+'][element-y='+ty+']',this.target);
+
+    // move higher
+    if (tx > tar_x || ty > tar_y) {
+      tar.insertAfter(ntar)
+    }
+    // start
+    $('#bunnyani')[0].beginElement()
+    setTimeout(()=>{
+      this.#remove_bunny()
+      this.#draw_bunny(tx,ty,this.state_bunny[2])
+    },500);
+  }
+
+
   #remove_bunny() { //{{{
     this.target.find('g.bunny').remove();
   } //}}}
