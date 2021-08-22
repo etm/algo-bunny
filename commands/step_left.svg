@@ -13,7 +13,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="step_left.svg">
+   sodipodi:docname="step_right.svg">
   <defs
      id="defs2">
     <inkscape:perspective
@@ -108,9 +108,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.919596"
-     inkscape:cx="108.86137"
-     inkscape:cy="61.162283"
+     inkscape:zoom="3.959798"
+     inkscape:cx="80.440526"
+     inkscape:cy="76.243307"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -155,7 +155,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -172,46 +172,46 @@
     <path
        id="path840-7"
        style="font-variation-settings:normal;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.22486;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000"
-       d="m 3.5268929,-109.52389 h -5.29166 m 2.36168499,2.64585 -2.36168499,-2.64585 2.36168499,-2.64582"
+       d="m 9.7553394,-109.52389 h 5.2916596 m -2.361685,2.64585 2.361685,-2.64585 -2.361685,-2.64582"
        sodipodi:nodetypes="ccccc" />
     <rect
        style="fill:#eeeeec;fill-opacity:1;stroke-width:0.346387;stroke-linecap:round;stroke-linejoin:round;stop-color:#000000"
        id="rect857"
        width="7.2898564"
        height="6.5955844"
-       x="5.5709252"
+       x="0.42145491"
        y="-110.83259" />
     <rect
        style="fill:#eeeeec;fill-opacity:1;stroke-width:0.384502;stroke-linecap:round;stroke-linejoin:round;stop-color:#000000"
        id="rect861"
        width="2.4299526"
        height="5.5541763"
-       x="5.5709252"
+       x="0.42145491"
        y="-116.38678" />
     <rect
        style="fill:#333333;fill-opacity:1;stroke-width:0.384502;stroke-linecap:round;stroke-linejoin:round;stop-color:#000000"
        id="rect861-3"
        width="2.4299524"
        height="5.5541763"
-       x="10.430825"
+       x="5.2813549"
        y="-116.38678" />
     <rect
        style="fill:#ffa4dc;fill-opacity:1;stroke-width:0.218382;stroke-linecap:round;stroke-linejoin:round;stop-color:#000000"
        id="rect883"
        width="1.0414079"
        height="4.1656327"
-       x="6.2651963"
+       x="1.115726"
        y="-115.69251" />
     <rect
        style="fill:#ffa4dc;fill-opacity:1;stroke-width:0.218382;stroke-linecap:round;stroke-linejoin:round;stop-color:#000000"
        id="rect883-6"
        width="1.0414079"
        height="4.1656327"
-       x="11.125095"
+       x="5.975625"
        y="-115.69251" />
     <g
        id="g1036"
-       transform="matrix(0.26240206,0.12515935,0,0.26240206,-22.789289,-139.90258)">
+       transform="matrix(0.26240206,0.12515935,0,0.26240206,-27.938759,-139.90258)">
       <ellipse
          fill="#305282"
          cx="128.75311"
@@ -247,8 +247,8 @@
          style="stroke-width:0.602695;stroke-miterlimit:10;stroke-dasharray:none" />
     </g>
     <path
-       style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.22486001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.22486001,1.22486001;stroke-dashoffset:0.367458;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
-       d="m 9.2604211,-103.1875 0,5.291667"
+       style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.22486;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.22486, 1.22486;stroke-dashoffset:0.367458;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+       d="m 4.0218112,-103.1875 v 5.291667"
        id="path840-7-1"
        sodipodi:nodetypes="cc" />
   </g>
