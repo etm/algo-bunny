@@ -26,24 +26,25 @@ class Field {
     return [nx,ny];
   } //}}}
 
-  #get_random(list) { //{{{
-    return list[Math.floor((Math.random()*list.length))];
-  } //}}}
-
-  #tile_base(x,y,klas) { //{{{
+  #tile_pos(x,y) { //{{{
     let [nx,ny] = this.#coordinate_transform(x,y);
     let pos_x = nx * (this.#tile_width + this.#tile_width/2) + (this.y * this.#tile_width) - (this.#tile_width / 2) - (this.y * this.#perspective_correction);
     let pos_y = ny * (this.#tile_height - this.#tile_height/2) + this.#height_shift;
+    return [pos_x,pos_y];
+  } //}}}
+  #tile_base(x,y,klas) { //{{{
+    let [pos_x,pos_y] = this.#tile_pos(x,y)
     return $X('<g transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + pos_x + ',' + pos_y + ')" class="' + klas + '" element-x="' + x + '" element-y="' + y  + '" xmlns="http://www.w3.org/2000/svg"></g>');
   } //}}}
+
   #draw_tile(x,y) { //{{{
-    let grax = this.#get_random(this.assets.tiles.normal.graphics).clone();
+    let grax = this.assets.tiles.normal.graphics.sample().clone();
     let g1 = this.#tile_base(x,y,'tile');
     g1.append(grax);
     this.target.append(g1);
   } //}}}
   #draw_carrot(x,y,size) { //{{{
-    let grax = this.#get_random(this.assets.tiles.carrot.graphics).clone();
+    let grax = this.assets.tiles.carrot.graphics.sample().clone();
     let tar = $('g.tile[element-x='+x+'][element-y='+y+']',this.target);
     let g1 = $X('<g transform="scale(1,1) translate(0,' + this.#carrot_y_displacement + ')" class="carrot" xmlns="http://www.w3.org/2000/svg"></g>');
         g1.append(grax)
@@ -52,9 +53,9 @@ class Field {
   #draw_flower(x,y,type) { //{{{
     let grax;
     if (type == 'position') {
-      grax = this.#get_random(this.assets.tiles.flower_blue.graphics).clone();
+      grax = this.assets.tiles.flower_blue.graphics.sample().clone();
     } else if (type == 'number') {
-      grax = this.#get_random(this.assets.tiles.flower_red.graphics).clone();
+      grax = this.assets.tiles.flower_red.graphics.sample().clone();
     }
     let tar = $('g.tile[element-x='+x+'][element-y='+y+']',this.target);
     let g1 = $X('<g transform="scale(1,1) translate(0,' + this.#flower_y_displacement + ')" class="flower" xmlns="http://www.w3.org/2000/svg"></g>');
@@ -64,13 +65,13 @@ class Field {
   #draw_bunny(x,y,face) { //{{{
     let grax;
     if (face == 'N') {
-      grax = this.#get_random(this.assets.tiles.bunny_n.graphics).clone();
+      grax = this.assets.tiles.bunny_n.graphics.sample().clone();
     } else if (face == 'S') {
-      grax = this.#get_random(this.assets.tiles.bunny_s.graphics).clone();
+      grax = this.assets.tiles.bunny_s.graphics.sample().clone();
     } else if (face == 'W') {
-      grax = this.#get_random(this.assets.tiles.bunny_w.graphics).clone();
+      grax = this.assets.tiles.bunny_w.graphics.sample().clone();
     } else if (face == 'E') {
-      grax = this.#get_random(this.assets.tiles.bunny_e.graphics).clone();
+      grax = this.assets.tiles.bunny_e.graphics.sample().clone();
     }
     let tar = $('g.tile[element-x='+x+'][element-y='+y+']',this.target);
     let g1 = this.#tile_base(x,y,'tile');
@@ -150,10 +151,12 @@ class Field {
     if (ox == x && oy == y && oface != face) {
       this.#remove_bunny()
       this.#draw_bunny(x,y,face)
+      this.state_bunny = [x,y,face];
     }
     if (ox != x || oy != y) {
       this.#remove_bunny()
-      this.#draw_bunny(x,y,face)
+      this.#draw_bunny(x,y,oface)
+      this.state_bunny = [x,y,oface]
     }
   }
 
