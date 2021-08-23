@@ -87,7 +87,7 @@ class Field {
         g1.append(g2);
     g1.insertAfter(tar);
   } // }}}
-  #bunny_hop(tx,ty) {
+  #bunny_hop(tx,ty,face) {
     let fx = 0;
     let fy = 0;
     let tar = $('g.bunny',this.target);
@@ -157,8 +157,9 @@ class Field {
     $('#bunnyani')[0].beginElement()
     setTimeout(()=>{
       this.#remove_bunny()
-      this.#draw_bunny(tx,ty,this.state_bunny[2])
-      this.state_bunny = [tx,ty,this.state_bunny[2]]
+      let nface = (face === undefined) ? this.state_bunny[2] : face;
+      this.#draw_bunny(tx,ty,nface)
+      this.state_bunny = [tx,ty,nface]
     },500);
   }
 
@@ -237,7 +238,7 @@ class Field {
       this.state_bunny = [x,y,face];
     }
     if (ox != x || oy != y) {
-      this.#bunny_hop(x,y);
+      this.#bunny_hop(x,y,face);
     }
   }
 
