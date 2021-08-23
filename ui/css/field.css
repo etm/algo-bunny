@@ -4,9 +4,10 @@ div.field {
   height: 100vh;
   display: flex;
   align-items: center;
+  flex-direction: column;
 }
 
-div.field svg {
+div.field > svg {
   width: 90%;
   height: auto;
   max-height: 90%;
@@ -14,3 +15,25 @@ div.field svg {
   margin: auto;
 }
 
+div.field > div {
+  height: 6em;
+  box-sizing: border-box;
+  padding: 0.5em 0em;
+  background-color: #72d4c8;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+div.field > div > div.ui {
+  width: 5em;
+  border: 0.2em solid black;
+  height: 100%;
+  box-sizing: border-box;
+  margin-right: 1em;
+}
+
+div.field > div > div.blank {
+  flex: 1 1 auto;
+}
