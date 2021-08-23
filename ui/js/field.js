@@ -87,29 +87,78 @@ class Field {
         g1.append(g2);
     g1.insertAfter(tar);
   } // }}}
-  bunny_hop(tx,ty) {
+  #bunny_hop(tx,ty) {
     let fx = 0;
     let fy = 0;
     let tar = $('g.bunny',this.target);
     let tar_x = tar.attr('element-x');
     let tar_y = tar.attr('element-y');
     let [pos_x,pos_y] = this.#tile_rel_pos(tx-tar_x,ty-tar_y);
-    let g1 = $X('<path id="motionpath" d="M ' + fx + ' ' + fy + ' L ' + pos_x + ' ' + pos_y + '" stroke="red" class="arc" xmlns="http://www.w3.org/2000/svg"></path>');
+
+    let g1;
+
+    // calc quadratic bezier point
+    let cx;
+    let cy;
+
+    // jump higher when only 1 field distance
+    if (
+         (Math.abs(tx-tar_x) == 1 && Math.abs(ty-tar_y) == 0) ||
+         (Math.abs(tx-tar_x) == 0 && Math.abs(ty-tar_y) == 1)
+       ) {
+      cx = (tx-tar_x) / 0.5;
+      cy = (ty-tar_y) / 0.5;
+    } else {
+      cx = (tx-tar_x) / 2.0;
+      cy = (ty-tar_y) / 2.0;
+    }
+
+    // select direction of orthogonal vector depending on diagonal plane of matrix
+
+    // this is very naive. length of ortho-vector should be adjusted based angle between source target and diagonal plane
+    // but hey, we are not building a photo-realistic shooter
+    if (cx < cy) {
+      let vx, vy;
+      // select vector shift direction based one movement direction
+      if (tar_x > tx || tar_y > ty) {
+        vx = -cy + cx
+        vy = cx + cy
+      } else {
+        vx = -cy - cx
+        vy = cx - cy
+      }
+      let [pos_vx,pos_vy] = this.#tile_rel_pos(vx,vy)
+      g1 = $X('<path id="motionpath" d="M ' + fx + ' ' + fy + ' Q ' + pos_vx + ' ' + pos_vy + ' ' + pos_x + ' ' + pos_y + '" stroke="red" fill="none" class="arc" xmlns="http://www.w3.org/2000/svg"></path>');
+    } else if (cx > cy) {
+      let vx, vy;
+      // select vector shift direction based one movement direction
+      if (tar_x > tx || tar_y > ty) {
+        vx = cy + cx
+        vy = -cx + cy
+      } else {
+        vx = cy - cx
+        vy = -cx - cy
+      }
+      let [pos_vx,pos_vy] = this.#tile_rel_pos(vx,vy)
+      g1 = $X('<path id="motionpath" d="M ' + fx + ' ' + fy + ' Q ' + pos_vx + ' ' + pos_vy + ' ' + pos_x + ' ' + pos_y + '" stroke="red" fill="none" class="arc" xmlns="http://www.w3.org/2000/svg"></path>');
+    } else {
+      // if on diagonal plane of matrix its just a line :-)
+      g1 = $X('<path id="motionpath" d="M ' + fx + ' ' + fy + ' L ' + pos_x + ' ' + pos_y + '" stroke="red" class="arc" xmlns="http://www.w3.org/2000/svg"></path>');
+    }
+
     // keySplines is the secret sauce, define motion pattern
     let g2 = $X('<animateMotion id="bunnyani" x:href="#elbunnerino" begin="indefinite" dur="0.5s" calcMode="spline" keyTimes="0;1" values="1;0" keySplines="0 0.5 1 0.5" repeatCount="1" fill="freeze" xmlns="http://www.w3.org/2000/svg" xmlns:x="http://www.w3.org/1999/xlink"><mpath x:href="#motionpath"/></animateMotion>');
     tar.append(g1);
     tar.append(g2);
-    let ntar = $('g.tile[element-x='+tx+'][element-y='+ty+']',this.target);
 
     // move higher
-    if (tx > tar_x || ty > tar_y) {
-      tar.insertAfter(ntar)
-    }
+    this.target.append(tar)
     // start
     $('#bunnyani')[0].beginElement()
     setTimeout(()=>{
       this.#remove_bunny()
       this.#draw_bunny(tx,ty,this.state_bunny[2])
+      this.state_bunny = [tx,ty,this.state_bunny[2]]
     },500);
   }
 
@@ -182,15 +231,13 @@ class Field {
 
   bunny_jump(x,y,face) {
     let [ox,oy,oface] = this.state_bunny;
-    if (ox == x && oy == y && oface != face) {
+    if (ox == x && oy == y && oface != face && !(face === undefined)) {
       this.#remove_bunny()
       this.#draw_bunny(x,y,face)
       this.state_bunny = [x,y,face];
     }
     if (ox != x || oy != y) {
-      this.#remove_bunny()
-      this.#draw_bunny(x,y,oface)
-      this.state_bunny = [x,y,oface]
+      this.#bunny_hop(x,y);
     }
   }
 
