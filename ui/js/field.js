@@ -109,8 +109,8 @@ class Field {
       cx = (tx-tar_x) / 0.5;
       cy = (ty-tar_y) / 0.5;
     } else {
-      cx = (tx-tar_x) / 2.0;
-      cy = (ty-tar_y) / 2.0;
+      cx = (tx-tar_x) / 1.5;
+      cy = (ty-tar_y) / 1.5;
     }
 
     // select direction of orthogonal vector depending on diagonal plane of matrix
