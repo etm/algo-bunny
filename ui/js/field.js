@@ -5,6 +5,8 @@ class Field {
   #perspective_correction;
   #height_shift;
   #carrot_y_displacement;
+  #carrot_scale_x_compensation;
+  #carrot_scale_y_compensation;
   #flower_y_displacement;
   #bunny_y_displacement;
 
@@ -52,7 +54,11 @@ class Field {
   #draw_carrot(x,y,size) { //{{{
     let grax = this.assets.tiles.carrot.graphics.sample().clone();
     let tar = $('g.tile[element-x='+x+'][element-y='+y+']',this.target);
-    let g1 = $X('<g transform="scale(1,1) translate(0,' + this.#carrot_y_displacement + ')" class="carrot" xmlns="http://www.w3.org/2000/svg"></g>');
+
+    if (size === undefined) { size = 1 }
+    let scale = ((this.max_carrots - size + 1) * (0.6 / this.max_carrots)) + 0.4
+
+    let g1 = $X('<g transform="scale('+scale+','+scale+') translate(' + ((1/scale) * this.#carrot_scale_x_compensation - this.#carrot_scale_x_compensation) + ',' + (((1/scale) * this.#carrot_scale_y_compensation - this.#carrot_scale_y_compensation) + this.#carrot_y_displacement) + ')" class="carrot" xmlns="http://www.w3.org/2000/svg"></g>');
         g1.append(grax)
     tar.append(g1);
   } //}}}
@@ -87,7 +93,7 @@ class Field {
         g1.append(g2);
     g1.insertAfter(tar);
   } // }}}
-  #bunny_hop(tx,ty,face) {
+  #bunny_hop(tx,ty,face) { //{{{
     let fx = 0;
     let fy = 0;
     let tar = $('g.bunny',this.target);
@@ -115,8 +121,9 @@ class Field {
 
     // select direction of orthogonal vector depending on diagonal plane of matrix
 
-    // this is very naive. length of ortho-vector should be adjusted based angle between source target and diagonal plane
-    // but hey, we are not building a photo-realistic shooter
+    // this is very naive. length of ortho-vector should be adjusted based
+    // angle between source target and diagonal plane but hey, we are not
+    // building a photo-realistic shooter
     if (cx < cy) {
       let vx, vy;
       // select vector shift direction based one movement direction
@@ -161,8 +168,7 @@ class Field {
       this.#draw_bunny(tx,ty,nface)
       this.state_bunny = [tx,ty,nface]
     },500);
-  }
-
+  } //}}}
 
   #remove_bunny() { //{{{
     this.target.find('g.bunny').remove();
@@ -176,6 +182,8 @@ class Field {
     this.#tile_width = 57;
     this.#tile_height = 83.5;
     this.#carrot_y_displacement = -25;
+    this.#carrot_scale_x_compensation = 60;
+    this.#carrot_scale_y_compensation = 28;
     this.#flower_y_displacement = -18;
     this.#bunny_y_displacement = -37;
     this.#scale_factor = 0.9;
@@ -199,7 +207,6 @@ class Field {
       this.elements] = pieces;
     this.x = 0;
     this.y = 0;
-
 
     this.elements = this.elements.split(',');
     this.state_flowers = [];
@@ -230,7 +237,116 @@ class Field {
     return true;
   }  //}}}
 
-  bunny_jump(x,y,face) {
+  #facing_tile () { //{{{
+    let [ox,oy,oface] = this.state_bunny
+    if      (oface == 'N') { oy -= 1 }
+    else if (oface == 'E') { ox += 1 }
+    else if (oface == 'S') { oy += 1 }
+    else if (oface == 'W') { ox -= 1 }
+    return [ox,oy]
+  } //}}}
+  has_carrot()    { //{{{
+    let [ox,oy] = this.#facing_tile()
+    return this.state_carrots[oy][ox] ? true : false
+  }  //}}}
+  has_flower()    {  //{{{
+    let [ox,oy] = this.#facing_tile()
+    return this.state_flowers[oy][ox] ? true : false
+  } //}}}
+  take_carrot()   { //{{{
+    let [ox,oy] = this.#facing_tile()
+    if (this.state_carrots[oy][ox]) {
+      let c = this.state_carrots[oy][ox]
+      delete this.state_carrots[oy][ox]
+      $('g.tile[element-x='+ox+'][element-y='+oy+'] g.carrot',this.target).remove()
+      return c
+    } else {
+      return false
+    }
+  } //}}}
+  put_carrot(val) { //{{{
+    let [ox,oy] = this.#facing_tile()
+    if (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == 'T' && this.state_carrots[oy][ox] === undefined && this.state_flowers[oy][ox] === undefined) {
+      this.state_carrots[oy][ox] = val
+      this.#draw_carrot(ox,oy,val)
+      return true
+    } else {
+      return false
+    }
+  } //}}}
+  eat() {
+    // play sound
+  }
+
+  put_flower(val) { //{{{
+    let v;
+    let s = val.toString().trim().split(',');
+    if (s.length == 1) { v = { 'type': 'number', 'value': parseInt(s[0]) } };
+    if (s.length == 3) { v = { 'type': 'position', 'x': parseInt(s[0]), 'y': parseInt(s[1]), 'face': s[2] } };
+
+    let [ox,oy] = this.#facing_tile()
+    if (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == 'T' && this.state_carrots[oy][ox] === undefined && this.state_flowers[oy][ox] === undefined) {
+      this.state_flowers[oy][ox] = v
+      this.#draw_flower(ox,oy,v.type)
+      return true
+    } else {
+      return false
+    }
+  } //}}}
+  eat_flower()    {  //{{{
+    this.eat()
+    let [ox,oy] = this.#facing_tile()
+    if (this.state_flowers[oy][ox]) {
+      let c = this.state_flowers[oy][ox]
+      delete this.state_flowers[oy][ox]
+      $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target).remove()
+      return true
+    } else {
+      return false
+    }
+  } //}}}
+
+  turn_right()     { //{{{
+    let [ox,oy,oface] = this.state_bunny
+    if      (oface == 'W') { oface = 'N' }
+    else if (oface == 'N') { oface = 'E' }
+    else if (oface == 'E') { oface = 'S' }
+    else if (oface == 'S') { oface = 'W' }
+    return this.bunny_jump(ox,oy,oface)
+  } //}}}
+  turn_left()     { //{{{
+    let [ox,oy,oface] = this.state_bunny
+    if      (oface == 'N') { oface = 'W' }
+    else if (oface == 'E') { oface = 'N' }
+    else if (oface == 'S') { oface = 'E' }
+    else if (oface == 'W') { oface = 'S' }
+    return this.bunny_jump(ox,oy,oface)
+  } //}}}
+  side_right()     { //{{{
+    let [ox,oy,oface] = this.state_bunny
+    if      (oface == 'W') { oy -= 1 }
+    else if (oface == 'N') { ox += 1 }
+    else if (oface == 'E') { oy += 1 }
+    else if (oface == 'S') { ox -= 1 }
+    return this.bunny_jump(ox,oy,oface)
+  } //}}}
+  side_left()     { //{{{
+    let [ox,oy,oface] = this.state_bunny
+    if      (oface == 'N') { ox -= 1 }
+    else if (oface == 'E') { oy -= 1 }
+    else if (oface == 'S') { ox += 1 }
+    else if (oface == 'W') { oy += 1 }
+    return this.bunny_jump(ox,oy,oface)
+  } //}}}
+  forward() { //{{{
+    let [ox,oy] = this.#facing_tile()
+    return this.bunny_jump(ox,oy,oface)
+  } //}}}
+
+  bunny_jump(x,y,face) { //{{{
+    if (!(this.tiles[y] && this.tiles[y][x] && this.tiles[y][x] == 'T' && this.state_carrots[y][x] === undefined && this.state_flowers[y][x] === undefined)) {
+      return false
+    }
     let [ox,oy,oface] = this.state_bunny;
     if (ox == x && oy == y && oface != face && !(face === undefined)) {
       this.#remove_bunny()
@@ -240,7 +356,8 @@ class Field {
     if (ox != x || oy != y) {
       this.#bunny_hop(x,y,face);
     }
-  }
+    return true
+  } //}}}
 
   render() { //{{{
     let counter = 0;
@@ -256,19 +373,20 @@ class Field {
             }
             if (this.tiles[i-j][j].match(/[1-9c]/)) {
               if (this.tiles[i-j][j] == 'c') {
-                this.state_carrots[i-j][i] = generated_carrots.sample();
-                generated_carrots =  generated_carrots.remove(this.state_carrots[i-j][i]);
+                this.state_carrots[i-j][j] = generated_carrots.sample();
+                generated_carrots =  generated_carrots.remove(this.state_carrots[i-j][j]);
               } else {
-                this.state_carrots[i-j][i] = parseInt(this.tiles[i-j][j]);
+                this.state_carrots[i-j][j] = parseInt(this.tiles[i-j][j]);
               }
-              this.#draw_carrot(j,i-j);
+              this.#draw_carrot(j,i-j,this.state_carrots[i-j][j])
             }
             if (this.tiles[i-j][j] == 'f') {
-              this.state_flowers[i-j][i] = this.assignments[flower_count++];
+              this.state_flowers[i-j][j] = this.assignments[flower_count++];
               this.#draw_flower(j,i-j,this.state_flowers[i-j][j].type);
             }
             if (this.tiles[i-j][j] == 'B') {
               this.state_bunny = [j,i-j,'E'];
+              this.tiles[i-j][j] = 'T'
               this.#draw_bunny(j,i-j,this.state_bunny[2]);
             }
           }
