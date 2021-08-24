@@ -7,7 +7,8 @@ div.field {
   flex-direction: column;
 }
 
-div.field > svg {
+div.field svg {
+  flex: 1 1 auto;
   width: 90%;
   height: auto;
   max-height: 90%;
@@ -15,8 +16,9 @@ div.field > svg {
   margin: auto;
 }
 
-div.field > div {
+div.field > div.bottom {
   height: 6em;
+  min-height: 6em;
   box-sizing: border-box;
   padding: 0.5em 0em;
   background-color: #72d4c8;
@@ -26,16 +28,64 @@ div.field > div {
   flex-direction: row;
 }
 
-div.field > div > div.ui {
+div.field > div > .ui {
   width: 5em;
-  border: 0.2em solid black;
-  height: 100%;
-  box-sizing: border-box;
+  border: 0em none;
+  height: 5em;
   margin-right: 1em;
   background-color: #47baa4;
-  border-color: #555854;
 }
 
-div.field > div > div.blank {
+div.field > div > .blank {
   flex: 1 1 auto;
+}
+
+div.field > div > button.ui {
+  padding: 0;
+  border-radius: 0.2em;
+  transition: all 0.1s;
+  border-bottom: 0.5em solid #222222;
+  cursor: pointer;
+}
+div.field > div > button.ui:active {
+  transform: scaleX(0.9) translateY(0.5em);
+}
+div.field > div > button.ui > img {
+  height: 80%;
+}
+div.field > div > div.hand {
+  background-image: url("../assets/hand.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+div.field > div > div.brain {
+  background-image: url("../assets/brain.svg");
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+
+  position: relative;
+}
+
+div.field > div > div.hand img {
+  height: 80%;
+}
+div.field > div > div.brain .type {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+}
+div.field > div > div.brain span {
+  padding-top: 2em;
+  font-size: 1em;
 }

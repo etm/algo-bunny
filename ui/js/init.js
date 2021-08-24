@@ -80,14 +80,27 @@ $(document).ready(async function() {
   });
 
   // click drag and drop
-  // $('div.program svg').on('mousedown','g[element-group=graph] g[element-id]',(ev)=>{
+  $('div.field svg').on('mousedown','g.tile',(ev)=>{
+    console.log(ev);
+  });
+  $('div.field svg').on('mousedown','foreignObject div',(ev)=>{
+    var left = $(window).scrollLeft();
+    var top = $(window).scrollTop();
+    $('div.field svg foreignObject div').css('display: none');
+    console.log(document.elementFromPoint(ev.pageX-left, ev.pageY-top));
+    // if (event.isTrusted) {
+    //   // Manually forward element to the canvas
+    //   const mouseEvent = new MouseEvent(ev.type, ev);
+    //   $('div.field svg g.tile')[0].dispatchEvent(mouseEvent);
+    //   mouseEvent.stopPropagation();
+    // }
   //   ev.type = "dragstart";
   //   ev.target = $('div.elements img:first')[0];
   //   ev.dataTransfer = new DataTransfer();
   //   $('div.elements img[data-type]').trigger(ev);
   //   ev.preventDefault();
   //   ev.stopPropagation();
-  // });
+  });
   $('div.elements').on('dragstart','img[data-type]',(ev)=>{
     if (ev.dataTransfer) { // the forward drag events, can be removed.
       ev.dataTransfer.effectAllowed = 'uninitialized';
