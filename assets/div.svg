@@ -13,7 +13,7 @@
    version="1.1"
    id="svg2040"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="tile4.svg">
+   sodipodi:docname="div.svg">
   <defs
      id="defs2034">
     <inkscape:perspective
@@ -277,8 +277,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="232.13446"
-     inkscape:cy="322.78263"
+     inkscape:cx="232.37534"
+     inkscape:cy="323.31365"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -327,20 +327,44 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g863"
-       transform="translate(-119.92276,-111.50125)">
+       id="g1053"
+       transform="translate(-83.019305,-174.36885)">
       <path
-         d="m 119.92276,140.70325 60.14076,29.3326 59.87296,-29.202 -60.14075,-29.3326 z"
-         style="fill:#dadf55;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
-         id="path846" />
+         d="m 151.04565,192.25382 7.94768,3.98944 8.00992,-4.02068 -7.94769,-3.98944 z"
+         style="fill:#cdab8f;stroke:none;stroke-width:0.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
+         id="path4245" />
       <path
-         d="m 180.06352,170.03585 v 30.14795 l 59.87296,-29.20199 v -30.14796 z"
-         style="fill:#32697c;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
-         id="path848" />
+         d="m 158.99333,196.24326 v 3.83402 l 8.00992,-4.02068 v -3.83402 z"
+         style="fill:#b5835a;stroke:none;stroke-width:0.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
+         id="path4247" />
       <path
-         d="m 119.92276,140.70325 60.14076,29.3326 v 30.14795 l -60.14076,-29.3326 z"
-         style="fill:#a1c153;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
-         id="path850" />
+         d="m 151.04565,192.25382 7.94768,3.98944 v 3.83402 l -7.94768,-3.98944 z"
+         style="fill:#986a44;stroke:none;stroke-width:0.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
+         id="path4249" />
+      <path
+         d="m 119.58362,192.14286 39.14775,19.09364 8.05588,-3.92912 -39.14776,-19.09363 z"
+         style="fill:#cdab8f;stroke:none;stroke-width:0.868698;stroke-linejoin:round;stop-color:#000000"
+         id="path4265" />
+      <path
+         d="m 158.73137,211.2365 v 3.94711 l 8.05588,-3.92912 v -3.94711 z"
+         style="fill:#b5835a;stroke:none;stroke-width:0.868698;stroke-linejoin:round;stop-color:#000000"
+         id="path4267" />
+      <path
+         d="m 119.58362,192.14286 39.14775,19.09364 v 3.94711 l -39.14775,-19.09364 z"
+         style="fill:#986a44;stroke:none;stroke-width:0.868698;stroke-linejoin:round;stop-color:#000000"
+         id="path4269" />
+      <path
+         d="m 119.62338,207.4655 8.09277,4.06227 8.00992,-4.02068 -8.09277,-4.06226 z"
+         style="fill:#cdab8f;stroke:none;stroke-width:0.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
+         id="path4285" />
+      <path
+         d="m 127.71615,211.52777 v 3.83194 l 8.00992,-4.02067 v -3.83195 z"
+         style="fill:#b5835a;stroke:none;stroke-width:0.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
+         id="path4287" />
+      <path
+         d="m 119.62338,207.4655 8.09277,4.06227 v 3.83194 l -8.09277,-4.06226 z"
+         style="fill:#986a44;stroke:none;stroke-width:0.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
+         id="path4289" />
     </g>
   </g>
 </svg>

@@ -13,7 +13,7 @@
    version="1.1"
    id="svg2040"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="tile4.svg">
+   sodipodi:docname="times.svg">
   <defs
      id="defs2034">
     <inkscape:perspective
@@ -318,7 +318,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -327,20 +327,20 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g863"
-       transform="translate(-119.92276,-111.50125)">
+       id="g1049"
+       transform="translate(-159.70173,-60.49943)">
       <path
-         d="m 119.92276,140.70325 60.14076,29.3326 59.87296,-29.202 -60.14075,-29.3326 z"
-         style="fill:#dadf55;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
-         id="path846" />
+         d="m 211.90153,85.934763 8.09277,3.9471 8.05588,-3.92911 -8.09277,-3.9471 z"
+         style="fill:#cdab8f;stroke:none;stroke-width:0.868699;stroke-linejoin:round;stop-color:#000000"
+         id="path4225" />
       <path
-         d="m 180.06352,170.03585 v 30.14795 l 59.87296,-29.20199 v -30.14796 z"
-         style="fill:#32697c;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
-         id="path848" />
+         d="m 219.9943,89.881863 v 3.94711 l 8.05588,-3.92911 v -3.94711 z"
+         style="fill:#b5835a;stroke:none;stroke-width:0.868699;stroke-linejoin:round;stop-color:#000000"
+         id="path4227" />
       <path
-         d="m 119.92276,140.70325 60.14076,29.3326 v 30.14795 l -60.14076,-29.3326 z"
-         style="fill:#a1c153;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
-         id="path850" />
+         d="m 211.90153,85.934763 8.09277,3.9471 v 3.94711 l -8.09277,-3.94711 z"
+         style="fill:#986a44;stroke:none;stroke-width:0.868699;stroke-linejoin:round;stop-color:#000000"
+         id="path4229" />
     </g>
   </g>
 </svg>

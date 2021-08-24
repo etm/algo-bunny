@@ -118,6 +118,26 @@ function Assets() {
       'assets/rabbit_north.svg',
     ]
   }; /*}}}*/
+  this.tiles.plus = { /*{{{*/
+    'locations': [
+      'assets/plus.svg',
+    ]
+  }; /*}}}*/
+  this.tiles.minus = { /*{{{*/
+    'locations': [
+      'assets/minus.svg',
+    ]
+  }; /*}}}*/
+  this.tiles.times = { /*{{{*/
+    'locations': [
+      'assets/times.svg',
+    ]
+  }; /*}}}*/
+  this.tiles.div = { /*{{{*/
+    'locations': [
+      'assets/div.svg',
+    ]
+  }; /*}}}*/
 
   /*------------------------*/
 

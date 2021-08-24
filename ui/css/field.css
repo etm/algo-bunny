@@ -32,6 +32,8 @@ div.field > div > div.ui {
   height: 100%;
   box-sizing: border-box;
   margin-right: 1em;
+  background-color: #47baa4;
+  border-color: #555854;
 }
 
 div.field > div > div.blank {

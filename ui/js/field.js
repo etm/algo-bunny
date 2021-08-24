@@ -8,6 +8,7 @@ class Field {
   #carrot_scale_x_compensation;
   #carrot_scale_y_compensation;
   #flower_y_displacement;
+  #op_y_displacement;
   #bunny_y_displacement;
 
   #get_level(levelurl) { //{{{
@@ -74,6 +75,22 @@ class Field {
         g1.append(grax)
     tar.append(g1);
   } //}}}
+  #draw_op(x,y,type) { //{{{
+    let grax;
+    if (type == 'plus') {
+      grax = this.assets.tiles.plus.graphics.sample().clone();
+    } else if (type == 'minus') {
+      grax = this.assets.tiles.minus.graphics.sample().clone();
+    } else if (type == 'times') {
+      grax = this.assets.tiles.times.graphics.sample().clone();
+    } else if (type == 'div') {
+      grax = this.assets.tiles.div.graphics.sample().clone();
+    }
+    let tar = $('g.tile[element-x='+x+'][element-y='+y+']',this.target);
+    let g1 = $X('<g transform="scale(1,1) translate(0,' + this.#op_y_displacement + ')" class="' + type + '" xmlns="http://www.w3.org/2000/svg"></g>');
+        g1.append(grax)
+    tar.append(g1);
+  } //}}}
   #draw_bunny(x,y,face) { //{{{
     let grax;
     if (face == 'N') {
@@ -135,7 +152,7 @@ class Field {
         vy = cx - cy
       }
       let [pos_vx,pos_vy] = this.#tile_rel_pos(vx,vy)
-      g1 = $X('<path id="motionpath" d="M ' + fx + ' ' + fy + ' Q ' + pos_vx + ' ' + pos_vy + ' ' + pos_x + ' ' + pos_y + '" stroke="red" fill="none" class="arc" xmlns="http://www.w3.org/2000/svg"></path>');
+      g1 = $X('<path id="motionpath" d="M ' + fx + ' ' + fy + ' Q ' + pos_vx + ' ' + pos_vy + ' ' + pos_x + ' ' + pos_y + '" stroke="none" fill="none" class="arc" xmlns="http://www.w3.org/2000/svg"></path>');
     } else if (cx > cy) {
       let vx, vy;
       // select vector shift direction based one movement direction
@@ -147,10 +164,10 @@ class Field {
         vy = -cx - cy
       }
       let [pos_vx,pos_vy] = this.#tile_rel_pos(vx,vy)
-      g1 = $X('<path id="motionpath" d="M ' + fx + ' ' + fy + ' Q ' + pos_vx + ' ' + pos_vy + ' ' + pos_x + ' ' + pos_y + '" stroke="red" fill="none" class="arc" xmlns="http://www.w3.org/2000/svg"></path>');
+      g1 = $X('<path id="motionpath" d="M ' + fx + ' ' + fy + ' Q ' + pos_vx + ' ' + pos_vy + ' ' + pos_x + ' ' + pos_y + '" stroke="none" fill="none" class="arc" xmlns="http://www.w3.org/2000/svg"></path>');
     } else {
       // if on diagonal plane of matrix its just a line :-)
-      g1 = $X('<path id="motionpath" d="M ' + fx + ' ' + fy + ' L ' + pos_x + ' ' + pos_y + '" stroke="red" class="arc" xmlns="http://www.w3.org/2000/svg"></path>');
+      g1 = $X('<path id="motionpath" d="M ' + fx + ' ' + fy + ' L ' + pos_x + ' ' + pos_y + '" stroke="none" class="arc" xmlns="http://www.w3.org/2000/svg"></path>');
     }
 
     // keySplines is the secret sauce, define motion pattern
@@ -185,6 +202,7 @@ class Field {
     this.#carrot_scale_x_compensation = 60;
     this.#carrot_scale_y_compensation = 28;
     this.#flower_y_displacement = -18;
+    this.#op_y_displacement = 0;
     this.#bunny_y_displacement = -37;
     this.#scale_factor = 0.9;
     this.#perspective_correction = 0;
@@ -211,10 +229,12 @@ class Field {
     this.elements = this.elements.split(',');
     this.state_flowers = [];
     this.state_carrots = [];
+    this.state_op = [];
     this.tiles = this.tiles.split(/\r?\n/);
     this.tiles = this.tiles.map( x => {
       this.state_flowers.push([]);
       this.state_carrots.push([]);
+      this.state_op.push([]);
       let s = x.split('');
       if (this.x < s.length) { this.x = s.length; }
       return s;
@@ -243,18 +263,18 @@ class Field {
     else if (oface == 'E') { ox += 1 }
     else if (oface == 'S') { oy += 1 }
     else if (oface == 'W') { ox -= 1 }
-    return [ox,oy]
+    return [ox,oy,oface]
   } //}}}
   has_carrot()    { //{{{
-    let [ox,oy] = this.#facing_tile()
+    let [ox,oy,oface] = this.#facing_tile()
     return this.state_carrots[oy][ox] ? true : false
   }  //}}}
   has_flower()    {  //{{{
-    let [ox,oy] = this.#facing_tile()
+    let [ox,oy,oface] = this.#facing_tile()
     return this.state_flowers[oy][ox] ? true : false
   } //}}}
   take_carrot()   { //{{{
-    let [ox,oy] = this.#facing_tile()
+    let [ox,oy,oface] = this.#facing_tile()
     if (this.state_carrots[oy][ox]) {
       let c = this.state_carrots[oy][ox]
       delete this.state_carrots[oy][ox]
@@ -265,7 +285,7 @@ class Field {
     }
   } //}}}
   put_carrot(val) { //{{{
-    let [ox,oy] = this.#facing_tile()
+    let [ox,oy,oface] = this.#facing_tile()
     if (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == 'T' && this.state_carrots[oy][ox] === undefined && this.state_flowers[oy][ox] === undefined) {
       this.state_carrots[oy][ox] = val
       this.#draw_carrot(ox,oy,val)
@@ -284,7 +304,7 @@ class Field {
     if (s.length == 1) { v = { 'type': 'number', 'value': parseInt(s[0]) } };
     if (s.length == 3) { v = { 'type': 'position', 'x': parseInt(s[0]), 'y': parseInt(s[1]), 'face': s[2] } };
 
-    let [ox,oy] = this.#facing_tile()
+    let [ox,oy,oface] = this.#facing_tile()
     if (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == 'T' && this.state_carrots[oy][ox] === undefined && this.state_flowers[oy][ox] === undefined) {
       this.state_flowers[oy][ox] = v
       this.#draw_flower(ox,oy,v.type)
@@ -295,7 +315,7 @@ class Field {
   } //}}}
   eat_flower()    {  //{{{
     this.eat()
-    let [ox,oy] = this.#facing_tile()
+    let [ox,oy,oface] = this.#facing_tile()
     if (this.state_flowers[oy][ox]) {
       let c = this.state_flowers[oy][ox]
       delete this.state_flowers[oy][ox]
@@ -339,7 +359,7 @@ class Field {
     return this.bunny_jump(ox,oy,oface)
   } //}}}
   forward() { //{{{
-    let [ox,oy] = this.#facing_tile()
+    let [ox,oy,oface] = this.#facing_tile()
     return this.bunny_jump(ox,oy,oface)
   } //}}}
 
@@ -378,11 +398,29 @@ class Field {
               } else {
                 this.state_carrots[i-j][j] = parseInt(this.tiles[i-j][j]);
               }
+              this.tiles[i-j][j] = 'T'
               this.#draw_carrot(j,i-j,this.state_carrots[i-j][j])
             }
             if (this.tiles[i-j][j] == 'f') {
               this.state_flowers[i-j][j] = this.assignments[flower_count++];
+              this.tiles[i-j][j] = 'T'
               this.#draw_flower(j,i-j,this.state_flowers[i-j][j].type);
+            }
+            if (this.tiles[i-j][j].match(/\+/)) {
+              this.state_op[i-j][j] = this.tiles[i-j][j]
+              this.#draw_op(j,i-j,'plus');
+            }
+            if (this.tiles[i-j][j].match(/-/)) {
+              this.state_op[i-j][j] = this.tiles[i-j][j]
+              this.#draw_op(j,i-j,'minus');
+            }
+            if (this.tiles[i-j][j].match(/\//)) {
+              this.state_op[i-j][j] = this.tiles[i-j][j]
+              this.#draw_op(j,i-j,'div');
+            }
+            if (this.tiles[i-j][j].match(/\*/)) {
+              this.state_op[i-j][j] = this.tiles[i-j][j]
+              this.#draw_op(j,i-j,'times');
             }
             if (this.tiles[i-j][j] == 'B') {
               this.state_bunny = [j,i-j,'E'];
