@@ -199,13 +199,14 @@ class Field {
 
   constructor(target,assets,levelurl) { //{{{
     this.assets = assets;
-    this.target_field = target;
     this.levelurl = levelurl;
+
+    this.target = target;
 
     let t1 = $X('<g element-group="field" xmlns="http://www.w3.org/2000/svg"></g>');
     let t2 = $X('<g element-group="drag"  xmlns="http://www.w3.org/2000/svg"></g>');
-    target.append(t1);
-    target.append(t2);
+    this.target.append(t1);
+    this.target.append(t2);
 
     this.target_field = t1;
     this.target_drag = t2;
@@ -454,7 +455,7 @@ class Field {
 
     this.#draw_drag_layer(iw,ih);
 
-    this.target_field.attr('height', 'auto');
-    this.target_field.attr('viewBox', '0 0 ' + iw + ' ' + ih);
+    this.target.attr('height', 'auto');
+    this.target.attr('viewBox', '0 0 ' + iw + ' ' + ih);
   } //}}}
 }

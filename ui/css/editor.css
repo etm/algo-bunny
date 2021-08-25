@@ -101,3 +101,13 @@ div.program svg g[element-group=graph] g[element-type] {
   100% { stroke-opacity: 0.00; fill-opacity: 0.00; }
 }
 
+div.program svg g[element-group=graph] g[element-type=jump] .cutout {
+  display: none;
+}
+div.program svg g[element-group=graph] g[element-type=jump].active .cutout {
+  display: inline;
+  stroke: red!important;
+}
+div.program svg g[element-group=graph] g[element-type=jump].targeting .cutout {
+  display: inline;
+}

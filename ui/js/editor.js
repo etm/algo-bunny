@@ -147,7 +147,7 @@ class Editor {
       return { "item": ety, "first": [], "second": [] };
     }
     if (item.type == 'position') {
-      return { "item": ety, "parameter": "" };
+      return { "item": ety, "target": "" };
     }
   } //}}}
   #newid_rec(it) { //{{{
@@ -202,6 +202,29 @@ class Editor {
     } else {
       this.program = this.#insert_rec(this.program,eid,eop,ety);
     }
+  } //}}}
+
+  #update_rec(it,eid,para,value) { //{{{
+    let newp = [];
+    for (const [k,v] of it) {
+      if (k == eid) {
+        v[para] = value
+      }
+      newp.push([k,v])
+      if (typeof(v) == 'object') {
+        if (v.first) {
+          v.first = this.#update_rec(v.first,eid,para,value);
+        }
+        if (v.second) {
+          v.second = this.#update_rec(v.second,eid,para,value);
+        }
+      }
+    }
+    return newp;
+  } //}}}
+  update_item(eid,para,value) { //{{{
+    this.program = this.#update_rec(this.program,eid,para,value)
+    console.log(this.program)
   } //}}}
 
   render() {

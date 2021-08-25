@@ -79,55 +79,85 @@ $(document).ready(async function() {
     return false;
   });
 
-  // click drag and drop
-  $('div.field svg').on('mousedown','g.tile',(ev)=>{
-    console.log(ev);
-  });
-  $('div.field svg').on('mousedown','foreignObject div',(ev)=>{
+  // drag on SVG does not work. so we have to be clever monkis
+  // foreignObject with div inside and at the end ov svg.
+  // it catches all mouseclicks :-) read on for the grand finale!
+  $('div.field svg').on('dragstart','foreignObject div',(ev)=>{
     var left = $(window).scrollLeft();
     var top = $(window).scrollTop();
-    $('div.field svg foreignObject div').css('display: none');
-    console.log(document.elementFromPoint(ev.pageX-left, ev.pageY-top));
-    // if (event.isTrusted) {
-    //   // Manually forward element to the canvas
-    //   const mouseEvent = new MouseEvent(ev.type, ev);
-    //   $('div.field svg g.tile')[0].dispatchEvent(mouseEvent);
-    //   mouseEvent.stopPropagation();
-    // }
-  //   ev.type = "dragstart";
-  //   ev.target = $('div.elements img:first')[0];
-  //   ev.dataTransfer = new DataTransfer();
-  //   $('div.elements img[data-type]').trigger(ev);
-  //   ev.preventDefault();
-  //   ev.stopPropagation();
-  });
-  $('div.elements').on('dragstart','img[data-type]',(ev)=>{
-    if (ev.dataTransfer) { // the forward drag events, can be removed.
-      ev.dataTransfer.effectAllowed = 'uninitialized';
-      ev.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'));
-      ev.dataTransfer.setDragImage(ev.currentTarget, 0, 0);
-    } else {
-      ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'));
-      ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0);
+
+    // what fucking clever shit. we hide the foreignObject that sits on top of
+    // SVG but is part of svg. we then use #elementFromPoint, and switch it
+    // back on. Its sad that we have to do this, but holy shit this is great.
+    field.target_drag.css('display','none')
+    let oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
+    field.target_drag.css('display','inline')
+
+    let ot = $(oe).parents('g.tile')
+
+    if (ot.length == 1) {
+      let ox = ot.attr('element-x')
+      let oy = ot.attr('element-y')
+      ev.originalEvent.dataTransfer.setData("text/plain",ox+','+oy);
+
+      var img = document.createElement("img");
+      img.src = "assets/location.svg";
+      ev.originalEvent.dataTransfer.setDragImage(img, 0, 0);
     }
+  });
+  $('div.program').on('drop','g[element-type=jump]',(ev)=>{
+    ev.preventDefault();
+    ev.stopPropagation();
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/)) {
+      let eid = $(ev.currentTarget).attr('element-id');
+      $(ev.currentTarget).removeClass('active');
+      $(ev.currentTarget).addClass('targeting');
+      editor.update_item(eid,'target',ev.originalEvent.dataTransfer.getData("text/plain"));
+    }
+  });
+  $('div.program').on('dragover','g[element-type=jump]',(ev)=>{
+    ev.preventDefault();
+    ev.stopPropagation();
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/)) {
+      $(ev.currentTarget).addClass('active');
+    }
+  });
+  $('div.program').on('dragleave','g[element-type=jump]',(ev)=>{
+    ev.preventDefault();
+    ev.stopPropagation();
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/)) {
+      $(ev.currentTarget).removeClass('active');
+    }
+  });
+
+
+  $('div.elements').on('dragstart','img[data-type]',(ev)=>{
+    ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'));
+    ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0);
   });
   $('div.program').on('drop','g[element-type=add]',(ev)=>{
     ev.preventDefault();
     ev.stopPropagation();
-    let eid = $(ev.currentTarget).attr('element-id');
-    let eop = $(ev.currentTarget).attr('element-op');
-    let ety = ev.originalEvent.dataTransfer.getData("text/plain");
-    editor.insert_item(eid,eop,ety);
-    editor.render();
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]*$/)) {
+      let eid = $(ev.currentTarget).attr('element-id');
+      let eop = $(ev.currentTarget).attr('element-op');
+      let ety = ev.originalEvent.dataTransfer.getData("text/plain");
+      editor.insert_item(eid,eop,ety);
+      editor.render();
+    }
   });
   $('div.program').on('dragover','g[element-type=add]',(ev)=>{
     ev.preventDefault();
     ev.stopPropagation();
-    $(ev.currentTarget).addClass('active');
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]*$/)) {
+      $(ev.currentTarget).addClass('active');
+    }
   });
   $('div.program').on('dragleave','g[element-type=add]',(ev)=>{
     ev.preventDefault();
     ev.stopPropagation();
-    $(ev.currentTarget).removeClass('active');
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]*$/)) {
+      $(ev.currentTarget).removeClass('active');
+    }
   });
 });
