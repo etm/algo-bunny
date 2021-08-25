@@ -91,9 +91,12 @@ div.field > div.bottom > div.brain .type {
   top: 0.2em;
   right: 0.2em;
 }
-div.field > div.bottom > div.brain span {
-  padding-top: 2em;
-  font-size: 1em;
+div.field > div.bottom > div.brain .text {
+  padding-top: 1.7em;
+  font-size: 1.3em;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.0em;
 }
 
 div.field > div.bottom > button.ui.control        img:first-child { display: inline; }

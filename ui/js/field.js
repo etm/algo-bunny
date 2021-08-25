@@ -298,7 +298,25 @@ class Field {
     let [ox,oy,oface] = this.#facing_tile()
     return this.state_flowers[oy][ox] ? true : false
   } //}}}
-  take_carrot()   { //{{{
+  check_carrot()   { //{{{
+    let [ox,oy,oface] = this.#facing_tile()
+    if (this.state_carrots[oy][ox]) {
+      let c = this.state_carrots[oy][ox]
+      return c
+    } else {
+      return false
+    }
+  } //}}}
+  check_flower()   { //{{{
+    let [ox,oy,oface] = this.#facing_tile()
+    if (this.state_flowers[oy][ox]) {
+      let c = this.state_flowers[oy][ox]
+      return c
+    } else {
+      return false
+    }
+  } //}}}
+  get_carrot()   { //{{{
     let [ox,oy,oface] = this.#facing_tile()
     if (this.state_carrots[oy][ox]) {
       let c = this.state_carrots[oy][ox]
@@ -365,48 +383,45 @@ class Field {
     }
   } //}}}
 
-  turn_right()     { //{{{
+  async right()     { //{{{
     let [ox,oy,oface] = this.state_bunny
     if      (oface == 'W') { oface = 'N' }
     else if (oface == 'N') { oface = 'E' }
     else if (oface == 'E') { oface = 'S' }
     else if (oface == 'S') { oface = 'W' }
-    return this.bunny_jump(ox,oy,oface)
+    return await this.jump(ox,oy,oface)
   } //}}}
-  turn_left()     { //{{{
+  async left()     { //{{{
     let [ox,oy,oface] = this.state_bunny
     if      (oface == 'N') { oface = 'W' }
     else if (oface == 'E') { oface = 'N' }
     else if (oface == 'S') { oface = 'E' }
     else if (oface == 'W') { oface = 'S' }
-    return this.bunny_jump(ox,oy,oface)
+    return await this.jump(ox,oy,oface)
   } //}}}
-  side_right()     { //{{{
+  async step_right()     { //{{{
     let [ox,oy,oface] = this.state_bunny
     if      (oface == 'W') { oy -= 1 }
     else if (oface == 'N') { ox += 1 }
     else if (oface == 'E') { oy += 1 }
     else if (oface == 'S') { ox -= 1 }
-    return this.bunny_jump(ox,oy,oface)
+    return await this.jump(ox,oy,oface)
   } //}}}
-  side_left()     { //{{{
+  async step_left()     { //{{{
     let [ox,oy,oface] = this.state_bunny
     if      (oface == 'N') { ox -= 1 }
     else if (oface == 'E') { oy -= 1 }
     else if (oface == 'S') { ox += 1 }
     else if (oface == 'W') { oy += 1 }
-    return this.bunny_jump(ox,oy,oface)
+    return await this.jump(ox,oy,oface)
   } //}}}
-  forward() { //{{{
+  async forward() { //{{{
     let [ox,oy,oface] = this.#facing_tile()
-    return this.bunny_jump(ox,oy,oface)
+    return await this.jump(ox,oy,oface)
   } //}}}
 
-  async bunny_jump(x,y,face) { //{{{
-    console.log(this.tiles[y][x],this.state_carrots,this.state_flowers)
-
+  async jump(x,y,face) { //{{{
     if (!(this.tiles[y] && this.tiles[y][x] && this.tiles[y][x] == 'T' && (this.state_carrots[y][x] === undefined || this.state_carrots[y][x] == null) && (this.state_flowers[y][x] === undefined || this.state_flowers[y][x] == null))) {
-      console.log('rrr')
       return false
     }
     let [ox,oy,oface] = this.state_bunny;

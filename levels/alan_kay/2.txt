@@ -27,4 +27,4 @@ Eat the carrot.
 ---
 100
 ---
-eat_carrot,put_flower,forward,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_flower,if_carrot
+eat_carrot,put_flower,forward,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_flower,if_carrot,memorize_position
