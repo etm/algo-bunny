@@ -188,5 +188,11 @@ class Walker {
 
   stop() { //{{{
     this.walking = false
+    this.#brain = null
+    this.#hand = null
+    this.#steps_active = false
+    $('div.field div.ui.brain .type').hide()
+    $('div.field div.ui.brain .text').text('')
+    $('div.field div.ui.hand img').hide()
   } //}}}
 }
