@@ -140,7 +140,8 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
+  <g style='display:none'
+     class="adder"
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"

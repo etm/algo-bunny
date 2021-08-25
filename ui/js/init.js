@@ -151,6 +151,10 @@ $(document).ready(async function() {
   $('div.elements').on('dragstart','img[data-type]',(ev)=>{
     ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'));
     ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0);
+    $('div.program g[element-type=add] .adder').show();
+  });
+  $('div.elements').on('dragstart','img[data-type] .adder',(ev)=>{
+    $('div.program g[element-type=add]').hide();
   });
   $('div.program').on('drop','g[element-type=add]',(ev)=>{
     ev.preventDefault();

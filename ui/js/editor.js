@@ -224,7 +224,6 @@ class Editor {
   } //}}}
   update_item(eid,para,value) { //{{{
     this.program = this.#update_rec(this.program,eid,para,value)
-    console.log(this.program)
   } //}}}
 
   render() {
