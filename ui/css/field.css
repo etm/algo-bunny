@@ -16,6 +16,11 @@ div.field svg {
   margin: auto;
 }
 
+div.field svg g.tile.active .tilebase path {
+  stroke: red!important;
+  stroke-width: 3!important;
+}
+
 div.field > div.bottom {
   height: 6em;
   min-height: 6em;

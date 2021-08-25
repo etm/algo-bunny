@@ -68,6 +68,22 @@ $(document).ready(async function() {
     return false;
   });
 
+  // display target tiles
+  $('div.program svg').on('mouseover','g[element-group=graph] g[element-type=jump]',(ev)=>{
+    let epara = $(ev.currentTarget).attr('element-para');
+    if (epara && epara.match(/^\d+,\d+$/)) {
+      let [ox,oy] = epara.split(',')
+      $('div.field g.tile[element-x=' + ox + '][element-y=' + oy + ']').addClass('active')
+    }
+  });
+  $('div.program svg').on('mouseout','g[element-group=graph] g[element-type=jump]',(ev)=>{
+    let epara = $(ev.currentTarget).attr('element-para');
+    if (epara && epara.match(/^\d+,\d+$/)) {
+      let [ox,oy] = epara.split(',')
+      $('div.field g.tile[element-x=' + ox + '][element-y=' + oy + ']').removeClass('active')
+    }
+  });
+
   // click delete
   $('div.program svg').on('click','g[element-group=drop] g[element-type=delete].active',(ev)=>{
     let eid = $(ev.currentTarget).attr('element-id');
@@ -112,7 +128,8 @@ $(document).ready(async function() {
       let eid = $(ev.currentTarget).attr('element-id');
       $(ev.currentTarget).removeClass('active');
       $(ev.currentTarget).addClass('targeting');
-      editor.update_item(eid,'target',ev.originalEvent.dataTransfer.getData("text/plain"));
+      $(ev.currentTarget).attr('element-para',ev.originalEvent.dataTransfer.getData("text/plain"))
+      editor.update_item(eid,'target',ev.originalEvent.dataTransfer.getData("text/plain"))
     }
   });
   $('div.program').on('dragover','g[element-type=jump]',(ev)=>{

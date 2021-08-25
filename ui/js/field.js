@@ -53,6 +53,7 @@ class Field {
 
   #draw_tile(x,y) { //{{{
     let grax = this.assets.tiles.normal.graphics.sample().clone();
+        grax.addClass('tilebase')
     let g1 = this.#tile_base(x,y,'tile');
     g1.append(grax);
     this.target_field.append(g1);
