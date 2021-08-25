@@ -2,6 +2,7 @@ class Walker {
   constructor(editor,field) { //{{{
     this.editor = editor;
     this.field = field;
+    this.walking = false;
   }  //}}}
 
   #walk_rec(it,eid,para,value) { //{{{
@@ -22,7 +23,12 @@ class Walker {
     }
     return newp;
   } //}}}
-  walk(eid,para,value) { //{{{
-    this.#walk_rec(editor.program,eid,para,value)
+  walk() { //{{{
+    this.walking = true
+    //this.#walk_rec(editor.program,eid,para,value)
+  } //}}}
+
+  stop() { //{{{
+    this.walking = false
   } //}}}
 }

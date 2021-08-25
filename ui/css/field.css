@@ -33,7 +33,7 @@ div.field > div.bottom {
   flex-direction: row;
 }
 
-div.field > div > .ui {
+div.field > div.bottom > .ui {
   width: 5em;
   border: 0em none;
   height: 5em;
@@ -41,24 +41,25 @@ div.field > div > .ui {
   background-color: #47baa4;
 }
 
-div.field > div > .blank {
+div.field > div.bottom > .blank {
   flex: 1 1 auto;
 }
 
-div.field > div > button.ui {
+div.field > div.bottom > button.ui {
   padding: 0;
+  padding-top: 0.2em;
   border-radius: 0.2em;
   transition: all 0.1s;
   border-bottom: 0.5em solid #222222;
   cursor: pointer;
 }
-div.field > div > button.ui:active {
+div.field > div.bottom > button.ui:active {
   transform: scaleX(0.9) translateY(0.5em);
 }
-div.field > div > button.ui > img {
+div.field > div.bottom > button.ui > img {
   height: 80%;
 }
-div.field > div > div.hand {
+div.field > div.bottom > div.hand {
   background-image: url("../assets/hand.svg");
   background-repeat: no-repeat;
   background-size: contain;
@@ -68,7 +69,7 @@ div.field > div > div.hand {
   justify-content: center;
   flex-direction: row;
 }
-div.field > div > div.brain {
+div.field > div.bottom > div.brain {
   background-image: url("../assets/brain.svg");
   background-repeat: no-repeat;
   background-size: 80%;
@@ -82,15 +83,20 @@ div.field > div > div.brain {
   position: relative;
 }
 
-div.field > div > div.hand img {
+div.field > div.bottom > div.hand img {
   height: 80%;
 }
-div.field > div > div.brain .type {
+div.field > div.bottom > div.brain .type {
   position: absolute;
   top: 0.2em;
   right: 0.2em;
 }
-div.field > div > div.brain span {
+div.field > div.bottom > div.brain span {
   padding-top: 2em;
   font-size: 1em;
 }
+
+div.field > div.bottom > button.ui.control        img:first-child { display: inline; }
+div.field > div.bottom > button.ui.control        img:last-child  { display: none; }
+div.field > div.bottom > button.ui.control.active img:first-child { display: none; }
+div.field > div.bottom > button.ui.control.active img:last-child  { display: inline; }

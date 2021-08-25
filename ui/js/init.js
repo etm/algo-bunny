@@ -128,7 +128,6 @@ $(document).ready(async function() {
   $('div.program').on('drop','g[element-type=jump]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
-    console.log(ev.originalEvent.dataTransfer.getData("text/plain"));
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/)) {
       let eid = $(ev.currentTarget).attr('element-id');
       $(ev.currentTarget).removeClass('active');
@@ -140,7 +139,6 @@ $(document).ready(async function() {
   $('div.program').on('dragover','g[element-type=jump]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
-    console.log(ev.originalEvent.dataTransfer.getData("text/plain"));
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location) {
       $(ev.currentTarget).addClass('active');
     }
@@ -192,7 +190,14 @@ $(document).ready(async function() {
 
   })
   $('button.control').click(ev=>{
-    console.log(ev);
-
+    if (editor.program.length > 0) {
+      if ($(ev.currentTarget).hasClass('active')) {
+        walker.stop()
+        field.reset_full()
+      } else {
+        walker.walk()
+      }
+      $(ev.currentTarget).toggleClass('active');
+    }
   })
 })

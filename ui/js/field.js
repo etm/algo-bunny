@@ -18,7 +18,6 @@ class Field {
 
   #nodraw;
 
-
   #play_audio(name) { //{{{
     new Audio('sounds/' + name + '.mp3').play();
   } //}}}
@@ -255,7 +254,8 @@ class Field {
     this.state_flowers = []
     this.state_carrots = []
     this.state_op = []
-    this.tiles = this.tiles.split(/\r?\n/)
+    this.tiles = this.tiles.trimRight().split(/\r?\n/)
+
     this.tiles = this.tiles.map( x => {
       this.state_flowers.push([])
       this.state_carrots.push([])
@@ -314,7 +314,7 @@ class Field {
   } //}}}
   put_carrot(val) { //{{{
     let [ox,oy,oface] = this.#facing_tile()
-    if (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == 'T' && this.state_carrots[oy][ox] === undefined && this.state_flowers[oy][ox] === undefined) {
+    if (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == 'T' && (this.state_carrots[oy][ox] === undefined || this.state_carrots[oy][ox] == null) && (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null)) {
       this.state_carrots[oy][ox] = val
       if (!this.#nodraw) {
         this.#draw_carrot(ox,oy,val)
@@ -338,7 +338,7 @@ class Field {
     if (s.length == 3) { v = { 'type': 'position', 'x': parseInt(s[0]), 'y': parseInt(s[1]), 'face': s[2] } };
 
     let [ox,oy,oface] = this.#facing_tile()
-    if (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == 'T' && this.state_carrots[oy][ox] === undefined && this.state_flowers[oy][ox] === undefined) {
+    if (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == 'T' && (this.state_carrots[oy][ox] === undefined || this.state_carrots[oy][ox] == null) && (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null)) {
       this.state_flowers[oy][ox] = v
       if (!this.#nodraw) {
         this.#draw_flower(ox,oy,v.type)
@@ -403,7 +403,10 @@ class Field {
   } //}}}
 
   async bunny_jump(x,y,face) { //{{{
-    if (!(this.tiles[y] && this.tiles[y][x] && this.tiles[y][x] == 'T' && this.state_carrots[y][x] === undefined && this.state_flowers[y][x] === undefined)) {
+    console.log(this.tiles[y][x],this.state_carrots,this.state_flowers)
+
+    if (!(this.tiles[y] && this.tiles[y][x] && this.tiles[y][x] == 'T' && (this.state_carrots[y][x] === undefined || this.state_carrots[y][x] == null) && (this.state_flowers[y][x] === undefined || this.state_flowers[y][x] == null))) {
+      console.log('rrr')
       return false
     }
     let [ox,oy,oface] = this.state_bunny;
@@ -419,7 +422,7 @@ class Field {
       let nface = (face === undefined) ? oface : face;
       this.state_bunny = [x,y,nface]
       if (!this.#nodraw) {
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise(resolve => setTimeout(resolve, 500));
         this.#remove_bunny()
         this.#draw_bunny(x,y,nface)
       }
