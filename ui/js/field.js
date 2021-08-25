@@ -16,6 +16,8 @@ class Field {
   #save_state_op;
   #save_state_flowers;
 
+  #nodraw;
+
 
   #play_audio(name) { //{{{
     new Audio('sounds/' + name + '.mp3').play();
@@ -197,12 +199,6 @@ class Field {
     // start
     $('#bunnyani')[0].beginElement()
     this.#play_audio('boing')
-    setTimeout(()=>{
-      this.#remove_bunny()
-      let nface = (face === undefined) ? this.state_bunny[2] : face;
-      this.#draw_bunny(tx,ty,nface)
-      this.state_bunny = [tx,ty,nface]
-    },500);
   } //}}}
 
   #remove_bunny() { //{{{
@@ -234,6 +230,8 @@ class Field {
     this.#scale_factor = 0.9;
     this.#perspective_correction = 0;
     this.#height_shift = 40;
+
+    this.#nodraw = false
    } //}}}
 
   async load_level() { //{{{
@@ -305,8 +303,10 @@ class Field {
     if (this.state_carrots[oy][ox]) {
       let c = this.state_carrots[oy][ox]
       delete this.state_carrots[oy][ox]
-      $('g.tile[element-x='+ox+'][element-y='+oy+'] g.carrot',this.target_field).remove()
-      this.#play_audio('pull')
+      if (!this.#nodraw) {
+        $('g.tile[element-x='+ox+'][element-y='+oy+'] g.carrot',this.target_field).remove()
+        this.#play_audio('pull')
+      }
       return c
     } else {
       return false
@@ -316,15 +316,19 @@ class Field {
     let [ox,oy,oface] = this.#facing_tile()
     if (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == 'T' && this.state_carrots[oy][ox] === undefined && this.state_flowers[oy][ox] === undefined) {
       this.state_carrots[oy][ox] = val
-      this.#draw_carrot(ox,oy,val)
-      this.#play_audio('pull')
+      if (!this.#nodraw) {
+        this.#draw_carrot(ox,oy,val)
+        this.#play_audio('pull')
+      }
       return true
     } else {
       return false
     }
   } //}}}
   eat() { //{{{
-    this.#play_audio('eat')
+    if (!this.#nodraw) {
+      this.#play_audio('eat')
+    }
   } //}}}
 
   put_flower(val) { //{{{
@@ -336,8 +340,10 @@ class Field {
     let [ox,oy,oface] = this.#facing_tile()
     if (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == 'T' && this.state_carrots[oy][ox] === undefined && this.state_flowers[oy][ox] === undefined) {
       this.state_flowers[oy][ox] = v
-      this.#draw_flower(ox,oy,v.type)
-      this.#play_audio('pull')
+      if (!this.#nodraw) {
+        this.#draw_flower(ox,oy,v.type)
+        this.#play_audio('pull')
+      }
       return true
     } else {
       return false
@@ -349,8 +355,10 @@ class Field {
     if (this.state_flowers[oy][ox]) {
       let c = this.state_flowers[oy][ox]
       delete this.state_flowers[oy][ox]
-      $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
-      this.#play_audio('eat')
+      if (!this.#nodraw) {
+        $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
+        this.#play_audio('eat')
+      }
       return true
     } else {
       return false
@@ -394,18 +402,27 @@ class Field {
     return this.bunny_jump(ox,oy,oface)
   } //}}}
 
-  bunny_jump(x,y,face) { //{{{
+  async bunny_jump(x,y,face) { //{{{
     if (!(this.tiles[y] && this.tiles[y][x] && this.tiles[y][x] == 'T' && this.state_carrots[y][x] === undefined && this.state_flowers[y][x] === undefined)) {
       return false
     }
     let [ox,oy,oface] = this.state_bunny;
     if (ox == x && oy == y && oface != face && !(face === undefined)) {
-      this.#remove_bunny()
-      this.#draw_bunny(x,y,face)
+      if (!this.#nodraw) {
+        this.#remove_bunny()
+        this.#draw_bunny(x,y,face)
+      }
       this.state_bunny = [x,y,face];
     }
     if (ox != x || oy != y) {
       this.#bunny_hop(x,y,face);
+      let nface = (face === undefined) ? oface : face;
+      this.state_bunny = [x,y,nface]
+      if (!this.#nodraw) {
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        this.#remove_bunny()
+        this.#draw_bunny(x,y,nface)
+      }
     }
     return true
   } //}}}
