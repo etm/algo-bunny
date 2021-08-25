@@ -1,6 +1,8 @@
 var active_del = '';
 var active_del_timeout;
 
+var active_drag_location; // thany you chrome for security without reason. Dragover and dragleave can not getData.
+
 var field;
 
 $(document).ready(async function() {
@@ -119,11 +121,14 @@ $(document).ready(async function() {
       var img = document.createElement("img");
       img.src = "assets/location.svg";
       ev.originalEvent.dataTransfer.setDragImage(img, 0, 0);
+
+      active_drag_location = ox+','+oy;
     }
   });
   $('div.program').on('drop','g[element-type=jump]',(ev)=>{
     ev.preventDefault();
     ev.stopPropagation();
+    console.log(ev.originalEvent.dataTransfer.getData("text/plain"));
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/)) {
       let eid = $(ev.currentTarget).attr('element-id');
       $(ev.currentTarget).removeClass('active');
@@ -135,16 +140,20 @@ $(document).ready(async function() {
   $('div.program').on('dragover','g[element-type=jump]',(ev)=>{
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/)) {
+    console.log(ev.originalEvent.dataTransfer.getData("text/plain"));
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location) {
       $(ev.currentTarget).addClass('active');
     }
   });
   $('div.program').on('dragleave','g[element-type=jump]',(ev)=>{
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/)) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location) {
       $(ev.currentTarget).removeClass('active');
     }
+  });
+  $(document).on('dragend',ev=>{
+    delete active_drag_location; // thanks again chrome.
   });
 
 
