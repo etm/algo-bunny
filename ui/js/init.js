@@ -21,7 +21,6 @@ $(document).ready(async function() {
   }
   field.render();
 
-
   // show some elements
   $('div.elements img').each((_,ele) => {
     let iname = $(ele).attr('data-type');

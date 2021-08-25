@@ -227,10 +227,10 @@ class Field {
 
   async load_level() { //{{{
     let level = await this.#get_level(this.levelurl);
-    let pieces = level.split(/---\s*\r?\n/);
+    let pieces = level.split(/---\s*\r?\n/)
     if (pieces.length != 6) {
-      bunny_say('Uh, oh. Level is no good.');
-      return false;
+      bunny_say('Uh, oh. Level is no good.')
+      return false
     }
     [
       this.tiles,
@@ -238,39 +238,39 @@ class Field {
       this.help,
       this.carrots,
       this.max_score,
-      this.elements] = pieces;
-    this.x = 0;
-    this.y = 0;
+      this.elements] = pieces
+    this.x = 0
+    this.y = 0
 
-    this.elements = this.elements.split(',');
-    this.state_flowers = [];
-    this.state_carrots = [];
-    this.state_op = [];
-    this.tiles = this.tiles.split(/\r?\n/);
+    this.elements = this.elements.trim().split(',')
+    this.state_flowers = []
+    this.state_carrots = []
+    this.state_op = []
+    this.tiles = this.tiles.split(/\r?\n/)
     this.tiles = this.tiles.map( x => {
-      this.state_flowers.push([]);
-      this.state_carrots.push([]);
-      this.state_op.push([]);
-      let s = x.split('');
-      if (this.x < s.length) { this.x = s.length; }
-      return s;
+      this.state_flowers.push([])
+      this.state_carrots.push([])
+      this.state_op.push([])
+      let s = x.split('')
+      if (this.x < s.length) { this.x = s.length }
+      return s
     });
-    this.y = this.tiles.length;
+    this.y = this.tiles.length
 
-    this.assignments = this.assignments.split(/\r?\n/);
+    this.assignments = this.assignments.split(/\r?\n/)
     this.assignments = this.assignments.map( x => {
-      let s = x.trim().split(',');
-      if (s.length == 1) { return { 'type': 'number', 'value': parseInt(s[0]) } };
-      if (s.length == 3) { return { 'type': 'position', 'x': parseInt(s[0]), 'y': parseInt(s[1]), 'face': s[2] } };
-    });
-    this.carrots = this.carrots.split('').map(x => x.trim()).filter(x => x !== undefined);
-    this.max_score = parseInt(this.max_score);
+      let s = x.trim().split(',')
+      if (s.length == 1) { return { 'type': 'number', 'value': parseInt(s[0]) } }
+      if (s.length == 3) { return { 'type': 'position', 'x': parseInt(s[0]), 'y': parseInt(s[1]), 'face': s[2] } }
+    })
+    this.carrots = this.carrots.split('').map(x => x.trim()).filter(x => x !== undefined)
+    this.max_score = parseInt(this.max_score)
     this.max_carrots = this.tiles.reduce((total,arr) => {
       return total + arr.reduce((total,ele) => {
-        return total + (ele.match(/[1-9c]/) ? 1 : 0);
-      },0);
-    },0);
-    return true;
+        return total + (ele.match(/[1-9c]/) ? 1 : 0)
+      },0)
+    },0)
+    return true
   }  //}}}
 
   #facing_tile () { //{{{
@@ -456,7 +456,6 @@ class Field {
 
     this.#draw_drag_layer(iw,ih);
 
-    this.target.attr('height', 'auto');
     this.target.attr('viewBox', '0 0 ' + iw + ' ' + ih);
   } //}}}
 }
