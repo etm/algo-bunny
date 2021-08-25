@@ -5,7 +5,7 @@ TTcT  TfT
 TTTT
 ---
 2
-1,5,O
+0,0,N
 ---
 Eat the carrot the flower reminds you of.
 ---

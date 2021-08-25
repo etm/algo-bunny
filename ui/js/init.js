@@ -1,9 +1,10 @@
-var active_del = '';
-var active_del_timeout;
+var active_del = ''
+var active_del_timeout
 
-var active_drag_location; // thany you chrome for security without reason. Dragover and dragleave can not getData.
+var active_drag_location // thany you chrome for security without reason. Dragover and dragleave can not getData.
 
-var field;
+var field
+var walker
 
 $(document).ready(async function() {
   let assets  = new Assets;
@@ -16,13 +17,13 @@ $(document).ready(async function() {
   editor.render();
 
   field = new Field($('div.field svg'), assets, level);
-  if (!(await field.load_level())) {
-    return;
-  }
+  if (!(await field.load_level())) { return; }
   field.render();
 
+  walker = new Walker(editor,field)
+
   // show some elements
-  $('div.elements img').each((_,ele) => {
+  $('div.elements img').each((_,ele) => { //{{{
     let iname = $(ele).attr('data-type');
     let item = assets.commands[iname];
     $(ele).attr('title',item.label);
@@ -36,7 +37,7 @@ $(document).ready(async function() {
     $('div.elements img[data-type=' + iname + ']').click(()=>{
       bunny_say(item.desc);
     });
-  });
+  }); //}}}
 
   // say initial thing
   bunny_one_liner();
@@ -45,7 +46,7 @@ $(document).ready(async function() {
   $('div.program svg').on('click','g[element-type=bunny]',()=>{ bunny_one_liner(); });
 
   // click element in editor, say and show delete
-  $('div.program svg').on('click','g[element-group=graph] g[element-id]',(ev)=>{
+  $('div.program svg').on('click','g[element-group=graph] g[element-id]',(ev)=>{ //{{{
     if (active_del_timeout) {
       clearTimeout(active_del_timeout);
     }
@@ -67,26 +68,26 @@ $(document).ready(async function() {
       },12000);
     }
     return false;
-  });
+  }); //}}}
 
   // display target tiles
-  $('div.program svg').on('mouseover','g[element-group=graph] g[element-type=jump]',(ev)=>{
+  $('div.program svg').on('mouseover','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
     let epara = $(ev.currentTarget).attr('element-para');
     if (epara && epara.match(/^\d+,\d+$/)) {
       let [ox,oy] = epara.split(',')
       $('div.field g.tile[element-x=' + ox + '][element-y=' + oy + ']').addClass('active')
     }
-  });
-  $('div.program svg').on('mouseout','g[element-group=graph] g[element-type=jump]',(ev)=>{
+  }); //}}}
+  $('div.program svg').on('mouseout','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
     let epara = $(ev.currentTarget).attr('element-para');
     if (epara && epara.match(/^\d+,\d+$/)) {
       let [ox,oy] = epara.split(',')
       $('div.field g.tile[element-x=' + ox + '][element-y=' + oy + ']').removeClass('active')
     }
-  });
+  }); //}}}
 
   // click delete
-  $('div.program svg').on('click','g[element-group=drop] g[element-type=delete].active',(ev)=>{
+  $('div.program svg').on('click','g[element-group=drop] g[element-type=delete].active',(ev)=>{ //{{{
     let eid = $(ev.currentTarget).attr('element-id');
     editor.remove_item(eid);
     editor.render();
@@ -94,17 +95,17 @@ $(document).ready(async function() {
     $(ev.currentTarget).removeClass('active');
     bunny_say_reset();
     return false;
-  });
+  }); //}}}
 
   // drag on SVG does not work. so we have to be clever monkis
-  // foreignObject with div inside and at the end ov svg.
+  // foreignObject with div inside and at the end of svg.
   // it catches all mouseclicks :-) read on for the grand finale!
-  $('div.field svg').on('dragstart','foreignObject div',(ev)=>{
+  $('div.field svg').on('dragstart','foreignObject div',(ev)=>{ //{{{
     var left = $(window).scrollLeft();
     var top = $(window).scrollTop();
 
     // what fucking clever shit. we hide the foreignObject that sits on top of
-    // SVG but is part of svg. we then use #elementFromPoint, and switch it
+    // SVG but is part of SVG. we then use #elementFromPoint, and switch it
     // back on. Its sad that we have to do this, but holy shit this is great.
     field.target_drag.css('display','none')
     let oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
@@ -123,8 +124,8 @@ $(document).ready(async function() {
 
       active_drag_location = ox+','+oy;
     }
-  });
-  $('div.program').on('drop','g[element-type=jump]',(ev)=>{
+  }); //}}}
+  $('div.program').on('drop','g[element-type=jump]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
     console.log(ev.originalEvent.dataTransfer.getData("text/plain"));
@@ -135,36 +136,33 @@ $(document).ready(async function() {
       $(ev.currentTarget).attr('element-para',ev.originalEvent.dataTransfer.getData("text/plain"))
       editor.update_item(eid,'target',ev.originalEvent.dataTransfer.getData("text/plain"))
     }
-  });
-  $('div.program').on('dragover','g[element-type=jump]',(ev)=>{
+  }); //}}}
+  $('div.program').on('dragover','g[element-type=jump]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
     console.log(ev.originalEvent.dataTransfer.getData("text/plain"));
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location) {
       $(ev.currentTarget).addClass('active');
     }
-  });
-  $('div.program').on('dragleave','g[element-type=jump]',(ev)=>{
+  }); //}}}
+  $('div.program').on('dragleave','g[element-type=jump]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location) {
       $(ev.currentTarget).removeClass('active');
     }
-  });
-  $(document).on('dragend',ev=>{
+  }); //}}}
+  $(document).on('dragend',ev=>{ //{{{
     delete active_drag_location; // thanks again chrome.
-  });
+  }); //}}}
 
 
-  $('div.elements').on('dragstart','img[data-type]',(ev)=>{
+  $('div.elements').on('dragstart','img[data-type]',(ev)=>{ //{{{
     ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'));
     ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0);
     $('div.program g[element-type=add] .adder').show();
-  });
-  $('div.elements').on('dragstart','img[data-type] .adder',(ev)=>{
-    $('div.program g[element-type=add]').hide();
-  });
-  $('div.program').on('drop','g[element-type=add]',(ev)=>{
+  }); //}}}
+  $('div.program').on('drop','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]*$/)) {
@@ -174,19 +172,27 @@ $(document).ready(async function() {
       editor.insert_item(eid,eop,ety);
       editor.render();
     }
-  });
-  $('div.program').on('dragover','g[element-type=add]',(ev)=>{
+  }); //}}}
+  $('div.program').on('dragover','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]*$/)) {
       $(ev.currentTarget).addClass('active');
     }
-  });
-  $('div.program').on('dragleave','g[element-type=add]',(ev)=>{
+  }); //}}}
+  $('div.program').on('dragleave','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]*$/)) {
       $(ev.currentTarget).removeClass('active');
     }
-  });
-});
+  }); //}}}
+
+  $('button.mission').click(ev=>{
+
+  })
+  $('button.control').click(ev=>{
+    console.log(ev);
+
+  })
+})

@@ -11,6 +11,16 @@ class Field {
   #op_y_displacement;
   #bunny_y_displacement;
 
+  #save_state_bunny;
+  #save_state_carrots;
+  #save_state_op;
+  #save_state_flowers;
+
+
+  #play_audio(name) { //{{{
+    new Audio('sounds/' + name + '.mp3').play();
+  } //}}}
+
   #get_level(levelurl) { //{{{
     return new Promise( resolve => {
       $.ajax({
@@ -186,6 +196,7 @@ class Field {
     this.target_field.append(tar)
     // start
     $('#bunnyani')[0].beginElement()
+    this.#play_audio('boing')
     setTimeout(()=>{
       this.#remove_bunny()
       let nface = (face === undefined) ? this.state_bunny[2] : face;
@@ -295,6 +306,7 @@ class Field {
       let c = this.state_carrots[oy][ox]
       delete this.state_carrots[oy][ox]
       $('g.tile[element-x='+ox+'][element-y='+oy+'] g.carrot',this.target_field).remove()
+      this.#play_audio('pull')
       return c
     } else {
       return false
@@ -305,14 +317,15 @@ class Field {
     if (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == 'T' && this.state_carrots[oy][ox] === undefined && this.state_flowers[oy][ox] === undefined) {
       this.state_carrots[oy][ox] = val
       this.#draw_carrot(ox,oy,val)
+      this.#play_audio('pull')
       return true
     } else {
       return false
     }
   } //}}}
-  eat() {
-    // play sound
-  }
+  eat() { //{{{
+    this.#play_audio('eat')
+  } //}}}
 
   put_flower(val) { //{{{
     let v;
@@ -324,6 +337,7 @@ class Field {
     if (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == 'T' && this.state_carrots[oy][ox] === undefined && this.state_flowers[oy][ox] === undefined) {
       this.state_flowers[oy][ox] = v
       this.#draw_flower(ox,oy,v.type)
+      this.#play_audio('pull')
       return true
     } else {
       return false
@@ -336,6 +350,7 @@ class Field {
       let c = this.state_flowers[oy][ox]
       delete this.state_flowers[oy][ox]
       $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
+      this.#play_audio('eat')
       return true
     } else {
       return false
@@ -395,6 +410,29 @@ class Field {
     return true
   } //}}}
 
+  reset_state() { //{{{
+    this.state_bunny   = JSON.parse(this.#save_state_bunny)
+    this.state_carrots = JSON.parse(this.#save_state_carrots)
+    this.state_op      = JSON.parse(this.#save_state_op)
+    this.state_flowers = JSON.parse(this.#save_state_flowers)
+    $('g.flower,g.carrot,g.bunny',this.target_field).remove()
+  } //}}}
+
+  reset_full() { //{{{
+    this.reset_state()
+    for (const[y,line] of this.state_carrots.entries()) {
+      for (const [x,v] of line.entries()) {
+        if (v) { this.#draw_carrot(x,y,v) }
+      }
+    }
+    for (const[y,line] of this.state_flowers.entries()) {
+      for (const [x,v] of line.entries()) {
+        if (v) { this.#draw_flower(x,y,v.type) }
+      }
+    }
+    this.#draw_bunny(this.state_bunny[0],this.state_bunny[1],this.state_bunny[2]);
+  } //}}}
+
   render() { //{{{
     let counter = 0;
     let flower_count = 0;
@@ -448,6 +486,12 @@ class Field {
       }
       counter += 1;
     }
+
+    this.#save_state_bunny   = JSON.stringify(this.state_bunny)
+    this.#save_state_carrots = JSON.stringify(this.state_carrots)
+    this.#save_state_op      = JSON.stringify(this.state_op)
+    this.#save_state_flowers = JSON.stringify(this.state_flowers)
+
     let [wid,_th] = this.#coordinate_transform(this.x,0);
     let [_tw,hei] = this.#coordinate_transform(this.x,this.y);
 
