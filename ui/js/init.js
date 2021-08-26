@@ -1,7 +1,7 @@
 var active_del = ''
 var active_del_timeout
 
-var active_drag_location // thany you chrome for security without reason. Dragover and dragleave can not getData.
+var active_drag_location = null // thany you chrome for security without reason. Dragover and dragleave can not getData.
 
 var field
 var walker
@@ -122,7 +122,7 @@ $(document).ready(async function() {
       img.src = "assets/location.svg";
       ev.originalEvent.dataTransfer.setDragImage(img, 0, 0);
 
-      active_drag_location = ox+','+oy;
+      active_drag_location = ox+','+oy
     }
   }); //}}}
   $('div.program').on('drop','g[element-type=jump]',(ev)=>{ //{{{
@@ -139,19 +139,19 @@ $(document).ready(async function() {
   $('div.program').on('dragover','g[element-type=jump]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location != null) {
       $(ev.currentTarget).addClass('active');
     }
   }); //}}}
   $('div.program').on('dragleave','g[element-type=jump]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location != null) {
       $(ev.currentTarget).removeClass('active');
     }
   }); //}}}
   $(document).on('dragend',ev=>{ //{{{
-    delete active_drag_location; // thanks again chrome.
+    active_drag_location = null // thanks again chrome.
   }); //}}}
 
 

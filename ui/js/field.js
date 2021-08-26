@@ -196,8 +196,8 @@ class Field {
     // move higher
     this.target_field.append(tar)
     // start
-    $('#bunnyani')[0].beginElement()
     this.#play_audio('boing')
+    $('#bunnyani')[0].beginElement()
   } //}}}
 
   #remove_bunny() { //{{{
@@ -323,7 +323,7 @@ class Field {
       delete this.state_carrots[oy][ox]
       if (!this.#nodraw) {
         $('g.tile[element-x='+ox+'][element-y='+oy+'] g.carrot',this.target_field).remove()
-        this.#play_audio('pull')
+        this.#play_audio('interact')
       }
       return c
     } else {
@@ -336,7 +336,7 @@ class Field {
       this.state_carrots[oy][ox] = val
       if (!this.#nodraw) {
         this.#draw_carrot(ox,oy,val)
-        this.#play_audio('pull')
+        this.#play_audio('interact')
       }
       return true
     } else {
@@ -360,7 +360,7 @@ class Field {
       this.state_flowers[oy][ox] = v
       if (!this.#nodraw) {
         this.#draw_flower(ox,oy,v.type)
-        this.#play_audio('pull')
+        this.#play_audio('interact')
       }
       return true
     } else {

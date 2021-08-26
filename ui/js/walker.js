@@ -34,14 +34,16 @@ class Walker {
             this.#check_steps_active()
             break;
           case 'left':
-            await this.#sleep(this.timing)
+            await this.#sleep(this.timing/2)
             res = await this.field.left()
             if (res === false) { return false; }
+            await this.#sleep(this.timing/2)
             break;
           case 'right':
-            await this.#sleep(this.timing)
+            await this.#sleep(this.timing/2)
             res = await this.field.right()
             if (res === false) { return false; }
+            await this.#sleep(this.timing/2)
             break;
           case 'step_left':
             res = await this.field.step_left()
@@ -59,92 +61,101 @@ class Walker {
             break;
           case 'get_carrot':
             if (this.#hand === undefined || this.#hand == null) {
-              await this.#sleep(this.timing)
+              await this.#sleep(this.timing/2)
               res = this.field.get_carrot()
               if (res === false) { return false; }
               this.#hand = res
               $('div.field div.ui.hand img').show()
+              await this.#sleep(this.timing/2)
             } else {
               return false
             }
             break;
           case 'put_carrot':
             if (!(this.#hand === undefined || this.#hand == null)) {
-              await this.#sleep(this.timing)
+              await this.#sleep(this.timing/2)
               res = this.field.put_carrot(this.#hand)
               if (res === false) { return false; }
               this.#hand = null
               $('div.field div.ui.hand img').hide()
+              await this.#sleep(this.timing/2)
             } else {
               return false
             }
             break;
           case 'put_flower':
             if (!(this.#brain === undefined || this.#brain == null)) {
-              await this.#sleep(this.timing)
+              await this.#sleep(this.timing/2)
               res = this.field.put_flower(this.#brain)
               if (res === false) { return false; }
+              await this.#sleep(this.timing/2)
             } else {
               return false
             }
             break;
           case 'eat_carrot':
             if (!(this.#hand === undefined || this.#hand == null)) {
-              await this.#sleep(this.timing)
-              await this.field.eat()
+              await this.#sleep(this.timing/2)
+              this.field.eat()
               this.#hand = null
               $('div.field div.ui.hand img').hide()
+              await this.#sleep(this.timing/2)
             } else if (this.field.has_carrot()) {
-              await this.#sleep(this.timing)
+              await this.#sleep(this.timing/2)
               res = this.field.get_carrot()
               if (res === false) { return false; }
-              await this.field.eat()
+              this.field.eat()
+              await this.#sleep(this.timing/2)
             } else {
               return false;
             }
             break;
           case 'eat_flower':
             if (this.field.has_flower()) {
-              await this.#sleep(this.timing)
+              await this.#sleep(this.timing/2)
               res = this.field.eat_flower()
               if (res === false) { return false; }
+              await this.#sleep(this.timing/2)
             } else {
               return false;
             }
             break;
           case 'memorize_carrot':
             if (this.field.has_carrot()) {
-              await this.#sleep(this.timing)
+              await this.#sleep(this.timing/2)
               res = this.field.check_carrot()
               if (res === false) { return false; }
               $('div.field div.ui.brain .type').hide()
               $('div.field div.ui.brain .text').text(res)
               this.#brain = res
               this.#steps_active = false
+              await this.#sleep(this.timing/2)
             } else {
               return false;
             }
             break;
           case 'memorize_position':
-            await this.#sleep(this.timing)
+            await this.#sleep(this.timing/2)
             res = this.field.state_bunny[0] + ',' + this.field.state_bunny[1] + ' ' + this.field.state_bunny[2];
             $('div.field div.ui.brain .type').hide()
             $('div.field div.ui.brain .type.location').show()
             $('div.field div.ui.brain .text').text(res)
             this.#brain = this.field.state_bunny.join(',')
             this.#steps_active = false
+            await this.#sleep(this.timing/2)
             break;
           case 'memorize_steps':
-            await this.#sleep(this.timing)
+            await this.#sleep(this.timing/2)
             $('div.field div.ui.brain .type').hide()
             $('div.field div.ui.brain .type.steps').show()
             this.#brain = 0
             $('div.field div.ui.brain .text').text(this.#brain)
             this.#steps_active = true
+            await this.#sleep(this.timing/2)
             break;
           case 'memorize_flower':
             if (this.field.has_flower()) {
-              await this.#sleep(this.timing)
+              await this.#sleep(this.timing/2)
               res = this.field.check_flower()
               if (res === false) { return false; }
               // fix
@@ -152,6 +163,7 @@ class Walker {
               $('div.field div.ui.brain .text').text(res)
               this.#brain = res
               this.#steps_active = false
+              await this.#sleep(this.timing/2)
             } else {
               return false;
             }

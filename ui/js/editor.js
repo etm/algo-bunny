@@ -39,12 +39,16 @@ class Editor {
   } //}}}
 
   #draw(id,i,x,y,what,parent) { //{{{
-    if (typeof(i) == 'object') {
-      i = i.item;
-    }
-    let item = this.assets.commands[i];
+    let name = (typeof(i) == 'object') ? i.item : i
+    let item = this.assets.commands[name];
     let grax = item.graphics[what].clone();
-    let g1 = $X('<g draggable="true" class="element" element-type="' + i + '" element-id="' + id  + '" xmlns="http://www.w3.org/2000/svg"></g>');
+    let g1 = $X('<g draggable="true" class="element" element-type="' + name + '" element-id="' + id  + '" xmlns="http://www.w3.org/2000/svg"></g>');
+    if (item.type == 'position') {
+      if (i.target != '') {
+        g1.attr('element-para',i.target)
+        g1.addClass('targeting')
+      }
+    }
     let g2 = $X('<g transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height) + ')" xmlns="http://www.w3.org/2000/svg"></g>');
         g2.append(grax);
         g1.append(g2);
