@@ -288,20 +288,19 @@ class Field {
 
   has_carrot()    { //{{{
     let [ox,oy,oface] = this.#facing_tile()
-    return this.state_carrots[oy][ox] ? true : false
+    return (this.state_carrots[oy] && this.state_carrots[oy][ox]) ? true : false
   }  //}}}
   has_flower()    {  //{{{
     let [ox,oy,oface] = this.#facing_tile()
-    return this.state_flowers[oy][ox] ? true : false
+    return (this.state_flowers[oy] && this.state_flowers[oy][ox]) ? true : false
   } //}}}
   is_hole()    {  //{{{
     let [ox,oy,oface] = this.#facing_tile()
-    return (this.tiles[oy] && this.tiles[oy][ox].match(/[T+\-*\/]/)) ? false : true
+    return (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox].match(/[T+\-*\/]/)) ? false : true
   } //}}}
   is_empty()    {  //{{{
     let [ox,oy,oface] = this.#facing_tile()
-    console.log(this.tiles[oy] && this.tiles[oy][ox].match(/[T+\-*\/]/) && (this.state_carrots[oy][ox] === undefined || this.state_carrots[oy][ox] == null) && (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null))
-    return (this.tiles[oy] && this.tiles[oy][ox].match(/[T+\-*\/]/) && (this.state_carrots[oy][ox] === undefined || this.state_carrots[oy][ox] == null) && (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null)) ? true : false
+    return (this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox].match(/[T+\-*\/]/) && (this.state_carrots[oy][ox] === undefined || this.state_carrots[oy][ox] == null) && (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null)) ? true : false
   } //}}}
   check_carrot()   { //{{{
     let [ox,oy,oface] = this.#facing_tile()
@@ -314,7 +313,7 @@ class Field {
   } //}}}
   check_flower()   { //{{{
     let [ox,oy,oface] = this.#facing_tile()
-    if (this.state_flowers[oy][ox]) {
+    if (this.state_flowers[oy] && this.state_flowers[oy][ox]) {
       let c = this.state_flowers[oy][ox]
       return c
     } else {
@@ -323,7 +322,7 @@ class Field {
   } //}}}
   get_carrot()   { //{{{
     let [ox,oy,oface] = this.#facing_tile()
-    if (this.state_carrots[oy][ox]) {
+    if (this.state_carrots[oy] && this.state_carrots[oy][ox]) {
       let c = this.state_carrots[oy][ox]
       delete this.state_carrots[oy][ox]
       if (!this.#nodraw) {
@@ -375,7 +374,7 @@ class Field {
   eat_flower()    {  //{{{
     this.eat()
     let [ox,oy,oface] = this.#facing_tile()
-    if (this.state_flowers[oy][ox]) {
+    if (this.state_flowers[oy] && this.state_flowers[oy][ox]) {
       let c = this.state_flowers[oy][ox]
       delete this.state_flowers[oy][ox]
       if (!this.#nodraw) {

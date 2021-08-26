@@ -185,6 +185,10 @@ $(document).ready(async function() {
 
   $('button.mission').click(ev=>{
     $('div.field div.info').toggleClass('active')
+    $('div.field div.info div.text').html(marked(field.help))
+  })
+  $('div.field div.info div.top img').click(ev=>{
+    $('div.field div.info').toggleClass('active')
   })
   $('button.control').click(ev=>{
     if (editor.program.length > 0) {

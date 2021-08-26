@@ -117,4 +117,18 @@ div.field > div.info.active {
   bottom: 9em;
   display: block;
   background-color: white;
+  border: 0.5em solid #222222;
+  padding: 1em;
+}
+
+div.field > div.info > .top {
+  text-align: right;
+  margin-bottom: 1em;
+}
+div.field > div.info > .top img {
+  height: 2em;
+  cursor: pointer;
+}
+div.field > div.info > .text {
+  font-size: 2em;
 }
