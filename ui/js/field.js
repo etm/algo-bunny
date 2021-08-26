@@ -18,10 +18,6 @@ class Field {
 
   #nodraw;
 
-  #play_audio(name) { //{{{
-    new Audio('sounds/' + name + '.mp3').play();
-  } //}}}
-
   #get_level(levelurl) { //{{{
     return new Promise( resolve => {
       $.ajax({
@@ -196,7 +192,7 @@ class Field {
     // move higher
     this.target_field.append(tar)
     // start
-    this.#play_audio('boing')
+    this.assets.play_audio(this.assets.audio.boing.sample())
     $('#bunnyani')[0].beginElement()
   } //}}}
 
@@ -237,7 +233,7 @@ class Field {
     let level = await this.#get_level(this.levelurl);
     let pieces = level.split(/---\s*\r?\n/)
     if (pieces.length != 6) {
-      bunny_say('Uh, oh. Level is no good.')
+      this.assets.say(this.assets.texts.faultylevel,'div.speech')
       return false
     }
     [
@@ -323,7 +319,7 @@ class Field {
       delete this.state_carrots[oy][ox]
       if (!this.#nodraw) {
         $('g.tile[element-x='+ox+'][element-y='+oy+'] g.carrot',this.target_field).remove()
-        this.#play_audio('interact')
+        this.assets.play_audio(this.assets.audio.interact.sample())
       }
       return c
     } else {
@@ -336,7 +332,7 @@ class Field {
       this.state_carrots[oy][ox] = val
       if (!this.#nodraw) {
         this.#draw_carrot(ox,oy,val)
-        this.#play_audio('interact')
+        this.assets.play_audio(this.assets.audio.interact.sample())
       }
       return true
     } else {
@@ -345,7 +341,7 @@ class Field {
   } //}}}
   eat() { //{{{
     if (!this.#nodraw) {
-      this.#play_audio('eat')
+      this.assets.play_audio(this.assets.audio.eat.sample())
     }
   } //}}}
 
@@ -360,7 +356,7 @@ class Field {
       this.state_flowers[oy][ox] = v
       if (!this.#nodraw) {
         this.#draw_flower(ox,oy,v.type)
-        this.#play_audio('interact')
+        this.assets.play_audio(this.assets.audio.interact.sample())
       }
       return true
     } else {
@@ -375,7 +371,7 @@ class Field {
       delete this.state_flowers[oy][ox]
       if (!this.#nodraw) {
         $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
-        this.#play_audio('eat')
+        this.assets.play_audio(this.assets.audio.eat.sample())
       }
       return true
     } else {

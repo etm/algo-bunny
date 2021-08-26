@@ -3,9 +3,6 @@ var active_del_timeout
 
 var active_drag_location = null // thany you chrome for security without reason. Dragover and dragleave can not getData.
 
-var field
-var walker
-
 $(document).ready(async function() {
   let assets  = new Assets;
   await assets.load();
@@ -16,11 +13,11 @@ $(document).ready(async function() {
   let editor = new Editor($('div.program svg'), assets);
   editor.render();
 
-  field = new Field($('div.field svg'), assets, level);
+  let field = new Field($('div.field svg'), assets, level);
   if (!(await field.load_level())) { return; }
   field.render();
 
-  walker = new Walker(editor,field)
+  let walker = new Walker(assets,editor,field)
 
   // show some elements
   $('div.elements img').each((_,ele) => { //{{{
@@ -35,15 +32,15 @@ $(document).ready(async function() {
       }
     }
     $('div.elements img[data-type=' + iname + ']').click(()=>{
-      bunny_say(item.desc);
+      assets.say(item.desc,'div.speech')
     });
   }); //}}}
 
   // say initial thing
-  bunny_one_liner();
+  assets.oneliner('div.speech')
 
   // one liners
-  $('div.program svg').on('click','g[element-type=bunny]',()=>{ bunny_one_liner(); });
+  $('div.program svg').on('click','g[element-type=bunny]',()=>{ assets.oneliner('div.speech') })
 
   // click element in editor, say and show delete
   $('div.program svg').on('click','g[element-group=graph] g[element-id]',(ev)=>{ //{{{
@@ -61,7 +58,7 @@ $(document).ready(async function() {
       $('div.program svg g[element-group=drop] g[element-type=delete][element-id=' + eid + ']').addClass('active');
       let iname = $(ev.currentTarget).attr('element-type');
       let item = assets.commands[iname];
-      bunny_say(item.label);
+      assets.say(item.label,'div.speech')
       active_del_timeout = setTimeout(()=>{
         $('div.program svg g[element-group=drop] g[element-type=delete][element-id].active').removeClass('active');
         active_del = '';
@@ -93,7 +90,7 @@ $(document).ready(async function() {
     editor.render();
     active_del = '';
     $(ev.currentTarget).removeClass('active');
-    bunny_say_reset();
+    assets.say_reset('div.speech')
     return false;
   }); //}}}
 

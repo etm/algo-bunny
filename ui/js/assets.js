@@ -1,12 +1,18 @@
 function Assets() {
-  var self = this;
+  var self = this
 
-  this.commands = {};
-  this.field = {};
-  this.placeholders = {};
-  this.tiles = {};
+  this.commands = {}
+  this.field = {}
+  this.placeholders = {}
+  this.tiles = {}
+  this.texts = {}
+  this.audio = {}
 
-  function load_svg(url,item,i) {
+  this.say_timeout
+  this.say_duration = 8000
+
+
+  function load_svg(url,item,i) { //{{{
     return $.ajax({
       type: "GET",
       dataType: "xml",
@@ -18,7 +24,11 @@ function Assets() {
         item.push($(res.documentElement).find('> g'));
       }
     });
-  }
+  } //}}}
+
+  this.play_audio = function(it) { //{{{
+    new Audio(it).play()
+  } //}}}
 
   this.load = function() { //{{{
     let promises = [];
@@ -59,6 +69,78 @@ function Assets() {
     return Promise.all(promises);
   }; //}}}
 
+  this.say_reset = function(target) { //{{{
+    if (self.say_timeout) {
+      clearTimeout(self.say_timeout)
+    }
+    $(target).hide()
+  } //}}}
+  this.say = function(text,target) { //{{{
+    if (this.say_timeout) {
+      clearTimeout(this.say_timeout);
+    }
+    $(target).html(text);
+    $(target).show();
+    this.say_timeout = setTimeout(()=>{$(target).hide();},this.say_duration);
+  } //}}}
+  this.oneliner = function(target) { //{{{
+    this.say(this.oneliners.sample(),target)
+  } //}}}
+
+  /*------------------------*/
+
+  this.audio.boing = [ 'sounds/boing.mp3' ]
+  this.audio.eat = [ 'sounds/eat.mp3' ]
+  this.audio.interact = [ 'sounds/interact.mp3' ]
+  this.audio.ohno =  [ 'sounds/ohno.mp3' ]
+
+  this.texts.nostep = "I don't want to step on carrots, flowers or magic! Falling into holes is also not an option."
+  this.texts.noget = "There is no carrot!"
+  this.texts.noplace = "There is already something there!"
+  this.texts.noeat = "There is nothing to eat! How dare you!"
+  this.texts.nosee = "There is nothing to see? I am bored."
+  this.texts.fail = "All this work, still no success :-("
+  this.texts.faultylevel = "Uh oh, level is b0rked :-/"
+
+  /*------------------------*/
+
+  this.oneliners = [ //{{{
+    "I love the smell of carrots in the morning.",
+    "Show me the carrots.",
+    "To carrots and beyond.",
+    "Go ahead, make my day.",
+    "Here's looking at you, carrot.",
+    "Yippie-ki-yay, carrot.",
+    "I'm the king of the carrots.",
+    "The greatest teacher, carrot is.",
+    "If you're nothing without the carrot, then you shouldn't have it.",
+    "I am serious, don't call me carrot.",
+    "The carrot abides.",
+    "You're gonna need a bigger carrot.",
+    "May the carrot be with you.",
+    "A carrot is a carrot, but they call it 'la carotte'.",
+    "Leave the flower. Take the carrots.",
+    "Keep your friends close, but your carrots closer.",
+    "This is not 'Nam. This is carrot gathering. There is rules.",
+    "You had me at carrot.",
+    "Flowers? Where we're going, we don't need flowers.",
+    "I'm having a carrot for dinner.",
+    "We'll always have carrots.",
+    "I think this is the beginning of a beautiful carrot gathering.",
+    "Round up the usual carrots.",
+    "Mama always said life is like a carrot. You never know what you're gonna get.",
+    "A carrot, for lack of a better word, is good.",
+    "As God is my witness, I'll never be hungry again.",
+    "Carrots, my dear Watson.",
+    "Soylent Orange is carrots.",
+    "My carrot!",
+    "I feel the need, the need for carrots.",
+    "Carpe diem. Seize the carrot. Make your lives extraordinary.",
+    "A million carrots isn't cool. You know what's cool? A billion carrots."
+  ] //}}}
+
+  /*------------------------*/
+
   this.placeholders.add = { /*{{{*/
     'label': 'Add',
     'desc': 'Drag here to add.',
@@ -74,6 +156,8 @@ function Assets() {
     'desc': 'I am Bunny. Algo Bunny.',
     'icon': 'assets/start.svg'
   }; /*}}}*/
+
+  /*------------------------*/
 
   this.tiles.normal = { /*{{{*/
     'locations': [
