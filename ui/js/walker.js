@@ -181,6 +181,10 @@ class Walker {
               return false;
             }
             break; //}}}
+          case 'break': //{{{
+            await this.#sleep(this.timing/2)
+            return 'leave'
+            break; //}}}
         }
       }
 
@@ -199,6 +203,46 @@ class Walker {
               if (res === false) { return res; }
             }
             break //}}}
+          case 'if_carrot': //{{{
+            await this.#sleep(this.timing/2)
+            if (this.field.has_carrot()) {
+              res = await this.#walk_rec(v.first)
+              if (res === false || res == 'leave') { return res; }
+            } else {
+              res = await this.#walk_rec(v.second)
+              if (res === false || res == 'leave') { return res; }
+            }
+            break //}}}
+          case 'if_flower': //{{{
+            await this.#sleep(this.timing/2)
+            if (this.field.has_flower()) {
+              res = await this.#walk_rec(v.first)
+              if (res === false || res == 'leave') { return res; }
+            } else {
+              res = await this.#walk_rec(v.second)
+              if (res === false || res == 'leave') { return res; }
+            }
+            break //}}}
+          case 'if_hole': //{{{
+            await this.#sleep(this.timing/2)
+            if (this.field.is_hole()) {
+              res = await this.#walk_rec(v.first)
+              if (res === false || res == 'leave') { return res; }
+            } else {
+              res = await this.#walk_rec(v.second)
+              if (res === false || res == 'leave') { return res; }
+            }
+            break //}}}
+          case 'if_empty': //{{{
+            await this.#sleep(this.timing/2)
+            if (this.field.is_empty()) {
+              res = await this.#walk_rec(v.first)
+              if (res === false || res == 'leave') { return res; }
+            } else {
+              res = await this.#walk_rec(v.second)
+              if (res === false || res == 'leave') { return res; }
+            }
+            break //}}}
         }
       }
 
@@ -215,7 +259,6 @@ class Walker {
     if (res == true) {
       this.assets.say(this.assets.texts.fail,'div.speech')
     }
-    console.log(res)
   } //}}}
 
   stop() { //{{{

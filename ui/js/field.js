@@ -18,6 +18,82 @@ class Field {
 
   #nodraw;
 
+  constructor(target,assets,levelurl) { //{{{
+    this.assets = assets;
+    this.levelurl = levelurl;
+
+    this.target = target;
+
+    let t1 = $X('<g element-group="field" xmlns="http://www.w3.org/2000/svg"></g>');
+    let t2 = $X('<g element-group="drag"  xmlns="http://www.w3.org/2000/svg"></g>');
+    this.target.append(t1);
+    this.target.append(t2);
+
+    this.target_field = t1;
+    this.target_drag = t2;
+
+    this.#tile_width = 57;
+    this.#tile_height = 83.5;
+    this.#carrot_y_displacement = -25;
+    this.#carrot_scale_x_compensation = 60;
+    this.#carrot_scale_y_compensation = 28;
+    this.#flower_y_displacement = -18;
+    this.#op_y_displacement = 0;
+    this.#bunny_y_displacement = -37;
+    this.#scale_factor = 0.9;
+    this.#perspective_correction = 0;
+    this.#height_shift = 40;
+
+    this.#nodraw = false
+   } //}}}
+  async load_level() { //{{{
+    let level = await this.#get_level(this.levelurl);
+    let pieces = level.split(/---\s*\r?\n/)
+    if (pieces.length != 6) {
+      this.assets.say(this.assets.texts.faultylevel,'div.speech')
+      return false
+    }
+    [
+      this.tiles,
+      this.assignments,
+      this.help,
+      this.carrots,
+      this.max_score,
+      this.elements] = pieces
+    this.x = 0
+    this.y = 0
+
+    this.elements = this.elements.trim().split(',')
+    this.state_flowers = []
+    this.state_carrots = []
+    this.state_op = []
+    this.tiles = this.tiles.trimRight().split(/\r?\n/)
+
+    this.tiles = this.tiles.map( x => {
+      this.state_flowers.push([])
+      this.state_carrots.push([])
+      this.state_op.push([])
+      let s = x.split('')
+      if (this.x < s.length) { this.x = s.length }
+      return s
+    });
+    this.y = this.tiles.length
+
+    this.assignments = this.assignments.split(/\r?\n/)
+    this.assignments = this.assignments.map( x => {
+      let s = x.trim().split(',')
+      if (s.length == 1) { return { 'type': 'number', 'value': parseInt(s[0]) } }
+      if (s.length == 3) { return { 'type': 'position', 'x': parseInt(s[0]), 'y': parseInt(s[1]), 'face': s[2] } }
+    })
+    this.carrots = this.carrots.split('').map(x => x.trim()).filter(x => x !== undefined)
+    this.max_score = parseInt(this.max_score)
+    this.max_carrots = this.tiles.reduce((total,arr) => {
+      return total + arr.reduce((total,ele) => {
+        return total + (ele.match(/[1-9c]/) ? 1 : 0)
+      },0)
+    },0)
+    return true
+  }  //}}}
   #get_level(levelurl) { //{{{
     return new Promise( resolve => {
       $.ajax({
@@ -51,6 +127,15 @@ class Field {
   #tile_base(x,y,klas) { //{{{
     let [pos_x,pos_y] = this.#tile_pos(x,y)
     return $X('<g transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + pos_x + ',' + pos_y + ')" class="' + klas + '" element-x="' + x + '" element-y="' + y  + '" xmlns="http://www.w3.org/2000/svg"></g>');
+  } //}}}
+
+  #facing_tile () { //{{{
+    let [ox,oy,oface] = this.state_bunny
+    if      (oface == 'N') { oy -= 1 }
+    else if (oface == 'E') { ox += 1 }
+    else if (oface == 'S') { oy += 1 }
+    else if (oface == 'W') { ox -= 1 }
+    return [ox,oy,oface]
   } //}}}
 
   #draw_drag_layer(width,height) { //{{{
@@ -124,6 +209,10 @@ class Field {
         g1.append(g2);
     g1.insertAfter(tar);
   } // }}}
+  #remove_bunny() { //{{{
+    this.target_field.find('g.bunny').remove();
+  } //}}}
+
   #bunny_hop(tx,ty,face) { //{{{
     let fx = 0;
     let fy = 0;
@@ -196,96 +285,6 @@ class Field {
     $('#bunnyani')[0].beginElement()
   } //}}}
 
-  #remove_bunny() { //{{{
-    this.target_field.find('g.bunny').remove();
-  } //}}}
-
-  constructor(target,assets,levelurl) { //{{{
-    this.assets = assets;
-    this.levelurl = levelurl;
-
-    this.target = target;
-
-    let t1 = $X('<g element-group="field" xmlns="http://www.w3.org/2000/svg"></g>');
-    let t2 = $X('<g element-group="drag"  xmlns="http://www.w3.org/2000/svg"></g>');
-    this.target.append(t1);
-    this.target.append(t2);
-
-    this.target_field = t1;
-    this.target_drag = t2;
-
-    this.#tile_width = 57;
-    this.#tile_height = 83.5;
-    this.#carrot_y_displacement = -25;
-    this.#carrot_scale_x_compensation = 60;
-    this.#carrot_scale_y_compensation = 28;
-    this.#flower_y_displacement = -18;
-    this.#op_y_displacement = 0;
-    this.#bunny_y_displacement = -37;
-    this.#scale_factor = 0.9;
-    this.#perspective_correction = 0;
-    this.#height_shift = 40;
-
-    this.#nodraw = false
-   } //}}}
-
-  async load_level() { //{{{
-    let level = await this.#get_level(this.levelurl);
-    let pieces = level.split(/---\s*\r?\n/)
-    if (pieces.length != 6) {
-      this.assets.say(this.assets.texts.faultylevel,'div.speech')
-      return false
-    }
-    [
-      this.tiles,
-      this.assignments,
-      this.help,
-      this.carrots,
-      this.max_score,
-      this.elements] = pieces
-    this.x = 0
-    this.y = 0
-
-    this.elements = this.elements.trim().split(',')
-    this.state_flowers = []
-    this.state_carrots = []
-    this.state_op = []
-    this.tiles = this.tiles.trimRight().split(/\r?\n/)
-
-    this.tiles = this.tiles.map( x => {
-      this.state_flowers.push([])
-      this.state_carrots.push([])
-      this.state_op.push([])
-      let s = x.split('')
-      if (this.x < s.length) { this.x = s.length }
-      return s
-    });
-    this.y = this.tiles.length
-
-    this.assignments = this.assignments.split(/\r?\n/)
-    this.assignments = this.assignments.map( x => {
-      let s = x.trim().split(',')
-      if (s.length == 1) { return { 'type': 'number', 'value': parseInt(s[0]) } }
-      if (s.length == 3) { return { 'type': 'position', 'x': parseInt(s[0]), 'y': parseInt(s[1]), 'face': s[2] } }
-    })
-    this.carrots = this.carrots.split('').map(x => x.trim()).filter(x => x !== undefined)
-    this.max_score = parseInt(this.max_score)
-    this.max_carrots = this.tiles.reduce((total,arr) => {
-      return total + arr.reduce((total,ele) => {
-        return total + (ele.match(/[1-9c]/) ? 1 : 0)
-      },0)
-    },0)
-    return true
-  }  //}}}
-
-  #facing_tile () { //{{{
-    let [ox,oy,oface] = this.state_bunny
-    if      (oface == 'N') { oy -= 1 }
-    else if (oface == 'E') { ox += 1 }
-    else if (oface == 'S') { oy += 1 }
-    else if (oface == 'W') { ox -= 1 }
-    return [ox,oy,oface]
-  } //}}}
   has_carrot()    { //{{{
     let [ox,oy,oface] = this.#facing_tile()
     return this.state_carrots[oy][ox] ? true : false
@@ -293,6 +292,15 @@ class Field {
   has_flower()    {  //{{{
     let [ox,oy,oface] = this.#facing_tile()
     return this.state_flowers[oy][ox] ? true : false
+  } //}}}
+  is_hole()    {  //{{{
+    let [ox,oy,oface] = this.#facing_tile()
+    return (this.tiles[oy] && this.tiles[oy][ox].match(/[T+\-*\/]/)) ? false : true
+  } //}}}
+  is_empty()    {  //{{{
+    let [ox,oy,oface] = this.#facing_tile()
+    console.log(this.tiles[oy] && this.tiles[oy][ox].match(/[T+\-*\/]/) && (this.state_carrots[oy][ox] === undefined || this.state_carrots[oy][ox] == null) && (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null))
+    return (this.tiles[oy] && this.tiles[oy][ox].match(/[T+\-*\/]/) && (this.state_carrots[oy][ox] === undefined || this.state_carrots[oy][ox] == null) && (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null)) ? true : false
   } //}}}
   check_carrot()   { //{{{
     let [ox,oy,oface] = this.#facing_tile()
@@ -448,7 +456,6 @@ class Field {
     this.state_flowers = JSON.parse(this.#save_state_flowers)
     $('g.flower,g.carrot,g.bunny',this.target_field).remove()
   } //}}}
-
   reset_full() { //{{{
     this.reset_state()
     for (const[y,line] of this.state_carrots.entries()) {
@@ -463,7 +470,6 @@ class Field {
     }
     this.#draw_bunny(this.state_bunny[0],this.state_bunny[1],this.state_bunny[2]);
   } //}}}
-
   render() { //{{{
     let counter = 0;
     let flower_count = 0;
