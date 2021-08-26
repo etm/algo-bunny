@@ -1,16 +1,13 @@
-TTTT
-TTcT  TTT
-TBcT  TfT
-TTcT  fTT
-TTTT
+TTTTTT TTT
+TB111T TfT
+TTTTTT TTT
 ---
 2
-1,2,E
 ---
-Eat the carrot the flower reminds you of.
+Eat as many carrots as the flower reminds you of.
 ---
-2
+11
 ---
 25
 ---
-eat_carrot,get_carrot,put_carrot,forward,left,right,step_left,step_right,jump,loop,break,if_empty,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower,memorize_carrot,memorize_position
+eat_carrot,get_carrot,put_carrot,forward,left,right,step_left,step_right,jump,jump_back,loop,break,if_empty,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower

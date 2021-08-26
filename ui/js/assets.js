@@ -93,6 +93,7 @@ function Assets() {
   this.audio.eat = [ 'sounds/eat.mp3' ]
   this.audio.interact = [ 'sounds/interact.mp3' ]
   this.audio.ohno =  [ 'sounds/ohno.mp3' ]
+  this.audio.yay =  [ 'sounds/yay.mp3' ]
 
   this.texts.nostep = "I don't want to step on carrots, flowers or magic! Falling into holes is also not an option."
   this.texts.neverjump = "I never jumped before. To infinity and beyond?"
@@ -103,6 +104,8 @@ function Assets() {
   this.texts.brainempty = "My brain is empty."
   this.texts.noeat = "There is nothing to eat! How dare you!"
   this.texts.nosee = "There is nothing to see? I am bored."
+  this.texts.nocompare = "I neither have a carrot, nor have I remembered any sizes! This is hopeless!"
+  this.texts.nocompareto = "There has to be something in front of me to do fancy size comparisons!"
   this.texts.fail = "All this work, still no success :-("
   this.texts.faultylevel = "Uh oh, level is b0rked :-/"
 

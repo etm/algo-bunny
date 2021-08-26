@@ -1,4 +1,6 @@
 div.field {
+  position: relative;
+
   flex: 1 1 auto;
   background-color: #98eae0;
   height: 100vh;
@@ -103,3 +105,16 @@ div.field > div.bottom > button.ui.control        img:first-child { display: inl
 div.field > div.bottom > button.ui.control        img:last-child  { display: none; }
 div.field > div.bottom > button.ui.control.active img:first-child { display: none; }
 div.field > div.bottom > button.ui.control.active img:last-child  { display: inline; }
+
+div.field > div.info {
+  display: none;
+}
+div.field > div.info.active {
+  position: absolute;
+  left: 3em;
+  top: 3em;
+  right: 3em;
+  bottom: 9em;
+  display: block;
+  background-color: white;
+}

@@ -1,4 +1,5 @@
 div.speech {
+  z-index: 1000;
 	position: absolute;
 	max-width: 28em;
 

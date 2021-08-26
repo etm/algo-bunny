@@ -85,7 +85,7 @@ class Field {
       if (s.length == 1) { return { 'type': 'number', 'value': parseInt(s[0]) } }
       if (s.length == 3) { return { 'type': 'position', 'x': parseInt(s[0]), 'y': parseInt(s[1]), 'face': s[2] } }
     })
-    this.carrots = this.carrots.split('').map(x => x.trim()).filter(x => x !== undefined)
+    this.carrots = this.carrots.trim().split('').map(x => x.trim()).filter(x => x !== undefined && x != '')
     this.max_score = parseInt(this.max_score)
     this.max_carrots = this.tiles.reduce((total,arr) => {
       return total + arr.reduce((total,ele) => {
@@ -156,7 +156,8 @@ class Field {
     let tar = $('g.tile[element-x='+x+'][element-y='+y+']',this.target_field);
 
     if (size === undefined) { size = 1 }
-    let scale = ((this.max_carrots - size + 1) * (0.6 / this.max_carrots)) + 0.4
+    if (size > this.max_carrots) { size = this.max_carrots }
+    let scale = (size * (0.6 / this.max_carrots)) + 0.4
 
     let g1 = $X('<g transform="scale('+scale+','+scale+') translate(' + ((1/scale) * this.#carrot_scale_x_compensation - this.#carrot_scale_x_compensation) + ',' + (((1/scale) * this.#carrot_scale_y_compensation - this.#carrot_scale_y_compensation) + this.#carrot_y_displacement) + ')" class="carrot" xmlns="http://www.w3.org/2000/svg"></g>');
         g1.append(grax)

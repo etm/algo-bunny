@@ -1,10 +1,16 @@
-TTTTTT TTT
-TB111T TfT
-TTTTTT TTT
+TTTTTT
+TT111T TTT
+TBTTTT TfT
+TTfffT TTT
+TTTTTT
+
 ---
 2
+2
+2
+2
 ---
-Eat as many carrots as the flower reminds you of.
+Eat as many carrots as the flowers remind you of.
 ---
 11
 ---

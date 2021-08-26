@@ -3,6 +3,7 @@ class Walker {
   #hand
   #brain
   #steps_active
+  #eaten
 
   #sleep(milliseconds) {//{{{
     return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -23,6 +24,7 @@ class Walker {
     this.timing = 500
     this.#steps_active = false
     this.#jump_back = null
+    this.#eaten = ''
   }  //}}}
 
   async #walk_rec(it) { //{{{
@@ -118,6 +120,7 @@ class Walker {
             if (!(this.#hand === undefined || this.#hand == null)) {
               await this.#sleep(this.timing/2)
               this.field.eat()
+              this.#eaten += this.#hand
               this.#hand = null
               $('div.field div.ui.hand img').hide()
               await this.#sleep(this.timing/2)
@@ -125,6 +128,7 @@ class Walker {
               await this.#sleep(this.timing/2)
               res = this.field.get_carrot()
               if (res === false) { this.assets.say(this.assets.texts.noeat,'div.speech'); return false; }
+              this.#eaten += res
               this.field.eat()
               await this.#sleep(this.timing/2)
             } else {
@@ -185,7 +189,7 @@ class Walker {
                 await this.#sleep(this.timing/2)
                 $('div.field div.ui.brain .type').hide()
                 $('div.field div.ui.brain .text').text(res.value)
-                this.#brain = res
+                this.#brain = res.value
                 this.#steps_active = false
                 await this.#sleep(this.timing/2)
               } else if (res.type == 'position') {
@@ -261,12 +265,92 @@ class Walker {
             break //}}}
           case 'if_same': //{{{
             await this.#sleep(this.timing/2)
-            if (this.field.is_empty()) {
-              res = await this.#walk_rec(v.first)
-              if (res === false || res == 'leave') { return res; }
+            if (this.field.has_carrot() || this.field.has_flower()) {
+              let cf = this.field.check_flower()
+              let cc = this.field.check_carrot()
+              if (!(this.#hand === undefined || this.#hand == null)) {
+                if ((cc !== false && this.#hand == cc) || (cf !== false && this.#hand == cf.value)) {
+                  res = await this.#walk_rec(v.first)
+                  if (res === false || res == 'leave') { return res; }
+                } else {
+                  res = await this.#walk_rec(v.second)
+                  if (res === false || res == 'leave') { return res; }
+                }
+              } else if (!(this.#brain === undefined || this.#brain == null)) {
+                if ((cc !== false && this.#brain == cc) || (cf !== false && this.#brain == cf.value)) {
+                  res = await this.#walk_rec(v.first)
+                  if (res === false || res == 'leave') { return res; }
+                } else {
+                  res = await this.#walk_rec(v.second)
+                  if (res === false || res == 'leave') { return res; }
+                }
+              } else {
+                this.assets.say(this.assets.texts.nocompare,'div.speech')
+                return false;
+              }
             } else {
-              res = await this.#walk_rec(v.second)
-              if (res === false || res == 'leave') { return res; }
+              this.assets.say(this.assets.texts.nocompareto,'div.speech')
+              return false;
+            }
+            break //}}}
+          case 'if_smaller': //{{{
+            await this.#sleep(this.timing/2)
+            if (this.field.has_carrot() || this.field.has_flower()) {
+              let cf = this.field.check_flower()
+              let cc = this.field.check_carrot()
+              if (!(this.#hand === undefined || this.#hand == null)) {
+                if ((cc !== false && this.#hand < cc) || (cf !== false && this.#hand < cf.value)) {
+                  res = await this.#walk_rec(v.first)
+                  if (res === false || res == 'leave') { return res; }
+                } else {
+                  res = await this.#walk_rec(v.second)
+                  if (res === false || res == 'leave') { return res; }
+                }
+              } else if (!(this.#brain === undefined || this.#brain == null)) {
+                if ((cc !== false && this.#brain < cc) || (cf !== false && this.#brain < cf.value)) {
+                  res = await this.#walk_rec(v.first)
+                  if (res === false || res == 'leave') { return res; }
+                } else {
+                  res = await this.#walk_rec(v.second)
+                  if (res === false || res == 'leave') { return res; }
+                }
+              } else {
+                this.assets.say(this.assets.texts.nocompare,'div.speech')
+                return false;
+              }
+            } else {
+              this.assets.say(this.assets.texts.nocompareto,'div.speech')
+              return false;
+            }
+            break //}}}
+          case 'if_bigger': //{{{
+            await this.#sleep(this.timing/2)
+            if (this.field.has_carrot() || this.field.has_flower()) {
+              let cf = this.field.check_flower()
+              let cc = this.field.check_carrot()
+              if (!(this.#hand === undefined || this.#hand == null)) {
+                if ((cc !== false && this.#hand > cc) || (cf !== false && this.#hand > cf.value)) {
+                  res = await this.#walk_rec(v.first)
+                  if (res === false || res == 'leave') { return res; }
+                } else {
+                  res = await this.#walk_rec(v.second)
+                  if (res === false || res == 'leave') { return res; }
+                }
+              } else if (!(this.#brain === undefined || this.#brain == null)) {
+                if ((cc !== false && this.#brain > cc) || (cf !== false && this.#brain > cf.value)) {
+                  res = await this.#walk_rec(v.first)
+                  if (res === false || res == 'leave') { return res; }
+                } else {
+                  res = await this.#walk_rec(v.second)
+                  if (res === false || res == 'leave') { return res; }
+                }
+              } else {
+                this.assets.say(this.assets.texts.nocompare,'div.speech')
+                return false;
+              }
+            } else {
+              this.assets.say(this.assets.texts.nocompareto,'div.speech')
+              return false;
             }
             break //}}}
         }
@@ -283,7 +367,13 @@ class Walker {
     this.walking = true
     let res = await this.#walk_rec(this.editor.program)
     if (res == true) {
-      this.assets.say(this.assets.texts.fail,'div.speech')
+      console.log(this.field.carrots.join())
+      console.log(this.#eaten)
+      if (this.field.carrots.join('') == this.#eaten) {
+        this.assets.play_audio(this.assets.audio.yay.sample())
+      } else {
+        this.assets.say(this.assets.texts.fail,'div.speech')
+      }
     }
   } //}}}
 
@@ -292,6 +382,7 @@ class Walker {
     this.#brain = null
     this.#hand = null
     this.#steps_active = false
+    this.#eaten = ''
     $('div.field div.ui.brain .type').hide()
     $('div.field div.ui.brain .text').text('')
     $('div.field div.ui.hand img').hide()
