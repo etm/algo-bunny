@@ -30,6 +30,7 @@ class Walker {
   async #walk_rec(it) { //{{{
     let res;
     for (const [k,v] of it) {
+      if (!this.walking) { return false }
 
       if (typeof(v) == 'string') {
         switch (v) {
@@ -375,6 +376,10 @@ class Walker {
         this.assets.say(this.assets.texts.fail,'div.speech')
       }
     }
+    if (!this.walking) {
+      this.stop()
+      this.field.reset_full()
+    }
   } //}}}
 
   stop() { //{{{
@@ -383,6 +388,7 @@ class Walker {
     this.#hand = null
     this.#steps_active = false
     this.#eaten = ''
+    this.assets.say_reset('div.speech')
     $('div.field div.ui.brain .type').hide()
     $('div.field div.ui.brain .text').text('')
     $('div.field div.ui.hand img').hide()

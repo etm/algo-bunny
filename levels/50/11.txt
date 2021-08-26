@@ -2,7 +2,7 @@ TTTT TTT
 TB1f T1T
 TTTT TTT
 ---
-1,6,N
+6,0,S
 ---
 Eat all carrots. Hint: memorize the flower.
 ---
