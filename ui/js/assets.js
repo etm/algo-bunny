@@ -181,7 +181,7 @@ function Assets() {
     'type': 'simple',
     'label': 'Jump Back',
     'desc': 'I jump to the origin of the last jump. I automatically remember my last jump, because jumps are exiting.',
-    'icon': 'commands/jump.svg'
+    'icon': 'commands/jump_back.svg'
    }; /*}}}*/
 
   this.commands.get_carrot = { /*{{{*/
