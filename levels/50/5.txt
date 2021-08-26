@@ -11,4 +11,4 @@ Eat all carrots.
 ---
 25
 ---
-eat_carrot,forward,left,right,loop,break,if_empty
+eat_carrot,forward,left,right,loop,break,if_empty,if_carrot

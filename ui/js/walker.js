@@ -368,8 +368,6 @@ class Walker {
     this.walking = true
     let res = await this.#walk_rec(this.editor.program)
     if (res == true) {
-      console.log(this.field.carrots.join())
-      console.log(this.#eaten)
       if (this.field.carrots.join('') == this.#eaten) {
         this.assets.play_audio(this.assets.audio.yay.sample())
       } else {
