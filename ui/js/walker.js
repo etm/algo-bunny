@@ -64,6 +64,7 @@ class Walker {
               res = await this.field.jump(wx,wy,wface)
               if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
             } else {
+              this.assets.say(this.assets.texts.neverjump,'div.speech')
               return false
             }
             break; //}}}
@@ -72,23 +73,33 @@ class Walker {
               await this.#sleep(this.timing/2)
               res = this.field.get_carrot()
               if (res === false) { this.assets.say(this.assets.texts.noget,'div.speech'); return false; }
-
               this.#hand = res
               $('div.field div.ui.hand img').show()
               await this.#sleep(this.timing/2)
             } else {
+              this.assets.say(this.assets.texts.alreadyhold,'div.speech')
               return false
             }
             break; //}}}
           case 'put_carrot': //{{{
             if (!(this.#hand === undefined || this.#hand == null)) {
               await this.#sleep(this.timing/2)
+              let tres = 0
+              if (this.field.has_carrot()) {
+                tres = this.field.get_carrot()
+              }
               res = this.field.put_carrot(this.#hand)
               if (res === false) { this.assets.say(this.assets.texts.noplace,'div.speech'); return false; }
-              this.#hand = null
-              $('div.field div.ui.hand img').hide()
+              if (tres > 0) {
+                this.#hand = tres
+                $('div.field div.ui.hand img').show()
+              } else {
+                this.#hand = null
+                $('div.field div.ui.hand img').hide()
+              }
               await this.#sleep(this.timing/2)
             } else {
+              this.assets.say(this.assets.texts.nocarrot,'div.speech')
               return false
             }
             break; //}}}
@@ -99,6 +110,7 @@ class Walker {
               if (res === false) { this.assets.say(this.assets.texts.noplace,'div.speech'); return false; }
               await this.#sleep(this.timing/2)
             } else {
+              this.assets.say(this.assets.texts.brainempty,'div.speech')
               return false
             }
             break; //}}}
@@ -116,6 +128,7 @@ class Walker {
               this.field.eat()
               await this.#sleep(this.timing/2)
             } else {
+              this.assets.say(this.assets.texts.noeat,'div.speech')
               return false;
             }
             break; //}}}
@@ -126,6 +139,7 @@ class Walker {
               if (res === false) { this.assets.say(this.assets.texts.noeat,'div.speech'); return false; }
               await this.#sleep(this.timing/2)
             } else {
+              this.assets.say(this.assets.texts.noeat,'div.speech')
               return false;
             }
             break; //}}}
@@ -140,6 +154,7 @@ class Walker {
               this.#steps_active = false
               await this.#sleep(this.timing/2)
             } else {
+              this.assets.say(this.assets.texts.nosee,'div.speech')
               return false;
             }
             break; //}}}
@@ -178,6 +193,7 @@ class Walker {
                 if (res === false) { return false; }
               }
             } else {
+              this.assets.say(this.assets.texts.nosee,'div.speech')
               return false;
             }
             break; //}}}
@@ -234,6 +250,16 @@ class Walker {
             }
             break //}}}
           case 'if_empty': //{{{
+            await this.#sleep(this.timing/2)
+            if (this.field.is_empty()) {
+              res = await this.#walk_rec(v.first)
+              if (res === false || res == 'leave') { return res; }
+            } else {
+              res = await this.#walk_rec(v.second)
+              if (res === false || res == 'leave') { return res; }
+            }
+            break //}}}
+          case 'if_same': //{{{
             await this.#sleep(this.timing/2)
             if (this.field.is_empty()) {
               res = await this.#walk_rec(v.first)
