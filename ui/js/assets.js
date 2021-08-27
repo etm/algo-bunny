@@ -12,7 +12,7 @@ function Assets() {
   this.say_duration = 8000
 
 
-  function load_svg(url,item,i) { //{{{
+  function  load_svg(url,item,i) { //{{{
     return $.ajax({
       type: "GET",
       dataType: "xml",
@@ -27,20 +27,26 @@ function Assets() {
   } //}}}
 
   this.play_audio = function(it) { //{{{
-    new Audio(it).play()
+    it.play()
   } //}}}
 
   this.load = function() { //{{{
     let promises = [];
+    _.each(self.audio,(item) => {
+      item.sounds = [];
+      _.each(item.locations,(l) => {
+        item.sounds.push(new Audio(l))
+      });
+    });
     _.each(self.tiles,(item) => {
-        item.graphics = [];
-        _.each(item.locations,(l) => {
-          promises.push(load_svg(l,item.graphics));
-        });
+      item.graphics = [];
+      _.each(item.locations,(l) => {
+        promises.push(load_svg(l,item.graphics));
+      });
     });
     _.each(self.placeholders,(item) => {
-        item.graphics = {};
-        promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
+      item.graphics = {};
+      promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
     });
     _.each(self.commands,(item) => {
       if (item.type == 'simple' || item.type == 'position') {
@@ -89,11 +95,21 @@ function Assets() {
 
   /*------------------------*/
 
-  this.audio.boing = [ 'sounds/boing.mp3' ]
-  this.audio.eat = [ 'sounds/eat.mp3' ]
-  this.audio.interact = [ 'sounds/interact.mp3' ]
-  this.audio.ohno =  [ 'sounds/ohno.mp3' ]
-  this.audio.yay =  [ 'sounds/yay.mp3' ]
+  this.audio.boing = { //{{{
+    'locations': [ 'sounds/boing.mp3' ]
+  } //}}}
+  this.audio.eat = { //{{{
+    'locations': [ 'sounds/eat.mp3' ]
+  } //}}}
+  this.audio.interact = { //{{{
+    'locations': [ 'sounds/interact.mp3' ]
+  } //}}}
+  this.audio.ohno = { //{{{
+    'locations': [ 'sounds/ohno.mp3' ]
+  } //}}}
+  this.audio.yay = { //{{{
+    'locations': [ 'sounds/yay.mp3' ]
+  } //}}}
 
   this.texts.nostep = "I don't want to step on carrots, flowers or magic! Falling into holes is also not an option."
   this.texts.neverjump = "I never jumped before. To infinity and beyond?"

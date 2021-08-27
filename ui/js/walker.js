@@ -369,7 +369,7 @@ class Walker {
     let res = await this.#walk_rec(this.editor.program)
     if (res == true) {
       if (this.field.carrots.join('') == this.#eaten) {
-        this.assets.play_audio(this.assets.audio.yay.sample())
+        this.assets.play_audio(this.assets.audio.yay.sounds.sample())
       } else {
         this.assets.say(this.assets.texts.fail,'div.speech')
       }

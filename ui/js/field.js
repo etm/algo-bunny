@@ -284,7 +284,7 @@ class Field {
     // move higher
     this.target_field.append(tar)
     // start
-    this.assets.play_audio(this.assets.audio.boing.sample())
+    this.assets.play_audio(this.assets.audio.boing.sounds.sample())
     $('#bunnyani')[0].beginElement()
   } //}}}
 
@@ -329,7 +329,7 @@ class Field {
       delete this.state_carrots[oy][ox]
       if (!this.#nodraw) {
         $('g.tile[element-x='+ox+'][element-y='+oy+'] g.carrot',this.target_field).remove()
-        this.assets.play_audio(this.assets.audio.interact.sample())
+        this.assets.play_audio(this.assets.audio.interact.sounds.sample())
       }
       return c
     } else {
@@ -342,7 +342,7 @@ class Field {
       this.state_carrots[oy][ox] = val
       if (!this.#nodraw) {
         this.#draw_carrot(ox,oy,val)
-        this.assets.play_audio(this.assets.audio.interact.sample())
+        this.assets.play_audio(this.assets.audio.interact.sounds.sample())
       }
       return true
     } else {
@@ -351,7 +351,7 @@ class Field {
   } //}}}
   eat() { //{{{
     if (!this.#nodraw) {
-      this.assets.play_audio(this.assets.audio.eat.sample())
+      this.assets.play_audio(this.assets.audio.eat.sounds.sample())
     }
   } //}}}
 
@@ -366,7 +366,7 @@ class Field {
       this.state_flowers[oy][ox] = v
       if (!this.#nodraw) {
         this.#draw_flower(ox,oy,v.type)
-        this.assets.play_audio(this.assets.audio.interact.sample())
+        this.assets.play_audio(this.assets.audio.interact.sounds.sample())
       }
       return true
     } else if (v.type =='number' && this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == '+') {
@@ -378,7 +378,7 @@ class Field {
       if (!this.#nodraw) {
         $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
         this.#draw_flower(ox,oy,'math')
-        this.assets.play_audio(this.assets.audio.interact.sample())
+        this.assets.play_audio(this.assets.audio.interact.sounds.sample())
       }
     } else if (v.type =='number' && this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == '-') {
       if (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null) {
@@ -389,7 +389,7 @@ class Field {
       if (!this.#nodraw) {
         $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
         this.#draw_flower(ox,oy,'math')
-        this.assets.play_audio(this.assets.audio.interact.sample())
+        this.assets.play_audio(this.assets.audio.interact.sounds.sample())
       }
     } else if (v.type =='number' && this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == '*') {
       if (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null) {
@@ -400,7 +400,7 @@ class Field {
       if (!this.#nodraw) {
         $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
         this.#draw_flower(ox,oy,'math')
-        this.assets.play_audio(this.assets.audio.interact.sample())
+        this.assets.play_audio(this.assets.audio.interact.sounds.sample())
       }
     } else if (v.type =='number' && this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == '/') {
       if (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null) {
@@ -411,7 +411,7 @@ class Field {
       if (!this.#nodraw) {
         $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
         this.#draw_flower(ox,oy,'math')
-        this.assets.play_audio(this.assets.audio.interact.sample())
+        this.assets.play_audio(this.assets.audio.interact.sounds.sample())
       }
     } else {
       return false
@@ -425,7 +425,7 @@ class Field {
       delete this.state_flowers[oy][ox]
       if (!this.#nodraw) {
         $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
-        this.assets.play_audio(this.assets.audio.eat.sample())
+        this.assets.play_audio(this.assets.audio.eat.sounds.sample())
       }
       return true
     } else {

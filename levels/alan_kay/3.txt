@@ -8,7 +8,7 @@ cTTTTT
 TTTTTT
 ---
 ---
-Eat the carrots in order - biggest first, smallest last.
+Eat the carrots in order - smallest first, biggest last.
 ---
 123456
 ---
