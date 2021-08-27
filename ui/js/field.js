@@ -169,6 +169,8 @@ class Field {
       grax = this.assets.tiles.flower_blue.graphics.sample().clone();
     } else if (type == 'number') {
       grax = this.assets.tiles.flower_red.graphics.sample().clone();
+    } else if (type == 'math') {
+      grax = this.assets.tiles.flower_math.graphics.sample().clone();
     }
     let tar = $('g.tile[element-x='+x+'][element-y='+y+']',this.target_field);
     let g1 = $X('<g transform="scale(1,1) translate(0,' + this.#flower_y_displacement + ')" class="flower" xmlns="http://www.w3.org/2000/svg"></g>');
@@ -367,6 +369,50 @@ class Field {
         this.assets.play_audio(this.assets.audio.interact.sample())
       }
       return true
+    } else if (v.type =='number' && this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == '+') {
+      if (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null) {
+        this.state_flowers[oy][ox] = v
+      } else {
+        this.state_flowers[oy][ox].value += v.value
+      }
+      if (!this.#nodraw) {
+        $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
+        this.#draw_flower(ox,oy,'math')
+        this.assets.play_audio(this.assets.audio.interact.sample())
+      }
+    } else if (v.type =='number' && this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == '-') {
+      if (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null) {
+        this.state_flowers[oy][ox] = v
+      } else {
+        this.state_flowers[oy][ox].value -= v.value
+      }
+      if (!this.#nodraw) {
+        $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
+        this.#draw_flower(ox,oy,'math')
+        this.assets.play_audio(this.assets.audio.interact.sample())
+      }
+    } else if (v.type =='number' && this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == '*') {
+      if (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null) {
+        this.state_flowers[oy][ox] = v
+      } else {
+        this.state_flowers[oy][ox].value *= v.value
+      }
+      if (!this.#nodraw) {
+        $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
+        this.#draw_flower(ox,oy,'math')
+        this.assets.play_audio(this.assets.audio.interact.sample())
+      }
+    } else if (v.type =='number' && this.tiles[oy] && this.tiles[oy][ox] && this.tiles[oy][ox] == '/') {
+      if (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null) {
+        this.state_flowers[oy][ox] = v
+      } else {
+        this.state_flowers[oy][ox].value = Math.round(this.state_flowers[oy][ox] / v.value)
+      }
+      if (!this.#nodraw) {
+        $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
+        this.#draw_flower(ox,oy,'math')
+        this.assets.play_audio(this.assets.audio.interact.sample())
+      }
     } else {
       return false
     }

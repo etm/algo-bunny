@@ -189,6 +189,13 @@ function Assets() {
       'assets/flower_red.svg',
     ]
   }; /*}}}*/
+  this.tiles.flower_math = { /*{{{*/
+    'locations': [
+      'assets/flower_math1.svg',
+      'assets/flower_math2.svg',
+      'assets/flower_math3.svg'
+    ]
+  }; /*}}}*/
   this.tiles.bunny_n = { /*{{{*/
     'locations': [
       'assets/rabbit_west.svg',
