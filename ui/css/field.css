@@ -111,6 +111,7 @@ div.field > div.mission, div.field > div.victory  {
 }
 
 div.field > div.mission.active, div.field > div.victory.active {
+  z-index: 1000;
   position: absolute;
   left: 3em;
   top: 3em;
@@ -119,12 +120,13 @@ div.field > div.mission.active, div.field > div.victory.active {
   display: block;
   background-color: white;
   border: 0.5em solid #222222;
-  padding: 1em;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 div.field > div.mission > .top, div.field > div.victory > .top {
   display: flex;
   flex-direction: row;
-  margin-bottom: 1em;
+  margin: 1em;
 }
 div.field > div.mission > .top .order, div.field > div.victory > .top .hurra {
   font-weight: bold;
@@ -142,10 +144,23 @@ div.field > div.mission > .top .text, div.field > div.victory > .top .text {
   font-size: 2em;
 }
 div.field > div.mission > .text, div.field > div.victory > .text {
+  position: relative;
   font-size: 2em;
+  padding: 1em;
 }
 div.field > div.mission > .text img, div.field > div.victory > .text img {
   height: 1.4em;
   vertical-align: bottom;
 }
 
+div.field > div.stats {
+  z-index: 500;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  padding: 1em;
+}
+div.field > div.stats > div {
+  text-align: right;
+}

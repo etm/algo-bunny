@@ -1,6 +1,8 @@
 var active_del = ''
 var active_del_timeout
 
+var walker
+
 var active_drag_location = null // thany you chrome for security without reason. Dragover and dragleave can not getData.
 
 $(document).ready(async function() {
@@ -17,7 +19,7 @@ $(document).ready(async function() {
   if (!(await field.load_level())) { return; }
   field.render();
 
-  let walker = new Walker(assets,editor,field)
+  walker = new Walker(assets,editor,field)
 
   // show some elements
   $('div.elements img').each((_,ele) => { //{{{
@@ -38,6 +40,15 @@ $(document).ready(async function() {
 
   // order
   assets.say(field.order.trim(),'div.speech')
+
+  // set mission and title
+  document.title = field.title.trim();
+  $('div.field div.mission div.top .order').text(field.order)
+  $('div.field div.mission div.text').html(marked(field.mission))
+  $('div.field div.mission div.text a[href]').attr('target','_blank')
+  if (field.title.trim() == 'Carrots!') {
+    $('div.field div.mission').toggleClass('active')
+  }
 
   // one liners
   $('div.program svg').on('click','g[element-type=bunny]',()=>{ assets.oneliner('div.speech') })
@@ -185,9 +196,6 @@ $(document).ready(async function() {
 
   $('button.mission').click(ev=>{
     $('div.field div.mission').toggleClass('active')
-    $('div.field div.mission div.top .order').text(field.order)
-    $('div.field div.mission div.text').html(marked(field.mission))
-    $('div.field div.mission div.text a[href]').attr('target','_blank')
   })
   $('div.field div.mission div.top img').click(ev=>{
     $('div.field div.mission').toggleClass('active')
@@ -202,5 +210,14 @@ $(document).ready(async function() {
       }
       $(ev.currentTarget).toggleClass('active');
     }
+  })
+  document.addEventListener('cisc:changed', (e) => {
+    $('div.field div.stats .cisc .value').text(editor.cisc_length())
+  })
+  document.addEventListener('ins:changed', (e) => {
+    $('div.field div.stats .ins .value').text(walker.ins_count())
+  })
+  document.addEventListener('steps:changed', (e) => {
+    $('div.field div.stats .steps .value').text(walker.step_count())
   })
 })

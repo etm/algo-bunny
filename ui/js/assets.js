@@ -11,7 +11,6 @@ function Assets() {
   this.say_timeout
   this.say_duration = 8000
 
-
   function  load_svg(url,item,i) { //{{{
     return $.ajax({
       type: "GET",
@@ -27,6 +26,7 @@ function Assets() {
   } //}}}
 
   this.play_audio = function(it) { //{{{
+    it.currentTime = 0
     it.play()
   } //}}}
 

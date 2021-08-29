@@ -5,6 +5,12 @@ class Walker {
   #steps_active
   #eaten
 
+  #changed_steps
+  #changed_ins
+
+  #ins_count
+  #step_count
+
   #sleep(milliseconds) {//{{{
     return new Promise(resolve => setTimeout(resolve, milliseconds))
   } //}}}
@@ -25,6 +31,12 @@ class Walker {
     this.#steps_active = false
     this.#jump_back = null
     this.#eaten = ''
+
+    this.#step_count = 0
+    this.#ins_count = 0
+
+    this.#changed_steps = new Event("steps:changed", {"bubbles":false, "cancelable":false})
+    this.#changed_ins = new Event("ins:changed", {"bubbles":false, "cancelable":false})
   }  //}}}
 
   async #walk_rec(it) { //{{{
@@ -32,12 +44,18 @@ class Walker {
     for (const [k,v] of it) {
       if (!this.walking) { return false }
 
+      this.#ins_count += 1
+      document.dispatchEvent(this.#changed_ins)
+
+
       if (typeof(v) == 'string') {
         switch (v) {
           case 'forward': //{{{
             res = await this.field.forward()
             if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
             this.#check_steps_active()
+            this.#step_count += 1
+            document.dispatchEvent(this.#changed_steps)
             break; //}}}
           case 'left': //{{{
             await this.#sleep(this.timing/2)
@@ -55,11 +73,14 @@ class Walker {
             res = await this.field.step_left()
             if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
             this.#check_steps_active()
+            this.#step_count += 1
+            document.dispatchEvent(this.#changed_steps)
             break; //}}}
           case 'step_right': //{{{
             res = await this.field.step_right()
             if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
             this.#check_steps_active()
+            this.#step_count += 1
             break; //}}}
           case 'jump_back': //{{{
             if (this.#jump_back != null) {
@@ -127,10 +148,10 @@ class Walker {
               await this.#sleep(this.timing/2)
             } else if (this.field.has_carrot()) {
               await this.#sleep(this.timing/2)
+              this.field.eat()
               res = this.field.get_carrot()
               if (res === false) { this.assets.say(this.assets.texts.noeat,'div.speech'); return false; }
               this.#eaten += res
-              this.field.eat()
               await this.#sleep(this.timing/2)
             } else {
               this.assets.say(this.assets.texts.noeat,'div.speech')
@@ -380,6 +401,9 @@ class Walker {
     }
   } //}}}
 
+  step_count() { return this.#step_count }
+  ins_count() { return this.#ins_count }
+
   stop() { //{{{
     this.walking = false
     this.#brain = null
@@ -387,6 +411,8 @@ class Walker {
     this.#steps_active = false
     this.#eaten = ''
     this.assets.say_reset('div.speech')
+    this.#step_count = 0
+    this.#ins_count = 0
     $('div.field div.ui.brain .type').hide()
     $('div.field div.ui.brain .text').text('')
     $('div.field div.ui.hand img').hide()

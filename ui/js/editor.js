@@ -1,33 +1,37 @@
 class Editor {
-  #tile_width;
-  #tile_height;
-  #scale_factor;
-  #height_shift;
+  #tile_width
+  #tile_height
+  #scale_factor
+  #height_shift
 
-  #width_add;
-  #height_add;
+  #width_add
+  #height_add
+
+  #changed
 
   constructor(target,assets) { //{{{
-    this.assets = assets;
-    this.target = target;
+    this.assets = assets
+    this.target = target
 
-    let t1 = $X('<g element-group="graph" xmlns="http://www.w3.org/2000/svg"></g>');
-    let t2 = $X('<g element-group="drop"  xmlns="http://www.w3.org/2000/svg"></g>');
-    target.append(t1);
-    target.append(t2);
+    let t1 = $X('<g element-group="graph" xmlns="http://www.w3.org/2000/svg"></g>')
+    let t2 = $X('<g element-group="drop"  xmlns="http://www.w3.org/2000/svg"></g>')
+    target.append(t1)
+    target.append(t2)
 
-    this.target_graph = t1;
-    this.target_drop = t2;
+    this.target_graph = t1
+    this.target_drop = t2
 
-    this.#tile_width = 26.4;
-    this.#tile_height = 27;
-    this.#scale_factor = 2.21;
-    this.#height_shift = 10;
+    this.#tile_width = 26.4
+    this.#tile_height = 27
+    this.#scale_factor = 2.21
+    this.#height_shift = 10
 
-    this.#width_add = this.#tile_width + 12;
-    this.#height_add = this.#tile_height + 8;
+    this.#width_add = this.#tile_width + 12
+    this.#height_add = this.#tile_height + 8
 
-    this.program = [];
+    this.#changed = new Event("cisc:changed", {"bubbles":false, "cancelable":false})
+
+    this.program = []
   }  //}}}
 
   #draw_asset(id,what,x,y,op,shift_y=0) { //{{{
@@ -132,6 +136,7 @@ class Editor {
   } //}}}
   remove_item(eid) { //{{{
     this.program = this.#remove_item_rec(this.program,eid);
+    document.dispatchEvent(this.#changed)
   } //}}}
 
   clear() { //{{{
@@ -206,6 +211,7 @@ class Editor {
     } else {
       this.program = this.#insert_rec(this.program,eid,eop,ety);
     }
+    document.dispatchEvent(this.#changed)
   } //}}}
 
   #update_rec(it,eid,para,value) { //{{{
@@ -229,6 +235,25 @@ class Editor {
   update_item(eid,para,value) { //{{{
     this.program = this.#update_rec(this.program,eid,para,value)
   } //}}}
+
+  #cisc_length_rec(it) { //{{{
+    let count = 0;
+    for (const [k,v] of it) {
+      count++;
+      if (typeof(v) == 'object') {
+        if (v.first) {
+          count += this.#cisc_length_rec(v.first)
+        }
+        if (v.second) {
+          count += this.#cisc_length_rec(v.second)
+        }
+      }
+    }
+    return count;
+  } //}}}
+  cisc_length(){
+    return this.#cisc_length_rec(this.program)
+  }
 
   render() {
     this.clear();
