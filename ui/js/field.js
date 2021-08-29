@@ -65,6 +65,8 @@ class Field {
     this.x = 0
     this.y = 0
 
+    this.max_score = parseInt(this.max_score)
+
     this.elements = this.elements.trim().split(',')
     this.state_flowers = []
     this.state_carrots = []

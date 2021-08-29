@@ -200,6 +200,9 @@ $(document).ready(async function() {
   $('div.field div.mission div.top img').click(ev=>{
     $('div.field div.mission').toggleClass('active')
   })
+  $('div.field div.victory div.top img').click(ev=>{
+    $('div.field div.victory').toggleClass('active')
+  })
   $('button.control').click(ev=>{
     if (editor.program.length > 0) {
       if ($(ev.currentTarget).hasClass('active')) {
@@ -219,5 +222,18 @@ $(document).ready(async function() {
   })
   document.addEventListener('steps:changed', (e) => {
     $('div.field div.stats .steps .value').text(walker.step_count())
+  })
+  document.addEventListener('walking:success', (e) => {
+    setTimeout(()=>{
+      $('div.field div.victory').toggleClass('active')
+      let cisc = editor.cisc_length()
+      let ins = walker.ins_count()
+      let steps = walker.step_count()
+
+      $('div.field div.victory .text .steps').text(steps)
+      $('div.field div.victory .text .ins').text(ins)
+      $('div.field div.victory .text .cisc').text(cisc)
+      $('div.field div.victory .text .rank').text(cisc + ins + steps - field.max_score)
+    },1000)
   })
 })

@@ -1,9 +1,9 @@
 TTTTTT
-TT111T TTT
-TBTTTT TfT
-TTfffT TTT
-TTTTTT
+TB111T TTT
+TffffT TfT
+TTTTTT TTT
 ---
+2
 2
 2
 2
@@ -13,9 +13,11 @@ The flowers will give you hints!
 ---
 Eat as many carrots as the flowers remind you of.
 ---
+Counting your steps ![](commands/memorize_steps.svg) gives you an idea how many
+carrots you have eaten.
 ---
 11
 ---
 25
 ---
-eat_carrot,get_carrot,put_carrot,forward,left,right,step_left,step_right,jump,loop,break,if_empty,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower
+eat_carrot,forward,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower

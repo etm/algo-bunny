@@ -9,11 +9,12 @@ TTTT
 ---
 Some carrots are bad!
 ---
-Eat the carrot the flower reminds you of.
+Eat the carrot the flower tells you.
 ---
+Use all the techniques learned before. Jumping, comparing, loops and of course eating.
 ---
 2
 ---
-25
+24
 ---
-eat_carrot,get_carrot,put_carrot,forward,left,right,step_left,step_right,jump,loop,break,if_empty,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower,memorize_carrot,memorize_position
+eat_carrot,get_carrot,put_carrot,forward,left,right,step_left,step_right,jump,jump_back,loop,break,if_empty,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower,memorize_carrot,memorize_position

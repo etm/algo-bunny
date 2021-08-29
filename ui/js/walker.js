@@ -7,6 +7,7 @@ class Walker {
 
   #changed_steps
   #changed_ins
+  #success
 
   #ins_count
   #step_count
@@ -37,6 +38,7 @@ class Walker {
 
     this.#changed_steps = new Event("steps:changed", {"bubbles":false, "cancelable":false})
     this.#changed_ins = new Event("ins:changed", {"bubbles":false, "cancelable":false})
+    this.#success = new Event("walking:success", {"bubbles":false, "cancelable":false})
   }  //}}}
 
   async #walk_rec(it) { //{{{
@@ -391,6 +393,7 @@ class Walker {
     if (res == true) {
       if (this.field.carrots.join('') == this.#eaten) {
         this.assets.play_audio(this.assets.audio.yay.sounds.sample())
+        document.dispatchEvent(this.#success)
       } else {
         this.assets.say(this.assets.texts.fail,'div.speech')
         this.assets.play_audio(this.assets.audio.no.sounds.sample())

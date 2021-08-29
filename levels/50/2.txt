@@ -10,6 +10,6 @@ Eat all carrots.
 ---
 1111
 ---
-25
+19
 ---
 eat_carrot,forward,left,right

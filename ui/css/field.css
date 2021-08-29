@@ -117,7 +117,8 @@ div.field > div.mission.active, div.field > div.victory.active {
   top: 3em;
   right: 3em;
   bottom: 9em;
-  display: block;
+  display: flex;
+  flex-direction:column;
   background-color: white;
   border: 0.5em solid #222222;
   overflow: hidden;
@@ -140,17 +141,37 @@ div.field > div.mission > .top .close img, div.field > div.victory > .top .close
   height: 2em;
   cursor: pointer;
 }
-div.field > div.mission > .top .text, div.field > div.victory > .top .text {
-  font-size: 2em;
-}
 div.field > div.mission > .text, div.field > div.victory > .text {
-  position: relative;
-  font-size: 2em;
-  padding: 1em;
+  flex-grow: 1;
+  font-size: 1.2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+  overflow-y: scroll;
+  scrollbar-color: #222222 #ffffff;
 }
+div.field > div.mission > .text *:first-child, div.field > div.victory > .text *:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+div.field > div.mission > .text *:last-child, div.field > div.victory > .text *:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+div.field > div.mission > .text::-webkit-scrollbar       { width: 0.5em; }
+div.field > div.mission > .text::-webkit-scrollbar-track { background-color: #ffffff; }
+div.field > div.mission > .text::-webkit-scrollbar-thumb { background-color: #222222; }
+div.field > div.victory > .text::-webkit-scrollbar       { width: 0.5em; }
+div.field > div.victory > .text::-webkit-scrollbar-track { background-color: #ffffff; }
+div.field > div.victory > .text::-webkit-scrollbar-thumb { background-color: #222222; }
+
+div.field > div.mission > .text table, div.field > div.victory > .text table { margin: 0; padding: 0; }
+div.field > div.mission > .text tr, div.field > div.victory > .text tr { margin: 0; padding: 0; }
+div.field > div.mission > .text td, div.field > div.victory > .text td { margin: 0; padding: 0; padding-right: 0.5em; }
+
 div.field > div.mission > .text img, div.field > div.victory > .text img {
   height: 1.4em;
-  vertical-align: bottom;
+  vertical-align: -0.35em;
 }
 
 div.field > div.stats {

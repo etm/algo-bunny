@@ -6,8 +6,13 @@ TTTTTT TTT
 ---
 The flower marks the spot!
 ---
-Eat as many carrots as the flower reminds you of.
+Eat as many carrots as the flower tells you.
 ---
+Counting your steps ![](commands/memorize_steps.svg) gives you an idea how many
+carrots you have eaten.  Jumping is easy: drag any location on the field onto
+the jump instruction ![](commands/jump.svg) in the editor. Jumping is also
+very exiting. So Algo always remembers where he has jumped from, and can jump back
+to the last jump location with ![](commands/jump_back.svg).
 ---
 11
 ---
