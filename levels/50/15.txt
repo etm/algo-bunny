@@ -15,6 +15,6 @@ Use all the techniques learned before. Jumping, comparing, loops and of course e
 ---
 2
 ---
-24
+31
 ---
 eat_carrot,get_carrot,put_carrot,forward,left,right,step_left,step_right,jump,jump_back,loop,break,if_empty,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower,memorize_carrot,memorize_position

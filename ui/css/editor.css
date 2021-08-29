@@ -78,6 +78,19 @@ div.program svg g[element-group=drop] g[element-type=delete] path {
 div.program svg g[element-group=drop] g[element-type=delete].active path {
   animation: pulse 1s infinite;
 }
+div.program svg g[element-group=drop] g[element-type=here] path {
+  display: none;
+  fill: #b6e5e0;
+  stroke: #ffffff;
+  stroke-opacity: 0;
+  fill-opacity: 0;
+  cursor: pointer;
+}
+div.program svg g[element-group=drop] g[element-type=here].active path {
+  display: inline;
+  stroke-opacity: 1.00;
+  fill-opacity: 1.00;
+}
 
 div.program svg g[element-group=graph] g[element-type] {
   cursor: pointer;

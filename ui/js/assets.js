@@ -172,9 +172,14 @@ function Assets() {
     'desc': 'Drag here to add.',
     'icon': 'commands/add.svg'
   }; /*}}}*/
+  this.placeholders.here = { /*{{{*/
+    'label': 'Here',
+    'desc': 'Which instruction is executed',
+    'icon': 'commands/this.svg'
+  }; /*}}}*/
   this.placeholders.delete = { /*{{{*/
     'label': 'Delete',
-    'desc': 'Delete.',
+    'desc': 'Click to delete instruction.',
     'icon': 'commands/delete.svg'
   }; /*}}}*/
   this.placeholders.bunny = { /*{{{*/

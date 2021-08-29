@@ -49,6 +49,8 @@ class Walker {
       this.#ins_count += 1
       document.dispatchEvent(this.#changed_ins)
 
+      $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
+      $('div.program svg g[element-group=drop] g[element-type=here][element-id=' + k + ']').addClass('active')
 
       if (typeof(v) == 'string') {
         switch (v) {
@@ -392,6 +394,7 @@ class Walker {
     let res = await this.#walk_rec(this.editor.program)
     if (res == true) {
       if (this.field.carrots.join('') == this.#eaten) {
+        $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
         this.assets.play_audio(this.assets.audio.yay.sounds.sample())
         document.dispatchEvent(this.#success)
       } else {
@@ -420,6 +423,7 @@ class Walker {
     this.assets.say_reset('div.speech')
     this.#step_count = 0
     this.#ins_count = 0
+    $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
     $('div.field div.ui.brain .type').hide()
     $('div.field div.ui.brain .text').text('')
     $('div.field div.ui.hand img').hide()

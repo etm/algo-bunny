@@ -34,7 +34,7 @@ class Editor {
     this.program = []
   }  //}}}
 
-  #draw_asset(id,what,x,y,op,shift_y=0) { //{{{
+  #draw_asset(id,what,x,y,op='',shift_y=0) { //{{{
     let item = this.assets.placeholders[what];
     let grax = item.graphics['icon'].clone();
     let g2 = $X('<g element-type="' + what + '" element-op="' + op  + '" element-id="' + id  + '" transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height + shift_y) + ')" xmlns="http://www.w3.org/2000/svg"></g>');
@@ -76,6 +76,7 @@ class Editor {
         this.#draw(k,v,x,y,'icon',parent);
         this.#draw_asset(k,'add',x,y,'after',this.#tile_height/2);
         this.#draw_asset(k,'delete',x,y,'at');
+        this.#draw_asset(k,'here',x,y,'at');
       }  else {
         let [l,w] = this.#dig(k,v,x,y,parent);
         y = l;
@@ -90,6 +91,7 @@ class Editor {
     this.#draw(id,sub.item,x,y,'first',parent);
     this.#draw(id,sub.item,x,y,'first_icon',id);
     this.#draw_asset(id,'delete',x+1,y,'at');
+    this.#draw_asset(id,'here',x+1,y,'at');
     if (sub.first) {
       this.#draw_asset(id,'add',x+1,y,'insert_first',this.#tile_height/2);
       let [dy, w] = this.#iter(sub.first,x+1,y,id);
