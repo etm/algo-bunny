@@ -195,6 +195,7 @@ $(document).ready(async function() {
   }); //}}}
 
   $('button.mission').click(ev=>{
+    $('div.field div.victory').removeClass('active')
     $('div.field div.mission').toggleClass('active')
   })
   $('div.field div.mission div.top img').click(ev=>{
@@ -204,6 +205,8 @@ $(document).ready(async function() {
     $('div.field div.victory').toggleClass('active')
   })
   $('button.control').click(ev=>{
+    $('div.field div.victory').removeClass('active')
+    $('div.field div.mission').removeClass('active')
     if (editor.program.length > 0) {
       if ($(ev.currentTarget).hasClass('active')) {
         walker.stop()
@@ -225,6 +228,7 @@ $(document).ready(async function() {
   })
   document.addEventListener('walking:success', (e) => {
     setTimeout(()=>{
+      $('div.field div.mission').removeClass('active')
       $('div.field div.victory').toggleClass('active')
       let cisc = editor.cisc_length()
       let ins = walker.ins_count()
