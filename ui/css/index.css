@@ -7,3 +7,7 @@ body {
   max-width: 50em;
   margin: auto;
 }
+.inline {
+  vertical-align: bottom;
+  height: 1.6em;
+}

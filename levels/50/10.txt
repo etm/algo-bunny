@@ -5,7 +5,10 @@ TcTcT
 TTTTT
 ---
 ---
+Rows and rows of carrots!
+---
 Eat the biggest carrot.
+---
 ---
 6
 ---

@@ -141,4 +141,11 @@ div.field > div.mission > .top .close img, div.field > div.victory > .top .close
 div.field > div.mission > .top .text, div.field > div.victory > .top .text {
   font-size: 2em;
 }
+div.field > div.mission > .text, div.field > div.victory > .text {
+  font-size: 2em;
+}
+div.field > div.mission > .text img, div.field > div.victory > .text img {
+  height: 1.4em;
+  vertical-align: bottom;
+}
 

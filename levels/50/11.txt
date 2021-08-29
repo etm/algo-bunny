@@ -4,7 +4,10 @@ TTTT TTT
 ---
 6,0,S
 ---
+Islands of info!
+---
 Eat all carrots. Hint: memorize the flower.
+---
 ---
 11
 ---
