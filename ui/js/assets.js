@@ -110,6 +110,9 @@ function Assets() {
   this.audio.yay = { //{{{
     'locations': [ 'sounds/yay.mp3' ]
   } //}}}
+  this.audio.no = { //{{{
+    'locations': [ 'sounds/no.mp3' ]
+  } //}}}
 
   this.texts.nostep = "I don't want to step on carrots, flowers or magic! Falling into holes is also not an option."
   this.texts.neverjump = "I never jumped before. To infinity and beyond?"

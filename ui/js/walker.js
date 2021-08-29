@@ -393,7 +393,11 @@ class Walker {
         this.assets.play_audio(this.assets.audio.yay.sounds.sample())
       } else {
         this.assets.say(this.assets.texts.fail,'div.speech')
+        this.assets.play_audio(this.assets.audio.no.sounds.sample())
       }
+    }
+    if (res == false) {
+      this.assets.play_audio(this.assets.audio.no.sounds.sample())
     }
     if (!this.walking) {
       this.stop()
