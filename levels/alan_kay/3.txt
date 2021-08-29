@@ -1,17 +1,25 @@
-TTTTTT
-cBTTT+
-cTTTT-
-cTTTT*
-cTTTT/
-cTTTTT
-cTTTTT
-TTTTTT
+T  TTT   T TT
+TTT TTTTTTTTT
+T TBT TTT   T
+TTT TTTTTTT T
+  TTT       T
+        TTTTT
+TTTTTTT   T
+TTTTTTT   TTc
 ---
 ---
-Eat the carrots in order - smallest first, biggest last.
+Treacherous Dungeons!
 ---
-123456
+Eat the carrot.
 ---
-40
+Here you need a more sophisticated method than a simple wall walker. Following
+the left or right wall will just not do the job Read [maze-solving algorithms
+on
+https://en.wikipedia.org/wiki/Maze-solving_algorithm](https://en.wikipedia.org/wiki/Maze-solving_algorithm).
+Use flowers for marking things.
 ---
-eat_carrot,eat_flower,get_carrot,put_carrot,put_flower,forward,left,right,step_left,step_right,jump,jump_back,loop,break,if_empty,if_flower,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower,memorize_carrot,memorize_position
+1
+---
+100
+---
+eat_carrot,eat_flower,put_flower,forward,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_flower,if_carrot,memorize_position,memorize_steps

@@ -1,0 +1,22 @@
+cTTTTT
+cBTTT+
+cTTTT-
+cTTTT*
+cTTTT/
+cTTTTT
+cTTTTT
+---
+---
+A little bit hungry!
+---
+Eat the median carrot.
+---
+You are still full from yesterday. You want a medium sized carrot. In order to
+eat you first have to find out which one is the median (size 4) carrot. Only
+then can you enjoy your meal.
+---
+4
+---
+40
+---
+eat_carrot,eat_flower,get_carrot,put_carrot,put_flower,forward,left,right,step_left,step_right,jump,jump_back,loop,break,if_empty,if_flower,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower,memorize_carrot,memorize_position

@@ -36,9 +36,6 @@ $(document).ready(async function() {
     });
   }); //}}}
 
-  // say initial thing
-  assets.oneliner('div.speech')
-
   // one liners
   $('div.program svg').on('click','g[element-type=bunny]',()=>{ assets.oneliner('div.speech') })
 

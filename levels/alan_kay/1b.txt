@@ -1,0 +1,18 @@
+ 111
+1111111
+11B11111
+11111
+ 111111
+---
+---
+Big Mess!
+---
+Eat all carrots.
+---
+Behave like a roomba try to go everywhere.
+---
+111111111111
+---
+25
+---
+eat_carrot,get_carrot,forward,left,right,loop,break,if_empty,if_hole,if_carrot
