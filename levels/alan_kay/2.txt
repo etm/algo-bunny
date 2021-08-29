@@ -14,8 +14,8 @@ Dungeons And Carrots!
 Eat the carrot.
 ---
 A simple wall walker will do the job here. Just follow either the left or the
-right wall. If you are stuck read [maze-solving algorithms on
-https://en.wikipedia.org/wiki/Maze-solving_algorithm](https://en.wikipedia.org/wiki/Maze-solving_algorithm).
+right wall. If you are stuck read about [maze-solving
+algorithms](https://en.wikipedia.org/wiki/Maze-solving_algorithm).
 ---
 1
 ---

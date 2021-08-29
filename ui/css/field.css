@@ -106,10 +106,11 @@ div.field > div.bottom > button.ui.control        img:last-child  { display: non
 div.field > div.bottom > button.ui.control.active img:first-child { display: none; }
 div.field > div.bottom > button.ui.control.active img:last-child  { display: inline; }
 
-div.field > div.info {
+div.field > div.mission, div.field > div.victory  {
   display: none;
 }
-div.field > div.info.active {
+
+div.field > div.mission.active, div.field > div.victory.active {
   position: absolute;
   left: 3em;
   top: 3em;
@@ -120,15 +121,24 @@ div.field > div.info.active {
   border: 0.5em solid #222222;
   padding: 1em;
 }
-
-div.field > div.info > .top {
-  text-align: right;
+div.field > div.mission > .top, div.field > div.victory > .top {
+  display: flex;
+  flex-direction: row;
   margin-bottom: 1em;
 }
-div.field > div.info > .top img {
+div.field > div.mission > .top .order, div.field > div.victory > .top .hurra {
+  font-weight: bold;
+  font-size: 2em;
+}
+div.field > div.mission > .top .close, div.field > div.victory > .top .close {
+  flex: 1 1 auto;
+  text-align: right;
+}
+div.field > div.mission > .top .close img, div.field > div.victory > .top .close img {
   height: 2em;
   cursor: pointer;
 }
-div.field > div.info > .text {
+div.field > div.mission > .top .text, div.field > div.victory > .top .text {
   font-size: 2em;
 }
+

@@ -36,6 +36,9 @@ $(document).ready(async function() {
     });
   }); //}}}
 
+  // order
+  assets.say(field.order.trim(),'div.speech')
+
   // one liners
   $('div.program svg').on('click','g[element-type=bunny]',()=>{ assets.oneliner('div.speech') })
 
@@ -181,11 +184,13 @@ $(document).ready(async function() {
   }); //}}}
 
   $('button.mission').click(ev=>{
-    $('div.field div.info').toggleClass('active')
-    $('div.field div.info div.text').html(marked(field.help))
+    $('div.field div.mission').toggleClass('active')
+    $('div.field div.mission div.top .order').text(field.order)
+    $('div.field div.mission div.text').html(marked(field.mission))
+    $('div.field div.mission div.text a[href]').attr('target','_blank')
   })
-  $('div.field div.info div.top img').click(ev=>{
-    $('div.field div.info').toggleClass('active')
+  $('div.field div.mission div.top img').click(ev=>{
+    $('div.field div.mission').toggleClass('active')
   })
   $('button.control').click(ev=>{
     if (editor.program.length > 0) {

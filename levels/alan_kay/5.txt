@@ -9,7 +9,7 @@ cTTTTT
 ---
 A little bit hungry!
 ---
-Eat the median carrot.
+Eat the median sized carrot.
 ---
 You are still full from yesterday. You want a medium sized carrot. In order to
 eat you first have to find out which one is the median (size 4) carrot. Only

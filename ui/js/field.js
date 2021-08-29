@@ -49,14 +49,16 @@ class Field {
   async load_level() { //{{{
     let level = await this.#get_level(this.levelurl);
     let pieces = level.split(/---\s*\r?\n/)
-    if (pieces.length != 6) {
+    if (pieces.length != 8) {
       this.assets.say(this.assets.texts.faultylevel,'div.speech')
       return false
     }
     [
       this.tiles,
       this.assignments,
-      this.help,
+      this.title,
+      this.order,
+      this.mission,
       this.carrots,
       this.max_score,
       this.elements] = pieces
