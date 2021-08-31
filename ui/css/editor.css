@@ -124,3 +124,7 @@ div.program svg g[element-group=graph] g[element-type=jump].active .cutout {
 div.program svg g[element-group=graph] g[element-type=jump].targeting .cutout {
   display: inline;
 }
+
+div.program svg g[element-group=drag] div {
+  cursor: pointer;
+}

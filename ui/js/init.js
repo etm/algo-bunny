@@ -84,18 +84,12 @@ $(document).ready(async function() {
   }); //}}}
 
   // display target tiles
-  $('div.program svg').on('mouseover','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
+  $('div.program svg').on('mousemove','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
     let epara = $(ev.currentTarget).attr('element-para');
     if (epara && epara.match(/^\d+,\d+$/)) {
       let [ox,oy] = epara.split(',')
+      $('div.field g.tile').removeClass('active')
       $('div.field g.tile[element-x=' + ox + '][element-y=' + oy + ']').addClass('active')
-    }
-  }) //}}}
-  $('div.program svg').on('mouseout','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
-    let epara = $(ev.currentTarget).attr('element-para');
-    if (epara && epara.match(/^\d+,\d+$/)) {
-      let [ox,oy] = epara.split(',')
-      $('div.field g.tile[element-x=' + ox + '][element-y=' + oy + ']').removeClass('active')
     }
   }) //}}}
 
@@ -129,6 +123,8 @@ $(document).ready(async function() {
 
     let ot = $(oe).parents('g.tile')
 
+    console
+
     if (ot.length == 1) {
       let ox = ot.attr('element-x')
       let oy = ot.attr('element-y')
@@ -150,6 +146,10 @@ $(document).ready(async function() {
       $(ev.currentTarget).addClass('targeting');
       $(ev.currentTarget).attr('element-para',ev.originalEvent.dataTransfer.getData("text/plain"))
       editor.update_item(eid,'target',ev.originalEvent.dataTransfer.getData("text/plain"))
+
+      let [ox,oy] = ev.originalEvent.dataTransfer.getData("text/plain").split(',')
+      $('div.field g.tile').removeClass('active')
+      $('div.field g.tile[element-x=' + ox + '][element-y=' + oy + ']').addClass('active')
     }
   }); //}}}
   $('div.program').on('dragover','g[element-type=jump]',(ev)=>{ //{{{
@@ -183,9 +183,31 @@ $(document).ready(async function() {
     editor.target_drag.show()
 
     let ot = $(oe).parents('g[element-type]')
-    if (ot.length == 1) {
-      ot.click()
+    if (ot.length > 0) {
+      ot.first().click()
     }
+  }) //}}}
+  $('div.program svg').on('mousemove','foreignObject div',(ev)=>{ //{{{
+    var left = $(window).scrollLeft()
+    var top = $(window).scrollTop()
+    let oe
+    if (!(editor.target_drag.css('display') == 'none')) {
+      editor.target_drag.hide()
+      oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
+      editor.target_drag.show()
+    } else {
+      oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
+    }
+
+    let ot = $(oe).parents('g[element-type=jump]')
+    if (ot.length > 0) {
+      ot.first().mousemove()
+    } else {
+      $('div.field g.tile').removeClass('active')
+    }
+  }) //}}}
+  $('div.program svg').on('mouseout','foreignObject div',(ev)=>{ //{{{
+    $('div.field g.tile').removeClass('active')
   }) //}}}
   $('div.program svg').on('dragstart','foreignObject div',(ev)=>{ //{{{
     var left = $(window).scrollLeft();
@@ -193,10 +215,12 @@ $(document).ready(async function() {
     editor.target_drag.hide()
     let oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
 
+    console.log('rrr')
+
     let ot = $(oe).parents('g[element-type]')
-    if (ot.length == 1 && ot.parents('g[element-group=graph]').length == 1) {
-      var ety = ot.attr('element-type')
-      var eid = ot.attr('element-id')
+    if (ot.length > 0 && ot.parents('g[element-group=graph]').length == 1) {
+      var ety = ot.first().attr('element-type')
+      var eid = ot.first().attr('element-id')
       var img = document.createElement("img")
       img.src = assets.commands[ety].icon
       ev.originalEvent.dataTransfer.setData("text/plain",eid);
