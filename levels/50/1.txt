@@ -21,4 +21,4 @@ If you jump into a hole or onto a carrot, you have to stop with
 ---
 7
 ---
-eat_carrot,forward
+eat_carrot,forward,execute

@@ -6,7 +6,10 @@ var walker
 var active_drag_location = null // thany you chrome for security without reason. Dragover and dragleave can not getData.
 var active_element_drag = null
 
+document.addEventListener('contextmenu', event => event.preventDefault())
+
 $(document).ready(async function() {
+
   let assets  = new Assets;
   await assets.load();
 

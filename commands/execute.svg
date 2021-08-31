@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
+   onload="this.getElementById('prgname').textContent = window.location.search.replace(/\?/,'')"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -178,7 +179,7 @@
          y="185.20833"
          id="text7673"><tspan
            sodipodi:role="line"
-           id="tspan7671"
+           id="prgname"
            x="14.521077"
            y="185.20833"
            style="text-align:center;text-anchor:middle;stroke-width:0.264583">P$</tspan></text>
