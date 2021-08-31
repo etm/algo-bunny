@@ -55,6 +55,8 @@ $(document).ready(async function() {
 
   // click element in editor, say and show delete
   $('div.program svg').on('click','g[element-group=graph] g[element-id]',(ev)=>{ //{{{
+    $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
+
     if (active_del_timeout) {
       clearTimeout(active_del_timeout);
     }
@@ -112,6 +114,7 @@ $(document).ready(async function() {
     var left = $(window).scrollLeft();
     var top = $(window).scrollTop();
 
+    $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
     // what fucking clever shit. we hide the foreignObject that sits on top of
     // SVG but is part of SVG. we then use #elementFromPoint, and switch it
     // back on. Its sad that we have to do this, but holy shit this is great.
@@ -166,6 +169,7 @@ $(document).ready(async function() {
   $('div.elements').on('dragstart','img[data-type]',(ev)=>{ //{{{
     ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'));
     ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0);
+    $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
     $('div.program g[element-type=add] .adder').show();
   }); //}}}
   $('div.program').on('drop','g[element-type=add]',(ev)=>{ //{{{
