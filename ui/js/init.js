@@ -215,8 +215,6 @@ $(document).ready(async function() {
     editor.target_drag.hide()
     let oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
 
-    console.log('rrr')
-
     let ot = $(oe).parents('g[element-type]')
     if (ot.length > 0 && ot.parents('g[element-group=graph]').length == 1) {
       var ety = ot.first().attr('element-type')
