@@ -122,8 +122,10 @@ class Editor {
       if (w > width) { width = w; }
     }
     y += 1;
-    this.#draw(id,sub.item,x,y,'end',id);
-    this.#draw_asset(id,'add',x,y,'after',this.#tile_height/2);
+    this.#draw(id,sub.item,x,y,'end',id)
+    if (sub.item != 'execute') {
+      this.#draw_asset(id,'add',x,y,'after',this.#tile_height/2)
+    }
     return [y,width];
   } //}}}
 
@@ -222,6 +224,9 @@ class Editor {
     }
     if (item.type == 'position') {
       return { "item": ety, "target": "" };
+    }
+    if (item.type == 'execution') {
+      return { "item": ety, "first": [], "id": "" };
     }
   } //}}}
   #newid_rec(it) { //{{{

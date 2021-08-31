@@ -24,12 +24,19 @@ div.elements div.group {
   flex-wrap: wrap;
 }
 
-div.elements div.group img {
+div.elements div.group > img[data-type] {
   height: 4em;
   width: auto;
   padding: 0em 0.2em;
 
   cursor: move;
+}
+div.elements div.group > img[id] {
+  height: 4em;
+  width: auto;
+  padding: 0em 0.2em;
+
+  cursor: pointer;
 }
 
 div.program {

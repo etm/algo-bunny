@@ -53,7 +53,7 @@ function Assets() {
         item.graphics = {};
         promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
       }
-      if (item.type == 'complex_one') {
+      if (item.type == 'complex_one' || item.type == 'execute') {
         item.graphics = {};
         promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
         promises.push(load_svg(item.first,       item.graphics, "first"      ));
@@ -338,7 +338,7 @@ function Assets() {
     'icon': 'commands/eat_flower.svg'
   }; /*}}}*/
 
-  this.commands.loop = { /*{{{*/
+  this.commands.loop  = { /*{{{*/
     'type': 'complex_one',
     'label': 'Repeat',
     'desc': 'I do something repeatedly. Please tell me when to stop.',
@@ -466,9 +466,67 @@ function Assets() {
   }; /*}}}*/
 
   this.commands.execute = { /*{{{*/
+    'type': 'execute',
+    'label': 'Do Something',
+    'desc': 'I do something you told me to do.',
+    'icon': 'commands/execute_start.svg'
+    'first': 'commands/execute/top.svg',
+    'first_icon': 'commands/execute/y.svg',
+    'middle': 'commands/execute/middle.svg',
+    'end': 'commands/execute/end.svg'
+  }; /*}}}*/
+  this.commands.execute1 = { /*{{{*/
     'type': 'simple',
     'label': 'Do Something',
     'desc': 'I do something you told me to do.',
-    'icon': 'commands/execute.svg'
+    'icon': 'commands/execute1.svg'
+  }; /*}}}*/
+  this.commands.execute2 = { /*{{{*/
+    'type': 'simple',
+    'label': 'Do Something',
+    'desc': 'I do something you told me to do.',
+    'icon': 'commands/execute2.svg'
+  }; /*}}}*/
+  this.commands.execute3 = { /*{{{*/
+    'type': 'simple',
+    'label': 'Do Something',
+    'desc': 'I do something you told me to do.',
+    'icon': 'commands/execute3.svg'
+  }; /*}}}*/
+  this.commands.execute4 = { /*{{{*/
+    'type': 'simple',
+    'label': 'Do Something',
+    'desc': 'I do something you told me to do.',
+    'icon': 'commands/execute4.svg'
+  }; /*}}}*/
+  this.commands.execute5 = { /*{{{*/
+    'type': 'simple',
+    'label': 'Do Something',
+    'desc': 'I do something you told me to do.',
+    'icon': 'commands/execute5.svg'
+  }; /*}}}*/
+  this.commands.execute6 = { /*{{{*/
+    'type': 'simple',
+    'label': 'Do Something',
+    'desc': 'I do something you told me to do.',
+    'icon': 'commands/execute6.svg'
+  }; /*}}}*/
+  this.commands.execute7 = {  /*{{{*/
+    'type': 'simple',
+    'label': 'Do Something',
+    'desc': 'I do something you told me to do.',
+    'icon': 'commands/execute7.svg'
+  }; /*}}}*/
+  this.commands.execute8 = { /*{{{*/
+    'type': 'simple',
+    'label': 'Do Something',
+    'desc': 'I do something you told me to do.',
+    'icon': 'commands/execute8.svg'
+  }; /*}}}*/
+  this.commands.execute9 = { /*{{{*/
+    'type': 'simple',
+    'label': 'Do Something',
+    'desc': 'I do something you told me to do.',
+    'icon': 'commands/execute9.svg'
   }; /*}}}*/
 }

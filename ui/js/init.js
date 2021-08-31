@@ -26,7 +26,7 @@ $(document).ready(async function() {
   walker = new Walker(assets,editor,field)
 
   // show some elements
-  $('div.elements img').each((_,ele) => { //{{{
+  $('div.elements *[data-type]').each((_,ele) => { //{{{
     let iname = $(ele).attr('data-type');
     let item = assets.commands[iname];
     $(ele).attr('title',item.label);
@@ -37,10 +37,18 @@ $(document).ready(async function() {
         $(ele).show();
       }
     }
-    $('div.elements img[data-type=' + iname + ']').click(()=>{
+    $('div.elements *[data-type=' + iname + ']').click(()=>{
       assets.say(item.desc,'div.speech')
     });
-  }); //}}}
+  });
+  if (field.elements.includes('execute')) {
+    $('#execute').show()
+  }
+  $('div.elements #execute').click((ev)=>{
+    let gr = $('div.elements #execute').parents('div.group')
+
+  });
+  //}}}
 
   // order
   assets.say(field.order.trim(),'div.speech')
@@ -233,7 +241,7 @@ $(document).ready(async function() {
     }
   }) //}}}
 
-  $('div.elements').on('dragstart','img[data-type]',(ev)=>{ //{{{
+  $('div.elements').on('dragstart','[draggable=true][data-type]',(ev)=>{ //{{{
     ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'));
     ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0);
     $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
