@@ -127,6 +127,7 @@ function Assets() {
   this.texts.nocompareto = "There has to be something in front of me to do fancy size comparisons!"
   this.texts.fail = "All this work, still no success :-("
   this.texts.faultylevel = "Uh oh, level is b0rked :-/"
+  this.texts.delete = "To delete an instruction, click on it!"
 
   /*------------------------*/
 

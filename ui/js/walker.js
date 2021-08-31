@@ -132,15 +132,12 @@ class Walker {
             }
             break; //}}}
           case 'put_flower': //{{{
-            if (!(this.#brain === undefined || this.#brain == null)) {
-              await this.#sleep(this.timing/2)
-              res = this.field.put_flower(this.#brain)
-              if (res === false) { this.assets.say(this.assets.texts.noplace,'div.speech'); return false; }
-              await this.#sleep(this.timing/2)
-            } else {
-              this.assets.say(this.assets.texts.brainempty,'div.speech')
-              return false
-            }
+            if (this.#brain === undefined || this.#brain == null) { this.#brain = 0 }
+
+            await this.#sleep(this.timing/2)
+            res = this.field.put_flower(this.#brain)
+            if (res === false) { this.assets.say(this.assets.texts.noplace,'div.speech'); return false; }
+            await this.#sleep(this.timing/2)
             break; //}}}
           case 'eat_carrot': //{{{
             if (!(this.#hand === undefined || this.#hand == null)) {
@@ -409,6 +406,7 @@ class Walker {
       this.stop()
       this.field.reset_full()
     }
+    this.walking = false
   } //}}}
 
   step_count() { return this.#step_count }

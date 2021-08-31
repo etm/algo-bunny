@@ -9,17 +9,25 @@ class Editor {
 
   #changed
 
+  #draw_drag_layer(width,height) { //{{{
+    let g1 = $X('<foreignObject x="0" y="0" width="' + width + '" height="' + height + '" xmlns="http://www.w3.org/2000/svg" requiredExtensions="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml" draggable="true" style="width: 100%; height:100%"></div></foreignObject>')
+    this.target_drag.append(g1);
+  } //}}}
+
   constructor(target,assets) { //{{{
     this.assets = assets
     this.target = target
 
     let t1 = $X('<g element-group="graph" xmlns="http://www.w3.org/2000/svg"></g>')
     let t2 = $X('<g element-group="drop"  xmlns="http://www.w3.org/2000/svg"></g>')
+    let t3 = $X('<g element-group="drag"  xmlns="http://www.w3.org/2000/svg"></g>');
     target.append(t1)
     target.append(t2)
+    target.append(t3)
 
     this.target_graph = t1
     this.target_drop = t2
+    this.target_drag = t3
 
     this.#tile_width = 26.4
     this.#tile_height = 27
@@ -141,9 +149,64 @@ class Editor {
     document.dispatchEvent(this.#changed)
   } //}}}
 
-  clear() { //{{{
+  #get_item_rec(it,eid){ //{{{
+    let ret;
+    for (const [k,v] of it) {
+      if (k == eid) {
+        return [k,v]
+      }
+      if (typeof(v) == 'object') {
+        if (v.first && ret === undefined) {
+          ret = this.#get_item_rec(v.first,eid)
+        }
+        if (v.second && ret === undefined) {
+          ret = this.#get_item_rec(v.second,eid);
+        }
+      }
+    }
+    return ret;
+  } //}}}
+  #move_rec(it,eid,eop,eco) { //{{{
+    let newp = [];
+    for (const [k,v] of it) {
+      newp.push([k,v]);
+      if (k == eid) {
+        if (eop == 'after') {
+          newp.push([this.#newid(),eco[1]]);
+        }
+        if (eop == 'insert_first') {
+          v.first.unshift([this.#newid(),eco[1]]);
+        }
+        if (eop == 'insert_second') {
+          v.second.unshift([this.#newid(),eco][1]);
+        }
+      }
+      if (typeof(v) == 'object') {
+        if (v.first) {
+          v.first = this.#move_rec(v.first,eid,eop,eco);
+        }
+        if (v.second) {
+          v.second = this.#move_rec(v.second,eid,eop,eco);
+        }
+      }
+    }
+    return newp;
+  } //}}}
+  move_item(eid,eop,eit) { //{{{
+    let eco = JSON.parse(JSON.stringify(this.#get_item_rec(this.program,eit)))
+    if (eid == '' && eop == 'insert_first') {
+      this.program.unshift([this.#newid(),eco[1]])
+    } else {
+      this.program = this.#move_rec(this.program,eid,eop,eco)
+    }
+    this.program = this.#remove_item_rec(this.program,eit)
+    document.dispatchEvent(this.#changed)
+  } //}}}
+
+  #clear() { //{{{
     this.target_graph.empty();
     this.target_drop.empty();
+    this.target_drag.empty();
   } //}}}
 
   #insert_rec_item(ety) { //{{{
@@ -258,7 +321,7 @@ class Editor {
   }
 
   render() {
-    this.clear();
+    this.#clear();
     this.#draw_asset('','bunny',1,1,'start');
     this.#draw_asset('','add',1,1,'insert_first',this.#tile_height/2);
     let [y,w] = this.#iter(this.program,1,1);
@@ -266,5 +329,7 @@ class Editor {
     let wid = w * this.#tile_width * this.#scale_factor + this.#width_add;
     this.target.attr('height', hei);
     this.target.attr('width',  wid);
+
+    this.#draw_drag_layer(wid,hei);
   }
 }

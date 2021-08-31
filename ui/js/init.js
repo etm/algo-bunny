@@ -4,6 +4,7 @@ var active_del_timeout
 var walker
 
 var active_drag_location = null // thany you chrome for security without reason. Dragover and dragleave can not getData.
+var active_element_drag = null
 
 $(document).ready(async function() {
   let assets  = new Assets;
@@ -68,7 +69,9 @@ $(document).ready(async function() {
       active_del = '';
     } else {
       active_del = eid;
-      $('div.program svg g[element-group=drop] g[element-type=delete][element-id=' + eid + ']').addClass('active');
+      if (!walker.walking) {
+        $('div.program svg g[element-group=drop] g[element-type=delete][element-id=' + eid + ']').addClass('active');
+      }
       let iname = $(ev.currentTarget).attr('element-type');
       let item = assets.commands[iname];
       assets.say(item.label,'div.speech')
@@ -87,25 +90,25 @@ $(document).ready(async function() {
       let [ox,oy] = epara.split(',')
       $('div.field g.tile[element-x=' + ox + '][element-y=' + oy + ']').addClass('active')
     }
-  }); //}}}
+  }) //}}}
   $('div.program svg').on('mouseout','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
     let epara = $(ev.currentTarget).attr('element-para');
     if (epara && epara.match(/^\d+,\d+$/)) {
       let [ox,oy] = epara.split(',')
       $('div.field g.tile[element-x=' + ox + '][element-y=' + oy + ']').removeClass('active')
     }
-  }); //}}}
+  }) //}}}
 
   // click delete
   $('div.program svg').on('click','g[element-group=drop] g[element-type=delete].active',(ev)=>{ //{{{
-    let eid = $(ev.currentTarget).attr('element-id');
-    editor.remove_item(eid);
-    editor.render();
-    active_del = '';
-    $(ev.currentTarget).removeClass('active');
+    let eid = $(ev.currentTarget).attr('element-id')
+    editor.remove_item(eid)
+    editor.render()
+    active_del = ''
+    $(ev.currentTarget).removeClass('active')
     assets.say_reset('div.speech')
     return false;
-  }); //}}}
+   }); //}}}
 
   // drag on SVG does not work. so we have to be clever monkis
   // foreignObject with div inside and at the end of svg.
@@ -114,13 +117,15 @@ $(document).ready(async function() {
     var left = $(window).scrollLeft();
     var top = $(window).scrollTop();
 
+    editor.target_drag.hide()
+
     $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
     // what fucking clever shit. we hide the foreignObject that sits on top of
     // SVG but is part of SVG. we then use #elementFromPoint, and switch it
     // back on. Its sad that we have to do this, but holy shit this is great.
-    field.target_drag.css('display','none')
+    field.target_drag.hide()
     let oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
-    field.target_drag.css('display','inline')
+    field.target_drag.show()
 
     let ot = $(oe).parents('g.tile')
 
@@ -135,7 +140,7 @@ $(document).ready(async function() {
 
       active_drag_location = ox+','+oy
     }
-  }); //}}}
+   }); //}}}
   $('div.program').on('drop','g[element-type=jump]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
@@ -162,38 +167,85 @@ $(document).ready(async function() {
     }
   }); //}}}
   $(document).on('dragend',ev=>{ //{{{
+    if (active_drag_location == null && active_element_drag == null) {
+      assets.say(assets.texts.delete,'div.speech')
+    }
     active_drag_location = null // thanks again chrome.
+    active_element_drag = null
+    editor.target_drag.show()
   }); //}}}
 
+  $('div.program svg').on('click','foreignObject div',(ev)=>{ //{{{
+    var left = $(window).scrollLeft();
+    var top = $(window).scrollTop();
+    editor.target_drag.hide()
+    let oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
+    editor.target_drag.show()
+
+    let ot = $(oe).parents('g[element-type]')
+    if (ot.length == 1) {
+      ot.click()
+    }
+  }) //}}}
+  $('div.program svg').on('dragstart','foreignObject div',(ev)=>{ //{{{
+    var left = $(window).scrollLeft();
+    var top = $(window).scrollTop();
+    editor.target_drag.hide()
+    let oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
+
+    let ot = $(oe).parents('g[element-type]')
+    if (ot.length == 1 && ot.parents('g[element-group=graph]').length == 1) {
+      var ety = ot.attr('element-type')
+      var eid = ot.attr('element-id')
+      var img = document.createElement("img")
+      img.src = assets.commands[ety].icon
+      ev.originalEvent.dataTransfer.setData("text/plain",eid);
+      ev.originalEvent.dataTransfer.setDragImage(img, 0, 0)
+      $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
+      $('div.program g[element-type=add] .adder').show();
+    } else {
+      return false
+    }
+  }) //}}}
 
   $('div.elements').on('dragstart','img[data-type]',(ev)=>{ //{{{
     ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'));
     ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0);
     $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
     $('div.program g[element-type=add] .adder').show();
+    editor.target_drag.hide()
+    active_element_drag = true
   }); //}}}
   $('div.program').on('drop','g[element-type=add]',(ev)=>{ //{{{
-    ev.preventDefault();
-    ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]*$/)) {
-      let eid = $(ev.currentTarget).attr('element-id');
-      let eop = $(ev.currentTarget).attr('element-op');
-      let ety = ev.originalEvent.dataTransfer.getData("text/plain");
-      editor.insert_item(eid,eop,ety);
+    ev.preventDefault()
+    ev.stopPropagation()
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]+$/)) {
+      let eid = $(ev.currentTarget).attr('element-id')
+      let eop = $(ev.currentTarget).attr('element-op')
+      let ety = ev.originalEvent.dataTransfer.getData("text/plain")
+      editor.insert_item(eid,eop,ety)
+      editor.render()
+    }
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
+      let eid = $(ev.currentTarget).attr('element-id')
+      let eop = $(ev.currentTarget).attr('element-op')
+      let eit = ev.originalEvent.dataTransfer.getData("text/plain")
+      editor.move_item(eid,eop,eit)
       editor.render();
+      editor.target_drag.show()
     }
   }); //}}}
   $('div.program').on('dragover','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]*$/)) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
       $(ev.currentTarget).addClass('active');
     }
   }); //}}}
   $('div.program').on('dragleave','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]*$/)) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
       $(ev.currentTarget).removeClass('active');
     }
   }); //}}}
