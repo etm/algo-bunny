@@ -225,7 +225,10 @@ class Editor {
     if (item.type == 'position') {
       return { "item": ety, "target": "" };
     }
-    if (item.type == 'execution') {
+    if (item.type == 'execute') {
+      return { "item": ety, "first": [] };
+    }
+    if (item.type == 'execute_item') {
       return { "item": ety, "first": [], "id": "" };
     }
   } //}}}
@@ -278,6 +281,8 @@ class Editor {
   insert_item(eid,eop,ety) { //{{{
     if (eid == '' && eop == 'insert_first') {
       this.program.unshift([this.#newid(),this.#insert_rec_item(ety)]);
+    } else if (eid == '' && eop == 'insert_last') {
+      this.program.push([this.#newid(),this.#insert_rec_item(ety)]);
     } else {
       this.program = this.#insert_rec(this.program,eid,eop,ety);
     }

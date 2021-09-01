@@ -46,7 +46,10 @@ $(document).ready(async function() {
   }
   $('div.elements #execute').click((ev)=>{
     let gr = $('div.elements #execute').parents('div.group')
+    editor.insert_item('','insert_last','execute')
+    console.log(editor.program)
 
+    editor.render()
   });
   //}}}
 

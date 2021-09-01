@@ -469,7 +469,7 @@ function Assets() {
     'type': 'execute',
     'label': 'Do Something',
     'desc': 'I do something you told me to do.',
-    'icon': 'commands/execute_start.svg'
+    'icon': 'commands/execute_start.svg',
     'first': 'commands/execute/top.svg',
     'first_icon': 'commands/execute/y.svg',
     'middle': 'commands/execute/middle.svg',
