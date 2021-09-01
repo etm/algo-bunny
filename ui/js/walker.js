@@ -45,6 +45,7 @@ class Walker {
     let res;
     for (const [k,v] of it) {
       if (!this.walking) { return false }
+      if (v == null) { return true }
 
       this.#ins_count += 1
       document.dispatchEvent(this.#changed_ins)
@@ -231,7 +232,7 @@ class Walker {
         }
       }
 
-      if (typeof(v) == 'object') {
+      if (typeof(v) == 'object' && v != null) {
         switch (v.item) {
           case 'jump': //{{{
             this.#jump_back = JSON.stringify(this.field.state_bunny)

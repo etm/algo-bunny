@@ -12,4 +12,4 @@ Eat all carrots.
 ---
 19
 ---
-eat_carrot,forward,left,right
+eat_carrot,forward,left,right,execute

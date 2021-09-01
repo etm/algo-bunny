@@ -46,10 +46,13 @@ $(document).ready(async function() {
   }
   $('div.elements #execute').click((ev)=>{
     let gr = $('div.elements #execute').parents('div.group')
-    editor.insert_item('','insert_last','execute')
-    console.log(editor.program)
-
-    editor.render()
+    let pid = editor.get_free_pid()
+    if (pid) {
+      editor.insert_item('','insert_last',null)
+      let nid = editor.insert_item('','insert_last','execute')
+      editor.update_item(nid,'id',pid)
+      editor.render()
+    }
   });
   //}}}
 
@@ -201,25 +204,25 @@ $(document).ready(async function() {
       ot.first().click()
     }
   }) //}}}
-  $('div.program svg').on('mousemove','foreignObject div',(ev)=>{ //{{{
-    var left = $(window).scrollLeft()
-    var top = $(window).scrollTop()
-    let oe
-    if (!(editor.target_drag.css('display') == 'none')) {
-      editor.target_drag.hide()
-      oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
-      editor.target_drag.show()
-    } else {
-      oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
-    }
+   $('div.program svg').on('mousemove','foreignObject div',(ev)=>{ //{{{
+     var left = $(window).scrollLeft()
+     var top = $(window).scrollTop()
+     let oe
+     if (!(editor.target_drag.css('display') == 'none')) {
+       editor.target_drag.hide()
+       oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
+       editor.target_drag.show()
+     } else {
+       oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
+     }
 
-    let ot = $(oe).parents('g[element-type=jump]')
-    if (ot.length > 0) {
-      ot.first().mousemove()
-    } else {
-      $('div.field g.tile').removeClass('active')
-    }
-  }) //}}}
+     let ot = $(oe).parents('g[element-type=jump]')
+     if (ot.length > 0) {
+       ot.first().mousemove()
+     } else {
+       $('div.field g.tile').removeClass('active')
+     }
+   }) //}}}
   $('div.program svg').on('mouseout','foreignObject div',(ev)=>{ //{{{
     $('div.field g.tile').removeClass('active')
   }) //}}}
@@ -232,6 +235,10 @@ $(document).ready(async function() {
     let ot = $(oe).parents('g[element-type]')
     if (ot.length > 0 && ot.parents('g[element-group=graph]').length == 1) {
       var ety = ot.first().attr('element-type')
+      if (ety == 'execute') {
+        editor.target_drag.show()
+        return false
+      }
       var eid = ot.first().attr('element-id')
       var img = document.createElement("img")
       img.src = assets.commands[ety].icon
@@ -240,6 +247,7 @@ $(document).ready(async function() {
       $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
       $('div.program g[element-type=add] .adder').show();
     } else {
+      editor.target_drag.show()
       return false
     }
   }) //}}}
