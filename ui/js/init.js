@@ -52,6 +52,7 @@ $(document).ready(async function() {
       let nid = editor.insert_item('','insert_last','execute')
       editor.update_item(nid,'id',pid)
       editor.render()
+      $('div.elements img[data-type=execute' + pid + ']').show()
     }
   });
   //}}}
@@ -113,6 +114,11 @@ $(document).ready(async function() {
   // click delete
   $('div.program svg').on('click','g[element-group=drop] g[element-type=delete].active',(ev)=>{ //{{{
     let eid = $(ev.currentTarget).attr('element-id')
+    let it = editor.get_item(eid)
+    if (it.item == 'execute') {
+      editor.remove_item_by_type(it.item + it.id)
+      $('div.elements img[data-type=execute' + it.id + ']').hide()
+    }
     editor.remove_item(eid)
     editor.render()
     active_del = ''
@@ -251,7 +257,7 @@ $(document).ready(async function() {
   $('div.program').on('drop','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault()
     ev.stopPropagation()
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]+$/)) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z][a-z0-9_]+$/)) {
       let eid = $(ev.currentTarget).attr('element-id')
       let eop = $(ev.currentTarget).attr('element-op')
       let ety = ev.originalEvent.dataTransfer.getData("text/plain")
@@ -270,14 +276,14 @@ $(document).ready(async function() {
   $('div.program').on('dragover','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z][a-z0-9_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
       $(ev.currentTarget).addClass('active');
     }
   }); //}}}
   $('div.program').on('dragleave','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z][a-z0-9_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
       $(ev.currentTarget).removeClass('active');
     }
   }); //}}}

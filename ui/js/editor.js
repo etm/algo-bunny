@@ -154,18 +154,43 @@ class Editor {
     }
     return newp
   } //}}}
+  #remove_item_by_type_rec(it,type){ //{{{
+    let newp = []
+    for (const [k,v] of it) {
+      if (typeof(v) == 'string' && v == type) {
+      } else {
+        newp.push([k,v])
+      }
+      if (typeof(v) == 'object' && v != null) {
+        if (v.item == type) {
+        } else {
+          newp.push([k,v])
+          if (v.first) {
+            v.first = this.#remove_item_by_type_rec(v.first,type)
+          }
+          if (v.second) {
+            v.second = this.#remove_item_by_type_rec(v.second,type)
+          }
+        }
+      }
+    }
+    return newp
+  } //}}}
   remove_item(eid) { //{{{
     this.program = this.#remove_item_rec(this.program,eid)
     document.dispatchEvent(this.#changed)
+  } //}}}
+  remove_item_by_type(type) { //{{{
+    this.program = this.#remove_item_by_type_rec(this.program,type)
   } //}}}
 
   #get_item_rec(it,eid){ //{{{
     let ret
     for (const [k,v] of it) {
       if (k == eid) {
-        return [k,v]
+        return v
       }
-      if (typeof(v) == 'object') {
+      if (typeof(v) == 'object' && v != null) {
         if (v.first && ret === undefined) {
           ret = this.#get_item_rec(v.first,eid)
         }
@@ -176,19 +201,43 @@ class Editor {
     }
     return ret
   } //}}}
+  get_item(eid) { //{{{
+    return this.#get_item_rec(this.program,eid)
+  } //}}}
+  #get_item_by_pid_rec(it,pid){ //{{{
+    let ret
+    for (const [k,v] of it) {
+      if (typeof(v) == 'object' && v != null) {
+        if (v.id == pid) {
+          return v
+        } else {
+          if (v.first && ret === undefined) {
+            ret = this.#get_item_by_pid_rec(v.first,pid)
+          }
+          if (v.second && ret === undefined) {
+            ret = this.#get_item_by_pid_rec(v.second,pid)
+          }
+        }
+      }
+    }
+    return ret
+  } //}}}
+  get_item_by_pid(pid) { //{{{
+    return this.#get_item_by_pid_rec(this.program,pid)
+  } //}}}
   #move_rec(it,eid,eop,eco) { //{{{
     let newp = []
     for (const [k,v] of it) {
       newp.push([k,v])
       if (k == eid) {
         if (eop == 'after') {
-          newp.push([this.#newid(),eco[1]])
+          newp.push([this.#newid(),eco])
         }
         if (eop == 'insert_first') {
-          v.first.unshift([this.#newid(),eco[1]])
+          v.first.unshift([this.#newid(),eco])
         }
         if (eop == 'insert_second') {
-          v.second.unshift([this.#newid(),eco[1]])
+          v.second.unshift([this.#newid(),eco])
         }
       }
       if (typeof(v) == 'object') {
@@ -205,7 +254,7 @@ class Editor {
   move_item(eid,eop,eit) { //{{{
     let eco = JSON.parse(JSON.stringify(this.#get_item_rec(this.program,eit)))
     if (eid == '' && eop == 'insert_first') {
-      this.program.unshift([this.#newid(),eco[1]])
+      this.program.unshift([this.#newid(),eco])
     } else {
       this.program = this.#move_rec(this.program,eid,eop,eco)
     }
@@ -236,9 +285,6 @@ class Editor {
       return { "item": ety, "target": "" }
     }
     if (item.type == 'execute') {
-      return { "item": ety, "first": [], "id": "" }
-    }
-    if (item.type == 'execute_item') {
       return { "item": ety, "first": [], "id": "" }
     }
   } //}}}
