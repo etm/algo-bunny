@@ -188,7 +188,7 @@ class Editor {
           v.first.unshift([this.#newid(),eco[1]])
         }
         if (eop == 'insert_second') {
-          v.second.unshift([this.#newid(),eco][1])
+          v.second.unshift([this.#newid(),eco[1]])
         }
       }
       if (typeof(v) == 'object') {
