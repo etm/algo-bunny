@@ -134,13 +134,10 @@ $(document).ready(async function() {
     // what fucking clever shit. we hide the foreignObject that sits on top of
     // SVG but is part of SVG. we then use #elementFromPoint, and switch it
     // back on. Its sad that we have to do this, but holy shit this is great.
-    field.target_drag.hide()
-    let oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
-    field.target_drag.show()
+    let oes = document.elementsFromPoint(ev.pageX-left, ev.pageY-top)
+    let oe = oes[2]
 
     let ot = $(oe).parents('g.tile')
-
-    console
 
     if (ot.length == 1) {
       let ox = ot.attr('element-x')
@@ -190,48 +187,39 @@ $(document).ready(async function() {
     active_drag_location = null // thanks again chrome.
     active_element_drag = null
     editor.target_drag.show()
-  }); //}}}
+  }) //}}}
 
   $('div.program svg').on('click','foreignObject div',(ev)=>{ //{{{
     var left = $(window).scrollLeft();
     var top = $(window).scrollTop();
-    editor.target_drag.hide()
-    let oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
-    editor.target_drag.show()
-
+    let oes = document.elementsFromPoint(ev.pageX-left, ev.pageY-top)
+    let oe = oes[2]
     let ot = $(oe).parents('g[element-type]')
     if (ot.length > 0) {
       ot.first().click()
     }
   }) //}}}
-   $('div.program svg').on('mousemove','foreignObject div',(ev)=>{ //{{{
-     var left = $(window).scrollLeft()
-     var top = $(window).scrollTop()
-     let oe
-     if (!(editor.target_drag.css('display') == 'none')) {
-       editor.target_drag.hide()
-       oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
-       editor.target_drag.show()
-     } else {
-       oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
-     }
-
-     let ot = $(oe).parents('g[element-type=jump]')
-     if (ot.length > 0) {
-       ot.first().mousemove()
-     } else {
-       $('div.field g.tile').removeClass('active')
-     }
-   }) //}}}
+  $('div.program svg').on('mousemove','foreignObject div',(ev)=>{ //{{{
+    var left = $(window).scrollLeft()
+    var top = $(window).scrollTop()
+    let oes = document.elementsFromPoint(ev.pageX-left, ev.pageY-top)
+    let oe = oes[2]
+    let ot = $(oe).parents('g[element-type=jump]')
+    if (ot.length > 0) {
+      ot.first().mousemove()
+    } else {
+      $('div.field g.tile').removeClass('active')
+    }
+  }) //}}}
   $('div.program svg').on('mouseout','foreignObject div',(ev)=>{ //{{{
     $('div.field g.tile').removeClass('active')
   }) //}}}
   $('div.program svg').on('dragstart','foreignObject div',(ev)=>{ //{{{
     var left = $(window).scrollLeft();
     var top = $(window).scrollTop();
-    editor.target_drag.hide()
-    let oe = document.elementFromPoint(ev.pageX-left, ev.pageY-top);
 
+    let oes = document.elementsFromPoint(ev.pageX-left, ev.pageY-top)
+    let oe = oes[2]
     let ot = $(oe).parents('g[element-type]')
     if (ot.length > 0 && ot.parents('g[element-group=graph]').length == 1) {
       var ety = ot.first().attr('element-type')
@@ -246,8 +234,8 @@ $(document).ready(async function() {
       ev.originalEvent.dataTransfer.setDragImage(img, 0, 0)
       $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
       $('div.program g[element-type=add] .adder').show();
+      editor.target_drag.hide()
     } else {
-      editor.target_drag.show()
       return false
     }
   }) //}}}
