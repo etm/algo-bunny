@@ -13,13 +13,12 @@ Treacherous Dungeons!
 Eat the carrot.
 ---
 Here you need a more sophisticated method than a simple wall walker. Following
-the left or right wall will just not do the job Read [maze-solving algorithms
-on
-https://en.wikipedia.org/wiki/Maze-solving_algorithm](https://en.wikipedia.org/wiki/Maze-solving_algorithm).
-Use flowers for marking things.
+the left or right wall will just not do the job Read [maze-solving
+algorithms](https://en.wikipedia.org/wiki/Maze-solving_algorithm). Use flowers
+for marking things.
 ---
 1
 ---
 100
 ---
-eat_carrot,eat_flower,put_flower,forward,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_flower,if_carrot,memorize_position,memorize_steps
+eat_carrot,eat_flower,put_flower,forward,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_flower,if_carrot,memorize_position,memorize_steps,execute

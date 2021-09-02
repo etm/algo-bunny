@@ -314,13 +314,13 @@ class Editor {
       newp.push([k,v])
       if (k == eid) {
         if (eop == 'after') {
-          newp.push([this.#newid(),this.#insert_rec_item(ety)])
+          newp.push([nid,this.#insert_rec_item(ety)])
         }
         if (eop == 'insert_first') {
-          v.first.unshift([this.#newid(),this.#insert_rec_item(ety)])
+          v.first.unshift([nid,this.#insert_rec_item(ety)])
         }
         if (eop == 'insert_second') {
-          v.second.unshift([this.#newid(),this.#insert_rec_item(ety)])
+          v.second.unshift([nid,this.#insert_rec_item(ety)])
         }
       }
       if (typeof(v) == 'object') {

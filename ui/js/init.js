@@ -257,7 +257,7 @@ $(document).ready(async function() {
   $('div.program').on('drop','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault()
     ev.stopPropagation()
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z][a-z0-9_]+$/)) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z]{2}[a-z0-9_]+$/)) {
       let eid = $(ev.currentTarget).attr('element-id')
       let eop = $(ev.currentTarget).attr('element-op')
       let ety = ev.originalEvent.dataTransfer.getData("text/plain")
@@ -276,14 +276,14 @@ $(document).ready(async function() {
   $('div.program').on('dragover','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z][a-z0-9_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z]{2}[a-z0-9_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
       $(ev.currentTarget).addClass('active');
     }
   }); //}}}
   $('div.program').on('dragleave','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z][a-z0-9_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z]{2}[a-z0-9_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
       $(ev.currentTarget).removeClass('active');
     }
   }); //}}}
