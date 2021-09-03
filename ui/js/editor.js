@@ -398,12 +398,12 @@ class Editor {
   #cisc_length_rec(it) { //{{{
     let count = 0
     for (const [k,v] of it) {
-      count++
-      if (typeof(v) == 'object') {
-        if (v != null && v.first) {
+      if (v != null) { count++ }
+      if (typeof(v) == 'object' && v != null) {
+        if (v.first) {
           count += this.#cisc_length_rec(v.first)
         }
-        if (v != null && v.second) {
+        if (v.second) {
           count += this.#cisc_length_rec(v.second)
         }
       }

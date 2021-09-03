@@ -12,6 +12,6 @@ Hint: memorize the flower by using ![](commands/memorize_flower.svg).
 ---
 11
 ---
-9
+5
 ---
 eat_carrot,forward,memorize_flower
