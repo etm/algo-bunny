@@ -218,7 +218,7 @@ class Walker {
           let it = this.editor.get_item_by_pid(pid)
           res = await this.#walk_rec(it.first)
           if (res === false || res == 'leave') { return res; }
-        }
+        } //}}}
       }
 
       if (typeof(v) == 'object' && v != null) {

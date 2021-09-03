@@ -410,7 +410,7 @@ class Field {
       if (this.state_flowers[oy][ox] === undefined || this.state_flowers[oy][ox] == null) {
         this.state_flowers[oy][ox] = v
       } else {
-        this.state_flowers[oy][ox].value = Math.round(this.state_flowers[oy][ox] / v.value)
+        this.state_flowers[oy][ox].value = Math.round(this.state_flowers[oy][ox].value / v.value)
       }
       if (!this.#nodraw) {
         $('g.tile[element-x='+ox+'][element-y='+oy+'] g.flower',this.target_field).remove()
