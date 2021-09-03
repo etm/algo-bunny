@@ -154,31 +154,33 @@ class Editor {
     }
     return newp
   } //}}}
+  remove_item(eid) { //{{{
+    this.program = this.#remove_item_rec(this.program,eid)
+    document.dispatchEvent(this.#changed)
+  } //}}}
   #remove_item_by_type_rec(it,type){ //{{{
     let newp = []
     for (const [k,v] of it) {
-      if (typeof(v) == 'string' && v == type) {
-      } else {
-        newp.push([k,v])
+      if (typeof(v) == 'string') {
+        if (v != type) { newp.push([k,v]) }
       }
-      if (typeof(v) == 'object' && v != null) {
-        if (v.item == type) {
-        } else {
+      if (typeof(v) == 'object') {
+        if (v == null) {
           newp.push([k,v])
-          if (v.first) {
-            v.first = this.#remove_item_by_type_rec(v.first,type)
-          }
-          if (v.second) {
-            v.second = this.#remove_item_by_type_rec(v.second,type)
+        } else {
+          if (v.item != type) {
+            newp.push([k,v])
+            if (v.first) {
+              v.first = this.#remove_item_by_type_rec(v.first,type)
+            }
+            if (v.second) {
+              v.second = this.#remove_item_by_type_rec(v.second,type)
+            }
           }
         }
       }
     }
     return newp
-  } //}}}
-  remove_item(eid) { //{{{
-    this.program = this.#remove_item_rec(this.program,eid)
-    document.dispatchEvent(this.#changed)
   } //}}}
   remove_item_by_type(type) { //{{{
     this.program = this.#remove_item_by_type_rec(this.program,type)
