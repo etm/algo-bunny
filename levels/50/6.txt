@@ -10,6 +10,6 @@ Eat all carrots.
 ---
 111111111
 ---
-25
+16
 ---
 eat_carrot,forward,left,right,loop,break,if_empty,if_hole

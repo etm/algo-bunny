@@ -1,22 +1,22 @@
-TTTTTT
-cBTTT+
-cTTTT-
-cTTTT*
-cTTTT/
-cTTTTT
-cTTTTT
-TTTTTT
+TTTTTTTTTTT
+cBTTTTTTTT+
+cTTTTTTTTT-
+cTTTTTTTTT*
+cTTTTTTTTT/
+cTTTTTTTTTT
+cTTTTTTTTTT
+TTTTTTTTTTT
 ---
 ---
 Let the Flying Spaghetti Monster sort them out!
 ---
 Eat the carrots in order - smallest first, biggest last.
 ---
-Any sorting algorithm is fair game. From bubble to quick to merge. BUT: your rank will be not as
-good if you use a weak sorting algorithm.
+Any sorting algorithm is fair game. From bubble to quick to merge. BUT: your rank will be bigger
+if you use a weak sorting algorithm.
 ---
 123456
 ---
-40
+42
 ---
 eat_carrot,eat_flower,get_carrot,put_carrot,put_flower,forward,left,right,step_left,step_right,jump,jump_back,loop,break,if_empty,if_flower,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower,memorize_carrot,memorize_position,execute

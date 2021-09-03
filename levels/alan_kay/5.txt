@@ -1,5 +1,5 @@
-cTTTTT
-cBTTT+
+cBTTTT
+cTTTT+
 cTTTT-
 cTTTT*
 cTTTT/
