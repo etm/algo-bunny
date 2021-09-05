@@ -8,10 +8,10 @@ Islands of info!
 ---
 Eat all carrots.
 ---
-Hint: memorize the flower by using ![](commands/memorize_flower.svg).
+Hint: memorize the flower by using ![](commands/memorize_flower.svg). Then jump to where your brain tells you to ![](commands/jump_brain.svg).
 ---
 11
 ---
-5
+6
 ---
-eat_carrot,forward,memorize_flower
+eat_carrot,forward,memorize_flower,jump_brain

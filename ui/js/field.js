@@ -315,6 +315,7 @@ class Field {
 
   has_carrot()    { //{{{
     let [ox,oy,oface] = this.#facing_tile()
+    console.log(ox,oy,oface)
     return (this.state_carrots[oy] && this.state_carrots[oy][ox]) ? true : false
   }  //}}}
   has_flower()    {  //{{{
@@ -509,6 +510,9 @@ class Field {
   } //}}}
 
   async jump(x,y,face) { //{{{
+    x = parseInt(x)
+    y = parseInt(y)
+
     if (!(this.tiles[y] && this.tiles[y][x] && this.tiles[y][x] == 'T' && (this.state_carrots[y][x] === undefined || this.state_carrots[y][x] == null) && (this.state_flowers[y][x] === undefined || this.state_flowers[y][x] == null))) {
       return false
     }
