@@ -332,8 +332,7 @@ class Field {
   check_carrot()   { //{{{
     let [ox,oy,oface] = this.#facing_tile()
     if (this.state_carrots[oy][ox]) {
-      let c = this.state_carrots[oy][ox]
-      return c
+      return this.state_carrots[oy][ox]
     } else {
       return false
     }
@@ -341,10 +340,16 @@ class Field {
   check_flower()   { //{{{
     let [ox,oy,oface] = this.#facing_tile()
     if (this.state_flowers[oy] && this.state_flowers[oy][ox]) {
-      let c = this.state_flowers[oy][ox]
-      return c
+      return this.state_flowers[oy][ox]
     } else {
       return false
+    }
+  } //}}}
+  check_dir(ox,oy)   { //{{{
+    if (this.state_dir[oy] && this.state_dir[oy][ox]) {
+      return this.state_dir[oy][ox]
+    } else {
+      return
     }
   } //}}}
   get_carrot()   { //{{{

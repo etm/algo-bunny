@@ -226,7 +226,7 @@ class Walker {
           case 'jump': //{{{
             this.#jump_back = JSON.stringify(this.field.state_bunny)
             let [wx,wy] = v.target.split(',')
-            res = await this.field.jump(parseInt(wx),parseInt(wy))
+            res = await this.field.jump(parseInt(wx),parseInt(wy),this.field.check_dir(wx,wy))
             if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false }
             break //}}}
           case 'loop': //{{{
