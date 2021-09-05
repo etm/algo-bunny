@@ -278,7 +278,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.7692637"
      inkscape:cx="102.01984"
-     inkscape:cy="201.77885"
+     inkscape:cy="201.21365"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -367,7 +367,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       style="fill:#cdab8f;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#8f5902;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;font-variation-settings:normal;opacity:1;vector-effect:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
        d="M 83.530282,38.413195 V 18.309507 H 42.311605 l 13.191167,6.43376 -24.050984,11.67099 14.731617,7.18509 24.050986,-11.67099 z"
        id="path27842" />
   </g>

@@ -367,7 +367,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       style="fill:#cdab8f;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#8f5902;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;font-variation-settings:normal;opacity:1;vector-effect:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
        d="M 37.831618,20.468216 V 40.571904 H 79.050295 L 65.859128,34.138144 89.910112,22.467154 75.178495,15.282064 51.127509,26.953054 Z"
        id="path27842" />
   </g>
