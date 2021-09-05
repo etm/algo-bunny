@@ -302,6 +302,12 @@ function Assets() {
     'desc': 'I turn right.',
     'icon': 'commands/right.svg'
   }; /*}}}*/
+  this.commands.random = { /*{{{*/
+    'type': 'simple',
+    'label': 'Turn Random',
+    'desc': 'I turn in a random direction.',
+    'icon': 'commands/random.svg'
+  }; /*}}}*/
   this.commands.step_left = { /*{{{*/
     'type': 'simple',
     'label': 'Sidestep Left',
@@ -319,6 +325,12 @@ function Assets() {
     'label': 'Jump',
     'desc': 'I jump to a position on the field. After placing this command, drag a tile onto it to set the position.',
     'icon': 'commands/jump.svg'
+   }; /*}}}*/
+  this.commands.jump_brain = { /*{{{*/
+    'type': 'simple',
+    'label': 'Jump',
+    'desc': 'I jump to the location I remember in my big brain. If I just remember a number, I move as many steps in the direction I face.',
+    'icon': 'commands/jump_brain.svg'
    }; /*}}}*/
   this.commands.jump_back = { /*{{{*/
     'type': 'simple',
@@ -480,8 +492,8 @@ function Assets() {
   }; /*}}}*/
   this.commands.memorize_flower = { /*{{{*/
     'type': 'simple',
-    'label': 'Memorize Flower Size or Jump',
-    'desc': 'I memorize the flower in front of me.<p>If it\'s a red flower I memorize its size. If it\'s a blue flower I immediately jump to the position it reminds me of.',
+    'label': 'Memorize Flower Size or Location',
+    'desc': 'I memorize the flower in front of me.<p>If it\'s a red flower I memorize its size. If it\'s a blue flower I memorize the saved location.',
     'icon': 'commands/memorize_flower.svg'
   }; /*}}}*/
 

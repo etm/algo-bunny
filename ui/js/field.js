@@ -499,6 +499,14 @@ class Field {
     let [ox,oy,oface] = this.#facing_tile()
     return await this.jump(ox,oy,oface)
   } //}}}
+  async jump_forward(dist) { //{{{
+    let [ox,oy,oface] = this.state_bunny
+    if      (oface == 'W') { ox -= parseInt(dist) }
+    else if (oface == 'N') { oy -= parseInt(dist) }
+    else if (oface == 'E') { ox += parseInt(dist) }
+    else if (oface == 'S') { ox += parseInt(dist) }
+    return await this.jump(ox,oy,oface)
+  } //}}}
 
   async jump(x,y,face) { //{{{
     if (!(this.tiles[y] && this.tiles[y][x] && this.tiles[y][x] == 'T' && (this.state_carrots[y][x] === undefined || this.state_carrots[y][x] == null) && (this.state_flowers[y][x] === undefined || this.state_flowers[y][x] == null))) {

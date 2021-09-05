@@ -81,8 +81,26 @@ class Walker {
           if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
           this.#check_steps_active()
           this.#step_count += 1 //}}}
+        } else if (v == 'jump_brain') { //{{{
+          if (this.#brain === undefined || this.#brain == null) {
+            this.assets.say(this.assets.texts.brainempty,'div.speech')
+            return false
+          }
+
+          if (this.#brain.toString().match(/\d,\d,[NEWS]/)) {
+            let [wx,wy,wface] = this.#brain.split(',')
+            res = await this.field.jump(wx,wy,wface)
+            if (res === false) { return false }
+          }
+          else if (this.#brain.toString().match(/\d+/)) {
+            res = await this.field.jump_forward(parseInt(this.#brain))
+            if (res === false) { return false }
+          }
+        //}}}
         } else if (v == 'jump_back') { //{{{
           if (this.#jump_back != null) {
+              res = await this.field.jump(res.x,res.y,res.face)
+              if (res === false) { return false; }
             let [wx,wy,wface] = JSON.parse(this.#jump_back)
             res = await this.field.jump(wx,wy,wface)
             if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
@@ -175,7 +193,7 @@ class Walker {
           } //}}}
         } else if (v == 'memorize_position') { //{{{
           await this.#sleep(this.timing/2)
-          res = this.field.state_bunny[0] + ',' + this.field.state_bunny[1] + ' ' + this.field.state_bunny[2];
+          res = this.field.state_bunny[0] + ',' + this.field.state_bunny[1] + ' ' + this.field.state_bunny[2]
           $('div.field div.ui.brain .type').hide()
           $('div.field div.ui.brain .type.location').show()
           $('div.field div.ui.brain .text').text(res)
@@ -202,8 +220,13 @@ class Walker {
               this.#steps_active = false
               await this.#sleep(this.timing/2)
             } else if (res.type == 'position') {
-              res = await this.field.jump(res.x,res.y,res.face)
-              if (res === false) { return false; }
+              let pos = res.x + ',' + res.y + ' ' + res.face
+              $('div.field div.ui.brain .type').hide()
+              $('div.field div.ui.brain .type.location').show()
+              $('div.field div.ui.brain .text').text(pos)
+              this.#brain = res.x + ',' + res.y + ',' + res.face
+              this.#steps_active = false
+              await this.#sleep(this.timing/2)
             }
           } else {
             this.assets.say(this.assets.texts.nosee,'div.speech')
