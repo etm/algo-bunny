@@ -295,6 +295,12 @@ function Assets() {
     'desc': 'I take a step in the direction I am facing. I hope I don\'t fall into a hole, step on a carrot or a flower.',
     'icon': 'commands/forward.svg'
   }; /*}}}*/
+  this.commands.back = { /*{{{*/
+    'type': 'simple',
+    'label': 'Back',
+    'desc': 'I take a step back. I hope I don\'t fall into a hole, step on a carrot or a flower.',
+    'icon': 'commands/back.svg'
+  }; /*}}}*/
   this.commands.left = { /*{{{*/
     'type': 'simple',
     'label': 'Turn Left',

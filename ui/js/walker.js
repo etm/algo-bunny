@@ -60,16 +60,22 @@ class Walker {
           this.#check_steps_active()
           this.#step_count += 1
           document.dispatchEvent(this.#changed_steps) //}}}
+        } else if (v == 'back') { //{{{
+          res = await this.field.back()
+          if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
+          this.#check_steps_active()
+          this.#step_count += 1
+          document.dispatchEvent(this.#changed_steps) //}}}
         } else if (v == 'left') { //{{{
-          await this.#sleep(this.timing/2)
+          await this.#sleep(this.timing/4)
           res = await this.field.left()
           if (res === false) { return false; }
-          await this.#sleep(this.timing/2) //}}}
+          await this.#sleep(this.timing/4) //}}}
         } else if (v == 'right') { //{{{
-          await this.#sleep(this.timing/2)
+          await this.#sleep(this.timing/4)
           res = await this.field.right()
           if (res === false) { return false; }
-          await this.#sleep(this.timing/2) //}}}
+          await this.#sleep(this.timing/4) //}}}
         } else if (v == 'step_left') { //{{{
           res = await this.field.step_left()
           if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
