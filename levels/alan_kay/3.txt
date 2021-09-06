@@ -4,9 +4,13 @@ T TBT T T   T
 TTT TTTTTTTTT
   TTT       T
         TTTTT
-TTTTTTW   T
-TTTTTTW   TTc
-     +W
+          T
++W        TTc
+
+TTTTTTTTTTTTW
+
+
+
 ---
 ---
 Treacherous Dungeons!

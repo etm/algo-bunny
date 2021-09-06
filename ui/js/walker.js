@@ -425,6 +425,10 @@ class Walker {
         }
       }
 
+      if (typeof(v) == null) {
+        return true
+      }
+
     }
     if (it.length == 0) {
       return 'continue'
