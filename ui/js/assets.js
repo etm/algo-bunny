@@ -173,6 +173,11 @@ function Assets() {
     'desc': 'Drag here to add.',
     'icon': 'commands/add.svg'
   }; /*}}}*/
+  this.placeholders.below = { /*{{{*/
+    'label': 'Add Below',
+    'desc': 'Drag here to add.',
+    'icon': 'commands/below.svg'
+  }; /*}}}*/
   this.placeholders.here = { /*{{{*/
     'label': 'Here',
     'desc': 'Which instruction is executed',

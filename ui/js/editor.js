@@ -18,13 +18,16 @@ class Editor {
     this.assets = assets
     this.target = target
 
+    let t0 = $X('<g element-group="below" xmlns="http://www.w3.org/2000/svg"></g>')
     let t1 = $X('<g element-group="graph" xmlns="http://www.w3.org/2000/svg"></g>')
     let t2 = $X('<g element-group="drop"  xmlns="http://www.w3.org/2000/svg"></g>')
     let t3 = $X('<g element-group="drag"  xmlns="http://www.w3.org/2000/svg"></g>')
+    target.append(t0)
     target.append(t1)
     target.append(t2)
     target.append(t3)
 
+    this.target_below = t0
     this.target_graph = t1
     this.target_drop = t2
     this.target_drag = t3
@@ -42,6 +45,13 @@ class Editor {
     this.program = []
   }  //}}}
 
+  #draw_below(id,what,x,y,op='',shift_y=0) { //{{{
+    let item = this.assets.placeholders[what]
+    let grax = item.graphics['icon'].clone()
+    let g2 = $X('<g element-type="' + what + '" element-op="' + op  + '" element-id="' + id  + '" transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height + shift_y) + ')" xmlns="http://www.w3.org/2000/svg"></g>')
+        g2.append(grax)
+    this.target_below.append(g2)
+  } //}}}
   #draw_asset(id,what,x,y,op='',shift_y=0) { //{{{
     let item = this.assets.placeholders[what]
     let grax = item.graphics['icon'].clone()
@@ -419,6 +429,7 @@ class Editor {
   render() {
     this.#clear()
     this.#draw_asset('','bunny',1,1,'start')
+    this.#draw_below('','below',1,1,'')
     this.#draw_asset('','add',1,1,'insert_first',this.#tile_height/2)
     let [y,w] = this.#iter(this.program,1,1)
     let hei = y * this.#tile_height * this.#scale_factor + this.#height_add
