@@ -135,3 +135,7 @@ div.program svg g[element-group=graph] g[element-type=jump].targeting .cutout {
 div.program svg g[element-group=drag] div {
   cursor: pointer;
 }
+
+button.save {
+  margin-left: 3em;
+}

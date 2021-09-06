@@ -90,7 +90,6 @@ class Walker {
           if (this.#brain.toString().match(/\d,\d,[NEWS]/)) {
             let [wx,wy,wface] = this.#brain.split(',')
             res = await this.field.jump(wx,wy,wface)
-            console.log(res)
             if (res === false) { return false }
           }
           else if (this.#brain.toString().match(/\d+/)) {
@@ -150,7 +149,6 @@ class Walker {
           if (res === false) { this.assets.say(this.assets.texts.noplace,'div.speech'); return false; }
           await this.#sleep(this.timing/2) //}}}
         } else if (v == 'eat_carrot') { //{{{
-          console.log('rrrrr')
           if (!(this.#hand === undefined || this.#hand == null)) {
             await this.#sleep(this.timing/2)
             this.field.eat()
@@ -159,11 +157,9 @@ class Walker {
             $('div.field div.ui.hand img').hide()
             await this.#sleep(this.timing/2)
           } else if (this.field.has_carrot()) {
-            console.log('here')
             await this.#sleep(this.timing/2)
             this.field.eat()
             res = this.field.get_carrot()
-            console.log(res)
             if (res === false) { this.assets.say(this.assets.texts.noeat,'div.speech'); return false; }
             this.#eaten += res
             await this.#sleep(this.timing/2)

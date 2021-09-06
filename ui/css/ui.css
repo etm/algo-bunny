@@ -7,3 +7,6 @@ body {
   flex-direction: row;
   justify-content: center;
 }
+
+#saveinstructions { display: none; }
+#loadinstructions { display: none; }

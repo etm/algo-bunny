@@ -335,4 +335,31 @@ $(document).ready(async function() {
       $('div.field div.victory .text .reference_rank').text(field.max_score)
     },1000)
   })
+
+  $('button.save').click(ev=>{
+    $('#saveinstructions').attr('download',field.title.trim().replace(/[^a-zA-Z0-9!?()-]/g,'_') + '.json');
+    $('#saveinstructions').attr('href','data:application/xml;charset=utf-8;base64,' + $B64(JSON.stringify(editor.program,null,2)));
+    document.getElementById('saveinstructions').click();
+  })
+  $('button.load').click(ev=>{
+    document.getElementById('loadinstructions').click();
+  })
+  $("input[name=loadinstructions]").change(ev=>{
+    if (typeof window.FileReader !== 'function') {
+      alert('FileReader not yet supportet');
+      return;
+    }
+    var files = $('#loadinstructions').get(0).files;
+    var reader = new FileReader();
+    reader.onload = function(){
+      editor.program = JSON.parse(reader.result)
+      editor.render()
+      document.getElementById('fuckchrome').reset();
+      loading = false;
+    }
+    reader.onerror = function(){ console.log('error reading file'); loading = false; }
+    reader.onabort = function(){ console.log('abort reading file'); loading = false; }
+    reader.readAsText(files[0]);
+
+  })
 })

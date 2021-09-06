@@ -315,7 +315,6 @@ class Field {
 
   has_carrot()    { //{{{
     let [ox,oy,oface] = this.#facing_tile()
-    console.log(ox,oy,oface)
     return (this.state_carrots[oy] && this.state_carrots[oy][ox]) ? true : false
   }  //}}}
   has_flower()    {  //{{{
