@@ -99,8 +99,6 @@ class Walker {
         //}}}
         } else if (v == 'jump_back') { //{{{
           if (this.#jump_back != null) {
-              res = await this.field.jump(res.x,res.y,res.face)
-              if (res === false) { return false; }
             let [wx,wy,wface] = JSON.parse(this.#jump_back)
             res = await this.field.jump(wx,wy,wface)
             if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
