@@ -303,6 +303,35 @@ class Walker {
               if (res === false || res == 'leave') { return res; }
             }
             break //}}}
+          case 'if_jump': //{{{
+            await this.#sleep(this.timing/2)
+
+            if (this.#brain === undefined || this.#brain == null) {
+              this.assets.say(this.assets.texts.brainempty,'div.speech')
+              return false
+            }
+
+            if (this.#brain.toString().match(/\d,\d,[NEWS]/)) {
+              let [wx,wy,wface] = this.#brain.split(',')
+              if (this.field.jump_possible(wx,wy,wface)) {
+                res = await this.#walk_rec(v.first)
+                if (res === false || res == 'leave') { return res; }
+              } else {
+                res = await this.#walk_rec(v.second)
+                if (res === false || res == 'leave') { return res; }
+              }
+            }
+            else if (this.#brain.toString().match(/\d+/)) {
+              res = await this.field.jump_forward(this.#brain)
+              if (this.field.jump_forward_possible(wx,wy,wface)) {
+                res = await this.#walk_rec(v.first)
+                if (res === false || res == 'leave') { return res; }
+              } else {
+                res = await this.#walk_rec(v.second)
+                if (res === false || res == 'leave') { return res; }
+              }
+            }
+            break //}}}
           case 'if_same': //{{{
             await this.#sleep(this.timing/2)
             if (this.field.has_carrot() || this.field.has_flower()) {

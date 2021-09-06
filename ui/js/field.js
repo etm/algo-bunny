@@ -516,6 +516,30 @@ class Field {
     return await this.jump(ox,oy,oface)
   } //}}}
 
+  jump_forward_possible(dist) { //{{{
+    let [x,y,face] = this.state_bunny
+    if      (face == 'W') { x -= parseInt(dist) }
+    else if (face == 'N') { y -= parseInt(dist) }
+    else if (face == 'E') { x += parseInt(dist) }
+    else if (face == 'S') { x += parseInt(dist) }
+
+    if (!(this.tiles[y] && this.tiles[y][x] && this.tiles[y][x] == 'T' && (this.state_carrots[y][x] === undefined || this.state_carrots[y][x] == null) && (this.state_flowers[y][x] === undefined || this.state_flowers[y][x] == null))) {
+      return false
+    } else {
+      return true
+    }
+  } //}}}
+  jump_possible(x,y,face) { //{{{
+    x = parseInt(x)
+    y = parseInt(y)
+
+    if (!(this.tiles[y] && this.tiles[y][x] && this.tiles[y][x] == 'T' && (this.state_carrots[y][x] === undefined || this.state_carrots[y][x] == null) && (this.state_flowers[y][x] === undefined || this.state_flowers[y][x] == null))) {
+      return false
+    } else {
+      return true
+    }
+  } //}}}
+
   async jump(x,y,face) { //{{{
     x = parseInt(x)
     y = parseInt(y)

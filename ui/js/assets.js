@@ -482,6 +482,18 @@ function Assets() {
     'second_icon': 'commands/if_bigger/n.svg',
     'end': 'commands/if_bigger/end.svg'
   }; /*}}}*/
+  this.commands.if_jump = { /*{{{*/
+    'type': 'complex_two',
+    'label': 'Check If Jump Is Possible',
+    'desc': 'I check if can jump to the location I memorized.',
+    'icon': 'commands/if_jump.svg',
+    'first': 'commands/if_jump/top.svg',
+    'first_icon': 'commands/if_jump/y.svg',
+    'middle': 'commands/if_jump/middle.svg',
+    'second': 'commands/if_jump/else.svg',
+    'second_icon': 'commands/if_jump/n.svg',
+    'end': 'commands/if_jump/end.svg'
+  }; /*}}}*/
 
   this.commands.memorize_carrot = { /*{{{*/
     'type': 'simple',
