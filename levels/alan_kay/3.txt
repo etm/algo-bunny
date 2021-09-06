@@ -4,8 +4,9 @@ T TBT T T   T
 TTT TTTTTTTTT
   TTT       T
         TTTTT
-TTTTTTT   T
-TTTTTTT   TTc
+TTTTTTW   T
+TTTTTTW   TTc
+     +W
 ---
 ---
 Treacherous Dungeons!
@@ -21,4 +22,4 @@ for marking things.
 ---
 0
 ---
-eat_carrot,eat_flower,put_flower,forward,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_flower,if_carrot,memorize_position,memorize_steps,execute,back
+eat_carrot,eat_flower,put_flower,forward,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_flower,if_carrot,memorize_position,memorize_steps,execute,back,jump,jump_back,jump_brain,if_same,if_smaller,if_bigger

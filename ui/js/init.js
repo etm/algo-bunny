@@ -355,7 +355,9 @@ $(document).ready(async function() {
       editor.program = JSON.parse(reader.result)
       editor.render()
       document.getElementById('fuckchrome').reset();
-      loading = false;
+      editor.get_pids().forEach(pid => {
+        $('div.elements img[data-type=execute' + pid + ']').show()
+      })
     }
     reader.onerror = function(){ console.log('error reading file'); loading = false; }
     reader.onabort = function(){ console.log('abort reading file'); loading = false; }

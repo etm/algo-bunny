@@ -381,7 +381,7 @@ class Editor {
     this.program = this.#update_rec(this.program,eid,para,value)
   } //}}}
 
-  #get_free_pid_rec(it){ //{{{
+  #get_pids_rec(it){ //{{{
     let ret = []
     for (const [k,v] of it) {
       if (typeof(v) == 'object') {
@@ -389,17 +389,20 @@ class Editor {
           ret.push(v.id)
         }
         if (v != null && v.first && ret === undefined) {
-          ret = ret.concat(this.#get_free_pid_rec(v.first))
+          ret = ret.concat(this.#get_pids_rec(v.first))
         }
         if (v != null && v.second && ret === undefined) {
-          ret = ret.concat(this.#get_free_pid_rec(v.second))
+          ret = ret.concat(this.#get_pids_rec(v.second))
         }
       }
     }
     return ret
   } //}}}
+  get_pids() { //{{{
+    return this.#get_pids_rec(this.program)
+  } //}}}
   get_free_pid() { //{{{
-    let pids = this.#get_free_pid_rec(this.program)
+    let pids = this.#get_pids_rec(this.program)
     for (let i = 1; i<10; i++) {
       if (!pids.includes(i)) {
         return i

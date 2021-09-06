@@ -103,7 +103,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -124,7 +124,7 @@
        sodipodi:nodetypes="ccccc" />
     <g
        id="g935"
-       transform="translate(0,7.1350286)">
+       transform="translate(0,4.4062067)">
       <rect
          style="fill:#eeeeec;fill-opacity:1;stroke-width:0.346387;stroke-linecap:round;stroke-linejoin:round;stop-color:#000000"
          id="rect857"
