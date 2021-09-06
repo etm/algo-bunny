@@ -19,6 +19,6 @@ Behave like a roomba. Try to go everywhere.
 ---
 11111111111111111111111111111111
 ---
-0
+83
 ---
 eat_carrot,eat_flower,put_flower,forward,jump,jump_brain,jump_back,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_carrot,memorize_flower,memorize_steps,if_bigger,if_same,if_smaller,if_flower,execute
