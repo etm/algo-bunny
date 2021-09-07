@@ -1,11 +1,17 @@
-TTTTTTT E+
-cBTTTTT E-
-cTTTTTT E*
-cTTTTTT E/
-cTTTTTT
-cTTTTTT TTTT
-cTTTTTT TTTT
-TTTTTTT NNNN
+ TTTTTTT E+TT
+ cBTTTTT E-TT
+ cTTTTTT E*TT
+ cTTTTTT E/TT
+ cTTTTTT   TT
+ cTTTTTT TTTT
+ cTTTTTT TTTT
+ TTTTTTT TTTT
+ TTTTTTT TTTT
+ TTTTTTT TTTT
+ TTTTTTT TTTT
+ TTTTTTT TTTT
+ TTTTTTT NNNN
+
 ---
 ---
 Let the Flying Spaghetti Monster sort them out!
@@ -19,4 +25,4 @@ if you use a weak sorting algorithm.
 ---
 42
 ---
-eat_carrot,eat_flower,get_carrot,put_carrot,put_flower,forward,left,right,step_left,step_right,jump,jump_brain,jump_back,loop,break,if_empty,if_flower,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower,memorize_carrot,memorize_position,execute
+eat_carrot,eat_flower,get_carrot,put_carrot,put_flower,forward,left,right,step_left,step_right,jump,jump_brain,jump_back,loop,break,if_empty,if_flower,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower,memorize_carrot,memorize_position,execute,if_jump,back,if_hold

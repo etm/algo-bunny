@@ -446,6 +446,18 @@ function Assets() {
     'second_icon': 'commands/if_hole/n.svg',
     'end': 'commands/if_hole/end.svg'
   }; /*}}}*/
+  this.commands.if_hold = { /*{{{*/
+    'type': 'complex_two',
+    'label': 'Check Carrot In Hand',
+    'desc': 'I check if I hold a carrot in my hand.',
+    'icon': 'commands/if_hold.svg',
+    'first': 'commands/if_hold/top.svg',
+    'first_icon': 'commands/if_hold/y.svg',
+    'middle': 'commands/if_hold/middle.svg',
+    'second': 'commands/if_hold/else.svg',
+    'second_icon': 'commands/if_hold/n.svg',
+    'end': 'commands/if_hold/end.svg'
+  }; /*}}}*/
   this.commands.if_same = { /*{{{*/
     'type': 'complex_two',
     'label': 'Check If Equal',

@@ -94,11 +94,13 @@ class Walker {
           }
 
           if (this.#brain.toString().match(/\d,\d,[NEWS]/)) {
+            this.#jump_back = JSON.stringify(this.field.state_bunny)
             let [wx,wy,wface] = this.#brain.split(',')
             res = await this.field.jump(wx,wy,wface)
             if (res === false) { return false }
           }
           else if (this.#brain.toString().match(/\d+/)) {
+            this.#jump_back = JSON.stringify(this.field.state_bunny)
             res = await this.field.jump_forward(this.#brain)
             if (res === false) { return false }
           }
@@ -330,6 +332,16 @@ class Walker {
                 res = await this.#walk_rec(v.second)
                 if (res === false || res == 'leave') { return res; }
               }
+            }
+            break //}}}
+          case 'if_hold': //{{{
+            await this.#sleep(this.timing/2)
+            if (!(this.#hand === undefined || this.#hand == null)) {
+              res = await this.#walk_rec(v.first)
+              if (res === false || res == 'leave') { return res; }
+            } else {
+              res = await this.#walk_rec(v.second)
+              if (res === false || res == 'leave') { return res; }
             }
             break //}}}
           case 'if_same': //{{{
