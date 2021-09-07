@@ -135,6 +135,12 @@ div.program svg g[element-group=graph] g[element-type=jump].targeting .cutout {
 div.program svg g[element-group=drag] div {
   cursor: pointer;
 }
+div.program svg g[element-group=drag].inactive  {
+  # we have to only do this because chrome is incompetent again. in firefox a simple display: none would suffice.
+  transition: transform 0.01s;
+  transform: translateX(-9999px);
+}
+
 
 button.save {
   margin-left: 3em;

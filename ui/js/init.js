@@ -134,7 +134,7 @@ $(document).ready(async function() {
     var left = $(window).scrollLeft();
     var top = $(window).scrollTop();
 
-    editor.target_drag.hide()
+    editor.target_drag.addClass('inactive')
 
     $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
     // what fucking clever shit. we hide the foreignObject that sits on top of
@@ -155,6 +155,8 @@ $(document).ready(async function() {
       ev.originalEvent.dataTransfer.setDragImage(img, 0, 0);
 
       active_drag_location = ox+','+oy
+    } else {
+      return false
     }
    }); //}}}
   $('div.program').on('drop','g[element-type=jump]',(ev)=>{ //{{{
@@ -173,6 +175,7 @@ $(document).ready(async function() {
     }
   }); //}}}
   $('div.program').on('dragover','g[element-type=jump]',(ev)=>{ //{{{
+    console.log('rrrr')
     ev.preventDefault();
     ev.stopPropagation();
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location != null) {
@@ -180,6 +183,7 @@ $(document).ready(async function() {
     }
   }); //}}}
   $('div.program').on('dragleave','g[element-type=jump]',(ev)=>{ //{{{
+    console.log('rrrr')
     ev.preventDefault();
     ev.stopPropagation();
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location != null) {
@@ -192,7 +196,8 @@ $(document).ready(async function() {
     }
     active_drag_location = null // thanks again chrome.
     active_element_drag = null
-    editor.target_drag.show()
+      console.log('aaa2')
+    editor.target_drag.removeClass('inactive')
   }) //}}}
 
   $('div.program svg').on('click','foreignObject div',(ev)=>{ //{{{
@@ -206,6 +211,7 @@ $(document).ready(async function() {
     }
   }) //}}}
   $('div.program svg').on('mousemove','foreignObject div',(ev)=>{ //{{{
+    console.log('rrrra5')
     var left = $(window).scrollLeft()
     var top = $(window).scrollTop()
     let oes = document.elementsFromPoint(ev.pageX-left, ev.pageY-top)
@@ -230,18 +236,23 @@ $(document).ready(async function() {
     if (ot.length > 0 && ot.parents('g[element-group=graph]').length == 1) {
       var ety = ot.first().attr('element-type')
       if (ety == 'execute') {
-        editor.target_drag.show()
+        console.log('aaa3')
+        editor.target_drag.removeClass('inactive')
         return false
       }
+      editor.target_drag.addClass('inactive')
       var eid = ot.first().attr('element-id')
+      ev.originalEvent.dataTransfer.setData("text/plain",eid);
+
       var img = document.createElement("img")
       img.src = assets.commands[ety].icon
-      ev.originalEvent.dataTransfer.setData("text/plain",eid);
       ev.originalEvent.dataTransfer.setDragImage(img, 0, 0)
+
       $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
       $('div.program g[element-type=add] .adder').show();
-      editor.target_drag.hide()
+      active_element_drag = true
     } else {
+      console.log('yyyy')
       return false
     }
   }) //}}}
@@ -251,7 +262,7 @@ $(document).ready(async function() {
     ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0);
     $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
     $('div.program g[element-type=add] .adder').show();
-    editor.target_drag.hide()
+    editor.target_drag.addClass('inactive')
     active_element_drag = true
   }); //}}}
   $('div.program').on('drop','g[element-type=add]',(ev)=>{ //{{{
@@ -270,20 +281,22 @@ $(document).ready(async function() {
       let eit = ev.originalEvent.dataTransfer.getData("text/plain")
       editor.move_item(eid,eop,eit)
       editor.render();
-      editor.target_drag.show()
+      console.log('aaa1')
+      editor.target_drag.removeClass('inactive')
     }
+    active_element_drag = false
   }); //}}}
   $('div.program').on('dragover','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z]{2}[a-z0-9_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z]{2}[a-z0-9_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/) || active_element_drag) {
       $(ev.currentTarget).addClass('active');
     }
   }); //}}}
   $('div.program').on('dragleave','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z]{2}[a-z0-9_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
+    if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z]{2}[a-z0-9_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/) || active_element_drag) {
       $(ev.currentTarget).removeClass('active');
     }
   }); //}}}
