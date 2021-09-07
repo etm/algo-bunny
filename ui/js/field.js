@@ -10,12 +10,14 @@ class Field {
   #flower_y_displacement
   #op_y_displacement
   #dir_y_displacement
+  #nocount_y_displacement
   #bunny_y_displacement
 
   #save_state_bunny
   #save_state_carrots
   #save_state_op
   #save_state_dir
+  #save_state_nocount
   #save_state_flowers
 
   #nodraw
@@ -42,6 +44,7 @@ class Field {
     this.#flower_y_displacement = -18
     this.#op_y_displacement = 0
     this.#dir_y_displacement = 0
+    this.#nocount_y_displacement = 0
     this.#bunny_y_displacement = -37
     this.#scale_factor = 0.9
     this.#perspective_correction = 0
@@ -77,6 +80,7 @@ class Field {
     this.state_carrots = []
     this.state_op = []
     this.state_dir = []
+    this.state_nocount = []
     this.tiles = this.tiles.trimRight().split(/\r?\n/)
 
     this.tiles = this.tiles.map( x => {
@@ -84,6 +88,7 @@ class Field {
       this.state_carrots.push([])
       this.state_op.push([])
       this.state_dir.push([])
+      this.state_nocount.push([])
       let s = x.split('')
       if (this.x < s.length) { this.x = s.length }
       return s
@@ -188,6 +193,13 @@ class Field {
         g1.append(grax)
     tar.append(g1)
   } //}}}
+  #draw_nocount(x,y) { //{{{
+    let grax = this.assets.tiles.grass.graphics.sample().clone()
+    let tar = $('g.tile[element-x='+x+'][element-y='+y+']',this.target_field)
+    let g1 = $X('<g transform="scale(1,1) translate(0,' + this.#nocount_y_displacement + ')" class="grass" xmlns="http://www.w3.org/2000/svg"></g>')
+        g1.append(grax)
+    tar.append(g1)
+  } //}}}
   #draw_dir(x,y,type) { //{{{
     let grax
     if (type == 'E') {
@@ -200,7 +212,7 @@ class Field {
       grax = this.assets.tiles.south.graphics.sample().clone()
     }
     let tar = $('g.tile[element-x='+x+'][element-y='+y+']',this.target_field)
-    let g1 = $X('<g transform="scale(1,1) translate(0,' + this.#dir_y_displacement + ')" class="' + type + '" xmlns="http://www.w3.org/2000/svg"></g>')
+    let g1 = $X('<g transform="scale(1,1) translate(0,' + this.#dir_y_displacement + ')" class="direction_' + type + '" xmlns="http://www.w3.org/2000/svg"></g>')
         g1.append(grax)
     tar.append(g1)
   } //}}}
@@ -346,6 +358,10 @@ class Field {
     } else {
       return false
     }
+  } //}}}
+  check_nocount()   { //{{{
+    let [ox,oy,oface] = this.state_bunny
+    return (this.state_nocount[oy] && this.state_nocount[oy][ox])
   } //}}}
   check_dir(ox,oy)   { //{{{
     if (this.state_dir[oy] && this.state_dir[oy][ox]) {
@@ -579,6 +595,7 @@ class Field {
     this.state_carrots = JSON.parse(this.#save_state_carrots)
     this.state_op      = JSON.parse(this.#save_state_op)
     this.state_dir     = JSON.parse(this.#save_state_dir)
+    this.state_nocount = JSON.parse(this.#save_state_nocount)
     this.state_flowers = JSON.parse(this.#save_state_flowers)
     $('g.flower,g.carrot,g.bunny',this.target_field).remove()
   } //}}}
@@ -608,9 +625,15 @@ class Field {
             if (this.tiles[i-j][j] != ' ') {
               this.#draw_tile(j,i-j)
             }
+            if (this.tiles[i-j][j] == 'G') {
+              this.#draw_nocount(j,i-j)
+              this.state_nocount[i-j][j] = true
+              this.tiles[i-j][j] = 'T'
+            }
             if (this.tiles[i-j][j].match(/[NEWS]/)) {
               this.#draw_dir(j,i-j,this.tiles[i-j][j])
               this.state_dir[i-j][j] = this.tiles[i-j][j]
+              this.state_nocount[i-j][j] = true
               this.tiles[i-j][j] = 'T'
             }
             if (this.tiles[i-j][j].match(/[1-9c]/)) {
@@ -659,6 +682,7 @@ class Field {
     this.#save_state_carrots = JSON.stringify(this.state_carrots)
     this.#save_state_op      = JSON.stringify(this.state_op)
     this.#save_state_dir     = JSON.stringify(this.state_dir)
+    this.#save_state_nocount = JSON.stringify(this.state_nocount)
     this.#save_state_flowers = JSON.stringify(this.state_flowers)
 
     let [wid,_th] = this.#coordinate_transform(this.x,0)

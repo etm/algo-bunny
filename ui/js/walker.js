@@ -6,11 +6,13 @@ class Walker {
   #eaten
 
   #changed_steps
+  #changed_cops
   #changed_ins
   #success
 
   #ins_count
   #step_count
+  #cops_count
 
   #sleep(milliseconds) {//{{{
     return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -35,8 +37,10 @@ class Walker {
 
     this.#step_count = 0
     this.#ins_count = 0
+    this.#cops_count = 0
 
     this.#changed_steps = new Event("steps:changed", {"bubbles":false, "cancelable":false})
+    this.#changed_cops = new Event("cops:changed", {"bubbles":false, "cancelable":false})
     this.#changed_ins = new Event("ins:changed", {"bubbles":false, "cancelable":false})
     this.#success = new Event("walking:success", {"bubbles":false, "cancelable":false})
 
@@ -61,15 +65,19 @@ class Walker {
         if (v == 'forward') { //{{{
           res = await this.field.forward()
           if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
-          this.#check_steps_active()
-          this.#step_count += 1
-          document.dispatchEvent(this.#changed_steps) //}}}
+          if (!this.field.check_nocount()) {
+            this.#check_steps_active()
+            this.#step_count += 1
+            document.dispatchEvent(this.#changed_steps)
+          } //}}}
         } else if (v == 'back') { //{{{
           res = await this.field.back()
           if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
-          this.#check_steps_active()
-          this.#step_count += 1
-          document.dispatchEvent(this.#changed_steps) //}}}
+          if (!this.field.check_nocount()) {
+            this.#check_steps_active()
+            this.#step_count += 1
+            document.dispatchEvent(this.#changed_steps)
+          } //}}}
         } else if (v == 'left') { //{{{
           await this.#sleep(this.timing/4)
           res = await this.field.left()
@@ -83,14 +91,19 @@ class Walker {
         } else if (v == 'step_left') { //{{{
           res = await this.field.step_left()
           if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
-          this.#check_steps_active()
-          this.#step_count += 1
-          document.dispatchEvent(this.#changed_steps) //}}}
+          if (!this.field.check_nocount()) {
+            this.#check_steps_active()
+            this.#step_count += 1
+            document.dispatchEvent(this.#changed_steps)
+          } //}}}
         } else if (v == 'step_right') { //{{{
           res = await this.field.step_right()
           if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
-          this.#check_steps_active()
-          this.#step_count += 1 //}}}
+          if (!this.field.check_nocount()) {
+            this.#check_steps_active()
+            this.#step_count += 1
+            document.dispatchEvent(this.#changed_steps)
+          } //}}}
         } else if (v == 'jump_brain') { //{{{
           if (this.#brain === undefined || this.#brain == null) {
             this.assets.say(this.assets.texts.brainempty,'div.speech')
@@ -125,6 +138,8 @@ class Walker {
             if (res === false) { this.assets.say(this.assets.texts.noget,'div.speech'); return false; }
             this.#hand = res
             $('div.field div.ui.hand img').show()
+            this.#cops_count += 1
+            document.dispatchEvent(this.#changed_cops)
             await this.#sleep(this.timing/2)
           } else {
             this.assets.say(this.assets.texts.alreadyhold,'div.speech')
@@ -146,6 +161,8 @@ class Walker {
               this.#hand = null
               $('div.field div.ui.hand img').hide()
             }
+            this.#cops_count += 1
+            document.dispatchEvent(this.#changed_cops)
             await this.#sleep(this.timing/2)
           } else {
             this.assets.say(this.assets.texts.nocarrot,'div.speech')
@@ -172,6 +189,8 @@ class Walker {
             res = this.field.get_carrot()
             if (res === false) { this.assets.say(this.assets.texts.noeat,'div.speech'); return false; }
             this.#eaten += res
+            this.#cops_count += 1
+            document.dispatchEvent(this.#changed_cops)
             await this.#sleep(this.timing/2)
           } else {
             this.assets.say(this.assets.texts.noeat,'div.speech')
@@ -196,6 +215,8 @@ class Walker {
             $('div.field div.ui.brain .text').text(res)
             this.#brain = res
             this.#steps_active = false
+            this.#cops_count += 1
+            document.dispatchEvent(this.#changed_cops)
             await this.#sleep(this.timing/2)
           } else {
             this.assets.say(this.assets.texts.nosee,'div.speech')
@@ -284,6 +305,8 @@ class Walker {
             if (this.field.has_carrot()) {
               res = await this.#walk_rec(v.first)
               if (res === false || res == 'leave') { return res; }
+              this.#cops_count += 1
+              document.dispatchEvent(this.#changed_cops)
             } else {
               res = await this.#walk_rec(v.second)
               if (res === false || res == 'leave') { return res; }
@@ -365,6 +388,10 @@ class Walker {
               let cc = this.field.check_carrot()
               if (!(this.#hand === undefined || this.#hand == null)) {
                 if ((cc !== false && this.#hand == cc) || (cf !== false && this.#hand == cf.value)) {
+                  if (cc !== false) {
+                    this.#cops_count += 1
+                    document.dispatchEvent(this.#changed_cops)
+                  }
                   res = await this.#walk_rec(v.first)
                   if (res === false || res == 'leave') { return res; }
                 } else {
@@ -373,6 +400,10 @@ class Walker {
                 }
               } else if (!(this.#brain === undefined || this.#brain == null)) {
                 if ((cc !== false && this.#brain == cc) || (cf !== false && this.#brain == cf.value)) {
+                  if (cc !== false) {
+                    this.#cops_count += 1
+                    document.dispatchEvent(this.#changed_cops)
+                  }
                   res = await this.#walk_rec(v.first)
                   if (res === false || res == 'leave') { return res; }
                 } else {
@@ -395,6 +426,10 @@ class Walker {
               let cc = this.field.check_carrot()
               if (!(this.#hand === undefined || this.#hand == null)) {
                 if ((cc !== false && this.#hand < cc) || (cf !== false && this.#hand < cf.value)) {
+                  if (cc !== false) {
+                    this.#cops_count += 1
+                    document.dispatchEvent(this.#changed_cops)
+                  }
                   res = await this.#walk_rec(v.first)
                   if (res === false || res == 'leave') { return res; }
                 } else {
@@ -403,6 +438,10 @@ class Walker {
                 }
               } else if (!(this.#brain === undefined || this.#brain == null)) {
                 if ((cc !== false && this.#brain < cc) || (cf !== false && this.#brain < cf.value)) {
+                  if (cc !== false) {
+                    this.#cops_count += 1
+                    document.dispatchEvent(this.#changed_cops)
+                  }
                   res = await this.#walk_rec(v.first)
                   if (res === false || res == 'leave') { return res; }
                 } else {
@@ -425,6 +464,10 @@ class Walker {
               let cc = this.field.check_carrot()
               if (!(this.#hand === undefined || this.#hand == null)) {
                 if ((cc !== false && this.#hand > cc) || (cf !== false && this.#hand > cf.value)) {
+                  if (cc !== false) {
+                    this.#cops_count += 1
+                    document.dispatchEvent(this.#changed_cops)
+                  }
                   res = await this.#walk_rec(v.first)
                   if (res === false || res == 'leave') { return res; }
                 } else {
@@ -433,6 +476,10 @@ class Walker {
                 }
               } else if (!(this.#brain === undefined || this.#brain == null)) {
                 if ((cc !== false && this.#brain > cc) || (cf !== false && this.#brain > cf.value)) {
+                  if (cc !== false) {
+                    this.#cops_count += 1
+                    document.dispatchEvent(this.#changed_cops)
+                  }
                   res = await this.#walk_rec(v.first)
                   if (res === false || res == 'leave') { return res; }
                 } else {
@@ -487,6 +534,7 @@ class Walker {
   } //}}}
 
   step_count() { return this.#step_count }
+  cops_count() { return this.#cops_count }
   ins_count() { return this.#ins_count }
 
   stop() { //{{{
@@ -497,6 +545,7 @@ class Walker {
     this.#eaten = ''
     this.assets.say_reset('div.speech')
     this.#step_count = 0
+    this.#cops_count = 0
     this.#ins_count = 0
     this.timing = this.default_timing
     this.field.timing = this.default_timing

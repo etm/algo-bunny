@@ -208,6 +208,16 @@ function Assets() {
       'assets/tile4.svg'
     ]
   }; /*}}}*/
+  this.tiles.grass = { /*{{{*/
+    'locations': [
+      'assets/grass1.svg',
+      'assets/grass2.svg',
+      'assets/grass3.svg',
+      'assets/grass4.svg',
+      'assets/grass5.svg',
+      'assets/grass6.svg'
+    ]
+  }; /*}}}*/
   this.tiles.carrot = { /*{{{*/
     'locations': [
       'assets/carrot.svg',

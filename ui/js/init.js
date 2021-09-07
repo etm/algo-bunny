@@ -175,7 +175,6 @@ $(document).ready(async function() {
     }
   }); //}}}
   $('div.program').on('dragover','g[element-type=jump]',(ev)=>{ //{{{
-    console.log('rrrr')
     ev.preventDefault();
     ev.stopPropagation();
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location != null) {
@@ -183,7 +182,6 @@ $(document).ready(async function() {
     }
   }); //}}}
   $('div.program').on('dragleave','g[element-type=jump]',(ev)=>{ //{{{
-    console.log('rrrr')
     ev.preventDefault();
     ev.stopPropagation();
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location != null) {
@@ -196,7 +194,6 @@ $(document).ready(async function() {
     }
     active_drag_location = null // thanks again chrome.
     active_element_drag = null
-      console.log('aaa2')
     editor.target_drag.removeClass('inactive')
   }) //}}}
 
@@ -211,7 +208,6 @@ $(document).ready(async function() {
     }
   }) //}}}
   $('div.program svg').on('mousemove','foreignObject div',(ev)=>{ //{{{
-    console.log('rrrra5')
     var left = $(window).scrollLeft()
     var top = $(window).scrollTop()
     let oes = document.elementsFromPoint(ev.pageX-left, ev.pageY-top)
@@ -236,7 +232,6 @@ $(document).ready(async function() {
     if (ot.length > 0 && ot.parents('g[element-group=graph]').length == 1) {
       var ety = ot.first().attr('element-type')
       if (ety == 'execute') {
-        console.log('aaa3')
         editor.target_drag.removeClass('inactive')
         return false
       }
@@ -252,7 +247,6 @@ $(document).ready(async function() {
       $('div.program g[element-type=add] .adder').show();
       active_element_drag = true
     } else {
-      console.log('yyyy')
       return false
     }
   }) //}}}
@@ -281,7 +275,6 @@ $(document).ready(async function() {
       let eit = ev.originalEvent.dataTransfer.getData("text/plain")
       editor.move_item(eid,eop,eit)
       editor.render();
-      console.log('aaa1')
       editor.target_drag.removeClass('inactive')
     }
     active_element_drag = false
@@ -333,6 +326,9 @@ $(document).ready(async function() {
   document.addEventListener('steps:changed', (e) => {
     $('div.field div.stats .steps .value').text(walker.step_count())
   })
+  document.addEventListener('cops:changed', (e) => {
+    $('div.field div.stats .cops .value').text(walker.cops_count())
+  })
   document.addEventListener('walking:success', (e) => {
     setTimeout(()=>{
       $('div.field div.mission').removeClass('active')
@@ -340,9 +336,11 @@ $(document).ready(async function() {
       let cisc = editor.cisc_length()
       let ins = walker.ins_count()
       let steps = walker.step_count()
+      let cops = walker.cops_count()
 
       $('div.field div.victory .text .title').text(field.title.trim())
       $('div.field div.victory .text .steps').text(steps)
+      $('div.field div.victory .text .cops').text(cops)
       $('div.field div.victory .text .ins').text(ins)
       $('div.field div.victory .text .cisc').text(cisc)
       $('div.field div.victory .text .rank').text(cisc + steps)
