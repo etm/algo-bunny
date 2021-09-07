@@ -1,6 +1,8 @@
 function Assets() {
   var self = this
 
+  this.mute = false
+
   this.commands = {}
   this.field = {}
   this.placeholders = {}
@@ -26,8 +28,10 @@ function Assets() {
   } //}}}
 
   this.play_audio = function(it) { //{{{
-    it.currentTime = 0
-    it.play()
+    if (!this.mute) {
+      it.currentTime = 0
+      it.play()
+    }
   } //}}}
 
   this.load = function() { //{{{
@@ -595,5 +599,24 @@ function Assets() {
     'label': 'Do Something',
     'desc': 'I do multiple things you told me to do.',
     'icon': 'commands/execute9.svg'
+  }; /*}}}*/
+
+  this.commands.fast = { /*{{{*/
+    'type': 'simple',
+    'label': 'Move Fast',
+    'desc': 'I am speed ... jackrabbit.',
+    'icon': 'commands/fast.svg'
+  }; /*}}}*/
+  this.commands.normal = { /*{{{*/
+    'type': 'simple',
+    'label': 'Move Normal',
+    'desc': 'Super pursuit mode ... off.',
+    'icon': 'commands/normal.svg'
+  }; /*}}}*/
+  this.commands.stop = { /*{{{*/
+    'type': 'simple',
+    'label': 'Stop Here',
+    'desc': 'I give up. I stop here, and debug myself.',
+    'icon': 'commands/stop.svg'
   }; /*}}}*/
 }

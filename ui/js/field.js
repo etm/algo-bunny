@@ -47,6 +47,8 @@ class Field {
     this.#perspective_correction = 0
     this.#height_shift = 40
 
+    this.timing = 500
+
     this.#nodraw = false
    } //}}}
   async load_level() { //{{{
@@ -556,11 +558,15 @@ class Field {
       this.state_bunny = [x,y,face]
     }
     if (ox != x || oy != y) {
-      this.#bunny_hop(x,y,face)
+      if (this.timing > 0) {
+        this.#bunny_hop(x,y,face)
+      }
       let nface = (face === undefined) ? oface : face
       this.state_bunny = [x,y,nface]
       if (!this.#nodraw) {
-        await new Promise(resolve => setTimeout(resolve, 500))
+        if (this.timing > 0) {
+          await new Promise(resolve => setTimeout(resolve, this.timing))
+        }
         this.#remove_bunny()
         this.#draw_bunny(x,y,nface)
       }

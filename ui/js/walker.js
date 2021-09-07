@@ -28,7 +28,7 @@ class Walker {
     this.field = field
     this.assets = assets
     this.walking = false
-    this.timing = 500
+    this.default_timing = 500
     this.#steps_active = false
     this.#jump_back = null
     this.#eaten = ''
@@ -39,6 +39,10 @@ class Walker {
     this.#changed_steps = new Event("steps:changed", {"bubbles":false, "cancelable":false})
     this.#changed_ins = new Event("ins:changed", {"bubbles":false, "cancelable":false})
     this.#success = new Event("walking:success", {"bubbles":false, "cancelable":false})
+
+    this.timing = this.default_timing
+    this.field.timing = this.default_timing
+    this.assets.mute = false
   }  //}}}
 
   async #walk_rec(it) { //{{{
@@ -241,6 +245,16 @@ class Walker {
         } else if (v == 'break') { //{{{
           await this.#sleep(this.timing/2)
           return 'leave' //}}}
+        } else if (v == 'fast') { //{{{
+          this.timing = 0
+          this.field.timing = 0
+          this.assets.mute = true //}}}
+        } else if (v == 'normal') { //{{{
+          this.timing = this.default_timing
+          this.field.timing = this.default_timing
+          this.assets.mute = false //}}}
+        } else if (v == 'stop') { //{{{
+          return 'false' //}}}
         } else if (v.match(/^execute/)) { //{{{
           await this.#sleep(this.timing/2)
           let pid = parseInt(v[7])
@@ -451,6 +465,7 @@ class Walker {
   async walk() { //{{{
     this.walking = true
     let res = await this.#walk_rec(this.editor.program)
+    this.assets.mute = false
     if (res == true) {
       if (this.field.carrots.join('') == this.#eaten) {
         $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
