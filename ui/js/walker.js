@@ -498,6 +498,9 @@ class Walker {
     this.assets.say_reset('div.speech')
     this.#step_count = 0
     this.#ins_count = 0
+    this.timing = this.default_timing
+    this.field.timing = this.default_timing
+    this.assets.mute = false
     $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
     $('div.field div.ui.brain .type').hide()
     $('div.field div.ui.brain .text').text('')

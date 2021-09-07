@@ -328,6 +328,7 @@ $(document).ready(async function() {
       let ins = walker.ins_count()
       let steps = walker.step_count()
 
+      $('div.field div.victory .text .title').text(field.title.trim())
       $('div.field div.victory .text .steps').text(steps)
       $('div.field div.victory .text .ins').text(ins)
       $('div.field div.victory .text .cisc').text(cisc)
