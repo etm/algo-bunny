@@ -358,7 +358,7 @@ $(document).ready(async function() {
       editor.get_pids().forEach(pid => {
         $('div.elements img[data-type=execute' + pid + ']').show()
       })
-      $('div.field div.stats .cisc .value').text(editor.cisc_length()
+      $('div.field div.stats .cisc .value').text(editor.cisc_length())
     }
     reader.onerror = function(){ console.log('error reading file'); loading = false; }
     reader.onabort = function(){ console.log('abort reading file'); loading = false; }
