@@ -550,6 +550,9 @@ class Walker {
     this.timing = this.default_timing
     this.field.timing = this.default_timing
     this.assets.mute = false
+    document.dispatchEvent(this.#changed_ins)
+    document.dispatchEvent(this.#changed_steps)
+    document.dispatchEvent(this.#changed_cops)
     $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
     $('div.field div.ui.brain .type').hide()
     $('div.field div.ui.brain .text').text('')
