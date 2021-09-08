@@ -65,16 +65,16 @@ class Walker {
         if (v == 'forward') { //{{{
           res = await this.field.forward()
           if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
+          this.#check_steps_active()
           if (!this.field.check_nocount()) {
-            this.#check_steps_active()
             this.#step_count += 1
             document.dispatchEvent(this.#changed_steps)
           } //}}}
         } else if (v == 'back') { //{{{
           res = await this.field.back()
           if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
+          this.#check_steps_active()
           if (!this.field.check_nocount()) {
-            this.#check_steps_active()
             this.#step_count += 1
             document.dispatchEvent(this.#changed_steps)
           } //}}}
@@ -91,16 +91,16 @@ class Walker {
         } else if (v == 'step_left') { //{{{
           res = await this.field.step_left()
           if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
+          this.#check_steps_active()
           if (!this.field.check_nocount()) {
-            this.#check_steps_active()
             this.#step_count += 1
             document.dispatchEvent(this.#changed_steps)
           } //}}}
         } else if (v == 'step_right') { //{{{
           res = await this.field.step_right()
           if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
+          this.#check_steps_active()
           if (!this.field.check_nocount()) {
-            this.#check_steps_active()
             this.#step_count += 1
             document.dispatchEvent(this.#changed_steps)
           } //}}}
