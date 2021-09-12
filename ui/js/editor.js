@@ -9,11 +9,6 @@ class Editor {
 
   #changed
 
-  #draw_drag_layer(width,height) { //{{{
-    let g1 = $X('<foreignObject x="0" y="0" width="' + width + '" height="' + height + '" xmlns="http://www.w3.org/2000/svg" requiredExtensions="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml" draggable="true" style="width: 100%; height:100%"></div></foreignObject>')
-    this.target_drag.append(g1)
-  } //}}}
-
   constructor(target,assets) { //{{{
     this.assets = assets
     this.target = target
@@ -21,16 +16,13 @@ class Editor {
     let t0 = $X('<g element-group="below" xmlns="http://www.w3.org/2000/svg"></g>')
     let t1 = $X('<g element-group="graph" xmlns="http://www.w3.org/2000/svg"></g>')
     let t2 = $X('<g element-group="drop"  xmlns="http://www.w3.org/2000/svg"></g>')
-    let t3 = $X('<g element-group="drag"  xmlns="http://www.w3.org/2000/svg"></g>')
     target.append(t0)
     target.append(t1)
     target.append(t2)
-    target.append(t3)
 
     this.target_below = t0
     this.target_graph = t1
     this.target_drop = t2
-    this.target_drag = t3
 
     this.#tile_width = 26.4
     this.#tile_height = 27
@@ -74,8 +66,10 @@ class Editor {
     if (item.type == 'execute') {
       grax.find('#tid').text('P' + i.id)
     }
+    let g3 = $X('<foreignObject width="' + this.#tile_width + '" height="' + this.#tile_height + '" xmlns="http://www.w3.org/2000/svg" requiredExtensions="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml" draggable="true" style="width: 100%; height:100%"></div></foreignObject>')
     let g2 = $X('<g transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height) + ')" xmlns="http://www.w3.org/2000/svg"></g>')
         g2.append(grax)
+        g2.append(g3)
         g1.append(g2)
     if (parent) {
       let tar = this.target_graph.find('g[element-id=' + parent + ']')
@@ -277,7 +271,6 @@ class Editor {
   #clear() { //{{{
     this.target_graph.empty()
     this.target_drop.empty()
-    this.target_drag.empty()
   } //}}}
 
   #insert_rec_item(ety) { //{{{
@@ -440,6 +433,6 @@ class Editor {
     this.target.attr('height', hei)
     this.target.attr('width',  wid)
 
-    this.#draw_drag_layer(wid,hei)
+    // this.#draw_drag_layer(wid,hei)
   }
 }

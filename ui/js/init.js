@@ -73,41 +73,20 @@ $(document).ready(async function() {
   $('div.program svg').on('click','g[element-type=bunny]',()=>{ assets.oneliner('div.speech') })
 
   // click element in editor, say and show delete
-  $('div.program svg').on('click','g[element-group=graph] g[element-id]',(ev)=>{ //{{{
-    $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
-
-    if (active_del_timeout) {
-      clearTimeout(active_del_timeout);
-    }
-    if (active_del != '') {
-      $('div.program svg g[element-group=drop] g[element-type=delete][element-id=' + active_del + ']').removeClass('active');
-    }
-    let eid = $(ev.currentTarget).attr('element-id');
-    if (active_del == eid) {
-      active_del = '';
-    } else {
-      active_del = eid;
-      if (!walker.walking) {
-        $('div.program svg g[element-group=drop] g[element-type=delete][element-id=' + eid + ']').addClass('active');
-      }
-      let iname = $(ev.currentTarget).attr('element-type');
-      let item = assets.commands[iname];
-      assets.say(item.label,'div.speech')
-      active_del_timeout = setTimeout(()=>{
-        $('div.program svg g[element-group=drop] g[element-type=delete][element-id].active').removeClass('active');
-        active_del = '';
-      },12000);
-    }
-    return false;
-  }); //}}}
 
   // display target tiles
-  $('div.program svg').on('mousemove','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
+  $('div.program svg').on('mouseover','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
     let epara = $(ev.currentTarget).attr('element-para');
     if (epara && epara.match(/^\d+,\d+$/)) {
       let [ox,oy] = epara.split(',')
       $('div.field g.tile').removeClass('active')
       $('div.field g.tile[element-x=' + ox + '][element-y=' + oy + ']').addClass('active')
+    }
+  }) //}}}
+  $('div.program svg').on('mouseout','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
+    let epara = $(ev.currentTarget).attr('element-para');
+    if (epara && epara.match(/^\d+,\d+$/)) {
+      $('div.field g.tile').removeClass('active')
     }
   }) //}}}
 
@@ -133,8 +112,6 @@ $(document).ready(async function() {
   $('div.field svg').on('dragstart','foreignObject div',(ev)=>{ //{{{
     var left = $(window).scrollLeft();
     var top = $(window).scrollTop();
-
-    editor.target_drag.addClass('inactive')
 
     $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
     // what fucking clever shit. we hide the foreignObject that sits on top of
@@ -194,57 +171,60 @@ $(document).ready(async function() {
     }
     active_drag_location = null // thanks again chrome.
     active_element_drag = null
-    editor.target_drag.removeClass('inactive')
   }) //}}}
 
   $('div.program svg').on('click','foreignObject div',(ev)=>{ //{{{
-    var left = $(window).scrollLeft();
-    var top = $(window).scrollTop();
-    let oes = document.elementsFromPoint(ev.pageX-left, ev.pageY-top)
-    let oe = oes[2]
+    let oe = $(ev.currentTarget)
     let ot = $(oe).parents('g[element-type]')
     if (ot.length > 0) {
-      ot.first().click()
+      $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
+
+      if (active_del_timeout) {
+        clearTimeout(active_del_timeout);
+      }
+      if (active_del != '') {
+        $('div.program svg g[element-group=drop] g[element-type=delete][element-id=' + active_del + ']').removeClass('active');
+      }
+      let eid = ot.first().attr('element-id')
+      if (active_del == eid) {
+        active_del = '';
+      } else {
+        active_del = eid;
+        if (!walker.walking) {
+          $('div.program svg g[element-group=drop] g[element-type=delete][element-id=' + eid + ']').addClass('active');
+        }
+        let iname = ot.first().attr('element-type');
+        let item = assets.commands[iname];
+        assets.say(item.label,'div.speech')
+        active_del_timeout = setTimeout(()=>{
+          $('div.program svg g[element-group=drop] g[element-type=delete][element-id].active').removeClass('active');
+          active_del = '';
+        },12000);
+      }
+      return false;
     }
-  }) //}}}
-  $('div.program svg').on('mousemove','foreignObject div',(ev)=>{ //{{{
-    var left = $(window).scrollLeft()
-    var top = $(window).scrollTop()
-    let oes = document.elementsFromPoint(ev.pageX-left, ev.pageY-top)
-    let oe = oes[2]
-    let ot = $(oe).parents('g[element-type=jump]')
-    if (ot.length > 0) {
-      ot.first().mousemove()
-    } else {
-      $('div.field g.tile').removeClass('active')
-    }
-  }) //}}}
-  $('div.program svg').on('mouseout','foreignObject div',(ev)=>{ //{{{
-    $('div.field g.tile').removeClass('active')
   }) //}}}
   $('div.program svg').on('dragstart','foreignObject div',(ev)=>{ //{{{
-    var left = $(window).scrollLeft();
-    var top = $(window).scrollTop();
-
-    let oes = document.elementsFromPoint(ev.pageX-left, ev.pageY-top)
-    let oe = oes[2]
+    let oe = $(ev.currentTarget)
     let ot = $(oe).parents('g[element-type]')
+    console.log(ot.length)
+    console.log(ot.parents('g[element-group=graph]').length)
     if (ot.length > 0 && ot.parents('g[element-group=graph]').length == 1) {
+      console.log('rrrr')
       var ety = ot.first().attr('element-type')
       if (ety == 'execute') {
-        editor.target_drag.removeClass('inactive')
         return false
       }
-      editor.target_drag.addClass('inactive')
       var eid = ot.first().attr('element-id')
       ev.originalEvent.dataTransfer.setData("text/plain",eid);
 
-      var img = document.createElement("img")
-      img.src = assets.commands[ety].icon
+      let img = $('div.elements img[data-type='+ety+']')[0]
       ev.originalEvent.dataTransfer.setDragImage(img, 0, 0)
 
       $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
-      $('div.program g[element-type=add] .adder').show();
+      setTimeout(ev=>{ // yes, chrome, you are an idiot
+        $('div.program g[element-type=add] .adder').show();
+      },100);
       active_element_drag = true
     } else {
       return false
@@ -256,7 +236,6 @@ $(document).ready(async function() {
     ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0);
     $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
     $('div.program g[element-type=add] .adder').show();
-    editor.target_drag.addClass('inactive')
     active_element_drag = true
   }); //}}}
   $('div.program').on('drop','g[element-type=add]',(ev)=>{ //{{{
@@ -275,7 +254,6 @@ $(document).ready(async function() {
       let eit = ev.originalEvent.dataTransfer.getData("text/plain")
       editor.move_item(eid,eop,eit)
       editor.render();
-      editor.target_drag.removeClass('inactive')
     }
     active_element_drag = false
   }); //}}}
