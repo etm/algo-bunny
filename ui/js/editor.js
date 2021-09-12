@@ -52,11 +52,19 @@ class Editor {
     this.target_drop.append(g2)
   } //}}}
 
+  #draw_drag(x,y,parent) {
+    let tar = this.target_graph.find('g[element-id=' + parent + ']')
+    let g2 = $X('<g transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height) + ')" xmlns="http://www.w3.org/2000/svg"></g>')
+    let g3 = $X('<foreignObject width="' + this.#tile_width + '" height="' + this.#tile_height + '" xmlns="http://www.w3.org/2000/svg" requiredExtensions="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml" draggable="true" style="width: 100%; height:100%"></div></foreignObject>')
+    g2.append(g3)
+    tar.append(g2)
+  }
+
   #draw(id,i,x,y,what,parent) { //{{{
     let name = (typeof(i) == 'object') ? i.item : i
     let item = this.assets.commands[name]
     let grax = item.graphics[what].clone()
-    let g1 = $X('<g draggable="true" class="element" element-type="' + name + '" element-id="' + id  + '" xmlns="http://www.w3.org/2000/svg"></g>')
+    let g1 = $X('<g class="element" element-type="' + name + '" element-id="' + id  + '" xmlns="http://www.w3.org/2000/svg"></g>')
     if (item.type == 'position') {
       if (i.target != '') {
         g1.attr('element-para',i.target)
@@ -66,10 +74,8 @@ class Editor {
     if (item.type == 'execute') {
       grax.find('#tid').text('P' + i.id)
     }
-    let g3 = $X('<foreignObject width="' + this.#tile_width + '" height="' + this.#tile_height + '" xmlns="http://www.w3.org/2000/svg" requiredExtensions="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml" draggable="true" style="width: 100%; height:100%"></div></foreignObject>')
     let g2 = $X('<g transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height) + ')" xmlns="http://www.w3.org/2000/svg"></g>')
         g2.append(grax)
-        g2.append(g3)
         g1.append(g2)
     if (parent) {
       let tar = this.target_graph.find('g[element-id=' + parent + ']')
@@ -89,6 +95,7 @@ class Editor {
       if (typeof(v) == 'string' || (typeof(v) == 'object' && v != null && !('first' in v))) {
         y += 1
         this.#draw(k,v,x,y,'icon',parent)
+        this.#draw_drag(x,y,k)
         this.#draw_asset(k,'add',x,y,'after',this.#tile_height/2)
         this.#draw_asset(k,'delete',x,y,'at')
         this.#draw_asset(k,'here',x,y,'at')
@@ -106,6 +113,8 @@ class Editor {
     if (sub == null) { return [y,width] }
     this.#draw(id,sub,x,y,'first',parent)
     this.#draw(id,sub,x,y,'first_icon',id)
+    this.#draw_drag(x,y,id)
+    this.#draw_drag(x+1,y,id)
     this.#draw_asset(id,'delete',x+1,y,'at')
     this.#draw_asset(id,'here',x+1,y,'at')
     if (sub.first) {
@@ -113,6 +122,7 @@ class Editor {
       let [dy, w] = this.#iter(sub.first,x+1,y,id)
       for (let i = y+1; i <= dy; i++) {
         this.#draw(id,sub,x,i,'middle',id)
+        this.#draw_drag(x,i,id)
       }
       y = dy
       if (w > width) { width = w }
@@ -121,16 +131,21 @@ class Editor {
       y += 1
       this.#draw(id,sub,x,y,'second',id)
       this.#draw(id,sub,x,y,'second_icon',id)
+      this.#draw_drag(x,y,id)
+      this.#draw_drag(x+1,y,id)
       this.#draw_asset(id,'add',x+1,y,'insert_second',this.#tile_height/2)
       let [dy, w] = this.#iter(sub.second,x+1,y,id)
       for (let i = y+1; i <= dy; i++) {
         this.#draw(id,sub,x,i,'middle',id)
+        this.#draw_drag(x,i,id)
       }
       y = dy
       if (w > width) { width = w }
     }
     y += 1
     this.#draw(id,sub,x,y,'end',id)
+    this.#draw_drag(x,y,id)
+    this.#draw_drag(x+1,y,id)
     if (sub.item != 'execute') {
       this.#draw_asset(id,'add',x,y,'after',this.#tile_height/2)
     }
@@ -432,7 +447,5 @@ class Editor {
     let wid = w * this.#tile_width * this.#scale_factor + this.#width_add
     this.target.attr('height', hei)
     this.target.attr('width',  wid)
-
-    // this.#draw_drag_layer(wid,hei)
   }
 }
