@@ -207,10 +207,7 @@ $(document).ready(async function() {
   $('div.program svg').on('dragstart','foreignObject div',(ev)=>{ //{{{
     let oe = $(ev.currentTarget)
     let ot = $(oe).parents('g[element-type]')
-    console.log(ot.length)
-    console.log(ot.parents('g[element-group=graph]').length)
     if (ot.length > 0 && ot.parents('g[element-group=graph]').length == 1) {
-      console.log('rrrr')
       var ety = ot.first().attr('element-type')
       if (ety == 'execute') {
         return false
