@@ -505,21 +505,32 @@ class Editor {
   render_diff() {
     this.remove_ids.forEach(e=>{
       let ele = $('div.program svg g[element-id=' + e + ']')
-      let y = parseInt(ele.attr('element-y'))
-      let h = ele.attr('element-height')
+      let ys = []
+      ele.find('g[element-y]').each((i,e)=>{
+        ys.push(parseInt($(e).attr('element-y')))
+      });
+      let shift = Math.max(...ys) + 1 - Math.min(...ys)
+      if (ele.attr('element-type') == 'execute') { shift += 1 }
+      let maxy = Math.max(...ys)
       ele.remove()
       let rest = $('div.program svg g[element-y]')
       rest.each((i,rr) => {
         let r = $(rr)
         let ry = parseInt(r.attr('element-y'))
-        if (ry > y) {
+        if (ys.includes(ry)) {
+          r.remove()
+        }
+        if (ry > maxy) {
           if (r.attr('transform')) {
             let t_x = r.attr('transform-t-x')
             let t_y = r.attr('transform-t-y')
-            r.attr('transform','scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + t_x + ',' + (t_y - this.#tile_height) + ')')
+            r.attr('transform-t-y',t_y - shift*this.#tile_width)
+            r.attr('transform','scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + t_x + ',' + (t_y - shift*this.#tile_height) + ')')
           }
+          r.attr('element-y',ry-shift)
         }
       })
     })
+    this.remove_ids = []
   }
 }
