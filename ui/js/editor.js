@@ -503,6 +503,7 @@ class Editor {
   }
 
   render_diff() {
+    let aggr_shift = 0;
     this.remove_ids.forEach(e=>{
       let ele = $('div.program svg g[element-id=' + e + ']')
       let ys = []
@@ -511,6 +512,7 @@ class Editor {
       });
       let shift = Math.max(...ys) + 1 - Math.min(...ys)
       if (ele.attr('element-type') == 'execute') { shift += 1 }
+      aggr_shift += shift
       let maxy = Math.max(...ys)
       ele.remove()
       let rest = $('div.program svg g[element-y]')
@@ -522,9 +524,9 @@ class Editor {
         }
         if (ry > maxy) {
           if (r.attr('transform')) {
-            let t_x = r.attr('transform-t-x')
-            let t_y = r.attr('transform-t-y')
-            r.attr('transform-t-y',t_y - shift*this.#tile_width)
+            let t_x = parseFloat(r.attr('transform-t-x'))
+            let t_y = parseFloat(r.attr('transform-t-y'))
+            r.attr('transform-t-y',t_y - shift*this.#tile_height)
             r.attr('transform','scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + t_x + ',' + (t_y - shift*this.#tile_height) + ')')
           }
           r.attr('element-y',ry-shift)
@@ -532,5 +534,8 @@ class Editor {
       })
     })
     this.remove_ids = []
+    let hei = parseFloat(this.target.attr('height'))
+
+    this.target.attr('height', hei - aggr_shift * this.#scale_factor * this.#tile_height)
   }
 }
