@@ -63,7 +63,7 @@ class Editor {
         g2.append(grax)
     this.target_below.append(g2)
   } //}}}
-  #draw_asset(id,what,x,y,op='',shift_y=0) { //{{{
+  #draw_asset(id,what,x,y,op='',shift_y=0,mark=null) { //{{{
     let item = this.assets.placeholders[what]
     let grax = item.graphics['icon'].clone()
     let g2 = this.groups.asset.clone()
@@ -75,11 +75,12 @@ class Editor {
         g2.attr('transform','scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height + shift_y) + ')')
         g2.attr('transform-t-x',(x-1) * this.#tile_width)
         g2.attr('transform-t-y',(y-1) * this.#tile_height + shift_y)
+        if (mark!=null) { g2.attr('element-mark','true') }
         g2.append(grax)
     this.target_drop.append(g2)
   } //}}}
 
-  #draw_drag(x,y,parent) {
+  #draw_drag(x,y,parent,mark=null) {
     let tar = this.target_graph.find('g[element-id=' + parent + ']')
     let g2 = this.groups.drag.clone()
         g2.attr('element-x',x)
@@ -87,13 +88,14 @@ class Editor {
         g2.attr('transform','scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height) + ')')
         g2.attr('transform-t-x',(x-1) * this.#tile_width)
         g2.attr('transform-t-y',(y-1) * this.#tile_height)
+        if (mark!=null) { g2.attr('element-mark','true') }
     let g3 = g2.find('foreignObject')
         g3.attr('width',this.#tile_width)
         g3.attr('height',this.#tile_height)
     tar.append(g2)
   }
 
-  #draw(id,i,x,y,what,parent) { //{{{
+  #draw(id,i,x,y,what,parent,mark=null) { //{{{
     let name = (typeof(i) == 'object') ? i.item : i
     let item = this.assets.commands[name]
     let grax = item.graphics[what].clone()
@@ -102,6 +104,7 @@ class Editor {
         g1.attr('element-y',y)
         g1.attr('element-type',name)
         g1.attr('element-id',id)
+        if (mark!=null) { g1.attr('element-mark','true') }
     if (item.type == 'position') {
       if (i.target != '') {
         g1.attr('element-para',i.target)
@@ -117,6 +120,7 @@ class Editor {
         g2.attr('transform','scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height) + ')')
         g2.attr('transform-t-x',(x-1) * this.#tile_width)
         g2.attr('transform-t-y',(y-1) * this.#tile_height)
+        if (mark!=null) { g2.attr('element-mark','true') }
         g2.append(grax)
         g1.append(g2)
     if (parent) {
@@ -131,67 +135,89 @@ class Editor {
     }
   } //}}}
 
-  #iter(it,x,y,parent) { //{{{
+  #iter(it,x,y,parent,particular) { //{{{
     let width = x == 0 ? 1 : x
+    let part = false
     for (const [k,v] of it) {
       if (typeof(v) == 'string' || (typeof(v) == 'object' && v != null && !('first' in v))) {
         y += 1
-        this.#draw(k,v,x,y,'icon',parent)
-        this.#draw_drag(x,y,k)
-        this.#draw_asset(k,'add',x,y,'after',this.#tile_height/2)
-        this.#draw_asset(k,'delete',x,y,'at')
-        this.#draw_asset(k,'here',x,y,'at')
+        if (particular === undefined || particular == k) {
+          this.#draw(k,v,x,y,'icon',parent,particular == k ? true : null)
+          this.#draw_drag(x,y,k,particular == k ? true : null)
+          this.#draw_asset(k,'add',x,y,'after',this.#tile_height/2,particular == k ? true : null)
+          this.#draw_asset(k,'delete',x,y,'at',particular == k ? true : null)
+          this.#draw_asset(k,'here',x,y,'at',particular == k ? true : null)
+          if (particular == k) { part = true }
+        }
       }  else {
-        let [l,w] = this.#dig(k,v,x,y,parent)
+        let [l,w,tp] = this.#dig(k,v,x,y,parent,particular)
+        part = tp
         y = l
         if (w > width) { width = w }
       }
     }
-    return [y,width]
+    return [y,width,part]
   } //}}}
-  #dig(id,sub,x,y,parent) { //{{{
+  #dig(id,sub,x,y,parent,particular) { //{{{
     let width = x
     y += 1
+    let gpart = (particular == id)
     if (sub == null) { return [y,width] }
-    this.#draw(id,sub,x,y,'first',parent)
-    this.#draw(id,sub,x,y,'first_icon',id)
-    this.#draw_drag(x,y,id)
-    this.#draw_drag(x+1,y,id)
-    this.#draw_asset(id,'delete',x+1,y,'at')
-    this.#draw_asset(id,'here',x+1,y,'at')
+    if (particular === undefined || particular == id) {
+      this.#draw(id,sub,x,y,'first',parent,particular == id ? true : null)
+      this.#draw(id,sub,x,y,'first_icon',id,particular == id ? true : null)
+      this.#draw_drag(x,y,id,particular == id ? true : null)
+      this.#draw_drag(x+1,y,id,particular == id ? true : null)
+      this.#draw_asset(id,'delete',x+1,y,'at',particular == id ? true : null)
+      this.#draw_asset(id,'here',x+1,y,'at',particular == id ? true : null)
+    }
     if (sub.first) {
-      this.#draw_asset(id,'add',x+1,y,'insert_first',this.#tile_height/2)
-      let [dy, w] = this.#iter(sub.first,x+1,y,id)
+      if (particular === undefined || particular == id) {
+        this.#draw_asset(id,'add',x+1,y,'insert_first',this.#tile_height/2,particular == id ? true : null)
+      }
+      let [dy, w, part] = this.#iter(sub.first,x+1,y,id,particular)
+      gpart = part || gpart ? true : false
       for (let i = y+1; i <= dy; i++) {
-        this.#draw(id,sub,x,i,'middle',id)
-        this.#draw_drag(x,i,id)
+        if (particular === undefined || particular == id || part) {
+          this.#draw(id,sub,x,i,'middle',id,gpart ? true : null)
+          this.#draw_drag(x,i,id,gpart ? true : null)
+        }
       }
       y = dy
       if (w > width) { width = w }
     }
     if (sub.second) {
       y += 1
-      this.#draw(id,sub,x,y,'second',id)
-      this.#draw(id,sub,x,y,'second_icon',id)
-      this.#draw_drag(x,y,id)
-      this.#draw_drag(x+1,y,id)
-      this.#draw_asset(id,'add',x+1,y,'insert_second',this.#tile_height/2)
-      let [dy, w] = this.#iter(sub.second,x+1,y,id)
+      if (particular === undefined || particular == id) {
+        this.#draw(id,sub,x,y,'second',id,particular == id ? true : null)
+        this.#draw(id,sub,x,y,'second_icon',id,particular == id ? true : null)
+        this.#draw_drag(x,y,id,particular == id ? true : null)
+        this.#draw_drag(x+1,y,id,particular == id ? true : null)
+        this.#draw_asset(id,'add',x+1,y,'insert_second',this.#tile_height/2,particular == id ? true : null)
+      }
+      let [dy, w, part] = this.#iter(sub.second,x+1,y,id,particular)
+      gpart = part || gpart ? true : false
       for (let i = y+1; i <= dy; i++) {
-        this.#draw(id,sub,x,i,'middle',id)
-        this.#draw_drag(x,i,id)
+        if (particular === undefined || particular == id || part) {
+          this.#draw(id,sub,x,i,'middle',id,gpart ? true : null)
+          this.#draw_drag(x,i,id,gpart ? true : null)
+        }
       }
       y = dy
       if (w > width) { width = w }
     }
     y += 1
-    this.#draw(id,sub,x,y,'end',id)
-    this.#draw_drag(x,y,id)
-    this.#draw_drag(x+1,y,id)
-    if (sub.item != 'execute') {
-      this.#draw_asset(id,'add',x,y,'after',this.#tile_height/2)
+    if (particular === undefined || particular == id) {
+      this.#draw(id,sub,x,y,'end',id,particular == id ? true : null)
+      this.#draw_drag(x,y,id,particular == id ? true : null)
+      this.#draw_drag(x+1,y,id,particular == id ? true : null)
     }
-    return [y,width]
+    if (sub.item != 'execute') {
+      if (particular === undefined || particular == id) {
+        this.#draw_asset(id,'add',x,y,'after',this.#tile_height/2,particular == id ? true : null)
+      }
+    }
+    return [y,width,gpart]
   } //}}}
 
   #remove_item_rec(it,eid){ //{{{
@@ -490,19 +516,7 @@ class Editor {
     return this.#cisc_length_rec(this.program)
   } //}}}
 
-  render() {
-    this.#clear()
-    this.#draw_asset('','bunny',1,1,'start')
-    this.#draw_below('','below',1,1,'')
-    this.#draw_asset('','add',1,1,'insert_first',this.#tile_height/2)
-    let [y,w] = this.#iter(this.program,1,1)
-    let hei = y * this.#tile_height * this.#scale_factor + this.#height_add
-    let wid = w * this.#tile_width * this.#scale_factor + this.#width_add
-    this.target.attr('height', hei)
-    this.target.attr('width',  wid)
-  }
-
-  render_diff() {
+  #render_remove() {
     let aggr_shift = 0;
     this.remove_ids.forEach(e=>{
       let ele = $('div.program svg g[element-id=' + e + ']')
@@ -535,7 +549,69 @@ class Editor {
     })
     this.remove_ids = []
     let hei = parseFloat(this.target.attr('height'))
-
     this.target.attr('height', hei - aggr_shift * this.#scale_factor * this.#tile_height)
+  }
+  #render_add() {
+    let aggr_shift = 0;
+
+    let ele = $('div.program svg g[element-id=' + this.add_id + ']')
+    let x = parseInt(ele.attr('element-x'))
+    let ys = []
+    ele.find('g[element-y]').each((i,e)=>{
+      ys.push(parseInt($(e).attr('element-y')))
+    });
+    let shift = Math.max(...ys) + 1 - Math.min(...ys)
+    if (ele.attr('element-type') == 'execute') { shift += 1 }
+    aggr_shift += shift
+    let miny = Math.min(...ys)
+    let rest = $('div.program svg g[element-y]')
+    rest.each((i,rr) => {
+      let r = $(rr)
+      if (r.attr('element-mark')) { return }
+      let ry = parseInt(r.attr('element-y'))
+      let rx = parseInt(r.attr('element-x'))
+
+      if (ry >= miny) {
+        if (r.attr('transform')) {
+          let t_x = parseFloat(r.attr('transform-t-x'))
+          let t_y = parseFloat(r.attr('transform-t-y'))
+          r.attr('transform-t-y',t_y + shift*this.#tile_height)
+          r.attr('transform','scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + t_x + ',' + (t_y + shift*this.#tile_height) + ')')
+        }
+        r.attr('element-y',ry+shift)
+      }
+    })
+
+    $('div.program svg g[element-mark]').each((i,e) => {
+      $(e).removeAttr('element-mark')
+    })
+
+    this.add_id = null
+  }
+
+  render() {
+    this.add_id = null
+    this.#render_remove()
+    this.#clear()
+    this.#draw_asset('','bunny',1,1,'start')
+    this.#draw_below('','below',1,1,'')
+    this.#draw_asset('','add',1,1,'insert_first',this.#tile_height/2)
+    let [y,w] = this.#iter(this.program,1,1,undefined)
+    let hei = y * this.#tile_height * this.#scale_factor + this.#height_add
+    let wid = w * this.#tile_width * this.#scale_factor + this.#width_add
+    this.target.attr('height', hei)
+    this.target.attr('width',  wid)
+  }
+
+  render_diff() {
+    if (this.add_id != null) {
+      let [y,w] = this.#iter(this.program,1,1,undefined,this.add_id)
+      this.#render_add()
+      let hei = y * this.#tile_height * this.#scale_factor + this.#height_add
+      let wid = w * this.#tile_width * this.#scale_factor + this.#width_add
+      this.target.attr('height', hei)
+      this.target.attr('width',  wid)
+    }
+    this.#render_remove()
   }
 }

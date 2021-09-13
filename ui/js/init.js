@@ -243,13 +243,19 @@ $(document).ready(async function() {
       let eop = $(ev.currentTarget).attr('element-op')
       let ety = ev.originalEvent.dataTransfer.getData("text/plain")
       editor.insert_item(eid,eop,ety)
-      editor.render()
+      active_element_drag = false
+      $('div.program g[element-type=add] .adder').hide()
+      $('div.program g[element-type=add]').removeClass('active')
+      editor.render_diff()
     }
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
       let eid = $(ev.currentTarget).attr('element-id')
       let eop = $(ev.currentTarget).attr('element-op')
       let eit = ev.originalEvent.dataTransfer.getData("text/plain")
       editor.move_item(eid,eop,eit)
+      active_element_drag = false
+      $('div.program g[element-type=add] .adder').hide()
+      $('div.program g[element-type=add]').removeClass('active')
       editor.render();
     }
     active_element_drag = false
