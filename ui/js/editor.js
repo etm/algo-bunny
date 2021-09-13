@@ -145,8 +145,8 @@ class Editor {
           this.#draw(k,v,x,y,'icon',parent,particular == k ? true : null)
           this.#draw_drag(x,y,k,particular == k ? true : null)
           this.#draw_asset(k,'add',x,y,'after',this.#tile_height/2,particular == k ? true : null)
-          this.#draw_asset(k,'delete',x,y,'at',particular == k ? true : null)
-          this.#draw_asset(k,'here',x,y,'at',particular == k ? true : null)
+          this.#draw_asset(k,'delete',x,y,'at',0,                  particular == k ? true : null)
+          this.#draw_asset(k,'here',x,y,'at',0,                    particular == k ? true : null)
           if (particular == k) { part = true }
         }
       }  else {
@@ -168,8 +168,8 @@ class Editor {
       this.#draw(id,sub,x,y,'first_icon',id,particular == id ? true : null)
       this.#draw_drag(x,y,id,particular == id ? true : null)
       this.#draw_drag(x+1,y,id,particular == id ? true : null)
-      this.#draw_asset(id,'delete',x+1,y,'at',particular == id ? true : null)
-      this.#draw_asset(id,'here',x+1,y,'at',particular == id ? true : null)
+      this.#draw_asset(id,'delete',x+1,y,'at',0,particular == id ? true : null)
+      this.#draw_asset(id,'here',x+1,y,'at',0,particular == id ? true : null)
     }
     if (sub.first) {
       if (particular === undefined || particular == id) {
