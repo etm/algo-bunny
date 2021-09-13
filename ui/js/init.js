@@ -99,7 +99,7 @@ $(document).ready(async function() {
       $('div.elements img[data-type=execute' + it.id + ']').hide()
     }
     editor.remove_item(eid)
-    editor.render_diff()
+    editor.render()
     active_del = ''
     $(ev.currentTarget).removeClass('active')
     assets.say_reset('div.speech')
