@@ -20,6 +20,14 @@ class Editor {
     target.append(t1)
     target.append(t2)
 
+    this.groups = {
+      'below': $X('<g element-x="" element-y="" element-type="" element-op="" element-id="" transform="" xmlns="http://www.w3.org/2000/svg"></g>'),
+      'asset': $X('<g element-x="" element-y="" element-type="" element-op="" element-id="" transform="" xmlns="http://www.w3.org/2000/svg"></g>'),
+      'drag': $X('<g element-x="" element-y="" transform="" xmlns="http://www.w3.org/2000/svg"><foreignObject width="" height="" requiredExtensions="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml" draggable="true" style="width: 100%; height:100%"></div></foreignObject></g>'),
+      'element': $X('<g class="element" element-type="" element-id="" xmlns="http://www.w3.org/2000/svg"></g>'),
+      'sub': $X('<g element-x="" element-y="" transform="" xmlns="http://www.w3.org/2000/svg"></g>')
+    }
+
     this.target_below = t0
     this.target_graph = t1
     this.target_drop = t2
@@ -35,28 +43,53 @@ class Editor {
     this.#changed = new Event("cisc:changed", {"bubbles":false, "cancelable":false})
 
     this.program = []
+
+    this.add_id = null
+    this.remove_ids = []
   }  //}}}
 
   #draw_below(id,what,x,y,op='',shift_y=0) { //{{{
     let item = this.assets.placeholders[what]
     let grax = item.graphics['icon'].clone()
-    let g2 = $X('<g element-type="' + what + '" element-op="' + op  + '" element-id="' + id  + '" transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height + shift_y) + ')" xmlns="http://www.w3.org/2000/svg"></g>')
+    let g2 = this.groups.below.clone()
+        g2.attr('element-x',x)
+        g2.attr('element-y',y)
+        g2.attr('element-type',what)
+        g2.attr('element-op',op)
+        g2.attr('element-id',id)
+        g2.attr('transform','scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height + shift_y) + ')')
+        g2.attr('transform-t-x',(x-1) * this.#tile_width)
+        g2.attr('transform-t-y',(y-1) * this.#tile_height + shift_y)
         g2.append(grax)
     this.target_below.append(g2)
   } //}}}
   #draw_asset(id,what,x,y,op='',shift_y=0) { //{{{
     let item = this.assets.placeholders[what]
     let grax = item.graphics['icon'].clone()
-    let g2 = $X('<g element-type="' + what + '" element-op="' + op  + '" element-id="' + id  + '" transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height + shift_y) + ')" xmlns="http://www.w3.org/2000/svg"></g>')
+    let g2 = this.groups.asset.clone()
+        g2.attr('element-x',x)
+        g2.attr('element-y',y)
+        g2.attr('element-type',what)
+        g2.attr('element-op',op)
+        g2.attr('element-id',id)
+        g2.attr('transform','scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height + shift_y) + ')')
+        g2.attr('transform-t-x',(x-1) * this.#tile_width)
+        g2.attr('transform-t-y',(y-1) * this.#tile_height + shift_y)
         g2.append(grax)
     this.target_drop.append(g2)
   } //}}}
 
   #draw_drag(x,y,parent) {
     let tar = this.target_graph.find('g[element-id=' + parent + ']')
-    let g2 = $X('<g transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height) + ')" xmlns="http://www.w3.org/2000/svg"></g>')
-    let g3 = $X('<foreignObject width="' + this.#tile_width + '" height="' + this.#tile_height + '" xmlns="http://www.w3.org/2000/svg" requiredExtensions="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml" draggable="true" style="width: 100%; height:100%"></div></foreignObject>')
-    g2.append(g3)
+    let g2 = this.groups.drag.clone()
+        g2.attr('element-x',x)
+        g2.attr('element-y',y)
+        g2.attr('transform','scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height) + ')')
+        g2.attr('transform-t-x',(x-1) * this.#tile_width)
+        g2.attr('transform-t-y',(y-1) * this.#tile_height)
+    let g3 = g2.find('foreignObject')
+        g3.attr('width',this.#tile_width)
+        g3.attr('height',this.#tile_height)
     tar.append(g2)
   }
 
@@ -64,7 +97,11 @@ class Editor {
     let name = (typeof(i) == 'object') ? i.item : i
     let item = this.assets.commands[name]
     let grax = item.graphics[what].clone()
-    let g1 = $X('<g class="element" element-type="' + name + '" element-id="' + id  + '" xmlns="http://www.w3.org/2000/svg"></g>')
+    let g1 = this.groups.element.clone()
+        g1.attr('element-x',x)
+        g1.attr('element-y',y)
+        g1.attr('element-type',name)
+        g1.attr('element-id',id)
     if (item.type == 'position') {
       if (i.target != '') {
         g1.attr('element-para',i.target)
@@ -74,7 +111,12 @@ class Editor {
     if (item.type == 'execute') {
       grax.find('#tid').text('P' + i.id)
     }
-    let g2 = $X('<g transform="scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height) + ')" xmlns="http://www.w3.org/2000/svg"></g>')
+    let g2 = this.groups.sub.clone()
+        g2.attr('element-x',x)
+        g2.attr('element-y',y)
+        g2.attr('transform','scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + ((x-1) * this.#tile_width) + ',' + ((y-1) * this.#tile_height) + ')')
+        g2.attr('transform-t-x',(x-1) * this.#tile_width)
+        g2.attr('transform-t-y',(y-1) * this.#tile_height)
         g2.append(grax)
         g1.append(g2)
     if (parent) {
@@ -175,19 +217,26 @@ class Editor {
   } //}}}
   remove_item(eid) { //{{{
     this.program = this.#remove_item_rec(this.program,eid)
+    this.remove_ids.push(eid)
     document.dispatchEvent(this.#changed)
   } //}}}
   #remove_item_by_type_rec(it,type){ //{{{
     let newp = []
     for (const [k,v] of it) {
       if (typeof(v) == 'string') {
-        if (v != type) { newp.push([k,v]) }
+        if (v == type) {
+          this.remove_ids.push(k)
+        } else {
+          newp.push([k,v])
+        }
       }
       if (typeof(v) == 'object') {
         if (v == null) {
           newp.push([k,v])
         } else {
-          if (v.item != type) {
+          if (v.item == type) {
+            this.remove_ids.push(k)
+          } else {
             newp.push([k,v])
             if (v.first) {
               v.first = this.#remove_item_by_type_rec(v.first,type)
@@ -246,40 +295,43 @@ class Editor {
   get_item_by_pid(pid) { //{{{
     return this.#get_item_by_pid_rec(this.program,pid)
   } //}}}
-  #move_rec(it,eid,eop,eco) { //{{{
+  #move_rec(it,eid,eop,eco,nid) { //{{{
     let newp = []
     for (const [k,v] of it) {
       newp.push([k,v])
       if (k == eid) {
         if (eop == 'after') {
-          newp.push([this.#newid(),eco])
+          newp.push([nid,eco])
         }
         if (eop == 'insert_first') {
-          v.first.unshift([this.#newid(),eco])
+          v.first.unshift([nid,eco])
         }
         if (eop == 'insert_second') {
-          v.second.unshift([this.#newid(),eco])
+          v.second.unshift([nid,eco])
         }
       }
       if (typeof(v) == 'object') {
         if (v != null && v.first) {
-          v.first = this.#move_rec(v.first,eid,eop,eco)
+          v.first = this.#move_rec(v.first,eid,eop,eco,nid)
         }
         if (v != null && v.second) {
-          v.second = this.#move_rec(v.second,eid,eop,eco)
+          v.second = this.#move_rec(v.second,eid,eop,eco,nid)
         }
       }
     }
     return newp
   } //}}}
   move_item(eid,eop,eit) { //{{{
+    let nid = this.#newid()
+    this.add_id = nid
     let eco = JSON.parse(JSON.stringify(this.#get_item_rec(this.program,eit)))
     if (eid == '' && eop == 'insert_first') {
-      this.program.unshift([this.#newid(),eco])
+      this.program.unshift([nid,eco])
     } else {
-      this.program = this.#move_rec(this.program,eid,eop,eco)
+      this.program = this.#move_rec(this.program,eid,eop,eco,nid)
     }
     this.program = this.#remove_item_rec(this.program,eit)
+    this.remove_ids.push(eit)
     document.dispatchEvent(this.#changed)
   } //}}}
 
@@ -356,6 +408,7 @@ class Editor {
   } //}}}
   insert_item(eid,eop,ety) { //{{{
     let nid = this.#newid()
+    this.add_id = nid
     if (eid == '' && eop == 'insert_first') {
       this.program.unshift([nid,this.#insert_rec_item(ety)])
     } else if (eid == '' && eop == 'insert_last') {
@@ -447,5 +500,26 @@ class Editor {
     let wid = w * this.#tile_width * this.#scale_factor + this.#width_add
     this.target.attr('height', hei)
     this.target.attr('width',  wid)
+  }
+
+  render_diff() {
+    this.remove_ids.forEach(e=>{
+      let ele = $('div.program svg g[element-id=' + e + ']')
+      let y = parseInt(ele.attr('element-y'))
+      let h = ele.attr('element-height')
+      ele.remove()
+      let rest = $('div.program svg g[element-y]')
+      rest.each((i,rr) => {
+        let r = $(rr)
+        let ry = parseInt(r.attr('element-y'))
+        if (ry > y) {
+          if (r.attr('transform')) {
+            let t_x = r.attr('transform-t-x')
+            let t_y = r.attr('transform-t-y')
+            r.attr('transform','scale(' + this.#scale_factor + ',' + this.#scale_factor + ') translate(' + t_x + ',' + (t_y - this.#tile_height) + ')')
+          }
+        }
+      })
+    })
   }
 }
