@@ -151,7 +151,7 @@ class Editor {
         }
       }  else {
         let [l,w,tp] = this.#dig(k,v,x,y,parent,particular)
-        part = tp
+        part = part || tp ? true : false
         y = l
         if (w > width) { width = w }
       }
