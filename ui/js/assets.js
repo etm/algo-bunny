@@ -119,7 +119,7 @@ function Assets() {
   } //}}}
 
   this.texts.nostep = "I don't want to step on carrots, flowers or magic! Falling into holes is also not an option."
-  this.texts.neverjump = "I never jumped before. To infinity and beyond?"
+  this.texts.neverjump = "I can't remember any jumps. To infinity and beyond then?"
   this.texts.noget = "There is no carrot!"
   this.texts.alreadyhold = "I already hold a carrot! I would eat it. Please let me eat it. My precious."
   this.texts.noplace = "There is already something there!"

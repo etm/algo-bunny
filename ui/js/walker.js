@@ -32,7 +32,7 @@ class Walker {
     this.walking = false
     this.default_timing = 500
     this.#steps_active = false
-    this.#jump_back = null
+    this.#jump_back = []
     this.#eaten = ''
 
     this.#step_count = 0
@@ -111,20 +111,20 @@ class Walker {
           }
 
           if (this.#brain.toString().match(/\d,\d,[NEWS]/)) {
-            this.#jump_back = JSON.stringify(this.field.state_bunny)
+            this.#jump_back.push(JSON.stringify(this.field.state_bunny))
             let [wx,wy,wface] = this.#brain.split(',')
             res = await this.field.jump(wx,wy,wface)
             if (res === false) { return false }
           }
           else if (this.#brain.toString().match(/\d+/)) {
-            this.#jump_back = JSON.stringify(this.field.state_bunny)
+            this.#jump_back.push(JSON.stringify(this.field.state_bunny))
             res = await this.field.jump_forward(this.#brain)
             if (res === false) { return false }
           }
         //}}}
         } else if (v == 'jump_back') { //{{{
-          if (this.#jump_back != null) {
-            let [wx,wy,wface] = JSON.parse(this.#jump_back)
+          if (this.#jump_back.length > 0) {
+            let [wx,wy,wface] = JSON.parse(this.#jump_back.pop())
             res = await this.field.jump(wx,wy,wface)
             if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
           } else {
@@ -275,7 +275,7 @@ class Walker {
           this.field.timing = this.default_timing
           this.assets.mute = false //}}}
         } else if (v == 'stop') { //{{{
-          return 'false' //}}}
+          return false //}}}
         } else if (v.match(/^execute/)) { //{{{
           await this.#sleep(this.timing/2)
           let pid = parseInt(v[7])
@@ -288,7 +288,7 @@ class Walker {
       if (typeof(v) == 'object' && v != null) {
         switch (v.item) {
           case 'jump': //{{{
-            this.#jump_back = JSON.stringify(this.field.state_bunny)
+            this.#jump_back.push(JSON.stringify(this.field.state_bunny))
             let [wx,wy] = v.target.split(',')
             res = await this.field.jump(parseInt(wx),parseInt(wy),this.field.check_dir(wx,wy))
             if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false }
