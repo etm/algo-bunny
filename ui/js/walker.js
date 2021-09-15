@@ -534,12 +534,13 @@ class Walker {
         this.assets.play_audio(this.assets.audio.no.sounds.sample())
       }
     }
-    $('button.control img').addClass('important')
     if (res == false) {
       this.assets.play_audio(this.assets.audio.no.sounds.sample())
       $('button.speed').hide()
     }
-    if (!this.walking) {
+    if (this.walking) {
+      $('button.control img').addClass('important')
+    } else {
       this.stop()
       this.field.reset_full()
     }
@@ -587,6 +588,7 @@ class Walker {
     this.timing = this.default_timing
     this.field.timing = this.default_timing
     this.assets.mute = false
+    this.#pause = false
     document.dispatchEvent(this.#changed_ins)
     document.dispatchEvent(this.#changed_steps)
     document.dispatchEvent(this.#changed_cops)
@@ -594,5 +596,9 @@ class Walker {
     $('div.field div.ui.brain .type').hide()
     $('div.field div.ui.brain .text').text('')
     $('div.field div.ui.hand img').hide()
+    if (this.#continue != null) {
+      this.#continue()
+      this.#continue = null
+    }
   } //}}}
 }
