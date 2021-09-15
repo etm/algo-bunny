@@ -10,9 +10,17 @@ class Walker {
   #changed_ins
   #success
 
+  #speed_normal
+  #speed_fast
+  #speed_pause
+
   #ins_count
   #step_count
   #cops_count
+
+  #continue
+
+  #pause
 
   #sleep(milliseconds) {//{{{
     return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -34,6 +42,8 @@ class Walker {
     this.#steps_active = false
     this.#jump_back = []
     this.#eaten = ''
+    this.#pause = false
+    this.#continue = null
 
     this.#step_count = 0
     this.#ins_count = 0
@@ -43,6 +53,9 @@ class Walker {
     this.#changed_cops = new Event("cops:changed", {"bubbles":false, "cancelable":false})
     this.#changed_ins = new Event("ins:changed", {"bubbles":false, "cancelable":false})
     this.#success = new Event("walking:success", {"bubbles":false, "cancelable":false})
+    this.#speed_normal = new Event("speed:normal", {"bubbles":false, "cancelable":false})
+    this.#speed_fast = new Event("speed:fast", {"bubbles":false, "cancelable":false})
+    this.#speed_pause = new Event("speed:pause", {"bubbles":false, "cancelable":false})
 
     this.timing = this.default_timing
     this.field.timing = this.default_timing
@@ -50,6 +63,8 @@ class Walker {
   }  //}}}
 
   async #walk_rec(it) { //{{{
+    if (this.#pause) { await new Promise(resolve => { this.#continue = resolve}) }
+
     let res;
     for (const [k,v] of it) {
       if (!this.walking) { return false }
@@ -259,15 +274,20 @@ class Walker {
           await this.#sleep(this.timing/2)
           return 'leave' //}}}
         } else if (v == 'fast') { //{{{
+          document.dispatchEvent(this.#speed_fast)
           this.timing = 0
           this.field.timing = 0
           this.assets.mute = true //}}}
         } else if (v == 'normal') { //{{{
+          document.dispatchEvent(this.#speed_normal)
           this.timing = this.default_timing
           this.field.timing = this.default_timing
           this.assets.mute = false //}}}
-        } else if (v == 'stop') { //{{{
-          return false //}}}
+        } else if (v == 'pause') { //{{{
+          document.dispatchEvent(this.#speed_pause)
+          this.#pause = true
+          if (this.#pause) { await new Promise(resolve => { this.#continue = resolve}) }
+          //}}}
         } else if (v.match(/^execute/)) { //{{{
           await this.#sleep(this.timing/2)
           let pid = parseInt(v[7])
@@ -504,6 +524,7 @@ class Walker {
     let res = await this.#walk_rec(this.editor.program)
     this.assets.mute = false
     if (res == true) {
+      $('button.speed').hide()
       if (this.field.carrots.join('') == this.#eaten) {
         $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
         this.assets.play_audio(this.assets.audio.yay.sounds.sample())
@@ -513,14 +534,41 @@ class Walker {
         this.assets.play_audio(this.assets.audio.no.sounds.sample())
       }
     }
+    $('button.control img').addClass('important')
     if (res == false) {
       this.assets.play_audio(this.assets.audio.no.sounds.sample())
+      $('button.speed').hide()
     }
     if (!this.walking) {
       this.stop()
       this.field.reset_full()
     }
   } //}}}
+
+  speed_control() {
+    if (this.#pause) {
+      if (this.#continue != null) {
+        this.#continue()
+        this.#continue = null
+      }
+      this.#pause = false
+      if (this.timing > 0) {
+        document.dispatchEvent(this.#speed_normal)
+      } else {
+        document.dispatchEvent(this.#speed_fast)
+      }
+    } else if (this.timing == 0) {
+      document.dispatchEvent(this.#speed_normal)
+      this.timing = this.default_timing
+      this.field.timing = this.default_timing
+      this.assets.mute = false
+    } else {
+      document.dispatchEvent(this.#speed_fast)
+      this.timing = 0
+      this.field.timing = 0
+      this.assets.mute = true
+    }
+  }
 
   step_count() { return this.#step_count }
   cops_count() { return this.#cops_count }

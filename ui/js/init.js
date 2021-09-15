@@ -297,7 +297,9 @@ $(document).ready(async function() {
     $('div.field div.victory').removeClass('active')
     $('div.field div.mission').removeClass('active')
     if (editor.program.length > 0) {
+      $('button.control img').removeClass('important')
       if ($(ev.currentTarget).hasClass('active')) {
+        $('button.speed').hide()
         walker.stop()
         field.reset_full()
       } else {
@@ -308,10 +310,28 @@ $(document).ready(async function() {
           $('div.program svg g[element-group=drop] g[element-type=delete][element-id]').removeClass('active')
           active_del = ''
         }
+        $('button.speed img').hide()
+        $('button.speed img.normal').show()
+        $('button.speed').show()
         walker.walk()
       }
       $(ev.currentTarget).toggleClass('active')
     }
+  })
+  $('button.speed').click(ev=>{
+    walker.speed_control()
+  })
+  document.addEventListener('speed:fast', (e) => {
+    $('button.speed img').hide()
+    $('button.speed img.fast').show()
+  })
+  document.addEventListener('speed:normal', (e) => {
+    $('button.speed img').hide()
+    $('button.speed img.normal').show()
+  })
+  document.addEventListener('speed:pause', (e) => {
+    $('button.speed img').hide()
+    $('button.speed img.pause').show()
   })
   document.addEventListener('cisc:changed', (e) => {
     $('div.field div.stats .cisc .value').text(editor.cisc_length())

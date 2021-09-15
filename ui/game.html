@@ -95,7 +95,7 @@
       <div class='group'>
         <img style='display:none' draggable='true' data-type="fast"              src="commands/fast.svg"/>
         <img style='display:none' draggable='true' data-type="normal"            src="commands/normal.svg"/>
-        <img style='display:none' draggable='true' data-type="stop"              src="commands/stop.svg"/>
+        <img style='display:none' draggable='true' data-type="pause"             src="commands/pause.svg"/>
       </div>
       <div class='group'>
         <img style='display:none' draggable='true' id="execute"                  src="commands/execute_start.svg" ondragstart="return false"/>
@@ -161,8 +161,13 @@
        <div class="bottom">
         <button class='ui mission' title="Mission"><img src="assets/mission.svg"/></button>
         <button class='ui control' title="Go / Reset">
-          <img src="assets/play.svg" class='pulse'/>
+          <img src="assets/play.svg"/>
           <img src="assets/reset.svg"/>
+        </button>
+        <button class='ui speed' title="Current Speed" style='display: none'>
+          <img class='fast'   style='display:none' src="assets/fast.svg"/>
+          <img class='normal' style='display:none' src="assets/normal.svg"/>
+          <img class='pause'  style='display:none' src="assets/pause.svg"/>
         </button>
         <a id="saveinstructions" href="" download=""></a>
         <form id='fuckchrome'>

@@ -623,10 +623,10 @@ function Assets() {
     'desc': 'Super pursuit mode ... off.',
     'icon': 'commands/normal.svg'
   }; /*}}}*/
-  this.commands.stop = { /*{{{*/
+  this.commands.pause = { /*{{{*/
     'type': 'simple',
-    'label': 'Stop Here',
-    'desc': 'I give up. I stop here, and debug myself.',
-    'icon': 'commands/stop.svg'
+    'label': 'Pause Here',
+    'desc': 'I give up. I pause here, and debug myself.',
+    'icon': 'commands/pause.svg'
   }; /*}}}*/
 }
