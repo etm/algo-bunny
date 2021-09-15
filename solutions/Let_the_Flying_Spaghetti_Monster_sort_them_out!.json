@@ -157,6 +157,36 @@
           "back"
         ],
         [
+          "a356",
+          "right"
+        ],
+        [
+          "a357",
+          "right"
+        ],
+        [
+          "a358",
+          {
+            "item": "if_hole",
+            "first": [
+              [
+                "a359",
+                "break"
+              ]
+            ],
+            "second": [
+              [
+                "a360",
+                "left"
+              ],
+              [
+                "a361",
+                "left"
+              ]
+            ]
+          }
+        ],
+        [
           "a285",
           "back"
         ],
@@ -182,6 +212,52 @@
                     ]
                   ]
                 }
+              ]
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  [
+    "a383",
+    "execute8"
+  ],
+  [
+    "a363",
+    "left"
+  ],
+  [
+    "a364",
+    "left"
+  ],
+  [
+    "a372",
+    "normal"
+  ],
+  [
+    "a365",
+    {
+      "item": "loop",
+      "first": [
+        [
+          "a366",
+          {
+            "item": "if_carrot",
+            "first": [
+              [
+                "a367",
+                "eat_carrot"
+              ],
+              [
+                "a371",
+                "step_left"
+              ]
+            ],
+            "second": [
+              [
+                "a368",
+                "break"
               ]
             ]
           }
@@ -313,7 +389,7 @@
       "item": "execute",
       "first": [
         [
-          "a63",
+          "a373",
           "jump_brain"
         ],
         [
@@ -584,6 +660,32 @@
       "item": "execute",
       "first": [
         [
+          "a322",
+          {
+            "item": "loop",
+            "first": [
+              [
+                "a323",
+                {
+                  "item": "if_empty",
+                  "first": [
+                    [
+                      "a324",
+                      "step_left"
+                    ]
+                  ],
+                  "second": [
+                    [
+                      "a325",
+                      "break"
+                    ]
+                  ]
+                }
+              ]
+            ]
+          }
+        ],
+        [
           "a224",
           "step_right"
         ],
@@ -618,50 +720,112 @@
           }
         ],
         [
-          "a290",
+          "a307",
+          "step_right"
+        ],
+        [
+          "a306",
+          "memorize_position"
+        ],
+        [
+          "a305",
           {
-            "item": "loop",
-            "first": [
-              [
-                "a291",
-                {
-                  "item": "if_empty",
-                  "first": [
-                    [
-                      "a292",
-                      "step_left"
-                    ]
-                  ],
-                  "second": [
-                    [
-                      "a293",
-                      "break"
-                    ]
-                  ]
-                }
-              ]
-            ]
+            "item": "jump",
+            "target": "11,12"
           }
         ],
         [
-          "a162",
+          "a317",
           {
-            "item": "loop",
+            "item": "if_flower",
             "first": [
               [
-                "a163",
+                "a318",
+                "eat_flower"
+              ]
+            ],
+            "second": []
+          }
+        ],
+        [
+          "a308",
+          "put_flower"
+        ],
+        [
+          "a309",
+          "jump_back"
+        ],
+        [
+          "a310",
+          "step_left"
+        ],
+        [
+          "a326",
+          "left"
+        ],
+        [
+          "a327",
+          {
+            "item": "if_hole",
+            "first": [
+              [
+                "a331",
+                "right"
+              ]
+            ],
+            "second": [
+              [
+                "a332",
+                "right"
+              ],
+              [
+                "a328",
                 {
-                  "item": "if_empty",
+                  "item": "loop",
                   "first": [
                     [
-                      "a165",
-                      "break"
+                      "a291",
+                      {
+                        "item": "if_empty",
+                        "first": [
+                          [
+                            "a292",
+                            "step_left"
+                          ]
+                        ],
+                        "second": [
+                          [
+                            "a293",
+                            "break"
+                          ]
+                        ]
+                      }
                     ]
-                  ],
-                  "second": [
+                  ]
+                }
+              ],
+              [
+                "a329",
+                {
+                  "item": "loop",
+                  "first": [
                     [
-                      "a167",
-                      "step_left"
+                      "a163",
+                      {
+                        "item": "if_empty",
+                        "first": [
+                          [
+                            "a165",
+                            "break"
+                          ]
+                        ],
+                        "second": [
+                          [
+                            "a167",
+                            "step_left"
+                          ]
+                        ]
+                      }
                     ]
                   ]
                 }
@@ -676,6 +840,34 @@
         [
           "a200",
           "memorize_position"
+        ],
+        [
+          "a311",
+          {
+            "item": "jump",
+            "target": "12,12"
+          }
+        ],
+        [
+          "a319",
+          {
+            "item": "if_flower",
+            "first": [
+              [
+                "a320",
+                "eat_flower"
+              ]
+            ],
+            "second": []
+          }
+        ],
+        [
+          "a312",
+          "put_flower"
+        ],
+        [
+          "a313",
+          "jump_back"
         ]
       ],
       "id": 6
@@ -691,8 +883,8 @@
       "item": "execute",
       "first": [
         [
-          "a194",
-          "jump_brain"
+          "a382",
+          "execute8"
         ],
         [
           "a197",
@@ -748,8 +940,8 @@
                 "eat_flower"
               ],
               [
-                "a243",
-                "jump_brain"
+                "a381",
+                "execute8"
               ],
               [
                 "a244",
@@ -790,34 +982,19 @@
           }
         ],
         [
-          "a304",
-          "step_right"
+          "a336",
+          {
+            "item": "jump",
+            "target": "11,12"
+          }
         ],
         [
-          "a299",
-          {
-            "item": "loop",
-            "first": [
-              [
-                "a300",
-                {
-                  "item": "if_carrot",
-                  "first": [
-                    [
-                      "a301",
-                      "step_right"
-                    ]
-                  ],
-                  "second": [
-                    [
-                      "a302",
-                      "break"
-                    ]
-                  ]
-                }
-              ]
-            ]
-          }
+          "a337",
+          "memorize_flower"
+        ],
+        [
+          "a338",
+          "jump_brain"
         ],
         [
           "a207",
@@ -835,8 +1012,50 @@
                         "item": "if_bigger",
                         "first": [
                           [
-                            "a210",
+                            "a348",
+                            "memorize_position"
+                          ],
+                          [
+                            "a343",
+                            {
+                              "item": "jump",
+                              "target": "13,12"
+                            }
+                          ],
+                          [
+                            "a350",
+                            "put_flower"
+                          ],
+                          [
+                            "a380",
+                            "execute8"
+                          ],
+                          [
+                            "a345",
                             "put_carrot"
+                          ],
+                          [
+                            "a352",
+                            {
+                              "item": "jump",
+                              "target": "13,12"
+                            }
+                          ],
+                          [
+                            "a353",
+                            "memorize_flower"
+                          ],
+                          [
+                            "a354",
+                            "eat_flower"
+                          ],
+                          [
+                            "a355",
+                            "jump_brain"
+                          ],
+                          [
+                            "a347",
+                            "get_carrot"
                           ]
                         ],
                         "second": []
@@ -873,8 +1092,8 @@
           }
         ],
         [
-          "a214",
-          "jump_brain"
+          "a379",
+          "execute8"
         ],
         [
           "a215",
@@ -920,6 +1139,34 @@
         ]
       ],
       "id": 7
+    }
+  ],
+  [
+    "a374",
+    null
+  ],
+  [
+    "a375",
+    {
+      "item": "execute",
+      "first": [
+        [
+          "a376",
+          {
+            "item": "jump",
+            "target": "12,12"
+          }
+        ],
+        [
+          "a377",
+          "memorize_flower"
+        ],
+        [
+          "a378",
+          "jump_brain"
+        ]
+      ],
+      "id": 8
     }
   ]
 ]

@@ -110,6 +110,8 @@ $(document).ready(async function() {
   // foreignObject with div inside and at the end of svg.
   // it catches all mouseclicks :-) read on for the grand finale!
   $('div.field svg').on('dragstart','foreignObject div',(ev)=>{ //{{{
+    if (walker.walking) { return false }
+
     var left = $(window).scrollLeft()
     var top = $(window).scrollTop()
 
@@ -174,6 +176,8 @@ $(document).ready(async function() {
   }) //}}}
 
   $('div.program svg').on('click','foreignObject div',(ev)=>{ //{{{
+    if (walker.walking) { return false }
+
     let oe = $(ev.currentTarget)
     let ot = $(oe).parents('g[element-type]')
     if (ot.length > 0) {
@@ -205,6 +209,8 @@ $(document).ready(async function() {
     }
   }) //}}}
   $('div.program svg').on('dragstart','foreignObject div',(ev)=>{ //{{{
+    if (walker.walking) { return false }
+
     let oe = $(ev.currentTarget)
     let ot = $(oe).parents('g[element-type]')
     if (ot.length > 0 && ot.parents('g[element-group=graph]').length == 1) {
@@ -229,6 +235,8 @@ $(document).ready(async function() {
   }) //}}}
 
   $('div.elements').on('dragstart','[draggable=true][data-type]',(ev)=>{ //{{{
+    if (walker.walking) { return false }
+
     ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'))
     ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0)
     $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
@@ -293,6 +301,13 @@ $(document).ready(async function() {
         walker.stop()
         field.reset_full()
       } else {
+        if (active_del_timeout) {
+          clearTimeout(active_del_timeout)
+        }
+        if (active_del != '') {
+          $('div.program svg g[element-group=drop] g[element-type=delete][element-id]').removeClass('active')
+          active_del = ''
+        }
         walker.walk()
       }
       $(ev.currentTarget).toggleClass('active')
