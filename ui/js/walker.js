@@ -110,7 +110,7 @@ class Walker {
             return false
           }
 
-          if (this.#brain.toString().match(/\d,\d,[NEWS]/)) {
+          if (this.#brain.toString().match(/\d+,\d+,[NEWS]/)) {
             this.#jump_back.push(JSON.stringify(this.field.state_bunny))
             let [wx,wy,wface] = this.#brain.split(',')
             res = await this.field.jump(wx,wy,wface)
@@ -161,7 +161,6 @@ class Walker {
               this.#hand = null
               $('div.field div.ui.hand img').hide()
             }
-            this.#cops_count += 1
             document.dispatchEvent(this.#changed_cops)
             await this.#sleep(this.timing/2)
           } else {
@@ -215,7 +214,6 @@ class Walker {
             $('div.field div.ui.brain .text').text(res)
             this.#brain = res
             this.#steps_active = false
-            this.#cops_count += 1
             document.dispatchEvent(this.#changed_cops)
             await this.#sleep(this.timing/2)
           } else {
@@ -305,7 +303,6 @@ class Walker {
             if (this.field.has_carrot()) {
               res = await this.#walk_rec(v.first)
               if (res === false || res == 'leave') { return res; }
-              this.#cops_count += 1
               document.dispatchEvent(this.#changed_cops)
             } else {
               res = await this.#walk_rec(v.second)
@@ -350,7 +347,7 @@ class Walker {
               return false
             }
 
-            if (this.#brain.toString().match(/\d,\d,[NEWS]/)) {
+            if (this.#brain.toString().match(/\d+,\d+,[NEWS]/)) {
               let [wx,wy,wface] = this.#brain.split(',')
               if (this.field.jump_possible(wx,wy,wface)) {
                 res = await this.#walk_rec(v.first)
@@ -389,7 +386,6 @@ class Walker {
               if (!(this.#hand === undefined || this.#hand == null)) {
                 if ((cc !== false && this.#hand == cc) || (cf !== false && this.#hand == cf.value)) {
                   if (cc !== false) {
-                    this.#cops_count += 1
                     document.dispatchEvent(this.#changed_cops)
                   }
                   res = await this.#walk_rec(v.first)
@@ -401,7 +397,6 @@ class Walker {
               } else if (!(this.#brain === undefined || this.#brain == null)) {
                 if ((cc !== false && this.#brain == cc) || (cf !== false && this.#brain == cf.value)) {
                   if (cc !== false) {
-                    this.#cops_count += 1
                     document.dispatchEvent(this.#changed_cops)
                   }
                   res = await this.#walk_rec(v.first)
@@ -427,7 +422,6 @@ class Walker {
               if (!(this.#hand === undefined || this.#hand == null)) {
                 if ((cc !== false && this.#hand < cc) || (cf !== false && this.#hand < cf.value)) {
                   if (cc !== false) {
-                    this.#cops_count += 1
                     document.dispatchEvent(this.#changed_cops)
                   }
                   res = await this.#walk_rec(v.first)
@@ -439,7 +433,6 @@ class Walker {
               } else if (!(this.#brain === undefined || this.#brain == null)) {
                 if ((cc !== false && this.#brain < cc) || (cf !== false && this.#brain < cf.value)) {
                   if (cc !== false) {
-                    this.#cops_count += 1
                     document.dispatchEvent(this.#changed_cops)
                   }
                   res = await this.#walk_rec(v.first)
@@ -465,7 +458,6 @@ class Walker {
               if (!(this.#hand === undefined || this.#hand == null)) {
                 if ((cc !== false && this.#hand > cc) || (cf !== false && this.#hand > cf.value)) {
                   if (cc !== false) {
-                    this.#cops_count += 1
                     document.dispatchEvent(this.#changed_cops)
                   }
                   res = await this.#walk_rec(v.first)
@@ -477,7 +469,6 @@ class Walker {
               } else if (!(this.#brain === undefined || this.#brain == null)) {
                 if ((cc !== false && this.#brain > cc) || (cf !== false && this.#brain > cf.value)) {
                   if (cc !== false) {
-                    this.#cops_count += 1
                     document.dispatchEvent(this.#changed_cops)
                   }
                   res = await this.#walk_rec(v.first)
