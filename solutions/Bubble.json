@@ -1,0 +1,91 @@
+[
+  [
+    "a1",
+    "right"
+  ],
+  [
+    "a2",
+    "right"
+  ],
+  [
+    "a3",
+    {
+      "item": "loop",
+      "first": [
+        [
+          "a16",
+          {
+            "item": "if_empty",
+            "first": [
+              [
+                "a17",
+                "break"
+              ]
+            ],
+            "second": []
+          }
+        ],
+        [
+          "a4",
+          "get_carrot"
+        ],
+        [
+          "a12",
+          "step_left"
+        ],
+        [
+          "a25",
+          "memorize_position"
+        ],
+        [
+          "a5",
+          {
+            "item": "loop",
+            "first": [
+              [
+                "a8",
+                {
+                  "item": "if_carrot",
+                  "first": [
+                    [
+                      "a9",
+                      {
+                        "item": "if_bigger",
+                        "first": [
+                          [
+                            "a14",
+                            "put_carrot"
+                          ]
+                        ],
+                        "second": [
+                          [
+                            "a15",
+                            "step_left"
+                          ]
+                        ]
+                      }
+                    ]
+                  ],
+                  "second": [
+                    [
+                      "a26",
+                      "eat_carrot"
+                    ],
+                    [
+                      "a11",
+                      "jump_brain"
+                    ],
+                    [
+                      "a10",
+                      "break"
+                    ]
+                  ]
+                }
+              ]
+            ]
+          }
+        ]
+      ]
+    }
+  ]
+]
