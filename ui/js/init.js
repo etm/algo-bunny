@@ -391,6 +391,5 @@ $(document).ready(async function() {
     reader.onerror = function(){ console.log('error reading file'); loading = false; }
     reader.onabort = function(){ console.log('abort reading file'); loading = false; }
     reader.readAsText(files[0])
-
   })
 })
