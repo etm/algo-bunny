@@ -55,6 +55,10 @@
                           [
                             "a14",
                             "put_carrot"
+                          ],
+                          [
+                            "a27",
+                            "step_left"
                           ]
                         ],
                         "second": [
