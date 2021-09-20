@@ -1,0 +1,42 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 1em;
+}
+
+@media print {
+  body{
+    zoom: 50%;
+  }
+}
+
+#loadinstructions { display: none; }
+
+div.program {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0.5em 0.5em;
+
+  min-height: 100vh;
+
+  height: auto;
+  width: auto;
+
+  background-color: #72d4c8;
+  scrollbar-color: #338c7b #72d4c8;
+
+  display: block;
+}
+
+button.load {
+  position: fixed;
+  top: 0.5em;
+  right: 1em;
+}
+
+@media print {
+  button.load {
+    display: none;
+  }
+}
