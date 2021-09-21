@@ -108,12 +108,20 @@ class Field {
     return true
   }  //}}}
   #get_level(levelurl) { //{{{
-    return new Promise( resolve => {
-      $.ajax({
-        type: "GET",
-        url: levelurl,
-        error: () => {}
-      }).then(res => { resolve(res) })
+    return new Promise( (resolve,reject) => {
+      if (levelurl.match(/^http/)) {
+        $.ajax({
+          type: "GET",
+          url: "download.php?url=" + levelurl,
+          error: () => { this.assets.say(this.assets.texts.faultylevel,'div.speech'); reject() }
+        }).then(res => { resolve(res) })
+      } else {
+        $.ajax({
+          type: "GET",
+          url: levelurl,
+          error: () => { this.assets.say(this.assets.texts.faultylevel,'div.speech'); reject() }
+        }).then(res => { resolve(res) })
+      }
     })
   } //}}}
 
