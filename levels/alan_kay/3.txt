@@ -23,6 +23,6 @@ for marking things.
 ---
 1
 ---
-247
+53 steps taken, 72 CISC length. 1709 instructions have been evaluated, this could be reduced at the cost of CISC length. We used a right-hand plus marking approach.
 ---
 eat_carrot,eat_flower,put_flower,forward,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_flower,if_carrot,memorize_position,memorize_steps,execute,back,jump,jump_back,jump_brain,if_same,if_smaller,if_bigger,if_jump,memorize_flower,fast,normal,pause

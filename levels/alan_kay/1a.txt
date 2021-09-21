@@ -13,6 +13,6 @@ A simple solution is to run along the edge of the level.
 ---
 111111111111
 ---
-33
+18 steps taken, 16 CISC length.
 ---
 eat_carrot,get_carrot,forward,left,right,loop,break,if_empty,if_hole,if_carrot,fast,normal,pause
