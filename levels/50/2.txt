@@ -10,6 +10,6 @@ Eat all carrots.
 ---
 1111
 ---
-11
+3 steps taken, 8 CISC length.
 ---
 eat_carrot,forward,left,right,execute

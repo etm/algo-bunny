@@ -342,8 +342,8 @@ $(document).ready(async function() {
   document.addEventListener('steps:changed', (e) => {
     $('div.field div.stats .steps .value').text(walker.step_count())
   })
-  document.addEventListener('cops:changed', (e) => {
-    $('div.field div.stats .cops .value').text(walker.cops_count())
+  document.addEventListener('cmps:changed', (e) => {
+    $('div.field div.stats .cmps .value').text(walker.cmps_count())
   })
   document.addEventListener('walking:success', (e) => {
     setTimeout(()=>{
@@ -352,14 +352,13 @@ $(document).ready(async function() {
       let cisc = editor.cisc_length()
       let ins = walker.ins_count()
       let steps = walker.step_count()
-      let cops = walker.cops_count()
+      let cmps = walker.cmps_count()
 
       $('div.field div.victory .text .title').text(field.title.trim())
       $('div.field div.victory .text .steps').text(steps)
-      $('div.field div.victory .text .cops').text(cops)
+      $('div.field div.victory .text .cmps').text(cmps)
       $('div.field div.victory .text .ins').text(ins)
       $('div.field div.victory .text .cisc').text(cisc)
-      $('div.field div.victory .text .rank').text(cisc + steps)
       $('div.field div.victory .text .reference_rank').text(field.max_score)
     },1000)
   })

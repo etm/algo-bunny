@@ -6,7 +6,7 @@ class Walker {
   #eaten
 
   #changed_steps
-  #changed_cops
+  #changed_cmps
   #changed_ins
   #success
 
@@ -16,7 +16,7 @@ class Walker {
 
   #ins_count
   #step_count
-  #cops_count
+  #cmps_count
 
   #continue
 
@@ -47,10 +47,10 @@ class Walker {
 
     this.#step_count = 0
     this.#ins_count = 0
-    this.#cops_count = 0
+    this.#cmps_count = 0
 
     this.#changed_steps = new Event("steps:changed", {"bubbles":false, "cancelable":false})
-    this.#changed_cops = new Event("cops:changed", {"bubbles":false, "cancelable":false})
+    this.#changed_cmps = new Event("cmps:changed", {"bubbles":false, "cancelable":false})
     this.#changed_ins = new Event("ins:changed", {"bubbles":false, "cancelable":false})
     this.#success = new Event("walking:success", {"bubbles":false, "cancelable":false})
     this.#speed_normal = new Event("speed:normal", {"bubbles":false, "cancelable":false})
@@ -398,8 +398,8 @@ class Walker {
               let cc = this.field.check_carrot()
               if (!(this.#hand === undefined || this.#hand == null)) {
                 if (cc !== false) {
-                  this.#cops_count += 1
-                  document.dispatchEvent(this.#changed_cops)
+                  this.#cmps_count += 1
+                  document.dispatchEvent(this.#changed_cmps)
                 }
                 if ((cc !== false && this.#hand == cc) || (cf !== false && this.#hand == cf.value)) {
                   res = await this.#walk_rec(v.first)
@@ -410,8 +410,8 @@ class Walker {
                 }
               } else if (!(this.#brain === undefined || this.#brain == null)) {
                 if (cc !== false) {
-                  this.#cops_count += 1
-                  document.dispatchEvent(this.#changed_cops)
+                  this.#cmps_count += 1
+                  document.dispatchEvent(this.#changed_cmps)
                 }
                 if ((cc !== false && this.#brain == cc) || (cf !== false && this.#brain == cf.value)) {
                   res = await this.#walk_rec(v.first)
@@ -436,8 +436,8 @@ class Walker {
               let cc = this.field.check_carrot()
               if (!(this.#hand === undefined || this.#hand == null)) {
                 if (cc !== false) {
-                  this.#cops_count += 1
-                  document.dispatchEvent(this.#changed_cops)
+                  this.#cmps_count += 1
+                  document.dispatchEvent(this.#changed_cmps)
                 }
                 if ((cc !== false && this.#hand < cc) || (cf !== false && this.#hand < cf.value)) {
                   res = await this.#walk_rec(v.first)
@@ -448,8 +448,8 @@ class Walker {
                 }
               } else if (!(this.#brain === undefined || this.#brain == null)) {
                 if (cc !== false) {
-                  this.#cops_count += 1
-                  document.dispatchEvent(this.#changed_cops)
+                  this.#cmps_count += 1
+                  document.dispatchEvent(this.#changed_cmps)
                 }
                 if ((cc !== false && this.#brain < cc) || (cf !== false && this.#brain < cf.value)) {
                   res = await this.#walk_rec(v.first)
@@ -474,8 +474,8 @@ class Walker {
               let cc = this.field.check_carrot()
               if (!(this.#hand === undefined || this.#hand == null)) {
                 if (cc !== false) {
-                  this.#cops_count += 1
-                  document.dispatchEvent(this.#changed_cops)
+                  this.#cmps_count += 1
+                  document.dispatchEvent(this.#changed_cmps)
                 }
                 if ((cc !== false && this.#hand > cc) || (cf !== false && this.#hand > cf.value)) {
                   res = await this.#walk_rec(v.first)
@@ -486,8 +486,8 @@ class Walker {
                 }
               } else if (!(this.#brain === undefined || this.#brain == null)) {
                 if (cc !== false) {
-                  this.#cops_count += 1
-                  document.dispatchEvent(this.#changed_cops)
+                  this.#cmps_count += 1
+                  document.dispatchEvent(this.#changed_cmps)
                 }
                 if ((cc !== false && this.#brain > cc) || (cf !== false && this.#brain > cf.value)) {
                   res = await this.#walk_rec(v.first)
@@ -572,7 +572,7 @@ class Walker {
   }
 
   step_count() { return this.#step_count }
-  cops_count() { return this.#cops_count }
+  cmps_count() { return this.#cmps_count }
   ins_count() { return this.#ins_count }
 
   stop() { //{{{
@@ -583,7 +583,7 @@ class Walker {
     this.#eaten = ''
     this.assets.say_reset('div.speech')
     this.#step_count = 0
-    this.#cops_count = 0
+    this.#cmps_count = 0
     this.#ins_count = 0
     this.timing = this.default_timing
     this.field.timing = this.default_timing
@@ -591,7 +591,7 @@ class Walker {
     this.#pause = false
     document.dispatchEvent(this.#changed_ins)
     document.dispatchEvent(this.#changed_steps)
-    document.dispatchEvent(this.#changed_cops)
+    document.dispatchEvent(this.#changed_cmps)
     $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
     $('div.field div.ui.brain .type').hide()
     $('div.field div.ui.brain .text').text('')

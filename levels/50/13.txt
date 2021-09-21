@@ -18,6 +18,6 @@ carrots you have eaten.
 ---
 11
 ---
-10
+2 steps taken, 8 CISC length, 15 instructions evaluated.
 ---
 eat_carrot,forward,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_steps,memorize_flower
