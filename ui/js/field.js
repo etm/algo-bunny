@@ -73,8 +73,6 @@ class Field {
     this.x = 0
     this.y = 0
 
-    this.max_score = parseInt(this.max_score)
-
     this.elements = this.elements.trim().split(',')
     this.state_flowers = []
     this.state_carrots = []
@@ -102,7 +100,6 @@ class Field {
       if (s.length == 3) { return { 'type': 'position', 'x': parseInt(s[0]), 'y': parseInt(s[1]), 'face': s[2] } }
     })
     this.carrots = this.carrots.trim().split('').map(x => x.trim()).filter(x => x !== undefined && x != '')
-    this.max_score = parseInt(this.max_score)
     this.max_carrots = this.tiles.reduce((total,arr) => {
       return total + arr.reduce((total,ele) => {
         return total + (ele.match(/[1-9c]/) ? 1 : 0)
