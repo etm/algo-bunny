@@ -14,11 +14,9 @@ class Field {
   #bunny_y_displacement
 
   #save_state_bunny
-  #save_state_carrots
   #save_state_op
   #save_state_dir
   #save_state_nocount
-  #save_state_flowers
 
   #nodraw
 
@@ -91,6 +89,7 @@ class Field {
       if (this.x < s.length) { this.x = s.length }
       return s
     })
+    this.raw_tiles = JSON.parse(JSON.stringify(this.tiles))
     this.y = this.tiles.length
 
     this.assignments = this.assignments.split(/\r?\n/)
@@ -597,11 +596,10 @@ class Field {
 
   reset_state() { //{{{
     this.state_bunny   = JSON.parse(this.#save_state_bunny)
-    this.state_carrots = JSON.parse(this.#save_state_carrots)
     this.state_op      = JSON.parse(this.#save_state_op)
     this.state_dir     = JSON.parse(this.#save_state_dir)
     this.state_nocount = JSON.parse(this.#save_state_nocount)
-    this.state_flowers = JSON.parse(this.#save_state_flowers)
+    this.#init_carrots_and_flowers()
     $('g.flower,g.carrot,g.bunny',this.target_field).remove()
   } //}}}
   reset_full() { //{{{
@@ -618,11 +616,54 @@ class Field {
     }
     this.#draw_bunny(this.state_bunny[0],this.state_bunny[1],this.state_bunny[2])
   } //}}}
+  #init_carrots_and_flowers() {
+    let counter
+    let flower_count
+    let carrot_count
+    let repeat
+    let generated_carrots
+
+    let orig_carrots = JSON.parse(JSON.stringify(this.state_carrots))
+    let orig_flowers = JSON.parse(JSON.stringify(this.state_flowers))
+
+    do {
+      counter = 0
+      flower_count = 0
+      carrot_count = 0
+      repeat = false
+      generated_carrots = []
+
+      repeat = false
+      for (let i=1; i<=this.max_carrots; i++) { generated_carrots[i-1] = i }
+      for (let i=0;i<Math.max(this.x,this.y)*2;i++) {
+        for (let j = counter; j >= 0; j--) {
+          if (j < this.x && (i-j) < this.y) {
+            if (this.raw_tiles[i-j][j]) {
+              if (this.raw_tiles[i-j][j].match(/[1-9c]/)) {
+                if (this.raw_tiles[i-j][j] == 'c') {
+                  carrot_count += 1
+                  this.state_carrots[i-j][j] = generated_carrots.sample()
+                  generated_carrots =  generated_carrots.remove(this.state_carrots[i-j][j])
+                  if (this.state_carrots[i-j][j] == orig_carrots[i-j][j]) {
+                    repeat = true
+                  }
+                } else {
+                  this.state_carrots[i-j][j] = parseInt(this.raw_tiles[i-j][j])
+                }
+              }
+              if (this.raw_tiles[i-j][j] == 'f') {
+                this.state_flowers[i-j][j] = this.assignments[flower_count++]
+              }
+            }
+          }
+        }
+        counter += 1
+      }
+    } while (repeat && carrot_count > 1)
+  }
   render() { //{{{
     let counter = 0
-    let flower_count = 0
-    let generated_carrots = []
-    for (let i=1; i<=this.max_carrots; i++) { generated_carrots[i-1] = i }
+    this.#init_carrots_and_flowers()
     for (let i=0;i<Math.max(this.x,this.y)*2;i++) {
       for (let j = counter; j >= 0; j--) {
         if (j < this.x && (i-j) < this.y) {
@@ -642,17 +683,10 @@ class Field {
               this.tiles[i-j][j] = 'T'
             }
             if (this.tiles[i-j][j].match(/[1-9c]/)) {
-              if (this.tiles[i-j][j] == 'c') {
-                this.state_carrots[i-j][j] = generated_carrots.sample()
-                generated_carrots =  generated_carrots.remove(this.state_carrots[i-j][j])
-              } else {
-                this.state_carrots[i-j][j] = parseInt(this.tiles[i-j][j])
-              }
               this.tiles[i-j][j] = 'T'
               this.#draw_carrot(j,i-j,this.state_carrots[i-j][j])
             }
             if (this.tiles[i-j][j] == 'f') {
-              this.state_flowers[i-j][j] = this.assignments[flower_count++]
               this.tiles[i-j][j] = 'T'
               this.#draw_flower(j,i-j,this.state_flowers[i-j][j].type)
             }
@@ -684,11 +718,9 @@ class Field {
     }
 
     this.#save_state_bunny   = JSON.stringify(this.state_bunny)
-    this.#save_state_carrots = JSON.stringify(this.state_carrots)
     this.#save_state_op      = JSON.stringify(this.state_op)
     this.#save_state_dir     = JSON.stringify(this.state_dir)
     this.#save_state_nocount = JSON.stringify(this.state_nocount)
-    this.#save_state_flowers = JSON.stringify(this.state_flowers)
 
     let [wid,_th] = this.#coordinate_transform(this.x,0)
     let [_tw,hei] = this.#coordinate_transform(this.x,this.y)
@@ -699,5 +731,5 @@ class Field {
     this.#draw_drag_layer(iw,ih)
 
     this.target.attr('viewBox', '0 0 ' + iw + ' ' + ih)
-  } //}}}
+  } // }}}
 }
