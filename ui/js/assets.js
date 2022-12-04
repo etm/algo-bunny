@@ -13,6 +13,8 @@ function Assets() {
   this.say_timeout
   this.say_duration = 8000
 
+  this.oneliners = []
+
   function  load_svg(url,item,i) { //{{{
     return $.ajax({
       type: "GET",
@@ -94,7 +96,10 @@ function Assets() {
     this.say_timeout = setTimeout(()=>{$(target).hide();},this.say_duration);
   } //}}}
   this.oneliner = function(target) { //{{{
-    this.say(this.oneliners.sample(),target)
+    if (this.oneliners.length == 0) { this.oneliners = JSON.parse(JSON.stringify(this.raw_oneliners)) }
+    let ol =  this.oneliners.sample()
+    this.oneliners = this.oneliners.remove(ol)
+    this.say(ol,target)
   } //}}}
 
   /*------------------------*/
@@ -136,7 +141,7 @@ function Assets() {
 
   /*------------------------*/
 
-  this.oneliners = [ //{{{
+  this.raw_oneliners = [ //{{{
     "I love the smell of carrots in the morning.", // apocalypse now
     "Show me the carrots.", // jerry maguire
     "To carrots and beyond.", // star trek
