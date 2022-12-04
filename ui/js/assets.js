@@ -132,7 +132,7 @@ function Assets() {
   this.texts.fail = "All this work, still no success :-("
   this.texts.faultylevel = "Uh oh, level is b0rked :-/"
   this.texts.delete = "To delete an instruction, click on it!"
-  this.texts.again = "Play it again, Sam!"
+  this.texts.again = "Play it again to win!"
 
   /*------------------------*/
 
@@ -168,7 +168,8 @@ function Assets() {
     "My carrot!",
     "I feel the need, the need for carrots.",
     "Carpe diem. Seize the carrot. Make your lives extraordinary.",
-    "A million carrots isn't cool. You know what's cool? A billion carrots."
+    "A million carrots isn't cool. You know what's cool? A billion carrots.",
+    "Play it again, carrot."
   ] //}}}
 
   /*------------------------*/
@@ -476,7 +477,7 @@ function Assets() {
   this.commands.if_same = { /*{{{*/
     'type': 'complex_two',
     'label': 'Check If Equal',
-    'desc': 'I check if the carrot I hold is the same size as the carrot (or flower) in front of me ...<p>... unless I memorized something in my big brain - then I always compare the number I memorized.',
+    'desc': '<strong>Same:</strong> I can compare the thing I hold in my hand or remember in my brain with the flower or carrot in front of me.<p>Each carrot has a size between 1 and 9. Each flower containes a number or a coordinate.',
     'icon': 'commands/if_same.svg',
     'first': 'commands/if_same/top.svg',
     'first_icon': 'commands/if_same/y.svg',
@@ -488,7 +489,7 @@ function Assets() {
   this.commands.if_smaller = { /*{{{*/
     'type': 'complex_two',
     'label': 'Check If Smaller',
-    'desc': 'I check if the carrot I hold is smaller than the carrot (or flower) in front of me ...<p>... unless I memorized syyomething in my big brain - then I always compare the number I memorized.',
+    'desc': '<strong>Smaller:</strong> I can compare the thing I hold in my hand or remember in my brain with the flower or carrot in front of me.<p>Each carrot has a size between 1 and 9. Each flower containes a number or a coordinate.',
     'icon': 'commands/if_smaller.svg',
     'first': 'commands/if_smaller/top.svg',
     'first_icon': 'commands/if_smaller/y.svg',
@@ -500,7 +501,7 @@ function Assets() {
   this.commands.if_bigger = { /*{{{*/
     'type': 'complex_two',
     'label': 'Check If Bigger',
-    'desc': 'I check if the carrot I hold is bigger than the carrot (or flower) in front of me ...<p> ... unless I memorized syyomething in my big brain - then I always compare the number I memorized.',
+    'desc': '<strong>Bigger:</strong> I can compare the thing I hold in my hand or remember in my brain with the flower or carrot in front of me.<p>Each carrot has a size between 1 and 9. Each flower containes a number or a coordinate.',
     'icon': 'commands/if_bigger.svg',
     'first': 'commands/if_bigger/top.svg',
     'first_icon': 'commands/if_bigger/y.svg',

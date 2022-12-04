@@ -17,7 +17,7 @@ There are 3 carrots. Each carrot has a different size:
   * The big carrot has the size 3.
 
 When Algo looks at the flower with ![](commands/memorize_flower.svg) he learns ![](assets/brain.svg)
-which carrot you have to eat.
+which carrot he has to eat.
 
 Algo can solve this puzzle in different ways:
 

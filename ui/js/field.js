@@ -355,7 +355,7 @@ class Field {
           this.assignments[i] = { 'type': 'number', 'value': Math.floor(Math.random() * parseInt(s[0].substring(1)) + 1) }
           if (this.#save_state_assignments[i] && this.assignments[i].value == this.#save_state_assignments[i].value) { repeat = true }
         } else if (s.length == 1 && s[0].match(/^f/)) {
-          this.assignments[i] = { 'type': 'number', 'value': this.assignments[s[0].substring(1)] }
+          this.assignments[i] = { 'type': 'number', 'value': this.assignments[s[0].substring(1)].value }
         } else if (s.length == 1 && s[0].match(/^[1-9]/)) {
           this.assignments[i] = { 'type': 'number', 'value': parseInt(s[0]) }
         } else if (s.length == 3) {
@@ -411,6 +411,10 @@ class Field {
         counter += 1
       }
     } while (repeat && carrot_count > 1)
+
+    console.log(this.assignments)
+    console.log(this.state_flowers)
+    console.log(this.carrots)
 
     this.#save_state_carrots = JSON.parse(JSON.stringify(this.state_carrots))
     this.#save_state_flowers = JSON.parse(JSON.stringify(this.state_flowers))
