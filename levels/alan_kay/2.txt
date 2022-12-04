@@ -19,6 +19,8 @@ algorithms](https://en.wikipedia.org/wiki/Maze-solving_algorithm).
 ---
 1
 ---
+1
+---
 42 steps taken, 9 CISC length. We took a right-hand approach. A Left-hand approach would be more efficient.
 ---
 eat_carrot,put_flower,forward,left,right,step_left,step_right,loop,break,if_empty,if_hole,if_flower,if_carrot,memorize_position,fast,normal,pause

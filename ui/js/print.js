@@ -4,7 +4,7 @@ $(document).ready(async function() {
   let assets  = new Assets
   await assets.load()
 
-  let editor = new Editor($('div.program svg'), assets)
+  let editor = new Editor($('div.program svg'), assets, 'current')
   editor.render()
 
   $('button.load').click(ev=>{

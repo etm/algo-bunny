@@ -9,9 +9,10 @@ class Editor {
 
   #changed
 
-  constructor(target,assets) { //{{{
+  constructor(target,assets,id) { //{{{
     this.assets = assets
     this.target = target
+    this.id = id
 
     let t0 = $X('<g element-group="below" xmlns="http://www.w3.org/2000/svg"></g>')
     let t1 = $X('<g element-group="graph" xmlns="http://www.w3.org/2000/svg"></g>')
@@ -43,6 +44,10 @@ class Editor {
     this.#changed = new Event("cisc:changed", {"bubbles":false, "cancelable":false})
 
     this.program = []
+    let prog
+    if (prog = window.localStorage.getItem(this.id)) {
+      this.program = JSON.parse(prog)
+    }
 
     this.add_id = null
     this.remove_ids = []
@@ -601,6 +606,9 @@ class Editor {
     let wid = w * this.#tile_width * this.#scale_factor + this.#width_add
     this.target.attr('height', hei)
     this.target.attr('width',  wid)
+    window.localStorage.setItem(this.id, JSON.stringify(this.program,null,2));
+    window.localStorage.setItem('current', JSON.stringify(this.program,null,2));
+
   }
 
   render_diff() {
@@ -613,5 +621,7 @@ class Editor {
       this.target.attr('width',  wid)
     }
     this.#render_remove()
+    window.localStorage.setItem(this.id, JSON.stringify(this.program,null,2));
+    window.localStorage.setItem('current', JSON.stringify(this.program,null,2));
   }
 }

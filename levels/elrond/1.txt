@@ -1,0 +1,36 @@
+TTTT
+TTcT  TTT
+TBcT  TfT
+TTcT  TTT
+TTTT
+---
+2
+---
+Some carrots are bad!
+---
+The flower tells you which carrot.
+---
+There are 3 carrots. Each carrot has a different size:
+
+  * The small carrot has the size 1.
+  * The middle carrot has the size 2.
+  * The big carrot has the size 3.
+
+When Algo looks at the flower with ![](commands/memorize_flower.svg) he learns ![](assets/brain.svg)
+which carrot he has to eat.
+
+Algo can solve this puzzle in different ways:
+
+  * He can take a carrot ![](commands/get_carrot.svg) to the flower ![](commands/jump.svg), and compare it to the flower ![](commands/if_same.svg).
+  * He can go to the flower ![](commands/jump.svg), look at the flower ![](commands/memorize_flower.svg), and then compare the memorized number ![](assets/brain.svg) to a carrot ![](commands/if_same.svg).
+  * He can memorize the size of a carrot ![](commands/memorize_carrot.svg), go to the flower ![](commands/jump.svg), and then compare the memorized number ![](assets/brain.svg) to the flower ![](commands/if_same.svg).
+
+__Important__: you have to run your CISC twice without changing it to win.
+---
+2
+---
+2
+---
+9 CISC length.
+---
+eat_carrot,get_carrot,put_carrot,forward,left,right,step_left,step_right,jump,jump_back,loop,break,if_empty,if_hole,if_carrot,if_same,if_bigger,if_smaller,memorize_flower,memorize_carrot

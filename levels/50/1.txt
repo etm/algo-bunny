@@ -19,6 +19,8 @@ If you jump into a hole or onto a carrot, you have to stop with
 ---
 11
 ---
+1
+---
 1 step taken, 3 CISC length.
 ---
 eat_carrot,forward

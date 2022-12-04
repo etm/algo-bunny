@@ -132,44 +132,46 @@ function Assets() {
   this.texts.fail = "All this work, still no success :-("
   this.texts.faultylevel = "Uh oh, level is b0rked :-/"
   this.texts.delete = "To delete an instruction, click on it!"
+  this.texts.again = "Play it again to win!"
 
   /*------------------------*/
 
   this.oneliners = [ //{{{
-    "I love the smell of carrots in the morning.",
-    "Show me the carrots.",
-    "To carrots and beyond.",
-    "Go ahead, make my day.",
-    "Here's looking at you, carrot.",
-    "Yippie-ki-yay, carrot.",
+    "I love the smell of carrots in the morning.", // apocalypse now
+    "Show me the carrots.", // jerry maguire
+    "To carrots and beyond.", // star trek
+    "Go ahead, make my day.", // dirty harry
+    "Here's looking at you, carrot.", // casablanca
+    "Yippie-ki-yay, carrot.", // die hard
     "I'm the king of the carrots.", // titanic
-    "The greatest teacher, carrot is.",
+    "The greatest teacher, carrot is.", // star wars
     "If you're nothing without the carrot, then you shouldn't have it.", // spider man
-    "I am serious, don't call me carrot.",
-    "The carrot abides.",
+    "I am serious, and don't call me carrot.", // airplane!
+    "The carrot abides.", // the big lebowski
     "You're gonna need a bigger carrot.", // jaws
-    "May the carrot be with you.",
-    "A carrot is a carrot, but they call it 'la carotte'.",
-    "Leave the flower. Take the carrots.",
-    "Keep your friends close, but your carrots closer.",
-    "This is not 'Nom. This is carrot gathering. There is rules.",
+    "May the carrot be with you.", // star wars
+    "A carrot is a carrot, but they call it 'la carotte'.", // pulp fiction
+    "Leave the flower. Take the carrots.", // the godfather
+    "Keep your friends close, but your carrots closer.", // the godfather
+    "This is not 'Nom. This is carrot gathering. There is rules.", // the big lebowski
     "You had me at carrot.", // jerry maguire
-    "Flowers? Where we're going, we don't need flowers.",
-    "I'm having a carrot for dinner.",
-    "We'll always have carrots.",
-    "I think this is the beginning of a beautiful carrot gathering.",
-    "Round up the usual carrots.",
-    "Mama always said life is like a carrot. You never know what you're gonna get.",
+    "Flowers? Where we're going, we don't need flowers.", // back to the future
+    "I'm having a carrot for dinner.", // silence of the lambs
+    "We'll always have carrots.", // casablanca
+    "I think this is the beginning of a beautiful carrot gathering.", // casablanca
+    "Round up the usual carrots.", // casablanca
+    "Mama always said life is like a carrot. You never know what you're gonna get.", // forest gump
     "A carrot, for lack of a better word, is good.", // wall street (1987)
     "As God is my witness, I'll never be hungry again.", // gone with the wind
-    "Carrots, my dear Watson.",
-    "Soylent Orange is carrots.",
-    "My carrot!",
-    "I feel the need, the need for carrots.",
-    "Carpe diem. Seize the carrot. Make your lives extraordinary.",
-    "A million carrots isn't cool. You know what's cool? A billion carrots.",
+    "Carrots, my dear Watson.", // sherlock holmes
+    "Soylent Orange is carrots.", // soylent green
+    "My carrot!", // lotr
+    "I feel the need, the need for carrots.", // top gun
+    "Carpe diem. Seize the carrot. Make your lives extraordinary.", // club of dead poets
+    "A million carrots isn't cool. You know what's cool? A billion carrots.", // social network
     "Nobody puts carrot in a corner.", // dirty dancing
-    "You want the carrot? You can't handle the carrot!" // a few good men
+    "You want the carrot? You can't handle the carrot!", // a few good men
+    "Play it again, carrot." // casablanca
   ] //}}}
 
   /*------------------------*/
@@ -477,7 +479,7 @@ function Assets() {
   this.commands.if_same = { /*{{{*/
     'type': 'complex_two',
     'label': 'Check If Equal',
-    'desc': 'I check if the carrot I hold is the same size as the carrot (or flower) in front of me ...<p>... unless I memorized something in my big brain - then I always compare the number I memorized.',
+    'desc': '<strong>Same:</strong> I can compare the thing I hold in my hand or remember in my brain with the flower or carrot in front of me.<p>Each carrot has a size between 1 and 9. Each flower containes a number or a coordinate.',
     'icon': 'commands/if_same.svg',
     'first': 'commands/if_same/top.svg',
     'first_icon': 'commands/if_same/y.svg',
@@ -489,7 +491,7 @@ function Assets() {
   this.commands.if_smaller = { /*{{{*/
     'type': 'complex_two',
     'label': 'Check If Smaller',
-    'desc': 'I check if the carrot I hold is smaller than the carrot (or flower) in front of me ...<p>... unless I memorized syyomething in my big brain - then I always compare the number I memorized.',
+    'desc': '<strong>Smaller:</strong> I can compare the thing I hold in my hand or remember in my brain with the flower or carrot in front of me.<p>Each carrot has a size between 1 and 9. Each flower containes a number or a coordinate.',
     'icon': 'commands/if_smaller.svg',
     'first': 'commands/if_smaller/top.svg',
     'first_icon': 'commands/if_smaller/y.svg',
@@ -501,7 +503,7 @@ function Assets() {
   this.commands.if_bigger = { /*{{{*/
     'type': 'complex_two',
     'label': 'Check If Bigger',
-    'desc': 'I check if the carrot I hold is bigger than the carrot (or flower) in front of me ...<p> ... unless I memorized syyomething in my big brain - then I always compare the number I memorized.',
+    'desc': '<strong>Bigger:</strong> I can compare the thing I hold in my hand or remember in my brain with the flower or carrot in front of me.<p>Each carrot has a size between 1 and 9. Each flower containes a number or a coordinate.',
     'icon': 'commands/if_bigger.svg',
     'first': 'commands/if_bigger/top.svg',
     'first_icon': 'commands/if_bigger/y.svg',

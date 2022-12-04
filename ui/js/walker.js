@@ -9,6 +9,7 @@ class Walker {
   #changed_cmps
   #changed_ins
   #success
+  #nosuccess
 
   #speed_normal
   #speed_fast
@@ -53,6 +54,7 @@ class Walker {
     this.#changed_cmps = new Event("cmps:changed", {"bubbles":false, "cancelable":false})
     this.#changed_ins = new Event("ins:changed", {"bubbles":false, "cancelable":false})
     this.#success = new Event("walking:success", {"bubbles":false, "cancelable":false})
+    this.#nosuccess = new Event("walking:nosuccess", {"bubbles":false, "cancelable":false})
     this.#speed_normal = new Event("speed:normal", {"bubbles":false, "cancelable":false})
     this.#speed_fast = new Event("speed:fast", {"bubbles":false, "cancelable":false})
     this.#speed_pause = new Event("speed:pause", {"bubbles":false, "cancelable":false})
@@ -84,7 +86,7 @@ class Walker {
           if (!this.field.check_nocount()) {
             this.#step_count += 1
             document.dispatchEvent(this.#changed_steps)
-          } //}}}
+          }  //}}}
         } else if (v == 'back') { //{{{
           res = await this.field.back()
           if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
@@ -322,7 +324,7 @@ class Walker {
               if (res === false || res == 'leave') { return res; }
             }
             break //}}}
-          case 'if_flower': //{{{
+           case 'if_flower': //{{{
             await this.#sleep(this.timing/2)
             if (this.field.has_flower()) {
               res = await this.#walk_rec(v.first)
@@ -380,7 +382,7 @@ class Walker {
                 if (res === false || res == 'leave') { return res; }
               }
             }
-            break //}}}
+             break //}}}
           case 'if_hold': //{{{
             await this.#sleep(this.timing/2)
             if (!(this.#hand === undefined || this.#hand == null)) {
@@ -518,7 +520,7 @@ class Walker {
     } else {
       return true
     }
-  } //}}}
+  } //}} }
   async walk() { //{{{
     this.walking = true
     let res = await this.#walk_rec(this.editor.program)
@@ -527,15 +529,14 @@ class Walker {
       $('button.speed').hide()
       if (this.field.carrots.join('') == this.#eaten) {
         $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
-        this.assets.play_audio(this.assets.audio.yay.sounds.sample())
         document.dispatchEvent(this.#success)
       } else {
         this.assets.say(this.assets.texts.fail,'div.speech')
-        this.assets.play_audio(this.assets.audio.no.sounds.sample())
+        document.dispatchEvent(this.#nosuccess)
       }
     }
     if (res == false) {
-      this.assets.play_audio(this.assets.audio.no.sounds.sample())
+      document.dispatchEvent(this.#nosuccess)
       $('button.speed').hide()
     }
     if (this.walking) {

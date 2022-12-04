@@ -1,22 +1,38 @@
 TTTTTT
-TB111T TTT
-TffffT TfT
-TTTTTT TTT
+TB111T
+TffffT
+TTTTTT
 ---
-2
-2
-2
-2
-2
+r3
+f0
+f0
+f0
 ---
 The flowers will give you hints!
 ---
-Eat as many carrots as the flowers remind you of.
+Eat as many carrots as the flowers tell you.
 ---
-Counting your steps ![](commands/memorize_steps.svg) gives you an idea how many
-carrots you have eaten.
+When Algo looks at the flower with ![](commands/memorize_flower.svg) he learns ![](assets/brain.svg)
+how many flowers he to has eat.
+
+Each flower gives him exactly the same hint, but each time you press
+![](assets/play.svg), the flowers contain different numbers.
+
+When Algo is counting his steps ![](commands/memorize_steps.svg) he knows how
+many carrots he has eaten - because he each time takes a step forward when he
+eats a carrot.
+
+__But wait__: as soon as Algo looks at a flower
+![](commands/memorize_flower.svg), he forgets how many carrots he has eaten!
+
+So Algo should not look at the flowers, but just compare ![](commands/if_same.svg) if the steps in his brain ![](assets/brain.svg)
+match the number contained in each flower.
+
+___Important___: you have to run your CISC twice without changing it to win.
 ---
-11
+t0,1
+---
+2
 ---
 2 steps taken, 8 CISC length, 15 instructions evaluated.
 ---

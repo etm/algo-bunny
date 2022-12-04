@@ -3,6 +3,8 @@ var active_del_timeout
 
 var walker
 
+var success = 0
+
 var active_drag_location = null // thany you chrome for security without reason. Dragover and dragleave can not getData.
 var active_element_drag = null
 
@@ -16,7 +18,7 @@ $(document).ready(async function() {
   let q = $.parseQuerySimple()
   let level = q.level ? q.level : ''
 
-  let editor = new Editor($('div.program svg'), assets)
+  let editor = new Editor($('div.program svg'), assets, level)
   editor.render()
 
   let field = new Field($('div.field svg'), assets, level)
@@ -57,17 +59,15 @@ $(document).ready(async function() {
   })
   //}}}
 
-  // order
-  assets.say(field.order.trim(),'div.speech')
-
   // set mission and title
   document.title = field.title.trim()
   $('div.field div.mission div.top .order').text(field.order)
   $('div.field div.mission div.text').html(marked(field.mission))
   $('div.field div.mission div.text a[href]').attr('target','_blank')
-  if (field.title.trim() == 'Carrots!') {
-    $('div.field div.mission').toggleClass('active')
-  }
+  $('div.field div.mission').toggleClass('active')
+
+  // order
+  assets.say(field.order.trim(),'div.speech')
 
   // one liners
   $('div.program svg').on('click','g[element-type=bunny]',()=>{ assets.oneliner('div.speech') })
@@ -335,6 +335,8 @@ $(document).ready(async function() {
   })
   document.addEventListener('cisc:changed', (e) => {
     $('div.field div.stats .cisc .value').text(editor.cisc_length())
+    success = 0
+    $('div.field div.stats .success .value').text(success)
   })
   document.addEventListener('ins:changed', (e) => {
     $('div.field div.stats .ins .value').text(walker.ins_count())
@@ -346,21 +348,33 @@ $(document).ready(async function() {
     $('div.field div.stats .cmps .value').text(walker.cmps_count())
   })
   document.addEventListener('walking:success', (e) => {
-    setTimeout(()=>{
-      $('div.field div.mission').removeClass('active')
-      $('div.field div.victory').toggleClass('active')
-      let cisc = editor.cisc_length()
-      let ins = walker.ins_count()
-      let steps = walker.step_count()
-      let cmps = walker.cmps_count()
+    success += 1
+    if (success >= field.success) {
+      setTimeout(()=>{
+        $('div.field div.mission').removeClass('active')
+        $('div.field div.victory').toggleClass('active')
+        let cisc = editor.cisc_length()
+        let ins = walker.ins_count()
+        let steps = walker.step_count()
+        let cmps = walker.cmps_count()
 
-      $('div.field div.victory .text .title').text(field.title.trim())
-      $('div.field div.victory .text .steps').text(steps)
-      $('div.field div.victory .text .cmps').text(cmps)
-      $('div.field div.victory .text .ins').text(ins)
-      $('div.field div.victory .text .cisc').text(cisc)
-      $('div.field div.victory .text .reference_rank').text(field.max_score)
-    },1000)
+        $('div.field div.victory .text .title').text(field.title.trim())
+        $('div.field div.victory .text .steps').text(steps)
+        $('div.field div.victory .text .cmps').text(cmps)
+        $('div.field div.victory .text .ins').text(ins)
+        $('div.field div.victory .text .cisc').text(cisc)
+        $('div.field div.victory .text .reference_rank').text(field.max_score)
+      },1000)
+      assets.play_audio(assets.audio.yay.sounds.sample())
+    } else {
+      assets.say(assets.texts.again,'div.speech')
+    }
+    $('div.field div.stats .success .value').text(success)
+  })
+  document.addEventListener('walking:nosuccess', (e) => {
+    success = 0
+    assets.play_audio(assets.audio.no.sounds.sample())
+    $('div.field div.stats .success .value').text(success)
   })
 
   $('button.save').click(ev=>{
