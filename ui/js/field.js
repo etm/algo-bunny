@@ -373,9 +373,9 @@ class Field {
     } else if (this.raw_carrots.match(/^s/)) {
       this.carrots = this.assignments[parseInt(this.raw_carrots.substring(1))].value.toString()
     } else {
-      this.carrots = this.raw_carrots.trim().split('').map(x => x.trim())
+      this.carrots = this.raw_carrots.trim()
     }
-    this.carrots = this.carrots.filter(x => x !== undefined && x != '')
+    this.carrots = this.carrots.split('').map(x => x.trim()).filter(x => x !== undefined && x != '')
 
     do {
       counter = 0
