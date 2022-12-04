@@ -12,6 +12,8 @@ the jump instruction ![](commands/jump.svg) in the editor.
 ---
 11
 ---
+1
+---
 3 instructions evaluated.
 ---
 eat_carrot,jump,forward

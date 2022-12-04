@@ -3,11 +3,11 @@ TB111T TTT
 TffffT TfT
 TTTTTT TTT
 ---
-2
-2
-2
-2
-2
+r3
+f1
+f1
+f1
+f1
 ---
 The flowers will give you hints!
 ---
@@ -16,7 +16,9 @@ Eat as many carrots as the flowers remind you of.
 Counting your steps ![](commands/memorize_steps.svg) gives you an idea how many
 carrots you have eaten.
 ---
-11
+{}
+---
+2
 ---
 2 steps taken, 8 CISC length, 15 instructions evaluated.
 ---

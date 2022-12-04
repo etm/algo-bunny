@@ -12,6 +12,8 @@ Hint: memorize the flower by using ![](commands/memorize_flower.svg). Then jump 
 ---
 11
 ---
+1
+---
 1 step taken, 5 CISC length.
 ---
 eat_carrot,forward,memorize_flower,jump_brain

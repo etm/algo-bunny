@@ -607,6 +607,8 @@ class Editor {
     this.target.attr('height', hei)
     this.target.attr('width',  wid)
     window.localStorage.setItem(this.id, JSON.stringify(this.program,null,2));
+    window.localStorage.setItem('current', JSON.stringify(this.program,null,2));
+
   }
 
   render_diff() {

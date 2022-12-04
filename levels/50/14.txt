@@ -2,7 +2,7 @@ TTTTTT TTT
 TB111T TfT
 TTTTTT TTT
 ---
-2
+r3
 ---
 The flower marks the spot!
 ---
@@ -14,7 +14,9 @@ the jump instruction ![](commands/jump.svg) in the editor. Jumping is also
 very exiting. So Algo always remembers where he has jumped from, and can jump back
 to the last jump location with ![](commands/jump_back.svg).
 ---
-11
+t0,1
+---
+2
 ---
 2 steps taken, 8 CISC length, 15 instructions evaluated.
 ---

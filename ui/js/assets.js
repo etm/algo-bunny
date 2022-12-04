@@ -132,6 +132,7 @@ function Assets() {
   this.texts.fail = "All this work, still no success :-("
   this.texts.faultylevel = "Uh oh, level is b0rked :-/"
   this.texts.delete = "To delete an instruction, click on it!"
+  this.texts.again = "Play it again, Sam!"
 
   /*------------------------*/
 

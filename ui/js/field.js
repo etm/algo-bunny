@@ -17,6 +17,9 @@ class Field {
   #save_state_op
   #save_state_dir
   #save_state_nocount
+  #save_state_carrots
+  #save_state_flowers
+  #save_state_assignments
 
   #nodraw
 
@@ -48,6 +51,8 @@ class Field {
     this.#perspective_correction = 0
     this.#height_shift = 40
 
+    this.success = 1
+
     this.timing = 500
 
     this.#nodraw = false
@@ -55,19 +60,21 @@ class Field {
   async load_level() { //{{{
     let level = await this.#get_level(this.levelurl)
     let pieces = level.split(/---\s*\r?\n/)
-    if (pieces.length != 8) {
+    if (pieces.length != 9) {
       this.assets.say(this.assets.texts.faultylevel,'div.speech')
       return false
     }
     [
-      this.tiles,
-      this.assignments,
+      this.raw_tiles,
+      this.raw_assignments,
       this.title,
       this.order,
       this.mission,
-      this.carrots,
+      this.raw_carrots,
+      this.times,
       this.max_score,
-      this.elements] = pieces
+      this.elements
+    ] = pieces
     this.x = 0
     this.y = 0
 
@@ -77,9 +84,15 @@ class Field {
     this.state_op = []
     this.state_dir = []
     this.state_nocount = []
-    this.tiles = this.tiles.trimRight().split(/\r?\n/)
+    this.raw_tiles = this.raw_tiles.trimRight().split(/\r?\n/)
+    this.success = parseInt(this.times)
+    this.success = this.success > 1 ? this.success : 0
 
-    this.tiles = this.tiles.map( x => {
+    this.#save_state_carrots = []
+    this.#save_state_flowers = []
+    this.#save_state_assignments = []
+
+    this.raw_tiles = this.raw_tiles.map( x => {
       this.state_flowers.push([])
       this.state_carrots.push([])
       this.state_op.push([])
@@ -89,17 +102,13 @@ class Field {
       if (this.x < s.length) { this.x = s.length }
       return s
     })
-    this.raw_tiles = JSON.parse(JSON.stringify(this.tiles))
-    this.y = this.tiles.length
+    this.carrots = ''
+    this.tiles = JSON.parse(JSON.stringify(this.raw_tiles))
+    this.y = this.raw_tiles.length
 
-    this.assignments = this.assignments.split(/\r?\n/)
-    this.assignments = this.assignments.map( x => {
-      let s = x.trim().split(',')
-      if (s.length == 1) { return { 'type': 'number', 'value': parseInt(s[0]) } }
-      if (s.length == 3) { return { 'type': 'position', 'x': parseInt(s[0]), 'y': parseInt(s[1]), 'face': s[2] } }
-    })
-    this.carrots = this.carrots.trim().split('').map(x => x.trim()).filter(x => x !== undefined && x != '')
-    this.max_carrots = this.tiles.reduce((total,arr) => {
+    this.raw_assignments = this.raw_assignments.split(/\r?\n/)
+    this.assignments = []
+    this.max_carrots = this.raw_tiles.reduce((total,arr) => {
       return total + arr.reduce((total,ele) => {
         return total + (ele.match(/[1-9c]/) ? 1 : 0)
       },0)
@@ -329,6 +338,83 @@ class Field {
     // start
     this.assets.play_audio(this.assets.audio.boing.sounds.sample())
     $('#bunnyani')[0].beginElement()
+  } //}}}
+
+  #init_carrots_and_flowers() { //{{{
+    let counter
+    let flower_count
+    let carrot_count
+    let generated_carrots
+
+    let repeat
+    do {
+      repeat = false
+      for (let i=0; i< this.raw_assignments.length; i++) {
+        let s = this.raw_assignments[i].trim().split(',')
+        if      (s.length == 1 && s[0].match(/^r/)) {
+          this.assignments[i] = { 'type': 'number', 'value': Math.floor(Math.random() * parseInt(s[0].substring(1)) + 1) }
+          if (this.#save_state_assignments[i] && this.assignments[i].value == this.#save_state_assignments[i].value) { repeat = true }
+        } else if (s.length == 1 && s[0].match(/^f/)) {
+          this.assignments[i] = { 'type': 'number', 'value': this.assignments[s[0].substring(1)] }
+        } else if (s.length == 1 && s[0].match(/^[1-9]/)) {
+          this.assignments[i] = { 'type': 'number', 'value': parseInt(s[0]) }
+        } else if (s.length == 3) {
+          this.assignments[i] = { 'type': 'position', 'x': parseInt(s[0]), 'y': parseInt(s[1]), 'face': s[2] }
+        }
+      }
+    } while (repeat)
+
+    this.carrots = ''
+    if (this.raw_carrots.match(/^t/)) {
+      let c = this.raw_carrots.substring(1).split(',')
+      for (let i=0; i < this.assignments[parseInt(c[0])].value; i++) {
+        this.carrots += c[1].trim()
+      }
+    } else if (this.raw_carrots.match(/^s/)) {
+      this.carrots = this.assignments[parseInt(this.raw_carrots.substring(1))].value.toString()
+    } else {
+      this.carrots = this.raw_carrots.trim().split('').map(x => x.trim())
+    }
+    this.carrots = this.carrots.filter(x => x !== undefined && x != '')
+
+    do {
+      counter = 0
+      flower_count = 0
+      carrot_count = 0
+      repeat = false
+      generated_carrots = []
+
+      repeat = false
+      for (let i=1; i<=this.max_carrots; i++) { generated_carrots[i-1] = i }
+      for (let i=0;i<Math.max(this.x,this.y)*2;i++) {
+        for (let j = counter; j >= 0; j--) {
+          if (j < this.x && (i-j) < this.y) {
+            if (this.raw_tiles[i-j][j]) {
+              if (this.raw_tiles[i-j][j].match(/[1-9c]/)) {
+                if (this.raw_tiles[i-j][j] == 'c') {
+                  carrot_count += 1
+                  this.state_carrots[i-j][j] = generated_carrots.sample()
+                  generated_carrots =  generated_carrots.remove(this.state_carrots[i-j][j])
+                  if (this.#save_state_carrots[i-j] && this.state_carrots[i-j][j] == this.#save_state_carrots[i-j][j]) {
+                    repeat = true
+                  }
+                } else {
+                  this.state_carrots[i-j][j] = parseInt(this.raw_tiles[i-j][j])
+                }
+              }
+              if (this.raw_tiles[i-j][j] == 'f') {
+                this.state_flowers[i-j][j] = this.assignments[flower_count++]
+              }
+            }
+          }
+        }
+        counter += 1
+      }
+    } while (repeat && carrot_count > 1)
+
+    this.#save_state_carrots = JSON.parse(JSON.stringify(this.state_carrots))
+    this.#save_state_flowers = JSON.parse(JSON.stringify(this.state_flowers))
+    this.#save_state_assignments = JSON.parse(JSON.stringify(this.assignments))
   } //}}}
 
   has_carrot()    { //{{{
@@ -616,51 +702,6 @@ class Field {
     }
     this.#draw_bunny(this.state_bunny[0],this.state_bunny[1],this.state_bunny[2])
   } //}}}
-  #init_carrots_and_flowers() {
-    let counter
-    let flower_count
-    let carrot_count
-    let repeat
-    let generated_carrots
-
-    let orig_carrots = JSON.parse(JSON.stringify(this.state_carrots))
-    let orig_flowers = JSON.parse(JSON.stringify(this.state_flowers))
-
-    do {
-      counter = 0
-      flower_count = 0
-      carrot_count = 0
-      repeat = false
-      generated_carrots = []
-
-      repeat = false
-      for (let i=1; i<=this.max_carrots; i++) { generated_carrots[i-1] = i }
-      for (let i=0;i<Math.max(this.x,this.y)*2;i++) {
-        for (let j = counter; j >= 0; j--) {
-          if (j < this.x && (i-j) < this.y) {
-            if (this.raw_tiles[i-j][j]) {
-              if (this.raw_tiles[i-j][j].match(/[1-9c]/)) {
-                if (this.raw_tiles[i-j][j] == 'c') {
-                  carrot_count += 1
-                  this.state_carrots[i-j][j] = generated_carrots.sample()
-                  generated_carrots =  generated_carrots.remove(this.state_carrots[i-j][j])
-                  if (this.state_carrots[i-j][j] == orig_carrots[i-j][j]) {
-                    repeat = true
-                  }
-                } else {
-                  this.state_carrots[i-j][j] = parseInt(this.raw_tiles[i-j][j])
-                }
-              }
-              if (this.raw_tiles[i-j][j] == 'f') {
-                this.state_flowers[i-j][j] = this.assignments[flower_count++]
-              }
-            }
-          }
-        }
-        counter += 1
-      }
-    } while (repeat && carrot_count > 1)
-  }
   render() { //{{{
     let counter = 0
     this.#init_carrots_and_flowers()
