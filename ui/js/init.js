@@ -3,6 +3,8 @@ var active_del_timeout
 
 var walker
 
+var success = 0
+
 var active_drag_location = null // thany you chrome for security without reason. Dragover and dragleave can not getData.
 var active_element_drag = null
 
@@ -16,7 +18,11 @@ $(document).ready(async function() {
   let q = $.parseQuerySimple()
   let level = q.level ? q.level : ''
 
-  let editor = new Editor($('div.program svg'), assets)
+  let editor = new Editor($('div.program svg'), assets, level)
+  let prog
+  if (prog = window.localStorage.getItem(level)) {
+    editor.program = JSON.parse(prog)
+  }
   editor.render()
 
   let field = new Field($('div.field svg'), assets, level)
