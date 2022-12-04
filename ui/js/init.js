@@ -19,10 +19,6 @@ $(document).ready(async function() {
   let level = q.level ? q.level : ''
 
   let editor = new Editor($('div.program svg'), assets, level)
-  let prog
-  if (prog = window.localStorage.getItem(level)) {
-    editor.program = JSON.parse(prog)
-  }
   editor.render()
 
   let field = new Field($('div.field svg'), assets, level)
