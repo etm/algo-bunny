@@ -37,7 +37,22 @@
     <script type="text/javascript" src="js_libs/jquery.caret.min.js"></script>
     <script type="text/javascript" src="js_libs/jquery.cookie.js"></script>
 
+    <script type="text/javascript" src="js/assets.js"></script>
+
     <link rel="stylesheet" href="css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="css/speech.css" type="text/css"/>
+
+    <script>
+      $(document).ready(()=>{
+        $('form').submit(false)
+        $('button').click(()=>{
+          let assets  = new Assets
+          let name = $('input').val()
+          assets.say('Hi ' + name,$('div.speech'))
+          document.cookie = "username=" + name;
+        })
+      })
+    </script>
   </head>
   <body>
     <div class='content'>
@@ -46,33 +61,46 @@
       Algo is cute, sassy, and he loves carrots. Join him on his adventures.
       Write <strong>Carrot Instruction Set Code (CISC)</strong> for Algo, to
       help him do his favourite thing in the world: carrot gathering.
+
+      <p>
+
+      <div style="position: relative">
+        <div style='display:none' class="speech front"></div>
+        <img src="assets/start.svg" style="height: 3em; vertical-align: -1.2em;"> Hi, I am Algo. Do you want to tell me your name? <form style="display: inline"><input type="text" value="John" style="width: 15ex"><button type="submit">Set name!</button></form>
+      </div>
+
+      <p>
+
       Read "<a href="#start">Get Started</a>" below to get a quick intro to the UI. Or directly
       start into the adventures:
 
       <p>
 
-      <strong>Adventure 1:</strong> Celebrating 50 years of Carrots (Beginners & Tutorial)
+      <strong>Adventure 0:</strong> Sneaky little carrotses, wicked, tricksy (Beginners)
       <ul>
-        <li>Level 1: <a target='_blank' href='game.html?level=levels/50/1.txt'>Carrots!</a></li>
-        <li>Level 2: <a target='_blank' href='game.html?level=levels/50/2.txt'>Carrots around the corner!</a></li>
-        <li>Level 3: <a target='_blank' href='game.html?level=levels/50/11.txt'>Islands of info!</a></li>
-        <li>Level 4: <a target='_blank' href='game.html?level=levels/50/12.txt'>Big jump!</a></li>
-        <li>Level 5: <a target='_blank' href='game.html?level=levels/50/13.txt'>The flowers will give you hints!</a></li>
-        <li>Level 6: <a target='_blank' href='game.html?level=levels/50/14.txt'>The flower marks the spot!</a></li>
-        <li>Level 7: <a target='_blank' href='game.html?level=levels/50/15.txt'>Some carrots are bad!</a></li>
-        <li>Level 8: <a target='_blank' href='game.html?level=levels/50/9.txt'>Big carrot!</a></li>
+        <li>Level 1: <a target='_blank' href='game.html?level=levels/1/1.txt'>Carrots!</a></li>
+        <li>Level 2: <a target='_blank' href='game.html?level=levels/1/2.txt'>Carrots around the corner!</a></li>
+        <li>Level 3: <a target='_blank' href='game.html?level=levels/1/3.txt'>Carrots on a stick!</a></li>
+        <li>Level 4: <a target='_blank' href='game.html?level=levels/1/4.txt'>Carrot flower!</a></li>
+        <li>Level 5: <a target='_blank' href='game.html?level=levels/1/5.txt'>Carrot flower power!</a></li>
+        <li>Level 6: <a target='_blank' href='game.html?level=levels/50/3.txt'>Merry go round!</a></li>
+        <li>Level 7: <a target='_blank' href='game.html?level=levels/50/6.txt'>Hm? What?</a></li>
+        <li>Level 8: <a target='_blank' href='game.html?level=levels/50/7.txt'>Decisions, decisions!</a></li>
+        <li>Level 9: <a target='_blank' href='game.html?level=levels/50/8.txt'>Even more decisions!</a></li>
+        <li>Level 10: <a target='_blank' href='game.html?level=levels/50/4.txt'>Magic 8!</a></li>
+        <li>Level 11: <a target='_blank' href='game.html?level=levels/50/5.txt'>Going in circles!</a></li>
       </ul>
 
       <p>
 
-      <strong>Adventure 2:</strong> Sneaky little carrotses, wicked, tricksy (Intermediate)
+      <strong>Adventure 1:</strong> Celebrating 50 years of Carrots (Intermediate)
       <ul>
-        <li>Level 1: <a target='_blank' href='game.html?level=levels/50/3.txt'>Merry go round!</a></li>
-        <li>Level 2: <a target='_blank' href='game.html?level=levels/50/6.txt'>Hm? What?</a></li>
-        <li>Level 3: <a target='_blank' href='game.html?level=levels/50/7.txt'>Decisions, decisions!</a></li>
-        <li>Level 4: <a target='_blank' href='game.html?level=levels/50/8.txt'>Even more decisions!</a></li>
-        <li>Level 5: <a target='_blank' href='game.html?level=levels/50/4.txt'>Magic 8!</a></li>
-        <li>Level 6: <a target='_blank' href='game.html?level=levels/50/5.txt'>Going in circles!</a></li>
+        <li>Level 1: <a target='_blank' href='game.html?level=levels/50/11.txt'>Islands of info!</a></li>
+        <li>Level 2: <a target='_blank' href='game.html?level=levels/50/12.txt'>Big jump!</a></li>
+        <li>Level 3: <a target='_blank' href='game.html?level=levels/50/14.txt'>The flower marks the spot!</a></li>
+        <li>Level 4: <a target='_blank' href='game.html?level=levels/elrond/1.txt'>Some carrots are bad!</a></li>
+        <li>Level 5: <a target='_blank' href='game.html?level=levels/50/13.txt'>The flowers will give you hints!</a></li>
+        <li>Level 6: <a target='_blank' href='game.html?level=levels/50/9.txt'>Big carrot!</a></li>
         <li>Level 7: <a target='_blank' href='game.html?level=levels/50/10.txt'>Rows and rows of carrots!</a></li>
       </ul>
 

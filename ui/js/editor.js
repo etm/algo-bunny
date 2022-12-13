@@ -85,7 +85,7 @@ class Editor {
     this.target_drop.append(g2)
   } //}}}
 
-  #draw_drag(x,y,parent,mark=null) {
+  #draw_drag(x,y,parent,mark=null) { //{{{
     let tar = this.target_graph.find('g[element-id=' + parent + ']')
     let g2 = this.groups.drag.clone()
         g2.attr('element-x',x)
@@ -98,7 +98,7 @@ class Editor {
         g3.attr('width',this.#tile_width)
         g3.attr('height',this.#tile_height)
     tar.append(g2)
-  }
+  } //}}}
 
   #draw(id,i,x,y,what,parent,mark=null) { //{{{
     let name = (typeof(i) == 'object') ? i.item : i
@@ -517,11 +517,12 @@ class Editor {
     }
     return count
   } //}}}
+
   cisc_length(){ //{{{
     return this.#cisc_length_rec(this.program)
   } //}}}
 
-  #render_remove() {
+  #render_remove() { //{{{
     let aggr_shift = 0;
     this.remove_ids.forEach(e=>{
       let ele = $('div.program svg g[element-id=' + e + ']')
@@ -555,8 +556,8 @@ class Editor {
     this.remove_ids = []
     let hei = parseFloat(this.target.attr('height'))
     this.target.attr('height', hei - aggr_shift * this.#scale_factor * this.#tile_height)
-  }
-  #render_add() {
+  } //}}}
+  #render_add() { //{{{
     let aggr_shift = 0;
 
     let ele = $('div.program svg g[element-id=' + this.add_id + ']')
@@ -592,9 +593,9 @@ class Editor {
     })
 
     this.add_id = null
-  }
+  } //}}}
 
-  render() {
+  render() { //{{{
     this.add_id = null
     this.#render_remove()
     this.#clear()
@@ -609,9 +610,8 @@ class Editor {
     window.localStorage.setItem(this.id, JSON.stringify(this.program,null,2));
     window.localStorage.setItem('current', JSON.stringify(this.program,null,2));
 
-  }
-
-  render_diff() {
+  } //}}}
+  render_diff() { //{{{
     if (this.add_id != null) {
       let [y,w] = this.#iter(this.program,1,1,undefined,this.add_id)
       this.#render_add()
@@ -623,5 +623,29 @@ class Editor {
     this.#render_remove()
     window.localStorage.setItem(this.id, JSON.stringify(this.program,null,2));
     window.localStorage.setItem('current', JSON.stringify(this.program,null,2));
+  } //}}}
+
+
+  #program_walk(it) {
+    if (typeof(it) == null || it === undefined) { return [] }
+    let result = []
+    for (const [k,v] of it) {
+      if (typeof(v) == 'string') {
+        result.push(v)
+      }
+
+      if (typeof(v) == 'object' && v != null) {
+        result.push(v.item)
+        result = result.concat(this.#program_walk(v.first))
+        result = result.concat(this.#program_walk(v.second))
+      }
+    }
+    return result
+  }
+  program_stats() {
+    const result = this.#program_walk(this.program)
+    const counts = {}
+    result.forEach((x)=>{ counts[x] = (counts[x] || 0) + 1 })
+    return counts
   }
 }

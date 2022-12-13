@@ -10,6 +10,18 @@ var active_element_drag = null
 
 document.addEventListener('contextmenu', event => event.preventDefault())
 
+function show_elements(stats,field) {
+  for (let e of field.elements) {
+    const c = stats[e]
+    const ele = $('div.elements img[data-type=' + e + ']')
+    if (parseInt(ele.attr('data-avail')) <= c) {
+      ele.hide()
+    } else {
+      ele.show()
+    }
+  }
+}
+
 $(document).ready(async function() {
 
   let assets  = new Assets
@@ -37,12 +49,17 @@ $(document).ready(async function() {
     } else {
       if (field.elements.includes(iname)) {
         $(ele).show()
+        let ea = field.elements_avail[field.elements.indexOf(iname)]
+        if (ea > 0) {
+          $(ele).attr('data-avail',ea)
+        }
       }
     }
     $('div.elements *[data-type=' + iname + ']').click(()=>{
       assets.say(item.desc,'div.speech')
     })
   })
+  show_elements(editor.program_stats(),field)
   if (field.elements.includes('execute')) {
     $('#execute').show()
   }
@@ -54,6 +71,7 @@ $(document).ready(async function() {
       let nid = editor.insert_item('','insert_last','execute')
       editor.update_item(nid,'id',pid)
       editor.render()
+      show_elements(editor.program_stats(),field)
       $('div.elements img[data-type=execute' + pid + ']').show()
     }
   })
@@ -100,6 +118,7 @@ $(document).ready(async function() {
     }
     editor.remove_item(eid)
     editor.render_diff()
+    show_elements(editor.program_stats(),field)
     active_del = ''
     $(ev.currentTarget).removeClass('active')
     assets.say_reset('div.speech')
@@ -255,6 +274,7 @@ $(document).ready(async function() {
       $('div.program g[element-type=add] .adder').hide()
       $('div.program g[element-type=add]').removeClass('active')
       editor.render_diff()
+      show_elements(editor.program_stats(),field)
     }
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
       let eid = $(ev.currentTarget).attr('element-id')
@@ -265,6 +285,7 @@ $(document).ready(async function() {
       $('div.program g[element-type=add] .adder').hide()
       $('div.program g[element-type=add]').removeClass('active')
       editor.render()
+      show_elements(editor.program_stats(),field)
     }
     active_element_drag = false
   }) //}}}
@@ -314,6 +335,11 @@ $(document).ready(async function() {
         $('button.speed img.normal').show()
         $('button.speed').show()
         walker.walk()
+        $.ajax({
+          type: 'POST',
+          url: 'save.php',
+          data: { "level": field.title.trim().replace(/[^a-zA-Z0-9!?()-]/g,'_'), "solution": JSON.stringify(editor.program,null,2) }
+        });
       }
       $(ev.currentTarget).toggleClass('active')
     }
@@ -392,9 +418,10 @@ $(document).ready(async function() {
     }
     var files = $('#loadinstructions').get(0).files
     var reader = new FileReader()
-    reader.onload = function(){
+    reader.onload = ()=>{
       editor.program = JSON.parse(reader.result)
       editor.render()
+      show_elements(editor.program_stats(),field)
       document.getElementById('fuckchrome').reset()
       editor.get_pids().forEach(pid => {
         $('div.elements img[data-type=execute' + pid + ']').show()

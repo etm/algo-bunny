@@ -79,6 +79,12 @@ class Field {
     this.y = 0
 
     this.elements = this.elements.trim().split(',')
+    this.elements_avail = []
+    this.elements = this.elements.map((e)=>{
+      let t = e.split('*')
+      this.elements_avail.push(t.length > 1 ? parseInt(t[1]) : 0)
+      return t.length > 1 ? t[0] : e
+    })
     this.state_flowers = []
     this.state_carrots = []
     this.state_op = []
@@ -411,10 +417,6 @@ class Field {
         counter += 1
       }
     } while (repeat && carrot_count > 1)
-
-    console.log(this.assignments)
-    console.log(this.state_flowers)
-    console.log(this.carrots)
 
     this.#save_state_carrots = JSON.parse(JSON.stringify(this.state_carrots))
     this.#save_state_flowers = JSON.parse(JSON.stringify(this.state_flowers))

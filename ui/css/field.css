@@ -169,10 +169,11 @@ div.field > div.mission > .text table, div.field > div.victory > .text table { m
 div.field > div.mission > .text tr, div.field > div.victory > .text tr { margin: 0; padding: 0; }
 div.field > div.mission > .text td, div.field > div.victory > .text td { margin: 0; padding: 0; padding-right: 0.5em; }
 
-div.field > div.mission > .text img, div.field > div.victory > .text img {
+div.field > div.mission > .text img[alt=""], div.field > div.victory > .text img[alt=""] {
   height: 1.4em;
   vertical-align: -0.35em;
 }
+div.field > div.mission > .text img[alt=example], div.field > div.victory > .text img[alt=example] { }
 
 div.field > div.stats {
   z-index: 500;

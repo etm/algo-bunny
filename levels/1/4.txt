@@ -1,0 +1,26 @@
+ 1
+1B1
+ 1
+---
+---
+Carrot Flower!
+---
+Eat all carrots.
+---
+Again Algo has to eat all carrots. But this time Algo has to turn
+![](commands/left.svg) or ![](commands/right.svg) in a loop
+![](commands/loop.svg)!
+
+In order to stop the loop ![](commands/loop.svg)! algo has to check
+if there is grass in front of him  ![](commands/if_empty.svg) instead of a
+carrot.
+
+Because when there is grass, he has to stop eating.
+---
+1111
+---
+1
+---
+0 steps taken, 5 CISC length.
+---
+eat_carrot*1,left*1,right*1,loop*1,break*1,if_empty*1
