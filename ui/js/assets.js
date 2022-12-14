@@ -3,13 +3,7 @@ function Assets() {
 
   this.mute = false
 
-  this.commands = {}
   this.field = {}
-  this.placeholders = {}
-  this.tiles = {}
-  this.texts = {}
-  this.lang = {}
-  this.audio = {}
 
   this.say_timeout
   this.say_duration = 8000
@@ -105,6 +99,7 @@ function Assets() {
 
   /*------------------------*/
 
+  this.audio = {} //{{{
   this.audio.boing = { //{{{
     'locations': [ 'sounds/boing.mp3' ]
   } //}}}
@@ -123,7 +118,10 @@ function Assets() {
   this.audio.no = { //{{{
     'locations': [ 'sounds/no.mp3' ]
   } //}}}
+  //}}}
 
+
+  this.texts = {} //{{{
   this.texts.nostep = "I don't want to step on carrots, flowers or magic! Falling into holes is also not an option."
   this.texts.neverjump = "I can't remember any jumps. To infinity and beyond then?"
   this.texts.noget = "There is no carrot!"
@@ -139,6 +137,7 @@ function Assets() {
   this.texts.faultylevel = "Uh oh, level is b0rked :-/"
   this.texts.delete = "To delete an instruction, click on it!"
   this.texts.again = "Play it again to win!"
+  //}}}
 
   /*------------------------*/
 
@@ -182,6 +181,7 @@ function Assets() {
 
   /*------------------------*/
 
+  this.placeholders = {} //{{{
   this.placeholders.add = { /*{{{*/
     'label': 'Add',
     'desc': 'Drag here to add.',
@@ -207,9 +207,11 @@ function Assets() {
     'desc': 'I am Bunny. Algo Bunny.',
     'icon': 'assets/start.svg'
   }; /*}}}*/
+  //}}}
 
   /*------------------------*/
 
+  this.tiles = {} //{{{
   this.tiles.normal = { /*{{{*/
     'locations': [
       'assets/tile1.svg',
@@ -310,9 +312,11 @@ function Assets() {
       'assets/arrow_W.svg',
     ]
   }; /*}}}*/
+  //}}}
 
   /*------------------------*/
 
+  this.commands = {} //{{{
   this.commands.forward = { /*{{{*/
     'type': 'simple',
     'label': 'Forward',
@@ -639,16 +643,16 @@ function Assets() {
     'desc': 'I give up. I pause here, and debug myself.',
     'icon': 'commands/pause.svg'
   }; /*}}}*/
+  //}}}
 
+  this.lang = {}
 
   /*------------------------*/
   /* German                 */
   /*------------------------*/
-
-
   this.lang['de'] = {}
 
-  this.lang['de'].texts = {}
+  this.lang['de'].texts = {} //{{{
   this.lang['de'].texts.nostep = "I will nicht auf Karotten, Blumen oder Magie steigen! Ich will auch nicht in ein Loch fallen."
   this.lang['de'].texts.neverjump = "Ich kann mich an keine Sprünge erinnern. Soll ich also in die Unendlichkeit und noch viel weiter springen?"
   this.lang['de'].texts.noget = "There is no carrot!"
@@ -664,17 +668,19 @@ function Assets() {
   this.lang['de'].texts.faultylevel = "Oh oh, das Level ist k4putt :-/"
   this.lang['de'].texts.delete = "Um eine Anweisung zu löschen, klick einfach drauf!"
   this.lang['de'].texts.again = "Lass mich das einfach nochmal machen, wenn du gewinnen willst!"
+  //}}}
 
-  this.lang['de'].raw_oneliners = [
+  this.lang['de'].raw_oneliners = [ //{{{
     "Ich liebe den Geruch von Karotten am Morgen.",
     "Möge die Karotte mit dir sein.",
     "Zu den Karotten, und noch viel weiter.",
     "Blumen? Wo wir hingehen brauchen wir keine Blumen."
-  ]
+  ] //}}}
 
+  // no need to translate because we currently only use the icons
   this.lang['de'].placeholders = {}
 
-  this.lang['de'].commands = {}
+  this.lang['de'].commands = {} //{{{
   this.lang['de'].commands.forward = { /*{{{*/
     'label': 'Schritt nach vor',
     'desc': 'I hüpfe einen Schritt in die Richtung in die ich schaue. I hoffe ich falle in kein Loch und steige auf keine Karotte oder Blume.'
@@ -853,6 +859,11 @@ function Assets() {
     'label': 'Pause Here',
     'desc': 'I give up. I pause here, and debug myself.',
   }; /*}}}*/
+  //}}}
+
+  /*------------------------*/
+  /* Load Translation       */
+  /*------------------------*/
 
   if ($.cookie('language')) {
     let lang = $.cookie('language')
