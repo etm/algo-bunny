@@ -1,0 +1,17 @@
+B11
+1 1
+111
+---
+---
+Merry go round!
+---
+Eat all carrots.
+---
+---
+1111111
+---
+1
+---
+7 steps taken, 8 CISC length.
+---
+eat_carrot,forward,left,right,loop,break,if_empty

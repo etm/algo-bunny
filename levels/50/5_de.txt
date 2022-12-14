@@ -1,0 +1,19 @@
+11111
+1 1 1
+11B11
+1 1 1
+11111
+---
+---
+Going in circles!
+---
+Eat all carrots.
+---
+---
+11111111111111111111
+---
+1
+---
+17 steps taken, 13 CISC length.
+---
+eat_carrot,forward,left,right,loop,break,if_empty,if_carrot

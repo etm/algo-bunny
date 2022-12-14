@@ -8,6 +8,7 @@ function Assets() {
   this.placeholders = {}
   this.tiles = {}
   this.texts = {}
+  this.lang = {}
   this.audio = {}
 
   this.say_timeout
@@ -15,7 +16,7 @@ function Assets() {
 
   this.oneliners = []
 
-  function  load_svg(url,item,i) { //{{{
+  function load_svg(url,item,i) { //{{{
     return $.ajax({
       type: "GET",
       dataType: "xml",
@@ -638,4 +639,237 @@ function Assets() {
     'desc': 'I give up. I pause here, and debug myself.',
     'icon': 'commands/pause.svg'
   }; /*}}}*/
+
+
+  /*------------------------*/
+  /* German                 */
+  /*------------------------*/
+
+
+  this.lang['de'] = {}
+
+  this.lang['de'].texts = {}
+  this.lang['de'].texts.nostep = "I will nicht auf Karotten, Blumen oder Magie steigen! Ich will auch nicht in ein Loch fallen."
+  this.lang['de'].texts.neverjump = "Ich kann mich an keine Sprünge erinnern. Soll ich also in die Unendlichkeit und noch viel weiter springen?"
+  this.lang['de'].texts.noget = "There is no carrot!"
+  this.lang['de'].texts.alreadyhold = "I halte schon eine Karotte in meiner Pfote! I könnte sie essen. Bitte lass mich sie essen. Mein Schatz."
+  this.lang['de'].texts.noplace = "Da ist schon was!"
+  this.lang['de'].texts.nocarrot = "I habe keine Karotte. Das versetzt mich in eine existentielle Kriese!"
+  this.lang['de'].texts.brainempty = "My Gehirn ist leer."
+  this.lang['de'].texts.noeat = "Hier gibts nix zu essen! Ich hasse dich!"
+  this.lang['de'].texts.nosee = "Hier gibts nix zu sehen? I bin gelangweilt."
+  this.lang['de'].texts.nocompare = "I hab weder eine Karotte noch kann ich mich an die Größe eine Karotte erinnern! Es ist sinnlos!"
+  this.lang['de'].texts.nocompareto = "Auf dem Feld vor mir muss was sein, damit ich einen Größenvergleich machen kann!"
+  this.lang['de'].texts.fail = "So viel Arbeit, und immer noch nicht geschafft :-("
+  this.lang['de'].texts.faultylevel = "Oh oh, das Level ist k4putt :-/"
+  this.lang['de'].texts.delete = "Um eine Anweisung zu löschen, klick einfach drauf!"
+  this.lang['de'].texts.again = "Lass mich das einfach nochmal machen, wenn du gewinnen willst!"
+
+  this.lang['de'].raw_oneliners = [
+    "Ich liebe den Geruch von Karotten am Morgen.",
+    "Möge die Karotte mit dir sein.",
+    "Zu den Karotten, und noch viel weiter.",
+    "Blumen? Wo wir hingehen brauchen wir keine Blumen."
+  ]
+
+  this.lang['de'].placeholders = {}
+
+  this.lang['de'].commands = {}
+  this.lang['de'].commands.forward = { /*{{{*/
+    'label': 'Schritt nach vor',
+    'desc': 'I hüpfe einen Schritt in die Richtung in die ich schaue. I hoffe ich falle in kein Loch und steige auf keine Karotte oder Blume.'
+  }; /*}}}*/
+  this.lang['de'].commands.back = { /*{{{*/
+    'label': 'Schritt zurück',
+    'desc': 'I hüpfe einen Schritt zurück. I hoffe ich falle in kein Loch und steige auf keine Karotte oder Blume.'
+  }; /*}}}*/
+  this.lang['de'].commands.left = { /*{{{*/
+    'label': 'Linksdrehung',
+    'desc': 'I dreh mich nach links.'
+  }; /*}}}*/
+  this.lang['de'].commands.right = { /*{{{*/
+    'label': 'Rechtsdrehung',
+    'desc': 'Ich drehe mich nach rechts.'
+  }; /*}}}*/
+  this.lang['de'].commands.random = { /*{{{*/
+    'label': 'Zufallsdrehung',
+    'desc': 'Ich drehe mich in eine zufällige Richtung.'
+  }; /*}}}*/
+  this.lang['de'].commands.step_left = { /*{{{*/
+    'label': 'Schritt nach Links',
+    'desc': 'Ich hüpfe seitlich nach links ohne mich zu drehen.'
+  }; /*}}}*/
+  this.lang['de'].commands.step_right = { /*{{{*/
+    'label': 'Schritt nach Rechts',
+    'desc': 'Ich hüpfe seitlich nach rechts ohne mich zu drehen.'
+  }; /*}}}*/
+  this.lang['de'].commands.jump = { /*{{{*/
+    'label': 'Sprung',
+    'desc': 'Ich springe zu einem anderen Feld. Ziehe das Feld auf das ich springen soll auf diese Anweisung.'
+   }; /*}}}*/
+  this.lang['de'].commands.jump_brain = { /*{{{*/
+    'label': 'Sprung',
+    'desc': 'Ich springe zum Feld das ich mir in meinem großen Gehirn gemerkt habe. Falls ich mir gerade eine Zahl merke springe ich soviele Felder in die Richtung in die ich gerade schaue.'
+   }; /*}}}*/
+  this.lang['de'].commands.jump_back = { /*{{{*/
+    'label': 'Rücksprung',
+    'desc': 'Ich springe dahin woher ich gekommen bin. Ich merk mir immer woher ich gekommen bin, weil Sprünge so aufregend sind.'
+   }; /*}}}*/
+
+  this.lang['de'].commands.get_carrot = { /*{{{*/
+    'label': 'Karotte nehmen',
+    'desc': 'Ich nehme die leckere Karotte auf dem Feld vor mir - und halte sie einfach nur :-/'
+  }; /*}}}*/
+  this.lang['de'].commands.put_carrot = { /*{{{*/
+    'label': 'Karotte pflanzen',
+    'desc': 'Ich planze die Karotte die ich gerade halte auf das Feld vor mir (falls Platz ist).<p>Wenn da schon eine Karotte ist, dann tausche ich die Karotten.'
+  }; /*}}}*/
+  this.lang['de'].commands.put_flower = { /*{{{*/
+    'label': 'Blume planzen',
+    'desc': 'Ich pflanze eine Blume auf das Feld vor mir (falls Platz ist).<p>Eine rote Blume erinnert mich an die Zahl die ich mir gerade merke. Eine blaue Blume erinnert mich an ein Feld zu dem ich springen kann das ich mir gerade merke.'
+  }; /*}}}*/
+  this.lang['de'].commands.eat_carrot = { /*{{{*/
+    'label': 'Essen',
+    'desc': 'Ich esse Karotte die ich gerade halte oder die auf dem Feld vor mir steht. Endlich!'
+  }; /*}}}*/
+  this.lang['de'].commands.eat_flower = { /*{{{*/
+    'label': 'Essen',
+    'desc': 'Ich esse die Blume auf dem Feld vor mir.'
+  }; /*}}}*/
+
+  this.lang['de'].commands.loop  = { /*{{{*/
+    'label': 'Schleife',
+    'desc': 'Ich mach etwas wieder und wieder und wieder. Sag mir wann ich aufhören soll.'
+  }; /*}}}*/
+  this.lang['de'].commands.break = { /*{{{*/
+    'label': 'Stop',
+    'desc': 'I höre mit der aktuelle Schleife auf.'
+  }; /*}}}*/
+
+  this.lang['de'].commands.if_carrot = { /*{{{*/
+    'label': 'Wenn Karotte',
+    'desc': 'Ich checke ob auf dem Feld vor mit eine Karotte steht.'
+  }; /*}}}*/
+  this.lang['de'].commands.if_empty = { /*{{{*/
+    'label': 'Wenn Gras',
+    'desc': 'Ich checke ob das Feld vor mir leer ist.'
+  }; /*}}}*/
+  this.lang['de'].commands.if_flower = { /*{{{*/
+    'label': 'Wenn Blume',
+    'desc': 'Ich checke ob auf dem Feld vor mir eine Blume wächst.'
+  }; /*}}}*/
+  this.lang['de'].commands.if_hole = { /*{{{*/
+    'label': 'Wenn Loch',
+    'desc': 'Ich checke of vor mir ein Loch ist.'
+  }; /*}}}*/
+  this.lang['de'].commands.if_hold = { /*{{{*/
+    'label': 'Check Carrot In Hand',
+    'desc': 'I check if I hold a carrot in my hand.',
+  }; /*}}}*/
+  this.lang['de'].commands.if_same = { /*{{{*/
+    'label': 'Check If Equal',
+    'desc': '<strong>Same:</strong> I can compare the thing I hold in my hand or remember in my brain with the flower or carrot in front of me.<p>Each carrot has a size between 1 and 9. Each flower containes a number or a coordinate.',
+  }; /*}}}*/
+  this.lang['de'].commands.if_smaller = { /*{{{*/
+    'label': 'Check If Smaller',
+    'desc': '<strong>Smaller:</strong> I can compare the thing I hold in my hand or remember in my brain with the flower or carrot in front of me.<p>Each carrot has a size between 1 and 9. Each flower containes a number or a coordinate.',
+  }; /*}}}*/
+  this.lang['de'].commands.if_bigger = { /*{{{*/
+    'label': 'Check If Bigger',
+    'desc': '<strong>Bigger:</strong> I can compare the thing I hold in my hand or remember in my brain with the flower or carrot in front of me.<p>Each carrot has a size between 1 and 9. Each flower containes a number or a coordinate.',
+  }; /*}}}*/
+  this.lang['de'].commands.if_jump = { /*{{{*/
+    'label': 'Check If Jump Is Possible',
+    'desc': 'I check if can jump to the location I memorized.',
+  }; /*}}}*/
+
+  this.lang['de'].commands.memorize_carrot = { /*{{{*/
+    'label': 'Memorize Carrot Size',
+    'desc': 'I memorize the size of the carrot in front of me.',
+  }; /*}}}*/
+  this.lang['de'].commands.memorize_steps = { /*{{{*/
+    'label': 'Memorize Steps or Reset',
+    'desc': 'I memorize the number of steps I will take from now on.',
+  }; /*}}}*/
+  this.lang['de'].commands.memorize_position = { /*{{{*/
+    'label': 'Memorize Position',
+    'desc': 'I memorize my current position.',
+  }; /*}}}*/
+  this.lang['de'].commands.memorize_flower = { /*{{{*/
+    'label': 'Memorize Flower Size or Location',
+    'desc': 'I memorize the flower in front of me.<p>If it\'s a red flower I memorize its size. If it\'s a blue flower I memorize the saved location.',
+  }; /*}}}*/
+
+  this.lang['de'].commands.execute = { /*{{{*/
+    'label': 'Gruppe',
+    'desc': 'Eine Gruppe von Anweisungen die ich machen kann wann immer du willst.',
+  }; /*}}}*/
+  this.lang['de'].commands.execute1 = { /*{{{*/
+    'label': 'Gruppe',
+    'desc': 'Ich mach die Gruppe von Anweisungen so wie du sie mitgeteilt hast.',
+  }; /*}}}*/
+  this.lang['de'].commands.execute2 = { /*{{{*/
+    'label': 'Do Something',
+    'desc': 'I do multiple things you told me to do.',
+  }; /*}}}*/
+  this.lang['de'].commands.execute3 = { /*{{{*/
+    'label': 'Do Something',
+    'desc': 'I do multiple things you told me to do.',
+  }; /*}}}*/
+  this.lang['de'].commands.execute4 = { /*{{{*/
+    'label': 'Do Something',
+    'desc': 'I do multiple things you told me to do.',
+  }; /*}}}*/
+  this.lang['de'].commands.execute5 = { /*{{{*/
+    'label': 'Do Something',
+    'desc': 'I do multiple things you told me to do.',
+  }; /*}}}*/
+  this.lang['de'].commands.execute6 = { /*{{{*/
+    'label': 'Do Something',
+    'desc': 'I do multiple things you told me to do.',
+  }; /*}}}*/
+  this.lang['de'].commands.execute7 = {  /*{{{*/
+    'label': 'Do Something',
+    'desc': 'I do multiple things you told me to do.',
+  }; /*}}}*/
+  this.lang['de'].commands.execute8 = { /*{{{*/
+    'label': 'Do Something',
+    'desc': 'I do multiple things you told me to do.',
+  }; /*}}}*/
+  this.lang['de'].commands.execute9 = { /*{{{*/
+    'label': 'Do Something',
+    'desc': 'I do multiple things you told me to do.',
+  }; /*}}}*/
+
+  this.lang['de'].commands.fast = { /*{{{*/
+    'label': 'Move Fast',
+    'desc': 'I am speed ... jackrabbit.',
+  }; /*}}}*/
+  this.lang['de'].commands.normal = { /*{{{*/
+    'label': 'Move Normal',
+    'desc': 'Super pursuit mode ... off.',
+  }; /*}}}*/
+  this.lang['de'].commands.pause = { /*{{{*/
+    'label': 'Pause Here',
+    'desc': 'I give up. I pause here, and debug myself.',
+  }; /*}}}*/
+
+  if ($.cookie('language')) {
+    let lang = $.cookie('language')
+    if (this.lang[lang]) {
+      this.raw_oneliners = this.lang[lang].raw_oneliners
+      for (const k in this.lang[lang].placeholders) {
+        this.placeholders[k].label = this.lang[lang].placeholders[k].label
+        this.placeholders[k].desc = this.lang[lang].placeholders[k].desc
+      }
+      for (const k in this.lang[lang].commands) {
+        this.commands[k].label = this.lang[lang].commands[k].label
+        this.commands[k].desc = this.lang[lang].commands[k].desc
+      }
+      for (const k in this.lang[lang].texts) {
+        this.texts[k] = this.lang[lang].texts[k]
+      }
+    }
+  }
+
 }

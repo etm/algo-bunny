@@ -11,3 +11,9 @@ body {
   vertical-align: bottom;
   height: 1.6em;
 }
+.language {
+  position: absolute;
+  top: 0;
+  right: 0.5em;
+}
+

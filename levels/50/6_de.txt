@@ -1,0 +1,17 @@
+B111
+1  1
+1111
+---
+---
+Hm? What?
+---
+Eat all carrots.
+---
+---
+111111111
+---
+1
+---
+9 steps taken, 7 CISC length, 46 instructions evaluated.
+---
+eat_carrot,forward,left,right,loop,break,if_empty,if_hole

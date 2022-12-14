@@ -1,0 +1,79 @@
+<div class='program'>
+  <div style='display:none' class="speech">Ich liebe den Geruch von Karotten am Morgen.</div>
+  <div>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:x="http://www.w3.org/1999/xlink" id='program' width='1' height='1'></svg>
+  </div>
+</div>
+<div class='field'>
+  <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" version="1.1" xmlns:x="http://www.w3.org/1999/xlink" id='field' width='1'></svg>
+  <div class="mission">
+    <div class="top">
+      <div class="order"></div>
+      <div class="close"><img src="assets/close.svg"/></div>
+    </div>
+    <div class="text"></div>
+  </div>
+  <div class="victory">
+    <div class="top">
+      <div class="hurra">Hurra!</div>
+      <div class="close"><img src="assets/close.svg"/></div>
+    </div>
+    <div class="text">
+      <table>
+      <tr><td>Name des Levels:         </td><td><span class='title'></span></td></tr>
+      <tr><td>Schritte:                </td><td><span class='steps'></span></td></tr>
+      <tr><td>Karottenvergleiche:      </td><td><span class='cmps'></span></td></tr>
+      <tr><td>CISC Länge:              </td><td><span class='cisc'></span></td></tr>
+      <tr><td>Ausgeführte Anweisungen: </td><td><span class='ins'></span></td></tr>
+      </table>
+      <p>
+      Mach deinen Code besser und versuchs nochmal, oder probier andere Levels indem <strong>diesen Browser Tab schließt</strong>.
+      <p>
+      Je niedriger die Zahlen sind, desto besser ist die Lösung. Vergleiche
+      deine Zahlen mit den Zahlen deiner Freunde! Je nach Level sind "Schritte"
+      oder "Karottenvergleiche" wichtiger. Die "CISC Länge" ist immer ein gutes
+      Mittel, um die Eleganz deiner Lösung zu beurteilen, sollten
+      Schritte/Karottenvergleiche ähnlich sein wie bei deinen Freunden.
+      "Ausgeführte Anweisungen" sind die am wenigsten wichtige Kennzahl, können
+      aber ein entscheidender Faktor sein.
+      <p>
+      <strong>Ein gutes Vergleichsergebnis ist:</strong> <span class='reference_rank'></span>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="steps"><span class="value">0</span> <span>Schritte</span></div>
+    <div class="cmps"><span class="value">0</span> <span>Vergleiche</span></div>
+    <div class="ins"><span class="value">0</span> <span>Anweisungen</span></div>
+    <div class="cisc"><span class="value">0</span> <span>CISC Länge</span></div>
+    <div class="success"><span class="value">0</span> * <span>Erfolg</span></div>
+  </div>
+  <div class="bottom">
+    <button class='ui mission' title="Mission"><img src="assets/mission.svg"/></button>
+    <button class='ui control' title="Los / Reset">
+      <img src="assets/play.svg"/>
+      <img src="assets/reset.svg"/>
+    </button>
+    <button class='ui speed' title="Aktuelle Geschwindigkeit" style='display: none'>
+      <img class='fast'   style='display:none' src="assets/fast.svg"/>
+      <img class='normal' style='display:none' src="assets/normal.svg"/>
+      <img class='pause'  style='display:none' src="assets/pause.svg"/>
+    </button>
+    <a id="saveinstructions" href="" download=""></a>
+    <form id='fuckchrome'>
+      <input type='file' name='loadinstructions' id='loadinstructions'/>
+    </form>
+    <button class='ui save' title="Speichern">
+      <img src="assets/save.svg"/>
+    </button>
+    <button class='ui load' title="Laden">
+      <img src="assets/load.svg"/>
+    </button>
+    <div class='blank'></div>
+    <div class='ui hand'><img style='display:none' src="assets/carrot_full.svg"/></div>
+    <div class='ui brain'>
+      <img style='display:none' class='type steps' src="assets/steps.svg"/>
+      <img style='display:none' class='type location' src="assets/location.svg"/>
+      <span class='text'></span>
+    </div>
+  </div>
+</div>

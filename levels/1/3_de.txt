@@ -1,0 +1,29 @@
+B11111
+---
+---
+Carrots on a stick!
+---
+Eat all carrots.
+---
+Again Algo has to eat all carrots. But this time you have only one
+![](commands/eat_carrot.svg) and one ![](commands/forward.svg) available. Try
+to let Algo eat ![](commands/eat_carrot.svg) and walk ![](commands/forward.svg)
+again and again like that:
+
+![example](help/3_1.png)
+
+This is called doing a loop ![](commands/loop.svg)!
+
+But when should Algo stop? When there is a hole in front of him:
+![](commands/if_hole.svg)! If there is a hole, Algo has to stop doing the loop
+![](commands/break.svg) like this:
+
+![example](help/3_2.png)
+---
+11111
+---
+1
+---
+5 steps taken, 5 CISC length.
+---
+eat_carrot*1,forward*1,loop*1,break*1,if_hole*1

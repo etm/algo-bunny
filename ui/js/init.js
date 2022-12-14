@@ -23,6 +23,12 @@ function show_elements(stats,field) {
 }
 
 $(document).ready(async function() {
+  let lang
+  if ($.cookie('language')) {
+    await $.get('game_' + $.cookie('language') + '.html',(data)=>{ $('body').append(data) })
+  } else {
+    await $.get('game_en.html',(data)=>{ $('body').append(data) })
+  }
 
   let assets  = new Assets
   await assets.load()

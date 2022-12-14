@@ -1,0 +1,27 @@
+B11
+---
+---
+Karotten!
+---
+Iss alle Karotten.
+---
+Auf der linken Seite siehst du alle Anweisungen die du Algo geben kannst. Zieh die Anweisungen auf den Platz unterhalb von Algo
+![](assets/start.svg) um Algo Carrot Instruction Set Code (CISC) mitzuteilen. Algo wird diesen Code dann befolgen um Karotten zu sammeln.
+
+Benutze ![](assets/mission.svg) um dir Missionsdetails und Tipps anzusehen, and
+![](assets/play.svg) um mit dem Karottensammeln zu starten. Versuchs einfach :-)!
+
+Benutze die Anweisung ![](commands/eat_carrot.svg) um Algo eine Karotte auf dem Feld vor ihm essen zu lassen,
+und ![](commands/forward.svg) um ihn ein Feld nach vor hüpfen zu lassen. Wenn
+Algo auf eine Karotte oder in ein Loch zu hüpfen droht, stoppt er (weil er
+gescheit ist). Du musst ihn dann zum Start zurück schicken mit
+![](assets/reset.svg) and kannst ihn das Ganze nochmal versuchen lassen mit
+![](assets/play.svg).
+---
+11
+---
+1
+---
+1 Schritt, 3 CISC Länge.
+---
+eat_carrot,forward
