@@ -52,37 +52,37 @@ $(document).ready(async function() {
 
   // set mission and title
   document.title = field.title.trim()
-  $('div.field div.mission div.top .order').text(field.order)
-  $('div.field div.mission div.text').html(marked(field.mission))
-  $('div.field div.mission div.text a[href]').attr('target','_blank')
-  $('div.field div.mission').toggleClass('active')
+  field.target.find('div.mission div.top .order').text(field.order)
+  field.target.find('div.mission div.text').html(marked(field.mission))
+  field.target.find('div.mission div.text a[href]').attr('target','_blank')
+  field.target.find('div.mission').toggleClass('active')
 
   // order
   assets.say(field.order.trim(),'div.speech')
 
   // one liners
-  $('div.program svg').on('click','g[element-type=bunny]',()=>{ assets.oneliner('div.speech') })
+  editor.target_svg.on('click','g[element-type=bunny]',()=>{ assets.oneliner('div.speech') })
 
   // click element in editor, say and show delete
 
   // display target tiles
-  $('div.program svg').on('mouseover','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
+  editor.target_svg.on('mouseover','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
     let epara = $(ev.currentTarget).attr('element-para')
     if (epara && epara.match(/^\d+,\d+$/)) {
       let [ox,oy] = epara.split(',')
-      $('div.field g.tile').removeClass('active')
-      $('div.field g.tile[element-x=' + ox + '][element-y=' + oy + ']').addClass('active')
+      field.target_svg.find('g.tile').removeClass('active')
+      field.target_svg.find('g.tile[element-x=' + ox + '][element-y=' + oy + ']').addClass('active')
     }
   }) //}}}
-  $('div.program svg').on('mouseout','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
+  editor.target_svg.on('mouseout','g[element-group=graph] g[element-type=jump]',(ev)=>{ //{{{
     let epara = $(ev.currentTarget).attr('element-para')
     if (epara && epara.match(/^\d+,\d+$/)) {
-      $('div.field g.tile').removeClass('active')
+      field.target_svg.find('g.tile').removeClass('active')
     }
   }) //}}}
 
   // click delete
-  $('div.program svg').on('click','g[element-group=drop] g[element-type=delete].active',(ev)=>{ //{{{
+  editor.target_svg.on('click','g[element-group=drop] g[element-type=delete].active',(ev)=>{ //{{{
     let eid = $(ev.currentTarget).attr('element-id')
     let it = editor.get_item(eid)
     if (it.item == 'execute') {
@@ -101,13 +101,13 @@ $(document).ready(async function() {
   // drag on SVG does not work. so we have to be clever monkis
   // foreignObject with div inside and at the end of svg.
   // it catches all mouseclicks :-) read on for the grand finale!
-  $('div.field svg').on('dragstart','foreignObject div',(ev)=>{ //{{{
+  field.target_svg.on('dragstart','foreignObject div',(ev)=>{ //{{{
     if (walker.walking) { return false }
 
     var left = $(window).scrollLeft()
     var top = $(window).scrollTop()
 
-    $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
+    editor.target_svg.find('g[element-group=drop] g[element-type=here]').removeClass('active')
     // what fucking clever shit. we hide the foreignObject that sits on top of
     // SVG but is part of SVG. we then use #elementFromPoint, and switch it
     // back on. Its sad that we have to do this, but holy shit this is great.
@@ -130,7 +130,7 @@ $(document).ready(async function() {
       return false
     }
    }) //}}}
-  $('div.program').on('drop','g[element-type=jump]',(ev)=>{ //{{{
+  editor.target.on('drop','g[element-type=jump]',(ev)=>{ //{{{
     ev.preventDefault()
     ev.stopPropagation()
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/)) {
@@ -141,18 +141,18 @@ $(document).ready(async function() {
       editor.update_item(eid,'target',ev.originalEvent.dataTransfer.getData("text/plain"))
 
       let [ox,oy] = ev.originalEvent.dataTransfer.getData("text/plain").split(',')
-      $('div.field g.tile').removeClass('active')
-      $('div.field g.tile[element-x=' + ox + '][element-y=' + oy + ']').addClass('active')
+      field.target_svg.find('g.tile').removeClass('active')
+      field.target_svg.find('g.tile[element-x=' + ox + '][element-y=' + oy + ']').addClass('active')
     }
   }) //}}}
-  $('div.program').on('dragover','g[element-type=jump]',(ev)=>{ //{{{
+  editor.target.on('dragover','g[element-type=jump]',(ev)=>{ //{{{
     ev.preventDefault()
     ev.stopPropagation()
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location != null) {
       $(ev.currentTarget).addClass('active')
     }
   }) //}}}
-  $('div.program').on('dragleave','g[element-type=jump]',(ev)=>{ //{{{
+  editor.target.on('dragleave','g[element-type=jump]',(ev)=>{ //{{{
     ev.preventDefault()
     ev.stopPropagation()
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^\d+,\d+$/) || active_drag_location != null) {
@@ -167,19 +167,19 @@ $(document).ready(async function() {
     active_element_drag = null
   }) //}}}
 
-  $('div.program svg').on('click','foreignObject div',(ev)=>{ //{{{
+  editor.target_svg.on('click','foreignObject div',(ev)=>{ //{{{
     if (walker.walking) { return false }
 
     let oe = $(ev.currentTarget)
     let ot = $(oe).parents('g[element-type]')
     if (ot.length > 0) {
-      $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
+      editor.target_svg.find('g[element-group=drop] g[element-type=here]').removeClass('active')
 
       if (active_del_timeout) {
         clearTimeout(active_del_timeout)
       }
       if (active_del != '') {
-        $('div.program svg g[element-group=drop] g[element-type=delete][element-id=' + active_del + ']').removeClass('active')
+        editor.target_svg.find('g[element-group=drop] g[element-type=delete][element-id=' + active_del + ']').removeClass('active')
       }
       let eid = ot.first().attr('element-id')
       if (active_del == eid) {
@@ -187,20 +187,20 @@ $(document).ready(async function() {
       } else {
         active_del = eid
         if (!walker.walking) {
-          $('div.program svg g[element-group=drop] g[element-type=delete][element-id=' + eid + ']').addClass('active')
+          editor.target_svg.find('g[element-group=drop] g[element-type=delete][element-id=' + eid + ']').addClass('active')
         }
         let iname = ot.first().attr('element-type')
         let item = assets.commands[iname]
         assets.say(item.label,'div.speech')
         active_del_timeout = setTimeout(()=>{
-          $('div.program svg g[element-group=drop] g[element-type=delete][element-id].active').removeClass('active')
+          editor.target_svg.find('g[element-group=drop] g[element-type=delete][element-id].active').removeClass('active')
           active_del = ''
         },12000)
       }
       return false
     }
   }) //}}}
-  $('div.program svg').on('dragstart','foreignObject div',(ev)=>{ //{{{
+  editor.target_svg.on('dragstart','foreignObject div',(ev)=>{ //{{{
     if (walker.walking) { return false }
 
     let oe = $(ev.currentTarget)
@@ -216,9 +216,9 @@ $(document).ready(async function() {
       let img = elements.target.find('img[data-type='+ety+']')[0]
       ev.originalEvent.dataTransfer.setDragImage(img, 0, 0)
 
-      $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
+      editor.target_svg.find('g[element-group=drop] g[element-type=here]').removeClass('active')
       setTimeout(ev=>{ // yes, chrome, you are an idiot
-        $('div.program g[element-type=add] .adder').show()
+        editor.target_svg.find('g[element-type=add] .adder').show()
       },100)
       active_element_drag = true
     } else {
@@ -231,11 +231,11 @@ $(document).ready(async function() {
 
     ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'))
     ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0)
-    $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
-    $('div.program g[element-type=add] .adder').show()
+    editor.target_svg.find('g[element-group=drop] g[element-type=here]').removeClass('active')
+    editor.target_svg.find('g[element-type=add] .adder').show()
     active_element_drag = true
   }) //}}}
-  $('div.program').on('drop','g[element-type=add]',(ev)=>{ //{{{
+  editor.target.on('drop','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault()
     ev.stopPropagation()
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z]{2}[a-z0-9_]+$/)) {
@@ -244,8 +244,8 @@ $(document).ready(async function() {
       let ety = ev.originalEvent.dataTransfer.getData("text/plain")
       editor.insert_item(eid,eop,ety)
       active_element_drag = false
-      $('div.program g[element-type=add] .adder').hide()
-      $('div.program g[element-type=add]').removeClass('active')
+      editor.target_svg.find('g[element-type=add] .adder').hide()
+      editor.target_svg.find('g[element-type=add]').removeClass('active')
       editor.render_diff()
       elements.show(editor.program_stats())
     }
@@ -255,21 +255,21 @@ $(document).ready(async function() {
       let eit = ev.originalEvent.dataTransfer.getData("text/plain")
       editor.move_item(eid,eop,eit)
       active_element_drag = false
-      $('div.program g[element-type=add] .adder').hide()
-      $('div.program g[element-type=add]').removeClass('active')
+      editor.target_svg.find('g[element-type=add] .adder').hide()
+      editor.target_svg.find('g[element-type=add]').removeClass('active')
       editor.render()
       elements.show(editor.program_stats())
     }
     active_element_drag = false
   }) //}}}
-  $('div.program').on('dragover','g[element-type=add]',(ev)=>{ //{{{
+  editor.target.on('dragover','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault()
     ev.stopPropagation()
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z]{2}[a-z0-9_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/) || active_element_drag) {
       $(ev.currentTarget).addClass('active')
     }
   }) //}}}
-  $('div.program').on('dragleave','g[element-type=add]',(ev)=>{ //{{{
+  editor.target.on('dragleave','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault()
     ev.stopPropagation()
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^[a-z]{2}[a-z0-9_]+$/) || ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/) || active_element_drag) {
@@ -278,18 +278,18 @@ $(document).ready(async function() {
   }) //}}}
 
   $('button.mission').click(ev=>{
-    $('div.field div.victory').removeClass('active')
-    $('div.field div.mission').toggleClass('active')
+    field.target.find('div.victory').removeClass('active')
+    field.target.find('div.mission').toggleClass('active')
   })
-  $('div.field div.mission div.top img').click(ev=>{
-    $('div.field div.mission').toggleClass('active')
+  field.target.find('div.mission div.top img').click(ev=>{
+    field.target.find('div.mission').toggleClass('active')
   })
-  $('div.field div.victory div.top img').click(ev=>{
-    $('div.field div.victory').toggleClass('active')
+  field.target.find('div.victory div.top img').click(ev=>{
+    field.target.find('div.victory').toggleClass('active')
   })
   $('button.control').click(ev=>{
-    $('div.field div.victory').removeClass('active')
-    $('div.field div.mission').removeClass('active')
+    field.target.find('div.victory').removeClass('active')
+    field.target.find('div.mission').removeClass('active')
     if (editor.program.length > 0) {
       $('button.control img').removeClass('important')
       if ($(ev.currentTarget).hasClass('active')) {
@@ -301,7 +301,7 @@ $(document).ready(async function() {
           clearTimeout(active_del_timeout)
         }
         if (active_del != '') {
-          $('div.program svg g[element-group=drop] g[element-type=delete][element-id]').removeClass('active')
+          editor.target_svg.find('g[element-group=drop] g[element-type=delete][element-id]').removeClass('active')
           active_del = ''
         }
         $('button.speed img').hide()
@@ -333,47 +333,47 @@ $(document).ready(async function() {
     $('button.speed img.pause').show()
   })
   document.addEventListener('cisc:changed', (e) => {
-    $('div.field div.stats .cisc .value').text(editor.cisc_length())
+    field.target.find('div.stats .cisc .value').text(editor.cisc_length())
     success = 0
-    $('div.field div.stats .success .value').text(success)
+    field.target.find('div.stats .success .value').text(success)
   })
   document.addEventListener('ins:changed', (e) => {
-    $('div.field div.stats .ins .value').text(walker.ins_count())
+    field.target.find('div.stats .ins .value').text(walker.ins_count())
   })
   document.addEventListener('steps:changed', (e) => {
-    $('div.field div.stats .steps .value').text(walker.step_count())
+    field.target.find('div.stats .steps .value').text(walker.step_count())
   })
   document.addEventListener('cmps:changed', (e) => {
-    $('div.field div.stats .cmps .value').text(walker.cmps_count())
+    field.target.find('div.stats .cmps .value').text(walker.cmps_count())
   })
   document.addEventListener('walking:success', (e) => {
     success += 1
     if (success >= field.success) {
       setTimeout(()=>{
-        $('div.field div.mission').removeClass('active')
-        $('div.field div.victory').toggleClass('active')
+        field.target.find('div.mission').removeClass('active')
+        field.target.find('div.victory').toggleClass('active')
         let cisc = editor.cisc_length()
         let ins = walker.ins_count()
         let steps = walker.step_count()
         let cmps = walker.cmps_count()
 
-        $('div.field div.victory .text .title').text(field.title.trim())
-        $('div.field div.victory .text .steps').text(steps)
-        $('div.field div.victory .text .cmps').text(cmps)
-        $('div.field div.victory .text .ins').text(ins)
-        $('div.field div.victory .text .cisc').text(cisc)
-        $('div.field div.victory .text .reference_rank').text(field.max_score)
+        field.target.find('div.victory .text .title').text(field.title.trim())
+        field.target.find('div.victory .text .steps').text(steps)
+        field.target.find('div.victory .text .cmps').text(cmps)
+        field.target.find('div.victory .text .ins').text(ins)
+        field.target.find('div.victory .text .cisc').text(cisc)
+        field.target.find('div.victory .text .reference_rank').text(field.max_score)
       },1000)
       assets.play_audio(assets.audio.yay.sounds.sample())
     } else {
       assets.say(assets.texts.again,'div.speech')
     }
-    $('div.field div.stats .success .value').text(success)
+    field.target.find('div.stats .success .value').text(success)
   })
   document.addEventListener('walking:nosuccess', (e) => {
     success = 0
     assets.play_audio(assets.audio.no.sounds.sample())
-    $('div.field div.stats .success .value').text(success)
+    field.target.find('div.stats .success .value').text(success)
   })
 
   $('button.save').click(ev=>{
@@ -399,7 +399,7 @@ $(document).ready(async function() {
       editor.get_pids().forEach(pid => {
         elements.target.find('img[data-type=execute' + pid + ']').show()
       })
-      $('div.field div.stats .cisc .value').text(editor.cisc_length())
+      field.target.find('div.stats .cisc .value').text(editor.cisc_length())
     }
     reader.onerror = function(){ console.log('error reading file'); loading = false; }
     reader.onabort = function(){ console.log('abort reading file'); loading = false; }
