@@ -12,14 +12,15 @@ class Editor {
   constructor(target,assets,id) { //{{{
     this.assets = assets
     this.target = target
+    this.target_svg = target.find('svg')
     this.id = id
 
     let t0 = $X('<g element-group="below" xmlns="http://www.w3.org/2000/svg"></g>')
     let t1 = $X('<g element-group="graph" xmlns="http://www.w3.org/2000/svg"></g>')
     let t2 = $X('<g element-group="drop"  xmlns="http://www.w3.org/2000/svg"></g>')
-    target.append(t0)
-    target.append(t1)
-    target.append(t2)
+    this.target_svg.append(t0)
+    this.target_svg.append(t1)
+    this.target_svg.append(t2)
 
     this.groups = {
       'below': $X('<g element-x="" element-y="" element-type="" element-op="" element-id="" transform="" xmlns="http://www.w3.org/2000/svg"></g>'),
@@ -554,8 +555,8 @@ class Editor {
       })
     })
     this.remove_ids = []
-    let hei = parseFloat(this.target.attr('height'))
-    this.target.attr('height', hei - aggr_shift * this.#scale_factor * this.#tile_height)
+    let hei = parseFloat(this.target_svg.attr('height'))
+    this.target_svg.attr('height', hei - aggr_shift * this.#scale_factor * this.#tile_height)
   } //}}}
   #render_add() { //{{{
     let aggr_shift = 0;
@@ -605,8 +606,8 @@ class Editor {
     let [y,w] = this.#iter(this.program,1,1,undefined)
     let hei = y * this.#tile_height * this.#scale_factor + this.#height_add
     let wid = w * this.#tile_width * this.#scale_factor + this.#width_add
-    this.target.attr('height', hei)
-    this.target.attr('width',  wid)
+    this.target_svg.attr('height', hei)
+    this.target_svg.attr('width',  wid)
     window.localStorage.setItem(this.id, JSON.stringify(this.program,null,2));
     window.localStorage.setItem('current', JSON.stringify(this.program,null,2));
 
@@ -617,8 +618,8 @@ class Editor {
       this.#render_add()
       let hei = y * this.#tile_height * this.#scale_factor + this.#height_add
       let wid = w * this.#tile_width * this.#scale_factor + this.#width_add
-      this.target.attr('height', hei)
-      this.target.attr('width',  wid)
+      this.target_svg.attr('height', hei)
+      this.target_svg.attr('width',  wid)
     }
     this.#render_remove()
     window.localStorage.setItem(this.id, JSON.stringify(this.program,null,2));

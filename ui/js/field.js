@@ -23,16 +23,16 @@ class Field {
 
   #nodraw
 
-  constructor(target,assets,levelurl) { //{{{
+  constructor(target,assets) { //{{{
     this.assets = assets
-    this.levelurl = levelurl
 
     this.target = target
+    this.target_svg = target.find('svg')
 
     let t1 = $X('<g element-group="field" xmlns="http://www.w3.org/2000/svg"></g>')
     let t2 = $X('<g element-group="drag"  xmlns="http://www.w3.org/2000/svg"></g>')
-    this.target.append(t1)
-    this.target.append(t2)
+    this.target_svg.append(t1)
+    this.target_svg.append(t2)
 
     this.target_field = t1
     this.target_drag = t2
@@ -56,87 +56,6 @@ class Field {
     this.timing = 500
 
     this.#nodraw = false
-   } //}}}
-  async load_level() { //{{{
-    let level = await this.#get_level(this.levelurl)
-    let pieces = level.split(/---\s*\r?\n/)
-    if (pieces.length != 9) {
-      this.assets.say(this.assets.texts.faultylevel,'div.speech')
-      return false
-    }
-    [
-      this.raw_tiles,
-      this.raw_assignments,
-      this.title,
-      this.order,
-      this.mission,
-      this.raw_carrots,
-      this.times,
-      this.max_score,
-      this.elements
-    ] = pieces
-    this.x = 0
-    this.y = 0
-
-    this.elements = this.elements.trim().split(',')
-    this.elements_avail = []
-    this.elements = this.elements.map((e)=>{
-      let t = e.split('*')
-      this.elements_avail.push(t.length > 1 ? parseInt(t[1]) : 0)
-      return t.length > 1 ? t[0] : e
-    })
-    this.state_flowers = []
-    this.state_carrots = []
-    this.state_op = []
-    this.state_dir = []
-    this.state_nocount = []
-    this.raw_tiles = this.raw_tiles.trimRight().split(/\r?\n/)
-    this.success = parseInt(this.times)
-    this.success = this.success > 1 ? this.success : 0
-
-    this.#save_state_carrots = []
-    this.#save_state_flowers = []
-    this.#save_state_assignments = []
-
-    this.raw_tiles = this.raw_tiles.map( x => {
-      this.state_flowers.push([])
-      this.state_carrots.push([])
-      this.state_op.push([])
-      this.state_dir.push([])
-      this.state_nocount.push([])
-      let s = x.split('')
-      if (this.x < s.length) { this.x = s.length }
-      return s
-    })
-    this.carrots = ''
-    this.tiles = JSON.parse(JSON.stringify(this.raw_tiles))
-    this.y = this.raw_tiles.length
-
-    this.raw_assignments = this.raw_assignments.split(/\r?\n/)
-    this.assignments = []
-    this.max_carrots = this.raw_tiles.reduce((total,arr) => {
-      return total + arr.reduce((total,ele) => {
-        return total + (ele.match(/[1-9c]/) ? 1 : 0)
-      },0)
-    },0)
-    return true
-  }  //}}}
-  #get_level(levelurl) { //{{{
-    return new Promise( (resolve,reject) => {
-      if (levelurl.match(/^http/)) {
-        $.ajax({
-          type: "GET",
-          url: "download.php?url=" + levelurl,
-          error: () => { this.assets.say(this.assets.texts.faultylevel,'div.speech'); reject() }
-        }).then(res => { resolve(res) })
-      } else {
-        $.ajax({
-          type: "GET",
-          url: levelurl,
-          error: () => { this.assets.say(this.assets.texts.faultylevel,'div.speech'); reject() }
-        }).then(res => { resolve(res) })
-      }
-    })
   } //}}}
 
   #coordinate_transform(x,y) { //{{{
@@ -686,6 +605,11 @@ class Field {
     return true
   } //}}}
 
+  init_state() { //{{{
+    this.#save_state_carrots = []
+    this.#save_state_flowers = []
+    this.#save_state_assignments = []
+  } //}}}
   reset_state() { //{{{
     this.state_bunny   = JSON.parse(this.#save_state_bunny)
     this.state_op      = JSON.parse(this.#save_state_op)
@@ -777,6 +701,6 @@ class Field {
 
     this.#draw_drag_layer(iw,ih)
 
-    this.target.attr('viewBox', '0 0 ' + iw + ' ' + ih)
+    this.target_svg.attr('viewBox', '0 0 ' + iw + ' ' + ih)
   } // }}}
 }

@@ -10,18 +10,6 @@ var active_element_drag = null
 
 document.addEventListener('contextmenu', event => event.preventDefault())
 
-function show_elements(stats,field) {
-  for (let e of field.elements) {
-    const c = stats[e]
-    const ele = $('div.elements img[data-type=' + e + ']')
-    if (parseInt(ele.attr('data-avail')) <= c) {
-      ele.hide()
-    } else {
-      ele.show()
-    }
-  }
-}
-
 $(document).ready(async function() {
   let lang
   if ($.cookie('language')) {
@@ -29,56 +17,35 @@ $(document).ready(async function() {
   } else {
     await $.get('game_en.html',(data)=>{ $('body').append(data) })
   }
+  let q = $.parseQuerySimple()
+  let levelurl = q.level ? q.level : ''
 
   let assets  = new Assets
   await assets.load()
 
-  let q = $.parseQuerySimple()
-  let level = q.level ? q.level : ''
+  let editor = new Editor($('div.program'), assets, levelurl)
+  let field = new Field($('div.field'), assets)
+  let elements = new Elements($('div.elements'),assets,field,editor)
+  let loader = new Loader(assets, editor, field, elements, levelurl)
 
-  let editor = new Editor($('div.program svg'), assets, level)
+  if (!(await loader.load_level())) { return }
+
+  elements.render()
   editor.render()
-
-  let field = new Field($('div.field svg'), assets, level)
-  if (!(await field.load_level())) { return }
   field.render()
 
   walker = new Walker(assets,editor,field)
 
-  // show some elements
-  $('div.elements *[data-type]').each((_,ele) => { //{{{
-    let iname = $(ele).attr('data-type')
-    let item = assets.commands[iname]
-    $(ele).attr('title',item.label)
-    if (field.elements.length == 0) {
-      $(ele).show()
-    } else {
-      if (field.elements.includes(iname)) {
-        $(ele).show()
-        let ea = field.elements_avail[field.elements.indexOf(iname)]
-        if (ea > 0) {
-          $(ele).attr('data-avail',ea)
-        }
-      }
-    }
-    $('div.elements *[data-type=' + iname + ']').click(()=>{
-      assets.say(item.desc,'div.speech')
-    })
-  })
-  show_elements(editor.program_stats(),field)
-  if (field.elements.includes('execute')) {
-    $('#execute').show()
-  }
-  $('div.elements #execute').click((ev)=>{
-    let gr = $('div.elements #execute').parents('div.group')
+  elements.target.find('#execute').click((ev)=>{
+    let gr = elements.target.find('#execute').parents('div.group')
     let pid = editor.get_free_pid()
     if (pid) {
       editor.insert_item('','insert_last',null)
       let nid = editor.insert_item('','insert_last','execute')
       editor.update_item(nid,'id',pid)
       editor.render()
-      show_elements(editor.program_stats(),field)
-      $('div.elements img[data-type=execute' + pid + ']').show()
+      elements.show(editor.program_stats())
+      elements.target.find('img[data-type=execute' + pid + ']').show()
     }
   })
   //}}}
@@ -120,11 +87,11 @@ $(document).ready(async function() {
     let it = editor.get_item(eid)
     if (it.item == 'execute') {
       editor.remove_item_by_type(it.item + it.id)
-      $('div.elements img[data-type=execute' + it.id + ']').hide()
+      elements.target.find('img[data-type=execute' + it.id + ']').hide()
     }
     editor.remove_item(eid)
     editor.render_diff()
-    show_elements(editor.program_stats(),field)
+    elements.show(editor.program_stats())
     active_del = ''
     $(ev.currentTarget).removeClass('active')
     assets.say_reset('div.speech')
@@ -246,7 +213,7 @@ $(document).ready(async function() {
       var eid = ot.first().attr('element-id')
       ev.originalEvent.dataTransfer.setData("text/plain",eid)
 
-      let img = $('div.elements img[data-type='+ety+']')[0]
+      let img = elements.target.find('img[data-type='+ety+']')[0]
       ev.originalEvent.dataTransfer.setDragImage(img, 0, 0)
 
       $('div.program svg g[element-group=drop] g[element-type=here]').removeClass('active')
@@ -259,7 +226,7 @@ $(document).ready(async function() {
     }
   }) //}}}
 
-  $('div.elements').on('dragstart','[draggable=true][data-type]',(ev)=>{ //{{{
+  elements.target.on('dragstart','[draggable=true][data-type]',(ev)=>{ //{{{
     if (walker.walking) { return false }
 
     ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'))
@@ -280,7 +247,7 @@ $(document).ready(async function() {
       $('div.program g[element-type=add] .adder').hide()
       $('div.program g[element-type=add]').removeClass('active')
       editor.render_diff()
-      show_elements(editor.program_stats(),field)
+      elements.show(editor.program_stats())
     }
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
       let eid = $(ev.currentTarget).attr('element-id')
@@ -291,7 +258,7 @@ $(document).ready(async function() {
       $('div.program g[element-type=add] .adder').hide()
       $('div.program g[element-type=add]').removeClass('active')
       editor.render()
-      show_elements(editor.program_stats(),field)
+      elements.show(editor.program_stats())
     }
     active_element_drag = false
   }) //}}}
@@ -427,10 +394,10 @@ $(document).ready(async function() {
     reader.onload = ()=>{
       editor.program = JSON.parse(reader.result)
       editor.render()
-      show_elements(editor.program_stats(),field)
+      elements.show(editor.program_stats())
       document.getElementById('fuckchrome').reset()
       editor.get_pids().forEach(pid => {
-        $('div.elements img[data-type=execute' + pid + ']').show()
+        elements.target.find('img[data-type=execute' + pid + ']').show()
       })
       $('div.field div.stats .cisc .value').text(editor.cisc_length())
     }
