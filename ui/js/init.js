@@ -9,12 +9,6 @@ var active_element_drag = null
 document.addEventListener('contextmenu', event => event.preventDefault())
 
 $(document).ready(async function() {
-  let lang
-  if ($.cookie('language')) {
-    await $.get('game_' + $.cookie('language') + '.html',(data)=>{ $('body').append(data) })
-  } else {
-    await $.get('game_en.html',(data)=>{ $('body').append(data) })
-  }
   let q = $.parseQuerySimple()
   let levelurl = q.level ? q.level : ''
 
@@ -23,9 +17,27 @@ $(document).ready(async function() {
 
   let editor = new Editor($('div.program'), assets, levelurl)
   let field = new Field($('div.field'), assets)
+      field.target.find('.victory .hurra').text(assets.texts.hurra)
+      field.target.find('.victory .text .title .label').text(assets.texts.victory_text_title)
+      field.target.find('.victory .text .steps .label').text(assets.texts.victory_text_steps)
+      field.target.find('.victory .text .cmps .label').text(assets.texts.victory_text_cmps)
+      field.target.find('.victory .text .cisc .label').text(assets.texts.victory_text_cisc)
+      field.target.find('.victory .text .ins .label').text(assets.texts.victory_text_ins)
+      field.target.find('.victory .text .explanation').html(assets.texts.victory_text_explanation)
+      field.target.find('.victory .text .reference_rank .label').text(assets.texts.victory_text_reference_rank)
+      field.target.find('.stats .steps .label').text(assets.texts.stats_steps)
+      field.target.find('.stats .cmps .label').text(assets.texts.stats_cmps)
+      field.target.find('.stats .ins .label').text(assets.texts.stats_ins)
+      field.target.find('.stats .cisc .label').text(assets.texts.stats_cisc)
+      field.target.find('.stats .success .label').text(assets.texts.stats_success)
+      field.target.find('.bottom .ui.mission').attr('title',assets.texts.mission)
+      field.target.find('.bottom .ui.control').attr('title',assets.texts.control)
+      field.target.find('.bottom .ui.speed').attr('title',assets.texts.speed)
+      field.target.find('.bottom .ui.save').attr('title',assets.texts.save)
+      field.target.find('.bottom .ui.load').attr('title',assets.texts.load)
   let elements = new Elements($('div.elements'),assets,field,editor)
-  let loader = new Loader(assets, editor, field, elements, levelurl)
 
+  let loader = new Loader(assets, editor, field, elements, levelurl)
   if (!(await loader.load_level())) { return }
 
   elements.render()
@@ -355,12 +367,12 @@ $(document).ready(async function() {
         let steps = walker.step_count()
         let cmps = walker.cmps_count()
 
-        field.target.find('div.victory .text .title').text(field.title.trim())
-        field.target.find('div.victory .text .steps').text(steps)
-        field.target.find('div.victory .text .cmps').text(cmps)
-        field.target.find('div.victory .text .ins').text(ins)
-        field.target.find('div.victory .text .cisc').text(cisc)
-        field.target.find('div.victory .text .reference_rank').text(field.max_score)
+        field.target.find('div.victory .text .title .value').text(field.title.trim())
+        field.target.find('div.victory .text .steps .value').text(steps)
+        field.target.find('div.victory .text .cmps .value').text(cmps)
+        field.target.find('div.victory .text .ins .value').text(ins)
+        field.target.find('div.victory .text .cisc .value').text(cisc)
+        field.target.find('div.victory .text .reference_rank .value').text(field.max_score)
       },1000)
       assets.play_audio(assets.audio.yay.sounds.sample())
     } else {

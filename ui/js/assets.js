@@ -137,6 +137,31 @@ function Assets() {
   this.texts.faultylevel = "Uh oh, level is b0rked :-/"
   this.texts.delete = "To delete an instruction, click on it!"
   this.texts.again = "Play it again to win!"
+  this.texts.hurra = 'Victory'
+  this.texts.victory_text_title = 'Name of Level:'
+  this.texts.victory_text_steps = 'Steps taken:'
+  this.texts.victory_text_cmps = 'Carrot Comparisons:'
+  this.texts.victory_text_cisc = 'Length of CISC:'
+  this.texts.victory_text_ins = 'Instructions evaluated:'
+  this.texts.victory_text_explanation = "\
+    Refine your code and try again or explore other levels by <strong>closing the browser tab</strong>.\
+    <p></p>\
+    The lower your numbers, the better your solution. Compare your numbers to the numbers of\
+    your friends! Depending on the level \"Steps taken\", or \"Carrot Comparisons\"\
+    are more important. \"Length of CISC\" is always a good way to judge the elegance of your solution,\
+    if the Steps/Comparisons are similar to your friends'. \"Instructions evaluated\" is the least important metric,\
+    but can be a decider."
+  this.texts.victory_text_reference_rank = 'Our results were:'
+  this.texts.stats_steps = 'Steps'
+  this.texts.stats_cmps = 'Carrot Cmps'
+  this.texts.stats_ins = 'Instructions'
+  this.texts.stats_cisc = 'CISC Length'
+  this.texts.stats_success = 'Success'
+  this.texts.mission = 'Mission'
+  this.texts.control = 'Go / Reset'
+  this.texts.speed = 'Current Speed'
+  this.texts.save = 'Save Instructions'
+  this.texts.load = 'Load Instructions'
   //}}}
 
   /*------------------------*/
@@ -668,6 +693,33 @@ function Assets() {
   this.lang['de'].texts.faultylevel = "Oh oh, das Level ist k4putt :-/"
   this.lang['de'].texts.delete = "Um eine Anweisung zu löschen, klick einfach drauf!"
   this.lang['de'].texts.again = "Lass mich das einfach nochmal machen, wenn du gewinnen willst!"
+  this.lang['de'].texts.hurra = 'Hurra!'
+  this.lang['de'].texts.victory_text_title = 'Name des Levels:'
+  this.lang['de'].texts.victory_text_steps = 'Schritte:'
+  this.lang['de'].texts.victory_text_cmps = 'Karottenvergleiche:'
+  this.lang['de'].texts.victory_text_cisc = 'CISC Länge:'
+  this.lang['de'].texts.victory_text_ins = 'Ausgeführte Anweisungen:'
+  this.lang['de'].texts.victory_text_explanation = "\
+    Mach deinen Code besser und versuchs nochmal, oder probier andere Levels indem du <strong>diesen Browser Tab schließt</strong>.\
+    <p></p>\
+    Je niedriger die Zahlen sind, desto besser ist die Lösung. Vergleiche\
+    deine Zahlen mit den Zahlen deiner Freunde! Je nach Level sind \"Schritte\"\
+    oder \"Karottenvergleiche\" wichtiger. Die \"CISC Länge\" ist immer ein gutes\
+    Mittel, um die Eleganz deiner Lösung zu beurteilen, sollten\
+    Schritte/Karottenvergleiche ähnlich sein wie bei deinen Freunden.\
+    \"Ausgeführte Anweisungen\" sind die am wenigsten wichtige Kennzahl, können\
+    aber auch verwendet werden um zu entscheiden welche Lösung gut ist."
+  this.lang['de'].texts.victory_text_reference_rank = 'Ein gutes Vergleichsergebnis ist:'
+  this.lang['de'].texts.stats_steps = 'Schritte'
+  this.lang['de'].texts.stats_cmps = 'Vergleiche'
+  this.lang['de'].texts.stats_ins = 'Anweisungen'
+  this.lang['de'].texts.stats_cisc = 'CISC Länge'
+  this.lang['de'].texts.stats_success = 'Erfolg'
+  this.lang['de'].texts.mission = 'Mission'
+  this.lang['de'].texts.control = 'Los / Reset'
+  this.lang['de'].texts.speed = 'Aktuelle Geschwindigkeit'
+  this.lang['de'].texts.save = 'Speichern'
+  this.lang['de'].texts.load = 'Laden'
   //}}}
 
   this.lang['de'].raw_oneliners = [ //{{{
