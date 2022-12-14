@@ -49,8 +49,6 @@ class Loader {
     this.#field.success = parseInt(this.#field.times)
     this.#field.success = this.#field.success > 1 ? this.#field.success : 0
 
-    this.#field.init_state()
-
     this.#field.raw_tiles = this.#field.raw_tiles.map( x => {
       this.#field.state_flowers.push([])
       this.#field.state_carrots.push([])

@@ -56,6 +56,10 @@ class Field {
     this.timing = 500
 
     this.#nodraw = false
+
+    this.#save_state_carrots = []
+    this.#save_state_flowers = []
+    this.#save_state_assignments = []
   } //}}}
 
   #coordinate_transform(x,y) { //{{{
@@ -339,7 +343,7 @@ class Field {
 
     this.#save_state_carrots = JSON.stringify(this.state_carrots)
     this.#save_state_flowers = JSON.stringify(this.state_flowers)
-    this.#save_state_assignments = JSON.parse(JSON.stringify(this.assignments)) // todo
+    this.#save_state_assignments = JSON.parse(JSON.stringify(this.assignments))
   } //}}}
 
   has_carrot()    { //{{{
@@ -605,18 +609,14 @@ class Field {
     return true
   } //}}}
 
-  init_state() { //{{{
-    this.#save_state_carrots = []
-    this.#save_state_flowers = []
-    this.#save_state_assignments = []
-  } //}}}
   reset_state() { //{{{
     this.state_bunny   = JSON.parse(this.#save_state_bunny)
     this.state_op      = JSON.parse(this.#save_state_op)
     this.state_dir     = JSON.parse(this.#save_state_dir)
     this.state_nocount = JSON.parse(this.#save_state_nocount)
-    this.state_carrots = JSON.parse(this.#save_state_carrots)
-    this.state_flowers = JSON.parse(this.#save_state_flowers)
+    this.state_carrots = JSON.parse(this.#save_state_carrots) // load because carrots may be at different locations
+    this.state_flowers = JSON.parse(this.#save_state_flowers) // loead because flowers may be at different locations
+    // no need to load saved assignments, because they dont change
     this.#init_carrots_and_flowers()
     $('g.flower,g.carrot,g.bunny',this.target_field).remove()
   } //}}}
