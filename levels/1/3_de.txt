@@ -1,22 +1,22 @@
 B11111
 ---
 ---
-Carrots on a stick!
+Karotten am Stiel!
 ---
-Eat all carrots.
+Iss alle Karotten.
 ---
-Again Algo has to eat all carrots. But this time you have only one
-![](commands/eat_carrot.svg) and one ![](commands/forward.svg) available. Try
-to let Algo eat ![](commands/eat_carrot.svg) and walk ![](commands/forward.svg)
-again and again like that:
+Algo muss schon wieder alle Karotten essen. Aber dieses mal gibts nur ein
+![](commands/eat_carrot.svg) und ein ![](commands/forward.svg). Versuche Algo
+beizubringen wie er Essen ![](commands/eat_carrot.svg) und Gehen
+![](commands/forward.svg) immer wieder und wieder machen kann. Ungefähr so:
 
 ![example](help/3_1.png)
 
-This is called doing a loop ![](commands/loop.svg)!
+Das nennt man eine Schleife ![](commands/loop.svg)!
 
-But when should Algo stop? When there is a hole in front of him:
-![](commands/if_hole.svg)! If there is a hole, Algo has to stop doing the loop
-![](commands/break.svg) like this:
+Aber wann soll Algo mit der Schleife aufhören? Wenn vor ihm ein Loch ist:
+![](commands/if_hole.svg)! Wenn vor Algo ein Loch ist, muss er mit der Schleife
+aufhören:
 
 ![example](help/3_2.png)
 ---
@@ -24,6 +24,6 @@ But when should Algo stop? When there is a hole in front of him:
 ---
 1
 ---
-5 steps taken, 5 CISC length.
+5 Schritte, 5 CISC Länge.
 ---
 eat_carrot*1,forward*1,loop*1,break*1,if_hole*1

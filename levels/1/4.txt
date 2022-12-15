@@ -11,7 +11,7 @@ Again Algo has to eat all carrots. But this time Algo has to turn
 ![](commands/left.svg) or ![](commands/right.svg) in a loop
 ![](commands/loop.svg)!
 
-In order to stop the loop ![](commands/loop.svg)! algo has to check
+In order to stop the loop ![](commands/loop.svg) Algo has to check
 if there is grass in front of him  ![](commands/if_empty.svg) instead of a
 carrot.
 

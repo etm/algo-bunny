@@ -3,15 +3,19 @@ B11
 111
 ---
 ---
-Merry go round!
+Karussell!
 ---
-Eat all carrots.
+Iss alle Karotten.
 ---
+Algo ___will___ die Karotten. Benutze alle Anweisungen die du bisher benutzt hast.
+
+___Tipp:___ überleg dir was in der Schleife sein muss damit eine Seite des
+Vierecks komplett gegessen werden kann.
 ---
 1111111
 ---
 1
 ---
-7 steps taken, 8 CISC length.
+7 Schritte, 8 CISC Länge.
 ---
 eat_carrot,forward,left,right,loop,break,if_empty

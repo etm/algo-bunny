@@ -7,12 +7,12 @@ Carrot Flower Power!
 ---
 Eat all carrots.
 ---
-Again Algo has to eat all carrots. But this time Algo has to turn
+Again Algo has to eat all carrots. Again Algo has to turn
 ![](commands/left.svg) or ![](commands/right.svg) in a loop
 ![](commands/loop.svg)!
 
-In order to stop the loop ![](commands/loop.svg)! algo has to check
-if there is NO carrot in front of him  ![](commands/if_carrot.svg).
+In order to stop the loop ![](commands/loop.svg)! Algo has to check
+if there is ___NO___ carrot in front of him  ![](commands/if_carrot.svg).
 
 Because when there is grass, he has to stop eating.
 ---

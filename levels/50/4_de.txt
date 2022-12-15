@@ -5,15 +5,20 @@
   111
 ---
 ---
-Magic 8!
+Magische 8!
 ---
-Eat all carrots.
+Iss alle Karotten.
 ---
+Algo ___will___ die Karotten. Benutze alle Anweisungen die du bisher benutzt
+hast.
+
+___Tipp:___ Algo muss zwei Schleifen machen. Und dazwischen muss er sich
+drehen. Und natürlich muss er sich wieder entscheiden wann er aufhört.
 ---
 11111111111111
 ---
 1
 ---
-16 steps taken, 13 CISC length.
+16 Schritte, 13 CISC Länge.
 ---
-eat_carrot,forward,left,right,loop,break,if_empty
+eat_carrot,forward,left,right,loop,break,if_empty,if_hole

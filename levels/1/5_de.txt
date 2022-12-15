@@ -3,18 +3,18 @@
  1
 ---
 ---
-Carrot Flower Power!
+Karottenblume, aber anders!
 ---
-Eat all carrots.
+Iss alle Karotten.
 ---
-Again Algo has to eat all carrots. But this time Algo has to turn
-![](commands/left.svg) or ![](commands/right.svg) in a loop
-![](commands/loop.svg)!
+Wieder will Algo alle Karotten essen. Wieder muss sich Algo in einer
+Schleife ![](commands/loop.svg) links ![](commands/left.svg) oder
+![](commands/right.svg) rechts drehen.
 
-In order to stop the loop ![](commands/loop.svg)! algo has to check
-if there is NO carrot in front of him  ![](commands/if_carrot.svg).
+Um die Schleife ![](commands/loop.svg) zu beenden muss Algo nachschauen ob vor
+ihm ___KEINE___ Karotte ist ![](commands/if_carrot.svg).
 
-Because when there is grass, he has to stop eating.
+Weil: Algo will nur Karotten, und kein Gras essen :-)
 ---
 1111
 ---

@@ -3,17 +3,17 @@ B11
   1
 ---
 ---
-Carrots around the corner!
+Karotten um die Ecke!
 ---
-Eat all carrots.
+Iss alle Karotten.
 ---
-Algo has to eat all the carrots. Algo can turn left ![](commands/left.svg) and
-right ![](commands/right.svg) to get the job done.
+Algo muss alle Karotten essen. Algo kann sich nach links ![](commands/left.svg)
+und nach rechts ![](commands/right.svg) drehen um den Job zu erledigen.
 ---
 1111
 ---
 1
 ---
-3 steps taken, 8 CISC length.
+3 Schritte, 8 CISC Länge.
 ---
 eat_carrot,forward,left,right,execute
