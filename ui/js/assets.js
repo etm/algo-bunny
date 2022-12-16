@@ -735,15 +735,15 @@ function Assets() {
   this.lang['de'].commands = {} //{{{
   this.lang['de'].commands.forward = { /*{{{*/
     'label': 'Schritt nach vor',
-    'desc': 'I hüpfe einen Schritt in die Richtung in die ich schaue. I hoffe ich falle in kein Loch und steige auf keine Karotte oder Blume.'
+    'desc': 'Ich hüpfe einen Schritt in die Richtung in die ich schaue. I hoffe ich falle in kein Loch und steige auf keine Karotte oder Blume.'
   }; /*}}}*/
   this.lang['de'].commands.back = { /*{{{*/
     'label': 'Schritt zurück',
-    'desc': 'I hüpfe einen Schritt zurück. I hoffe ich falle in kein Loch und steige auf keine Karotte oder Blume.'
+    'desc': 'Ich hüpfe einen Schritt zurück. Ich hoffe ich falle in kein Loch und steige auf keine Karotte oder Blume.'
   }; /*}}}*/
   this.lang['de'].commands.left = { /*{{{*/
     'label': 'Linksdrehung',
-    'desc': 'I dreh mich nach links.'
+    'desc': 'Ich dreh mich nach links.'
   }; /*}}}*/
   this.lang['de'].commands.right = { /*{{{*/
     'label': 'Rechtsdrehung',
@@ -818,7 +818,7 @@ function Assets() {
   }; /*}}}*/
   this.lang['de'].commands.if_hole = { /*{{{*/
     'label': 'Wenn Loch',
-    'desc': 'Ich checke of vor mir ein Loch ist.'
+    'desc': 'Ich checke ob vor mir ein Loch ist.'
   }; /*}}}*/
   this.lang['de'].commands.if_hold = { /*{{{*/
     'label': 'Check Carrot In Hand',
