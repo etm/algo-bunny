@@ -45,10 +45,6 @@ class Editor {
     this.#changed = new Event("cisc:changed", {"bubbles":false, "cancelable":false})
 
     this.program = []
-    let prog
-    if (prog = window.localStorage.getItem(this.id)) {
-      this.program = JSON.parse(prog)
-    }
 
     this.add_id = null
     this.remove_ids = []

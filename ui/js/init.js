@@ -40,9 +40,20 @@ $(document).ready(async function() {
   let loader = new Loader(assets, editor, field, elements, levelurl)
   if (!(await loader.load_level())) { return }
 
+  let prog
+  if (prog = window.localStorage.getItem(levelurl)) {
+    editor.program = JSON.parse(prog)
+  }
+
   elements.render()
   editor.render()
   field.render()
+
+  elements.show(editor.program_stats())
+  field.target.find('div.stats .cisc .value').text(editor.cisc_length())
+  editor.get_pids().forEach(pid => {
+    elements.target.find('img[data-type=execute' + pid + ']').show()
+  })
 
   walker = new Walker(assets,editor,field)
 
