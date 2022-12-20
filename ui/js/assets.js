@@ -33,23 +33,23 @@ function Assets() {
 
   this.load = function() { //{{{
     let promises = [];
-    _.each(self.audio,(item) => {
-      item.sounds = [];
-      _.each(item.locations,(l) => {
+    Object.values(self.audio).forEach((item) => {
+      item.sounds = []
+      Object.values(item.locations).forEach((l) => {
         item.sounds.push(new Audio(l))
-      });
-    });
-    _.each(self.tiles,(item) => {
+      })
+    })
+    Object.values(self.tiles).forEach((item) => {
       item.graphics = [];
-      _.each(item.locations,(l) => {
+      Object.values(item.locations).forEach((l) => {
         promises.push(load_svg(l,item.graphics));
       });
     });
-    _.each(self.placeholders,(item) => {
+    Object.values(self.placeholders).forEach((item) => {
       item.graphics = {};
       promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
     });
-    _.each(self.commands,(item) => {
+    Object.values(self.commands).forEach((item) => {
       if (item.type == 'simple' || item.type == 'position') {
         item.graphics = {};
         promises.push(load_svg(item.icon,        item.graphics, "icon"       ));

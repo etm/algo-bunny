@@ -406,7 +406,7 @@ class Editor {
   }  //}}}
   #newid(){ //{{{
     let ids = this.#newid_rec(this.program)
-    return "a" + (_.max(ids) + 1)
+    return "a" + (Math.max(...ids) + 1)
   } //}}}
   #insert_rec(it,eid,eop,ety,nid) { //{{{
     let newp = []
