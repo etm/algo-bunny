@@ -1,3 +1,11 @@
+function fs() {
+  var element = document.documentElement;
+  if      (element.requestFullscreen)       element.requestFullscreen();
+  else if (element.mozRequestFullScreen)    element.mozRequestFullScreen();
+  else if (element.webkitRequestFullscreen) element.webkitRequestFullscreen();
+  else if (element.msRequestFullscreen)     element.msRequestFullscreen();
+}
+
 $(document).ready(()=>{
   $('form').submit(false)
   if ($.cookie('username')) {
