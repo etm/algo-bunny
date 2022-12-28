@@ -256,6 +256,15 @@ $(document).ready(async function() {
     editor.target_svg.find('g[element-type=add] .adder').show()
     active_element_drag = true
   }) //}}}
+  elements.target.on('touchstart','[draggable=true][data-type]',(ev)=>{ //{{{
+    console.log('touchstart')
+  }) //}}}
+  elements.target.on('touchend','[draggable=true][data-type]',(ev)=>{ //{{{
+    console.log('touchend')
+  }) //}}}
+  elements.target.on('touchmove','[draggable=true][data-type]',(ev)=>{ //{{{
+    console.log('touchmove')
+  }) //}}}
   editor.target.on('drop','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault()
     ev.stopPropagation()

@@ -16,4 +16,4 @@ Eat all carrots.
 ---
 13 steps taken, 7 CISC length.
 ---
-eat_carrot,forward,left,right,if_carrot,if_hole,loop,break
+eat_carrot*1,forward*1,left,right,if_carrot,if_hole,loop,break

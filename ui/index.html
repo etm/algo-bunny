@@ -36,6 +36,15 @@
     <link rel="stylesheet" href="css/index.css" type="text/css"/>
 
     <link rel="stylesheet" href="css/speech.css" type="text/css"/>
+    <script>
+      function fs() {
+        var element = document.documentElement;
+        if      (element.requestFullscreen)       element.requestFullscreen();
+        else if (element.mozRequestFullScreen)    element.mozRequestFullScreen();
+        else if (element.webkitRequestFullscreen) element.webkitRequestFullscreen();
+        else if (element.msRequestFullscreen)     element.msRequestFullscreen();
+      }
+    </script>
   </head>
   <body>
     <div class='language' >[<a lang='de' href='index_de.html'>de</a>] [<a lang='en' href='index_en.html'>en</a>] </div>
@@ -45,6 +54,8 @@
       Algo is cute, sassy, and he loves carrots. Join him on his adventures.
       Write <strong>Carrot Instruction Set Code (CISC)</strong> for Algo, to
       help him do his favourite thing in the world: carrot gathering.
+
+      <button onclick="fs()">Fullscreen</button>
 
       <p>
 

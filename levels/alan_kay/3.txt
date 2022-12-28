@@ -1,6 +1,6 @@
 T TTT    TTTT
 TTT TTTTTT  T
-T TBT T T   T
+T TBT   T   T
 TTT TTTTTTTTT
   TTT       T
         TTTTT

@@ -29,6 +29,7 @@
     <script type="text/javascript" src="js_libs/parsequery.js"></script>
     <script type="text/javascript" src="js_libs/jquery.cookie.js"></script>
     <script type="text/javascript" src="js_libs/marked.min.js"></script>
+    <!-- script type="text/javascript" src="//cdn.jsdelivr.net/npm/eruda"></script -->
 
     <!-- custom stuff, play arround  -->
     <script type="text/javascript" src="js/assets.js"></script>
@@ -39,6 +40,7 @@
     <script type="text/javascript" src="js/elements.js"></script>
     <script type="text/javascript" src="js/init.js"></script>
 
+    <link rel="stylesheet" href="css/game.css" type="text/css"/>
     <link rel="stylesheet" href="css/ui.css" type="text/css"/>
     <link rel="stylesheet" href="css/editor.css" type="text/css"/>
     <link rel="stylesheet" href="css/field.css" type="text/css"/>
@@ -173,5 +175,17 @@
         </div>
       </div>
     </div>
+    <!-- script>
+      $(document).ready(function(){
+        let el = document.createElement('div');
+        document.body.appendChild(el);
+
+        eruda.init({
+            container: el,
+            tool: ['console', 'elements']
+        })
+        eruda.position({x: 20, y: 600});
+      })
+    </script -->
   </body>
 </html>
