@@ -146,7 +146,7 @@ $(document).ready(async function() {
       img.src = "assets/location.svg"
       ev.originalEvent.dataTransfer.setDragImage(img, 0, 0)
 
-      active_drag_location = ox+','+oy
+      active_drag_location = { x: ox, y: oy }
     } else {
       return false
     }
@@ -256,15 +256,74 @@ $(document).ready(async function() {
     editor.target_svg.find('g[element-type=add] .adder').show()
     active_element_drag = true
   }) //}}}
+
   elements.target.on('touchstart','[draggable=true][data-type]',(ev)=>{ //{{{
-    console.log('touchstart')
+    let touchobj = ev.changedTouches[0]
+    active_drag_location = {
+      x: parseInt(touchobj.clientX),
+      y: parseInt(touchobj.clientY),
+      add: null
+    }
+    editor.target_svg.find('g[element-group=drop] g[element-type=here]').removeClass('active')
+    editor.target_svg.find('g[element-type=add] .adder').show()
+    active_element_drag = true
+    ev.preventDefault()
   }) //}}}
   elements.target.on('touchend','[draggable=true][data-type]',(ev)=>{ //{{{
-    console.log('touchend')
+    active_drag_location = null
+    active_element_drag = false
+    drag.classList.remove('visible')
+
+    let pos = document.elementsFromPoint(ev.originalEvent.changedTouches[0].pageX,ev.originalEvent.changedTouches[0].pageY)[0]
+    let ot = $(pos).parents('g[element-type=add]')
+
+    let eid = $(ot).attr('element-id')
+    let eop = $(ot).attr('element-op')
+    let ety = $(ev.currentTarget).attr('data-type')
+
+    editor.insert_item(eid,eop,ety)
+
+    editor.target_svg.find('g[element-type=add] .adder').hide()
+    editor.target_svg.find('g[element-type=add]').removeClass('active')
+
+    editor.render_diff()
+    elements.show(editor.program_stats())
+
+    ev.preventDefault()
   }) //}}}
   elements.target.on('touchmove','[draggable=true][data-type]',(ev)=>{ //{{{
-    console.log('touchmove')
+    if (active_element_drag) {
+      let drag = document.querySelector('#drag')
+      let elem = ev.currentTarget
+      let clone = elem.cloneNode(true)
+
+      drag.replaceChildren(clone)
+      drag.classList.add('visible')
+      let posX = ev.originalEvent.changedTouches[0].pageX - (ev.currentTarget.clientWidth/2)
+      let posY = ev.originalEvent.changedTouches[0].pageY
+      drag.style.left = posX + 'px'
+      drag.style.top = posY + 'px'
+
+      let pos = document.elementsFromPoint(ev.originalEvent.changedTouches[0].pageX,ev.originalEvent.changedTouches[0].pageY)[2]
+      let ot = $(pos).parents('g[element-type=add]')
+
+      if (ot.length > 0) {
+        if (!ot.hasClass('active')) {
+          active_drag_location.add = ot
+          active_drag_location.add.addClass('active')
+        }
+      } else {
+        if (active_drag_location.add != null) {
+          active_drag_location.add.removeClass('active')
+          active_drag_location.add = null
+        }
+      }
+    } else {
+      // no move that we care about
+    }
+    ev.preventDefault();
   }) //}}}
+
   editor.target.on('drop','g[element-type=add]',(ev)=>{ //{{{
     ev.preventDefault()
     ev.stopPropagation()
