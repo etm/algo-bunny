@@ -366,6 +366,8 @@ $(document).ready(async function() {
     }
   }) //}}}
 
+  console.log(window.devicePixelRatio)
+
   $('button.mission').click(ev=>{
     field.target.find('div.victory').removeClass('active')
     field.target.find('div.mission').toggleClass('active')
