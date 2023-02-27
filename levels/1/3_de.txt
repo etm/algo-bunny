@@ -1,0 +1,29 @@
+B11111
+---
+---
+Karotten am Stiel!
+---
+Iss alle Karotten.
+---
+Algo muss schon wieder alle Karotten essen. Aber dieses mal gibts nur ein
+![](commands/eat_carrot.svg) und ein ![](commands/forward.svg). Versuche Algo
+beizubringen wie er Essen ![](commands/eat_carrot.svg) und Gehen
+![](commands/forward.svg) immer wieder und wieder machen kann. Ungefähr so:
+
+![example](help/3_1.png)
+
+Das nennt man eine Schleife ![](commands/loop.svg)!
+
+Aber wann soll Algo mit der Schleife aufhören? Wenn vor ihm ein Loch ist:
+![](commands/if_hole.svg)! Wenn vor Algo ein Loch ist, muss er mit der Schleife
+aufhören:
+
+![example](help/3_2.png)
+---
+11111
+---
+1
+---
+5 Schritte, 5 CISC Länge.
+---
+eat_carrot*1,forward*1,loop*1,break*1,if_hole*1

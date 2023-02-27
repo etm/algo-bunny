@@ -1,0 +1,22 @@
+B111
+1  1
+1111
+---
+---
+Wie bitte?
+---
+Iss alle Karotten.
+---
+Algo ___will___ die Karotten. Benutze alle Anweisungen die du bisher benutzt
+hast. Aber manche darfst du nur eine mal benutzen :-).
+
+___Tipp:___ Algo muss in der Schleife zwei unterschiedliche Dinge entscheiden: wann er sich
+drehen will ![](commands/if_hole.svg) und wann er fertig ist ![](commands/if_empty.svg).
+---
+111111111
+---
+1
+---
+9 Schritte, 7 CISC Länge, 46 Anweisungen.
+---
+eat_carrot*1,forward*1,left,right,loop,break,if_empty,if_hole

@@ -1,0 +1,27 @@
+ 1   1   1
+1B1 1T1 1T1
+ f   f   1
+---
+5,1,E
+9,1,E
+---
+Inselblumen!
+---
+Iss alle Karotten.
+---
+Wieder will Algo alle Karotten essen. Auch dieses Mal muss sich Algo in einer
+Schleife ![](commands/loop.svg) links ![](commands/left.svg) oder
+![](commands/right.svg) rechts drehen.
+
+Wenn Algo eine Blumenfreundin findet, muss er sich merken was diese ihm sagt
+![](commands/memorize_flower.svg) und dann dorthin spring ![](commands/jump_brain.svg).
+
+Dann gehts weiter.
+---
+1111111111
+---
+1
+---
+0 Schritte, 12 CISC Länge.
+---
+br,eat_carrot*1,left,right,loop,break,if_carrot,if_empty,if_flower,memorize_flower,jump_brain

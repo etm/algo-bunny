@@ -1,0 +1,28 @@
+TTTTTT
+B1111T
+T3333T
+T5555T
+T7777T
+TTTTTT
+---
+---
+Hü-Hüpf!
+---
+Iss die Karotten der Grösse nach.
+---
+Wichtig ist dass Algo zuerst die kleinen, und dann erst die grossen Karotten
+isst.
+
+Algo muss sich merken wo er ist ![](commands/memorize_position.svg). Wenn er am Ende
+der Reihe ist kann er zur gemerkten Position springen ![](commands/jump_brain.svg),
+und dann einen Schritt nach rechts gehen.
+
+Das muss er so lange machen ![](commands/loop.svg) bis er alle Karotten gegessen hat.
+---
+1111333355557777
+---
+1
+---
+20 Schritte, 11 CISC Länge.
+---
+eat_carrot*1,forward*1,step_right,jump_brain,memorize_position,loop,break,if_carrot

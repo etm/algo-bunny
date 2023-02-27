@@ -1,0 +1,25 @@
+ 1
+1B1
+ 1
+---
+---
+Karottenblume!
+---
+Iss alle Karotten.
+---
+Wieder will Algo alle Karotten essen. Aber diese Mal muss sich Algo in einer
+Schleife ![](commands/loop.svg) links ![](commands/left.svg) oder
+![](commands/right.svg) rechts drehen.
+
+Um die Schleife ![](commands/loop.svg) zu beenden muss Algo nachschauen ob vor
+ihm Wiese ![](commands/if_empty.svg) statt einer Karotte ist.
+
+Weil: Algo will nur Karotten, und kein Gras essen :-)
+---
+1111
+---
+1
+---
+0 Schritte, 5 CISC Länge.
+---
+eat_carrot*1,left*1,right*1,loop*1,break*1,if_empty*1

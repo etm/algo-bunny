@@ -1,0 +1,29 @@
+ T   T
+TBf TT1
+ T   T
+---
+5,1,E
+---
+Blumenfreundin!
+---
+Iss alle Karotten.
+---
+Algo will die Karotte essen. Aber diese Mal ist die Karotte auf einer
+anderen Insel.
+
+Die Blume vor Algo ist sein Freundin und sagt ihm er hinspringen muss. Algo
+muss sich merken was die Blume sagt ![](commands/memorize_flower.svg).
+
+Was die Blume sagt ist dann in seinem grossen Gehirn (rechts unten) gespeichert
+![](assets/brain.svg).
+
+Wenn Algo zur Stelle springt die er sich gemerkt hat
+![](commands/jump_brain.svg), kann er die Karotte essen.
+---
+1
+---
+1
+---
+0 Schritte, 3 CISC Länge.
+---
+eat_carrot*1,memorize_flower*1,jump_brain*1

@@ -7,6 +7,8 @@ Carrots around the corner!
 ---
 Eat all carrots.
 ---
+Algo has to eat all the carrots. Algo can turn left ![](commands/left.svg) and
+right ![](commands/right.svg) to get the job done.
 ---
 1111
 ---

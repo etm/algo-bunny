@@ -14,6 +14,6 @@ Eat all carrots. Avoid trying to eat carrots where no carrots are.
 ---
 1
 ---
-13 steps taken, 9 CISC length, 68 instructions evaluated.
+13 steps taken, 7 CISC length.
 ---
-eat_carrot,forward,left,right,loop,break,if_empty,if_hole,if_carrot,loop,break
+eat_carrot*3,forward*3,left,right,loop,break,if_empty,if_hole,if_carrot,loop,break

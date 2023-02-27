@@ -6,15 +6,15 @@ Carrots!
 Eat all carrots.
 ---
 On the left side is the list of available instructions. Drag instructions below
-![](assets/start.svg) to create Carrot Instruction Set Code (CISC), that the
-bunny will follow to gather carrots.
+![](assets/start.svg) to create Carrot Instruction Set Code (CISC), that Algo
+will follow to gather carrots.
 
 Use ![](assets/mission.svg) to show details and helpful tips, and
 ![](assets/play.svg) to try things out. Try things out :-)!
 
-Use ![](commands/eat_carrot.svg) to eat the carrot in front of you, and
-![](commands/forward.svg) to jump one field in the direction you are facing.
-If you jump into a hole or onto a carrot, you have to stop with
+Use ![](commands/eat_carrot.svg) to let Algo eat the carrot in front of him,
+and ![](commands/forward.svg) to let Algo jump one field in the direction he is
+facing. If Algo jumps into a hole or onto a carrot, you have to stop with
 ![](assets/reset.svg) and restart with ![](assets/play.svg).
 ---
 11

@@ -12,14 +12,15 @@ class Editor {
   constructor(target,assets,id) { //{{{
     this.assets = assets
     this.target = target
+    this.target_svg = target.find('svg')
     this.id = id
 
     let t0 = $X('<g element-group="below" xmlns="http://www.w3.org/2000/svg"></g>')
     let t1 = $X('<g element-group="graph" xmlns="http://www.w3.org/2000/svg"></g>')
     let t2 = $X('<g element-group="drop"  xmlns="http://www.w3.org/2000/svg"></g>')
-    target.append(t0)
-    target.append(t1)
-    target.append(t2)
+    this.target_svg.append(t0)
+    this.target_svg.append(t1)
+    this.target_svg.append(t2)
 
     this.groups = {
       'below': $X('<g element-x="" element-y="" element-type="" element-op="" element-id="" transform="" xmlns="http://www.w3.org/2000/svg"></g>'),
@@ -44,10 +45,6 @@ class Editor {
     this.#changed = new Event("cisc:changed", {"bubbles":false, "cancelable":false})
 
     this.program = []
-    let prog
-    if (prog = window.localStorage.getItem(this.id)) {
-      this.program = JSON.parse(prog)
-    }
 
     this.add_id = null
     this.remove_ids = []
@@ -85,7 +82,7 @@ class Editor {
     this.target_drop.append(g2)
   } //}}}
 
-  #draw_drag(x,y,parent,mark=null) {
+  #draw_drag(x,y,parent,mark=null) { //{{{
     let tar = this.target_graph.find('g[element-id=' + parent + ']')
     let g2 = this.groups.drag.clone()
         g2.attr('element-x',x)
@@ -98,7 +95,7 @@ class Editor {
         g3.attr('width',this.#tile_width)
         g3.attr('height',this.#tile_height)
     tar.append(g2)
-  }
+  } //}}}
 
   #draw(id,i,x,y,what,parent,mark=null) { //{{{
     let name = (typeof(i) == 'object') ? i.item : i
@@ -409,7 +406,7 @@ class Editor {
   }  //}}}
   #newid(){ //{{{
     let ids = this.#newid_rec(this.program)
-    return "a" + (_.max(ids) + 1)
+    return "a" + (Math.max(...ids) + 1)
   } //}}}
   #insert_rec(it,eid,eop,ety,nid) { //{{{
     let newp = []
@@ -517,11 +514,12 @@ class Editor {
     }
     return count
   } //}}}
+
   cisc_length(){ //{{{
     return this.#cisc_length_rec(this.program)
   } //}}}
 
-  #render_remove() {
+  #render_remove() { //{{{
     let aggr_shift = 0;
     this.remove_ids.forEach(e=>{
       let ele = $('div.program svg g[element-id=' + e + ']')
@@ -553,10 +551,10 @@ class Editor {
       })
     })
     this.remove_ids = []
-    let hei = parseFloat(this.target.attr('height'))
-    this.target.attr('height', hei - aggr_shift * this.#scale_factor * this.#tile_height)
-  }
-  #render_add() {
+    let hei = parseFloat(this.target_svg.attr('height'))
+    this.target_svg.attr('height', hei - aggr_shift * this.#scale_factor * this.#tile_height)
+  } //}}}
+  #render_add() { //{{{
     let aggr_shift = 0;
 
     let ele = $('div.program svg g[element-id=' + this.add_id + ']')
@@ -592,9 +590,9 @@ class Editor {
     })
 
     this.add_id = null
-  }
+  } //}}}
 
-  render() {
+  render() { //{{{
     this.add_id = null
     this.#render_remove()
     this.#clear()
@@ -604,24 +602,47 @@ class Editor {
     let [y,w] = this.#iter(this.program,1,1,undefined)
     let hei = y * this.#tile_height * this.#scale_factor + this.#height_add
     let wid = w * this.#tile_width * this.#scale_factor + this.#width_add
-    this.target.attr('height', hei)
-    this.target.attr('width',  wid)
+    this.target_svg.attr('height', hei)
+    this.target_svg.attr('width',  wid)
     window.localStorage.setItem(this.id, JSON.stringify(this.program,null,2));
     window.localStorage.setItem('current', JSON.stringify(this.program,null,2));
 
-  }
-
-  render_diff() {
+  } //}}}
+  render_diff() { //{{{
     if (this.add_id != null) {
       let [y,w] = this.#iter(this.program,1,1,undefined,this.add_id)
       this.#render_add()
       let hei = y * this.#tile_height * this.#scale_factor + this.#height_add
       let wid = w * this.#tile_width * this.#scale_factor + this.#width_add
-      this.target.attr('height', hei)
-      this.target.attr('width',  wid)
+      this.target_svg.attr('height', hei)
+      this.target_svg.attr('width',  wid)
     }
     this.#render_remove()
     window.localStorage.setItem(this.id, JSON.stringify(this.program,null,2));
     window.localStorage.setItem('current', JSON.stringify(this.program,null,2));
+  } //}}}
+
+
+  #program_walk(it) {
+    if (typeof(it) == null || it === undefined) { return [] }
+    let result = []
+    for (const [k,v] of it) {
+      if (typeof(v) == 'string') {
+        result.push(v)
+      }
+
+      if (typeof(v) == 'object' && v != null) {
+        result.push(v.item)
+        result = result.concat(this.#program_walk(v.first))
+        result = result.concat(this.#program_walk(v.second))
+      }
+    }
+    return result
+  }
+  program_stats() {
+    const result = this.#program_walk(this.program)
+    const counts = {}
+    result.forEach((x)=>{ counts[x] = (counts[x] || 0) + 1 })
+    return counts
   }
 }

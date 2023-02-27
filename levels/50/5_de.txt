@@ -1,0 +1,20 @@
+11111
+1 1 1
+11B11
+1 1 1
+11111
+---
+---
+Kreislauf!
+---
+Iss alle Karotten.
+---
+Algo ___will___ alle Karotten. Bring ihm bei wie er sie kriegt!
+---
+11111111111111111111
+---
+1
+---
+17 Schritte, 13 CISC Länge.
+---
+eat_carrot,forward,left,right,loop,break,if_empty,if_carrot

@@ -1,0 +1,29 @@
+1111
+1
+1 B1
+1  1
+1111
+---
+---
+Entscheidungen!
+---
+Iss alle Karotten.
+---
+Algo ___will___ die Karotten. Benutze alle Anweisungen die du bisher benutzt
+hast. Aber manche darfst du nur eine mal benutzen :-).
+
+___Tipp:___ Algo muss in der Schleife zwei unterschiedliche Dinge entscheiden:
+wann er sich drehen will und wann er fertig ist. Normalerweise, wenn Algo sich
+gedreht hat, kann er weiteressen. Aber ganz am Schluss wenn er sich gedreht hat
+gibts nix mehr zu beissen.
+
+Probier einfach mal aus alle zu essen, und dann überleg wo du aus der Schleife
+aussteigen musst.
+---
+1111111111111
+---
+1
+---
+13 Schritte, 7 CISC Länge.
+---
+eat_carrot*1,forward*1,left,right,if_carrot,if_hole,loop,break

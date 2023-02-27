@@ -1,0 +1,28 @@
+TTTTTT
+B1111T
+T1111T
+T1T11T
+T11T1T
+TTTTTT
+---
+---
+Wer hat die Karotten geklaut?
+---
+Iss alle Karotten.
+---
+Wieder will Algo alle Karotten essen. Wieder muss sich Algo in einer
+Schleife ![](commands/loop.svg) links ![](commands/left.svg) oder
+![](commands/right.svg) rechts drehen.
+
+Algo kann sich entweder abwechselnd nach links und rechts drehen oder er
+könnte einfach das Ganze Feld absuchen.
+
+Leider hat eine anderer Hase schon die schönsten Karotten geklaut.
+---
+11111111111111
+---
+1
+---
+0 steps taken, 5 CISC length.
+---
+eat_carrot,forward,left,right,loop,break,if_carrot,if_hole,execute

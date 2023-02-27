@@ -4,7 +4,9 @@ div.elements {
   background-color: #47baa4;
   scrollbar-color: #338c7b #47baa4;
   padding: 0.5em 0.5em;
-  height: 100vh;
+
+  height: 100%;
+
   width: 17.5em;
   min-width: 10.5em;
   overflow-y: scroll;
@@ -44,7 +46,7 @@ div.program {
   box-sizing: border-box;
   padding: 0.5em 0.5em;
 
-  height: 100vh;
+  height: 100%;
 
   background-color: #72d4c8;
   scrollbar-color: #338c7b #72d4c8;

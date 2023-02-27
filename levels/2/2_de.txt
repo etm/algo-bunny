@@ -1,0 +1,36 @@
+TTTTTT
+B1111T
+T3333T
+T5555T
+T7777T
+TTTTTT
+---
+---
+Kleine und grosse Karotten!
+---
+Iss die Karotten der Grösse nach.
+---
+Wieder will Algo alle Karotten essen. Wieder muss sich Algo in einer
+Schleife ![](commands/loop.svg) links ![](commands/left.svg) oder
+![](commands/right.svg) rechts drehen.
+
+Wichtig ist dass Algo zuerst die kleinen, und dann erst die grossen Karotten
+isst.
+
+Algo MUSS sich abwechselnd nach links und rechts drehen. Mach eine Schleife in
+der Algo eine Reihe isst, am Ende der Reihe mach ![](commands/break.svg). Dann
+dreh dich nach rechts. Dann mach wieder die selbe Schleife und dreh dich nach
+rechts.
+
+Dadurch dass du die beiden Schleifen und die Drehungen in eine weitere Schleife
+hineinmachst, macht Algo beides 2 mal.
+
+Dann fehlt nur noch die Abbruchbedingung :-)
+---
+1111333355557777
+---
+1
+---
+16 Schritte, 16 CISC Länge.
+---
+eat_carrot*4,forward*4,left,right,loop,break,if_carrot,execute
