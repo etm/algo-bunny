@@ -520,7 +520,7 @@ class Walker {
     } else {
       return true
     }
-  } //}} }
+  } //}}}
   async walk() { //{{{
     this.walking = true
     let res = await this.#walk_rec(this.editor.program)
@@ -535,14 +535,16 @@ class Walker {
         document.dispatchEvent(this.#nosuccess)
       }
     } else {
-      document.dispatchEvent(this.#nosuccess)
+      if (this.walking) {
+        document.dispatchEvent(this.#nosuccess)
+      }
       $('button.speed').hide()
     }
     if (this.walking) {
       $('button.control img').addClass('important')
       this.walking = false;
     } else {
-      this.stop()
+      this.#stop()
       this.field.reset_full()
     }
   } //}}}
@@ -580,11 +582,11 @@ class Walker {
     if (this.walking) {
       this.walking = false
     } else {
-      this.stop()
+      this.#stop()
       this.field.reset_full()
     }
   } //}}}
-  stop() { //{{{
+  #stop() { //{{{
     this.#brain = null
     this.#hand = null
     this.#steps_active = false
