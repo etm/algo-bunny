@@ -385,8 +385,7 @@ $(document).ready(async function() {
       $('button.control img').removeClass('important')
       if ($(ev.currentTarget).hasClass('active')) {
         $('button.speed').hide()
-        walker.stop()
-        field.reset_full()
+        walker.trigger_stop()
       } else {
         if (active_del_timeout) {
           clearTimeout(active_del_timeout)

@@ -534,13 +534,13 @@ class Walker {
         this.assets.say(this.assets.texts.fail,'div.speech')
         document.dispatchEvent(this.#nosuccess)
       }
-    }
-    if (res == false) {
+    } else {
       document.dispatchEvent(this.#nosuccess)
       $('button.speed').hide()
     }
     if (this.walking) {
       $('button.control img').addClass('important')
+      this.walking = false;
     } else {
       this.stop()
       this.field.reset_full()
@@ -576,8 +576,15 @@ class Walker {
   cmps_count() { return this.#cmps_count }
   ins_count() { return this.#ins_count }
 
+  trigger_stop() { //{{{
+    if (this.walking) {
+      this.walking = false
+    } else {
+      this.stop()
+      this.field.reset_full()
+    }
+  } //}}}
   stop() { //{{{
-    this.walking = false
     this.#brain = null
     this.#hand = null
     this.#steps_active = false
