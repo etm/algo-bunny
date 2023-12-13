@@ -446,6 +446,11 @@ $(document).ready(async function() {
         let ins = walker.ins_count()
         let steps = walker.step_count()
         let cmps = walker.cmps_count()
+        let sol_stats = { "cisc": cisc,
+                          "ins": ins,
+                          "steps": steps,
+                          "cmps": cmps
+                        }
 
         field.target.find('div.victory .text .title .value').text(field.title.trim())
         field.target.find('div.victory .text .steps .value').text(steps)
@@ -453,6 +458,13 @@ $(document).ready(async function() {
         field.target.find('div.victory .text .ins .value').text(ins)
         field.target.find('div.victory .text .cisc .value').text(cisc)
         field.target.find('div.victory .text .reference_rank .value').text(field.max_score)
+        $.ajax({
+          type: 'POST',
+          url: 'save_scores.php',
+          data: { "level": field.title.trim().replace(/[^a-zA-Z0-9!?()-]/g,'_'),
+                  "stats": JSON.stringify(sol_stats,null,2),
+                  "solution": JSON.stringify(editor.program,null,2)}
+        });
       },1000)
       assets.play_audio(assets.audio.yay.sounds.sample())
     } else {
