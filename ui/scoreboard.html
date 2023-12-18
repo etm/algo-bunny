@@ -1,0 +1,58 @@
+<!--
+  This file is part of Algo-Bunny.
+
+  Algo-Bunny is free software: you can redistribute it and/or modify it under the terms
+  of the GNU General Public License as published by the Free Software Foundation,
+  either version 3 of the License, or (at your option) any later version.
+
+  Algo-Bunny is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along with
+  Algo-Bunny (file COPYING in the main directory).  If not, see
+  <http://www.gnu.org/licenses/>.
+-->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title>Algo The Bunny - Scores</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <!-- <link href="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.css" rel="stylesheet"> -->
+    
+    <script type="text/javascript" src="js_libs/jquery.min.js"></script>
+    <!-- <script src="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.js"></script> -->
+    <script type="text/javascript" src="js_libs/util.js"></script>
+    <script type="text/javascript" src="js_libs/parsequery.js"></script>
+    <script type="text/javascript" src="js_libs/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js_libs/marked.min.js"></script>
+
+    <script type="text/javascript" src="js/scoreboard.js"></script>
+
+    <link rel="stylesheet" href="css/scoreboard.css" type="text/css"/>
+
+  </head>
+  <body>
+    <div>
+    <!-- Scoreboard -->
+    <div style="justify-content: center;"> 
+      <table id="scoreboard_table">
+        <thead> 
+          <tr id="scoreboard_head">
+            <th>Level</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td id="next_level_cell"> Level 1 </td>
+            <td colspan="3"> <input id="btn_add_row" type="button" value="Not yet!" style="width:100%;height:100%"> </td>
+          </tr>
+        </tbody>
+      
+    </table>   
+
+  </body>
+</html>
