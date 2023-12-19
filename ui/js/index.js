@@ -8,6 +8,10 @@ function fs() {
 
 $(document).ready(()=>{
   $('form').submit(false)
+  if (!$.cookie('username')) {
+    $.cookie('username', $('input').val());
+    $.cookie('userid', $UUID());
+  }
   if ($.cookie('username')) {
     $('input').val($.cookie('username'))
   }
