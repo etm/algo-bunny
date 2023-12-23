@@ -10,7 +10,10 @@ $(document).ready(()=>{
   $('form').submit(false)
   if (!$.cookie('username')) {
     $.cookie('username', $('input').val());
-    $.cookie('userid', $UUID());
+  }
+  if (!$.cookie('userid')) {
+    $.cookie('userid', $UUID(), { expires : 365, path: "/;SameSite=Lax", secure: true});
+    console.log("userid: ", $.cookie('userid'))
   }
   if ($.cookie('username')) {
     $('input').val($.cookie('username'))
