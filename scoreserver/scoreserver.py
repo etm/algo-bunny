@@ -12,7 +12,7 @@ CORS(app) # So bunny can access data
 path_root = '/var/www/bunny/'
 now = datetime.datetime.now()
 today = now.strftime("%y-%m-%d")
-today = '23-12-17'
+today = '23-12-26'
 
 levels = [
     "Carrots!",
@@ -25,10 +25,23 @@ levels = [
 def hello_world():
     return '<p>Hello, World!</p>'
 
-def get_students():
+def get_student_ids():
     folder = path_root + 'scores'
     sub_folders = [name for name in os.listdir(folder) if os.path.isdir(os.path.join(folder, name))]
     return sub_folders
+
+def get_name_by_id(id):
+    username_path = path_root + 'data/' + id + '/username.txt'
+    f = open(username_path, 'r')
+    return f.read()
+
+def extract_time_from_filename(filename):
+    ext = '.json'
+    time_len = 8
+    end = - len(ext)
+    start = end - time_len
+    time_str = filename[start:end].replace('-', ':')
+    return time_str
 
 def get_student_level_data(student, level = 0):
     global today
@@ -47,6 +60,7 @@ def get_student_level_data(student, level = 0):
     latest_sol_file = open(files[-1])
     latest_sol = json.load(latest_sol_file)
     latest_sol["sol_source"] = files[-1][len(prefix):]
+    latest_sol["timestamp"] = today+' '+extract_time_from_filename(files[-1])
 
     return latest_sol
 
@@ -54,7 +68,7 @@ def get_student_level_data(student, level = 0):
 @app.route('/init', methods=['GET'])
 def students():
     table_data = {}
-    table_data['names'] = get_students()
+    table_data['users'] = [{'id': id, 'username': get_name_by_id(id)} for id in get_student_ids()]
     return json.dumps(table_data)
 
 @app.route('/get/level/<level>', methods=['GET'])
@@ -65,7 +79,7 @@ def get_level_data(level):
         return json.dumps({"err": "I don't know that level!"})
 
     level_data = {"students":{}, "err":"No errors!"}
-    students = get_students()
+    students = get_student_ids()
     for student in students:
         level_data["students"][student] = get_student_level_data(student, int(level))
 

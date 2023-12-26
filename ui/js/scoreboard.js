@@ -1,9 +1,11 @@
+// Type of name_list: [{id: string, username: string}]
 function add_table_head(name_list) {
     const table_head = document.getElementById("scoreboard_head")
 
-    name_list.forEach(function(name) {
+    name_list.forEach(function(user) {
         cell = document.createElement('th')
-        cell.innerHTML = name
+        cell.id = user.id
+        cell.innerHTML = user.username
         table_head.appendChild(cell)
     })
 }
@@ -30,9 +32,9 @@ function add_row(student_data) {
     const colCount = $("#scoreboard_table tr th").length;
 
     // Get name order in table header
-    const names = Array.from(document.getElementById("scoreboard_head").children)
-                    .map((cell) => cell.textContent)
-    console.log(names)
+    const ids = Array.from(document.getElementById("scoreboard_head").children)
+                    .map((cell) => cell.id)
+    console.log(ids)
 
     let table = document.getElementById("scoreboard_table");
     let row = table.insertRow(rowCount - 1);
@@ -43,7 +45,7 @@ function add_row(student_data) {
     for (let i = 1; i <= colCount - 1; i++) {
         let cell = row.insertCell(i);
         // Fill cells we have data about
-        let name = names[i]
+        let name = ids[i]
         if (name in student_data) {
             cell.textContent = JSON.stringify(student_data[name]);
         }
@@ -62,15 +64,13 @@ $(document).ready(
             error: () => { console.log("error") }
             }).then(res => {
             const response = JSON.parse(res)
-            add_table_head(response.names)
+            console.log(response)
+            add_table_head(response.users)
         })
 
         const btn_add_row = document.getElementById("btn_add_row")
         btn_add_row.onclick = ((ev)=>{
-            console.log(ev)
-            console.log("clicked button!")
             insert_next_level()
-            // add_row()
         })
     }
 )
