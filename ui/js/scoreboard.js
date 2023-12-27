@@ -26,6 +26,12 @@ function insert_next_level() {
     })
 }
 
+function rm_row(row_index) {
+    return function () {
+        document.getElementById("scoreboard_table").deleteRow(row_index);
+    }
+}
+
 function add_row(student_data) {
     // Find position to insert row at
     const rowCount = $("#scoreboard_table tr").length;
@@ -41,7 +47,17 @@ function add_row(student_data) {
 
     // Create row
     let level_cell = row.insertCell(0);
-    level_cell.innerHTML = "New Level!" + (rowCount - 1)
+    // level_cell.innerHTML = '<button class="row_rm_button"> X </button>' +
+    //     " New Level!" + (rowCount - 1)
+    const cell_text = document.createElement('div')
+    cell_text.textContent = " New Level!" + (rowCount - 1)
+    const bttn = document.createElement('button')
+    bttn.textContent = 'X'
+    bttn.className = 'row_rm_button'
+    bttn.onclick = rm_row(rowCount - 1)
+    level_cell.appendChild(bttn)
+    level_cell.appendChild(cell_text)
+
     for (let i = 1; i <= colCount - 1; i++) {
         let cell = row.insertCell(i);
         // Fill cells we have data about
