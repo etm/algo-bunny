@@ -1,12 +1,17 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_sse import sse
 
 import os
 import glob
 import json
 import datetime
 
+from fileobserver import observer_setup
+
 app = Flask(__name__)
+app.config['REDIS_URL'] = 'redis://localhost' # flask_see needs this
+app.register_blueprint(sse, url_prefix='/stream') # channel broadcasting user and score changes
 CORS(app) # So bunny can access data
 
 path_root = '/var/www/bunny/'
@@ -89,5 +94,17 @@ def get_level_data(level):
 def get_student_data(student):
     return 'student: '+student
 
+# Broadcast an event to everyone viewing the scoreboard
+def send_event(event_type, data):
+    with app.app_context():
+        print(event_type, data)
+        sse.publish(data, type=event_type)
+
+
 if __name__ == '__main__':
-    app.run(host='localhost', port=3000)
+    app.debug = True
+    # Monitor username changes
+    observer_setup(send_event)
+    # TODO: Monitor new submissions
+    app.run(host='localhost', port=3000, threaded=True)
+

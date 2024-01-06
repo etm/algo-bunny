@@ -47,8 +47,6 @@ function add_row(student_data) {
 
     // Create row
     let level_cell = row.insertCell(0);
-    // level_cell.innerHTML = '<button class="row_rm_button"> X </button>' +
-    //     " New Level!" + (rowCount - 1)
     const cell_text = document.createElement('div')
     cell_text.textContent = " New Level!" + (rowCount - 1)
     const bttn = document.createElement('button')
@@ -73,7 +71,16 @@ function add_row(student_data) {
 }
 
 $(document).ready(
-    function() {
+    async function() {
+        // let q = $.parseQuerySimple()
+        // let levelurl = q.level ? q.level : ''
+
+        let source = new EventSource("http://localhost:3000/stream");
+        source.addEventListener('publish', function(event) {
+            // var data = JSON.parse(event.data)
+            console.log('got event!!!', event)
+        }, false);
+
         $.ajax({
             type: "GET",
             url: "http://localhost:3000/init",
