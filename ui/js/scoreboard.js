@@ -70,16 +70,26 @@ function add_row(student_data) {
     next_level_cell.innerHTML = "Next level: " + rowCount
 }
 
+function update_username(uid, username) {
+    let username_cell = document.getElementById(uid)
+    username_cell.innerHTML = username
+}
+
+function register_events() {
+    let source = new EventSource("http://localhost:3000/stream");
+    source.addEventListener('username_change', function(event) {
+        var data = JSON.parse(event.data)
+        console.log('got event!!!', event)
+        update_username(data.uid, data.username)
+    }, false);
+}
+
 $(document).ready(
     async function() {
         // let q = $.parseQuerySimple()
         // let levelurl = q.level ? q.level : ''
 
-        let source = new EventSource("http://localhost:3000/stream");
-        source.addEventListener('publish', function(event) {
-            // var data = JSON.parse(event.data)
-            console.log('got event!!!', event)
-        }, false);
+        
 
         $.ajax({
             type: "GET",
@@ -89,6 +99,9 @@ $(document).ready(
             const response = JSON.parse(res)
             console.log(response)
             add_table_head(response.users)
+        }).then(() => {
+            console.log('table head built')
+            register_events()
         })
 
         const btn_add_row = document.getElementById("btn_add_row")
