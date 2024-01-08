@@ -446,10 +446,12 @@ $(document).ready(async function() {
         let ins = walker.ins_count()
         let steps = walker.step_count()
         let cmps = walker.cmps_count()
+        let level_src = $.parseQuerySimple().level
         let sol_stats = { "cisc": cisc,
                           "ins": ins,
                           "steps": steps,
-                          "cmps": cmps
+                          "cmps": cmps,
+                          "level_src": level_src
                         }
 
         field.target.find('div.victory .text .title .value').text(field.title.trim())

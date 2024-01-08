@@ -1,3 +1,25 @@
+class ScoreManager {
+    #hidden_data
+
+    constructor(initial_data) {
+        this.hidden_data = initial_data;
+    }
+
+    show_next_levels() {
+        if (Object.keys(this.hidden_data).length === 0) {
+            console.log("No more submissions");
+            return;
+        }
+
+        for (const [level, users] of Object.entries(this.hidden_data)) {
+            console.log(`${level}: ${users}`);
+            add_row(level, users)
+        }
+
+        this.hidden_data = {}
+    }
+}
+
 // Type of name_list: [{id: string, username: string}]
 function add_table_head(name_list) {
     const table_head = document.getElementById("scoreboard_head")
@@ -11,22 +33,6 @@ function add_table_head(name_list) {
 
     // Adjust button span
     document.getElementById("next_level_button_cell").colSpan = "" + name_list.length;
-}
-
-function insert_next_level() {
-    const rowCount = $("#scoreboard_table tr").length;
-
-    $.ajax({
-        type: "GET",
-        url: "http://localhost:3000/get/level/" + (rowCount - 1),
-        error: () => { console.log("error") }
-        }).then(res => {
-        const response = JSON.parse(res)
-        console.log(response)
-        if ("students" in response) {
-            add_row(response["students"])
-        }
-    })
 }
 
 function rm_row(row_index) {
@@ -45,7 +51,7 @@ function create_cell_content(data) {
 
     timestamp.textContent = data.timestamp
     stats.textContent = data.cisc + "|" + data.ins + "|" + data.steps + "|" + data.cmps
-    // stats.href = 
+    stats.href = 'game.html?level=' + data.level_src + '&solution=' + data.sol_src
     show_more_bttn.textContent = '...'
     show_more_bttn.className = 'show_more_button'
 
@@ -56,7 +62,7 @@ function create_cell_content(data) {
     return wrapper
 }
 
-function add_row(student_data) {
+function add_row(level_name, student_data) {
     // Find position to insert row at
     const rowCount = $("#scoreboard_table tr").length;
     const colCount = $("#scoreboard_table tr th").length;
@@ -72,11 +78,12 @@ function add_row(student_data) {
     // Create row
     let level_cell = row.insertCell(0);
     const cell_text = document.createElement('div')
-    cell_text.textContent = " New Level!" + (rowCount - 1)
+    cell_text.textContent = level_name
     const bttn = document.createElement('button')
     bttn.textContent = 'X'
     bttn.className = 'row_rm_button'
     bttn.onclick = rm_row(rowCount - 1)
+    level_cell.id = level_name
     level_cell.appendChild(bttn)
     level_cell.appendChild(cell_text)
 
@@ -84,15 +91,11 @@ function add_row(student_data) {
         let cell = row.insertCell(i);
         // Fill cells we have data about
         let name = ids[i]
-        if (name in student_data) {
-            if ('timestamp' in student_data[name])
-                cell.appendChild(create_cell_content(student_data[name]))
+        if (name in student_data && student_data[name] != []) {
+            const stats = student_data[name][0];
+            cell.appendChild(create_cell_content(stats));
         }
     }
-
-    // Change level number next to the button
-    let next_level_cell = document.getElementById("next_level_cell");
-    next_level_cell.innerHTML = "Next level: " + rowCount
 }
 
 function add_new_user_column(uid, username) {
@@ -139,17 +142,17 @@ $(document).ready(
     async function() {
         // let q = $.parseQuerySimple()
         // let levelurl = q.level ? q.level : ''
-
-        
+        let scoreManager = undefined
 
         $.ajax({
             type: "GET",
-            url: "http://localhost:3000/init",
+            url: "http://localhost:3000/init/today",
             error: () => { console.log("error") }
             }).then(res => {
             const response = JSON.parse(res)
             console.log(response)
             add_table_head(response.users)
+            scoreManager = new ScoreManager(response.levels)
         }).then(() => {
             console.log('table head built')
             register_events()
@@ -157,7 +160,8 @@ $(document).ready(
 
         const btn_add_row = document.getElementById("btn_add_row")
         btn_add_row.onclick = ((ev)=>{
-            insert_next_level()
+            if (scoreManager)
+                scoreManager.show_next_levels()
         })
     }
 )

@@ -6,6 +6,7 @@ import os
 import glob
 import json
 import datetime
+from itertools import groupby
 
 from fileobserver import observer_setup
 
@@ -17,14 +18,7 @@ CORS(app) # So bunny can access data
 path_root = '/var/www/bunny/'
 now = datetime.datetime.now()
 today = now.strftime("%y-%m-%d")
-today = '23-12-26'
-
-levels = [
-    "Carrots!",
-    "Carrots_around_the_corner!",
-    "Carrots_on_a_stick!"
-    ]
-
+today = '24-01-08'
 
 @app.route('/')
 def hello_world():
@@ -48,27 +42,27 @@ def extract_time_from_filename(filename):
     time_str = filename[start:end].replace('-', ':')
     return time_str
 
-def get_student_level_data(student, level = 0):
-    global today
-    
-    if (level == 0):
-        pass # get all levels for the specified student
-    
-    prefix = path_root + 'scores/'
-    score_path = student + '/' + today + "/" + levels[level-1]
-    file_path = prefix + score_path + "*"
-    files = glob.glob(file_path)
+def extract_stats(filename, day):
+    file = open(filename)
+    stats = json.load(file)
+    stats["sol_src"] = 'data/' + filename[len(path_root + 'scores/'):]
+    stats["timestamp"] = day+' '+extract_time_from_filename(filename)
+    return stats
 
-    if files == []:
-        return {}
-    # Open last file in list for now
-    latest_sol_file = open(files[-1])
-    latest_sol = json.load(latest_sol_file)
-    latest_sol["sol_source"] = files[-1][len(prefix):]
-    latest_sol["timestamp"] = today+' '+extract_time_from_filename(files[-1])
+def filter_stats(file_list, day):
+    all_stats = [extract_stats(filename, day) for filename in file_list]
+    return all_stats
 
-    return latest_sol
-
+def get_stats_by_datetime(uid, day, time=None):
+    if time==None:
+        prefix = path_root + 'scores/' + uid + '/' + day + '/'
+        file_regex = prefix + '*'
+        files = glob.glob(file_regex)
+        grouped_files = groupby(sorted(files), lambda filename : filename[len(prefix):len(filename)-len(day+'.json')-1])
+        # grouped_lists = [(k, [filename[len(path_root):] for filename in list(g)]) for k, g in grouped_files]
+        grouped_lists = {k: filter_stats(list(g), day) for k, g in grouped_files}
+        return grouped_lists
+    return []
 
 @app.route('/init', methods=['GET'])
 def students():
@@ -76,19 +70,24 @@ def students():
     table_data['users'] = [{'id': id, 'username': get_name_by_id(id)} for id in get_student_ids()]
     return json.dumps(table_data)
 
-@app.route('/get/level/<level>', methods=['GET'])
-def get_level_data(level):
-    global today, levels
+@app.route('/init/today', methods=['GET'])
+def stats_today():
+    table_data = {}
+    table_data['users'] = [{'id': id, 'username': get_name_by_id(id)} for id in get_student_ids()]
+    stats = {user['id']: get_stats_by_datetime(user['id'], today) for user in table_data['users']}
+    table_data['levels'] = {}
 
-    if (int(level) > len(levels)):
-        return json.dumps({"err": "I don't know that level!"})
+    for uid in stats:
+        for level in stats[uid]:
+            if level not in table_data['levels']:
+                table_data['levels'][level] = {}
+            table_data['levels'][level][uid] = stats[uid][level]
 
-    level_data = {"students":{}, "err":"No errors!"}
-    students = get_student_ids()
-    for student in students:
-        level_data["students"][student] = get_student_level_data(student, int(level))
+    return json.dumps(table_data)
 
-    return json.dumps(level_data)
+@app.route('/init/last_hour', methods=['GET'])
+def stats_hour():
+    pass
 
 @app.route('/get/student/<student>', methods=['GET'])
 def get_student_data(student):
