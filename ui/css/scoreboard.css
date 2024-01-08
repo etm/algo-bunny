@@ -11,3 +11,7 @@ th, td {
 .row_rm_button {
     float: left;
 }
+
+.show_more_button {
+    float: right;
+}

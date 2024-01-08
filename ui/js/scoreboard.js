@@ -8,6 +8,9 @@ function add_table_head(name_list) {
         cell.innerHTML = user.username
         table_head.appendChild(cell)
     })
+
+    // Adjust button span
+    document.getElementById("next_level_button_cell").colSpan = "" + name_list.length;
 }
 
 function insert_next_level() {
@@ -30,6 +33,27 @@ function rm_row(row_index) {
     return function () {
         document.getElementById("scoreboard_table").deleteRow(row_index);
     }
+}
+
+function create_cell_content(data) {
+    console.log(data)
+
+    const wrapper = document.createElement('div')
+    const timestamp = document.createElement('div')
+    const stats = document.createElement('a')
+    const show_more_bttn = document.createElement('button')
+
+    timestamp.textContent = data.timestamp
+    stats.textContent = data.cisc + "|" + data.ins + "|" + data.steps + "|" + data.cmps
+    // stats.href = 
+    show_more_bttn.textContent = '...'
+    show_more_bttn.className = 'show_more_button'
+
+    wrapper.appendChild(stats)
+    wrapper.appendChild(show_more_bttn)
+    wrapper.appendChild(timestamp)
+
+    return wrapper
 }
 
 function add_row(student_data) {
@@ -61,7 +85,8 @@ function add_row(student_data) {
         // Fill cells we have data about
         let name = ids[i]
         if (name in student_data) {
-            cell.textContent = JSON.stringify(student_data[name]);
+            if ('timestamp' in student_data[name])
+                cell.appendChild(create_cell_content(student_data[name]))
         }
     }
 
