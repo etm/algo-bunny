@@ -70,9 +70,35 @@ function add_row(student_data) {
     next_level_cell.innerHTML = "Next level: " + rowCount
 }
 
+function add_new_user_column(uid, username) {
+    const table_head = document.getElementById("scoreboard_head");
+    const rowCount = $("#scoreboard_table tr").length;
+
+    // Add name in table head
+    cell = document.createElement('th');
+    cell.id = uid;
+    cell.innerHTML = username;
+    table_head.appendChild(cell);
+
+    // Add cells in rows already displayed
+    [...document.querySelectorAll('#scoreboard_table tbody tr')].forEach((row, i) => {
+        if (i < rowCount - 2) {
+            const cell = document.createElement("td");
+            row.appendChild(cell);
+        }
+    });
+
+    // Change span of button cell
+    const colCount = $("#scoreboard_table tr th").length;
+    document.getElementById("next_level_button_cell").colSpan = "" + colCount - 1;
+}
+
 function update_username(uid, username) {
     let username_cell = document.getElementById(uid)
-    username_cell.innerHTML = username
+    if (username_cell)
+        username_cell.innerHTML = username
+    else
+        add_new_user_column(uid, username)
 }
 
 function register_events() {

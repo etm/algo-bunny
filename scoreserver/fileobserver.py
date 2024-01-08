@@ -23,6 +23,7 @@ def observer_setup(send_event):
     case_sensitive = True
     my_event_handler = PatternMatchingEventHandler(patterns, ignore_patterns, ignore_directories, case_sensitive)
     my_event_handler.on_modified = on_username_change(send_event)
+    my_event_handler.on_created = on_username_change(send_event)
 
     path = "/var/www/bunny/data"
     go_recursively = True
