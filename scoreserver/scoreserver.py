@@ -1,6 +1,5 @@
-from flask import Flask
+from flask import Flask, Response
 from flask_cors import CORS
-from flask_sse import sse
 
 import os
 import glob
@@ -9,16 +8,17 @@ import datetime
 from itertools import groupby
 
 from fileobserver import observer_setup
+from eventmanager import EventManager
 
 app = Flask(__name__)
-app.config['REDIS_URL'] = 'redis://localhost' # flask_see needs this
-app.register_blueprint(sse, url_prefix='/stream') # channel broadcasting user and score changes
 CORS(app) # So bunny can access data
 
 path_root = '/var/www/bunny/'
 now = datetime.datetime.now()
 today = now.strftime("%y-%m-%d")
 today = '24-01-08'
+
+event_manager = EventManager()
 
 @app.route('/')
 def hello_world():
@@ -96,9 +96,23 @@ def get_student_data(student):
 
 # Broadcast an event to everyone viewing the scoreboard
 def send_event(event_type, data):
+    global event_manager
+
     with app.app_context():
         print(event_type, data)
-        sse.publish(data, type=event_type)
+        event_manager.announce(event_type, json.dumps(data))
+
+@app.route('/stream', methods=['GET'])
+def listen():
+    def stream():
+        global event_manager
+
+        messages = event_manager.listen()  # returns a queue.Queue
+        while True:
+            msg = messages.get()  # blocks until a new message arrives
+            yield msg
+
+    return Response(stream(), mimetype='text/event-stream')
 
 
 if __name__ == '__main__':
@@ -106,5 +120,6 @@ if __name__ == '__main__':
     # Monitor username changes
     observer_setup(send_event)
     # TODO: Monitor new submissions
+
     app.run(host='localhost', port=3000, threaded=True)
 
