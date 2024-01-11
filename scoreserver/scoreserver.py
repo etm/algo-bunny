@@ -46,7 +46,8 @@ def extract_stats(filename, day):
     file = open(filename)
     stats = json.load(file)
     stats["sol_src"] = 'data/' + filename[len(path_root + 'scores/'):]
-    stats["timestamp"] = day+' '+extract_time_from_filename(filename)
+    stats["date"] = day
+    stats["timestamp"] = extract_time_from_filename(filename)
     return stats
 
 def filter_stats(file_list, day):
