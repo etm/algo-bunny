@@ -4,7 +4,8 @@
   $uname = preg_replace($filter,'',$_COOKIE['username']);
   if (!$uname || $uname == '') {
     $uname = "John Doe";
-    $uid = "John Doe";    
+    $uid = "John Doe";
+    file_put_contents('data/' . $uid . '/' . 'username.txt', $uname);
   }
   $cdate = date('y-m-d');
   $ctime = date('h-i-s');
@@ -13,7 +14,6 @@
   $level = preg_replace($filter,'',$_REQUEST['level']);
   $data = $_REQUEST['solution'];
 
-  file_put_contents('data/' . $uid . '/' . 'username.txt', $uname);
   file_put_contents('data/' . $uid . '/' . $cdate . '/' . $level . '_' . $ctime . '.json', $data);
   exit;
 ?>
