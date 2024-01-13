@@ -2,7 +2,20 @@ class ScoreManager {
     #hidden_data
 
     constructor(initial_data) {
-        this.hidden_data = initial_data;
+        this.hidden_data = {};
+        console.log(initial_data);
+
+        for (const [level_name, students] of Object.entries(initial_data)) {
+            this.hidden_data[level_name] = {}
+            for (const [uid, level_stats] of Object.entries(students)) {
+                this.hidden_data[level_name][uid] = {}
+                // TODO: filter duplicate solutions and find best solution
+                this.hidden_data[level_name][uid]['best'] = level_stats[0]
+                this.hidden_data[level_name][uid]['more'] = level_stats.slice(1)
+            }
+        }
+
+        console.log(this.hidden_data)
     }
 
     show_next_levels() {
@@ -41,22 +54,55 @@ function rm_row(row_index) {
     }
 }
 
+function append_stats(container, stats) {
+    stats_div = document.createElement('div')
+    for (let i=0; i<stats.length; i++) {
+        container.appendChild(stats_to_elem(stats[i]))
+    }
+}
+
+function stats_to_elem(stats) {
+    const stats_elem = document.createElement('a')
+
+    stats_elem.textContent = stats.timestamp
+    stats_elem.title = stats.cisc + "|" + stats.ins + "|" + stats.steps + "|" + stats.cmps
+    stats_elem.href = 'game.html?level=' + stats.level_src + '&solution=' + stats.sol_src
+    stats_elem.style.display = "block"
+
+    return stats_elem
+}
+
 function create_cell_content(data) {
     console.log(data)
+    const best = data['best']
+    const more_stats = data['more']
 
     const wrapper = document.createElement('div')
     const timestamp = document.createElement('div')
     const stats = document.createElement('a')
     const show_more_bttn = document.createElement('button')
+    const bubble = document.createElement('div')
 
-    timestamp.textContent = data.timestamp
-    stats.textContent = data.cisc + "|" + data.ins + "|" + data.steps + "|" + data.cmps
-    stats.href = 'game.html?level=' + data.level_src + '&solution=' + data.sol_src
+    timestamp.textContent = best.timestamp
+    stats.textContent = best.cisc + "|" + best.ins + "|" + best.steps + "|" + best.cmps
+    stats.href = 'game.html?level=' + best.level_src + '&solution=' + best.sol_src
     show_more_bttn.textContent = '...'
     show_more_bttn.className = 'show_more_button'
+    bubble.className = 'bubble'
+    if (more_stats)
+        append_stats(bubble, more_stats);
+    else
+        bubble.textContent = "Bubble"
+    bubble.hidden = true
+
+    show_more_bttn.onclick = () => {
+        bubble.hidden = !bubble.hidden;
+        show_more_bttn.textContent = show_more_bttn.textContent === '...' ? 'x' : '...'
+    }
 
     wrapper.appendChild(stats)
     wrapper.appendChild(show_more_bttn)
+    wrapper.appendChild(bubble)
     wrapper.appendChild(timestamp)
 
     return wrapper
@@ -92,7 +138,7 @@ function add_row(level_name, student_data) {
         // Fill cells we have data about
         let name = ids[i]
         if (name in student_data && student_data[name] != []) {
-            const stats = student_data[name][0];
+            const stats = student_data[name];
             cell.appendChild(create_cell_content(stats));
         }
     }
