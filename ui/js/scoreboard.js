@@ -78,8 +78,19 @@ class ScoreManager {
                                                         get_cell_id(data['level'], data['uid']))
                 cell.appendChild(cell_content)
             }
-        } else {
-            // TODO
+        } else { // Level not yet displayed
+            if (!(data['level'] in this.hidden_data))
+                this.hidden_data[data['level']] = {}
+            if (!(data['uid'] in this.hidden_data[data['level']])) {
+                this.hidden_data[data['level']][data['uid']] = {'best': stats, 'more': []}
+            } else {
+                const current_best = this.hidden_data[data['level']][data['uid']]['best']
+                if (this.stats_cmp(current_best, stats) > 0) {
+                    this.hidden_data[data['level']][data['uid']]['best'] = stats
+                } else {
+                    this.hidden_data[data['level']][data['uid']]['more'].push(stats)
+                }
+            }
         }
     }
 }
