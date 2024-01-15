@@ -13,8 +13,6 @@ class ScoreManager {
                 this.hidden_data[level_name][uid] = {}
                 // TODO: filter duplicate solutions
                 const sorted_stats = level_stats.toSorted(this.stats_cmp)
-                console.log("unsorted: ", level_stats)
-                console.log('sorted: ', sorted_stats)
                 this.hidden_data[level_name][uid]['best'] = sorted_stats[0]
                 this.hidden_data[level_name][uid]['more'] = sorted_stats.slice(1)
             }
@@ -74,7 +72,11 @@ class ScoreManager {
                     append_stats(bubble, [data['stats']])
                 }
             } else {
-                // Add user column/construct cell data
+                this.visible_data[data['level']][data['uid']] = {'best': stats, 'more': []}
+                const cell = document.getElementById(get_cell_id(data['level'], data['uid']))
+                const cell_content = create_cell_content(this.visible_data[data['level']][data['uid']],
+                                                        get_cell_id(data['level'], data['uid']))
+                cell.appendChild(cell_content)
             }
         } else {
             // TODO
@@ -195,7 +197,8 @@ function add_row(level_name, student_data) {
     for (let i = 1; i <= colCount - 1; i++) {
         let cell = row.insertCell(i);
         // Fill cells we have data about
-        let name = ids[i]
+        let name = ids[i];
+        cell.id = get_cell_id(level_name, name);
         if (name in student_data && student_data[name] != []) {
             const stats = student_data[name];
             cell.appendChild(create_cell_content(stats, get_cell_id(level_name, name)));
