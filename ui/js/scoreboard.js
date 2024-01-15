@@ -24,13 +24,15 @@ class ScoreManager {
     }
 
     stats_cmp(stats1, stats2) {
-        //     stats_elem.title = stats.cisc + "|" + stats.ins + "|" + stats.steps + "|" + stats.cmps
         if (stats1.cisc === stats2.cisc && stats1.ins === stats2.ins &&
             stats1.steps === stats2.steps && stats1.cmps === stats2.cmps)
             return new Date(stats2.timestamp) - new Date(stats1.timestamp)
         else if (stats1.cisc >= stats2.cisc && stats1.ins >= stats2.ins &&
             stats1.steps >= stats2.steps && stats1.cmps >= stats2.cmps)
             return 1
+        else if (stats1.cisc <= stats2.cisc && stats1.ins <= stats2.ins &&
+            stats1.steps <= stats2.steps <= stats1.cmps <= stats2.cmps)
+            return -1
         return new Date(stats2.timestamp) - new Date(stats1.timestamp)
     }
 
@@ -51,19 +53,28 @@ class ScoreManager {
     }
 
     add_new_submission(data) {
-        // TODO: Check for the best solution
         // TODO: Check if solution already exists
+        const stats = data['stats']
         
+        // Already showing data for this level
         if (data['level'] in this.visible_data) {
+            // User already has submissions for this level
             if (data['uid'] in this.visible_data[data['level']]) {
-                console.log("uid already exists")
-                this.visible_data[data['level']][data['uid']]['more'].push(data['stats'])
-
-                // Add solution to bubble
+                const current_best = this.visible_data[data['level']][data['uid']]['best']
                 const bubble = document.getElementById(get_cell_id(data['level'], data['uid'], "_bubble"))
-                append_stats(bubble, [data['stats']])
+                const field_best = document.getElementById(get_cell_id(data['level'], data['uid'], "_best"))
+
+                // Check if it's a better solution
+                if (this.stats_cmp(current_best, stats) > 0) {
+                    this.visible_data[data['level']][data['uid']]['best'] = stats
+                    update_best(field_best, stats)
+                } else {
+                    this.visible_data[data['level']][data['uid']]['more'].push(stats)
+                    // Add solution to bubble
+                    append_stats(bubble, [data['stats']])
+                }
             } else {
-                // Add user column
+                // Add user column/construct cell data
             }
         } else {
             // TODO
@@ -107,6 +118,11 @@ function stats_to_elem(stats) {
     stats_elem.style.display = "block"
 
     return stats_elem
+}
+
+function update_best(cell, stats) {
+    cell.textContent = stats.cisc + "|" + stats.ins + "|" + stats.steps + "|" + stats.cmps
+    cell.href = 'game.html?level=' + stats.level_src + '&solution=' + stats.sol_src
 }
 
 function create_cell_content(data, cell_id) {
