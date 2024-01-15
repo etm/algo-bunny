@@ -46,6 +46,7 @@ def extract_stats(filename, day):
     file = open(filename)
     stats = json.load(file)
     stats["sol_src"] = 'data/' + filename[len(path_root + 'scores/'):]
+    stats["code"] = open(path_root + stats["sol_src"], 'r').read()
     stats["date"] = day
     stats["timestamp"] = extract_time_from_filename(filename)
     return stats
@@ -60,7 +61,6 @@ def get_stats_by_datetime(uid, day, time=None):
         file_regex = prefix + '*'
         files = glob.glob(file_regex)
         grouped_files = groupby(sorted(files), lambda filename : filename[len(prefix):len(filename)-len(day+'.json')-1])
-        # grouped_lists = [(k, [filename[len(path_root):] for filename in list(g)]) for k, g in grouped_files]
         grouped_lists = {k: filter_stats(list(g), day) for k, g in grouped_files}
         return grouped_lists
     return []
@@ -119,7 +119,7 @@ if __name__ == '__main__':
     app.debug = True
     # Monitor username changes
     username_observer_setup(send_event)
-    # TODO: Monitor new submissions
+    # Monitor new submissions
     solution_observer_setup(send_event)
     app.run(host='localhost', port=3000, threaded=True)
 

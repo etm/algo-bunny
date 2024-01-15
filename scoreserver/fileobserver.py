@@ -26,10 +26,11 @@ def extract_time_from_filename(filename):
     return time_str
 
 def extract_stats(filename):
-    path_root = '/var/www/bunny'
+    path_root = '/var/www/bunny/'
     file = open(filename)
     stats = json.load(file)
     stats["sol_src"] = 'data/' + filename[len(path_root + 'scores/'):]
+    stats["code"] = open(path_root + stats["sol_src"], 'r').read()
     stats["timestamp"] = extract_time_from_filename(filename)
     return stats
 

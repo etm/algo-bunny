@@ -11,14 +11,28 @@ class ScoreManager {
             this.hidden_data[level_name] = {}
             for (const [uid, level_stats] of Object.entries(students)) {
                 this.hidden_data[level_name][uid] = {}
-                // TODO: filter duplicate solutions
-                const sorted_stats = level_stats.toSorted(this.stats_cmp)
+                const unique_solutions = this.filter_solutions(level_stats)
+                const sorted_stats = unique_solutions.toSorted(this.stats_cmp)
                 this.hidden_data[level_name][uid]['best'] = sorted_stats[0]
                 this.hidden_data[level_name][uid]['more'] = sorted_stats.slice(1)
             }
         }
 
         console.log(this.hidden_data)
+    }
+
+    filter_solutions(stats) {
+        const groups = Object.groupBy(stats, ({code}) => code)
+        let unique_sols = []
+        for (const [_, group] of Object.entries(groups)) {
+            if (group.len === 1)
+                unique_sols.push(group[0])
+            else {
+                const sorted_group = group.toSorted(this.stats_cmp)
+                unique_sols.push(sorted_group[0])
+            }
+        }
+        return unique_sols
     }
 
     stats_cmp(stats1, stats2) {
@@ -99,7 +113,6 @@ class ScoreManager {
     }
 
     add_new_submission(data) {
-        // TODO: Check if solution already exists
         const stats = data['stats']
         
         // Already showing data for this level
@@ -107,13 +120,21 @@ class ScoreManager {
             // User already has submissions for this level
             if (data['uid'] in this.visible_data[data['level']]) {
                 const current_best = this.visible_data[data['level']][data['uid']]['best']
+                const other_sols = this.visible_data[data['level']][data['uid']]['more']
+                // Check if solution already exists
+                const duplicate = other_sols.concat(current_best).find(({code}) => code === stats['code'])
+                if (duplicate !== undefined)
+                    return
+
                 const bubble = document.getElementById(get_cell_id(data['level'], data['uid'], "_bubble"))
                 const field_best = document.getElementById(get_cell_id(data['level'], data['uid'], "_best"))
 
                 // Check if it's a better solution
                 if (this.stats_cmp(current_best, stats) > 0) {
+                    this.visible_data[data['level']][data['uid']]['more'].push(current_best)
                     this.visible_data[data['level']][data['uid']]['best'] = stats
                     update_best(field_best, stats)
+                    append_stats(bubble, [current_best])
                 } else {
                     this.visible_data[data['level']][data['uid']]['more'].push(stats)
                     // Add solution to bubble
@@ -200,8 +221,6 @@ function create_cell_content(data, cell_id) {
     bubble.className = 'bubble'
     if (more_stats)
         append_stats(bubble, more_stats);
-    else
-        bubble.textContent = "Bubble"
     bubble.hidden = true
     bubble.id = cell_id + "_bubble"
 
