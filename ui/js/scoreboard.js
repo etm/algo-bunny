@@ -42,12 +42,60 @@ class ScoreManager {
 
         for (const [level, users] of Object.entries(this.hidden_data)) {
             console.log(`${level}: ${users}`);
-            add_row(level, users)
+            this.add_row(level, users)
             this.visible_data[level] = users;
         }
 
         this.hidden_data = {}
         console.log(this.visible_data)
+    }
+
+    rm_row(cell, level_name) {
+        const scoremanager = this;
+
+        return function () {
+            let row_index = cell.parentNode.rowIndex;
+            scoremanager.hidden_data[level_name] = scoremanager.visible_data[level_name];
+            document.getElementById("scoreboard_table").deleteRow(row_index);
+            scoremanager.visible_data[level_name] = {}
+        }
+    }
+
+    add_row(level_name, student_data) {
+        // Find position to insert row at
+        const rowCount = $("#scoreboard_table tr").length;
+        const colCount = $("#scoreboard_table tr th").length;
+    
+        // Get name order in table header
+        const ids = Array.from(document.getElementById("scoreboard_head").children)
+                        .map((cell) => cell.id)
+        console.log(ids)
+    
+        let table = document.getElementById("scoreboard_table");
+        let row = table.insertRow(rowCount - 1);
+    
+        // Create row
+        let level_cell = row.insertCell(0);
+        const cell_text = document.createElement('div')
+        cell_text.textContent = level_name
+        const bttn = document.createElement('button')
+        bttn.textContent = 'X'
+        bttn.className = 'row_rm_button'
+        bttn.onclick = this.rm_row(level_cell, level_name)
+        row.id = level_name
+        level_cell.appendChild(bttn)
+        level_cell.appendChild(cell_text)
+    
+        for (let i = 1; i <= colCount - 1; i++) {
+            let cell = row.insertCell(i);
+            // Fill cells we have data about
+            let name = ids[i];
+            cell.id = get_cell_id(level_name, name);
+            if (name in student_data && student_data[name] != []) {
+                const stats = student_data[name];
+                cell.appendChild(create_cell_content(stats, get_cell_id(level_name, name)));
+            }
+        }
     }
 
     add_new_submission(data) {
@@ -108,12 +156,6 @@ function add_table_head(name_list) {
 
     // Adjust button span
     document.getElementById("next_level_button_cell").colSpan = "" + name_list.length;
-}
-
-function rm_row(row_index) {
-    return function () {
-        document.getElementById("scoreboard_table").deleteRow(row_index);
-    }
 }
 
 function append_stats(container, stats) {
@@ -180,42 +222,7 @@ function get_cell_id(level_name, uid, suffix="") {
     return level_name + "_" + uid + suffix;
 }
 
-function add_row(level_name, student_data) {
-    // Find position to insert row at
-    const rowCount = $("#scoreboard_table tr").length;
-    const colCount = $("#scoreboard_table tr th").length;
 
-    // Get name order in table header
-    const ids = Array.from(document.getElementById("scoreboard_head").children)
-                    .map((cell) => cell.id)
-    console.log(ids)
-
-    let table = document.getElementById("scoreboard_table");
-    let row = table.insertRow(rowCount - 1);
-
-    // Create row
-    let level_cell = row.insertCell(0);
-    const cell_text = document.createElement('div')
-    cell_text.textContent = level_name
-    const bttn = document.createElement('button')
-    bttn.textContent = 'X'
-    bttn.className = 'row_rm_button'
-    bttn.onclick = rm_row(rowCount - 1)
-    row.id = level_name
-    level_cell.appendChild(bttn)
-    level_cell.appendChild(cell_text)
-
-    for (let i = 1; i <= colCount - 1; i++) {
-        let cell = row.insertCell(i);
-        // Fill cells we have data about
-        let name = ids[i];
-        cell.id = get_cell_id(level_name, name);
-        if (name in student_data && student_data[name] != []) {
-            const stats = student_data[name];
-            cell.appendChild(create_cell_content(stats, get_cell_id(level_name, name)));
-        }
-    }
-}
 
 function add_new_user_column(uid, username) {
     const table_head = document.getElementById("scoreboard_head");
