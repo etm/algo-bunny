@@ -1,8 +1,10 @@
 class ScoreManager {
     #hidden_data
+    #visible_data
 
     constructor(initial_data) {
         this.hidden_data = {};
+        this.visible_data = {};
         console.log(initial_data);
 
         for (const [level_name, students] of Object.entries(initial_data)) {
@@ -27,9 +29,31 @@ class ScoreManager {
         for (const [level, users] of Object.entries(this.hidden_data)) {
             console.log(`${level}: ${users}`);
             add_row(level, users)
+            this.visible_data[level] = users;
         }
 
         this.hidden_data = {}
+        console.log(this.visible_data)
+    }
+
+    add_new_submission(data) {
+        // TODO: Check for the best solution
+        // TODO: Check if solution already exists
+        
+        if (data['level'] in this.visible_data) {
+            if (data['uid'] in this.visible_data[data['level']]) {
+                console.log("uid already exists")
+                this.visible_data[data['level']][data['uid']]['more'].push(data['stats'])
+
+                // Add solution to bubble
+                const bubble = document.getElementById(get_cell_id(data['level'], data['uid'], "_bubble"))
+                append_stats(bubble, [data['stats']])
+            } else {
+                // Add user column
+            }
+        } else {
+            // TODO
+        }
     }
 }
 
@@ -55,7 +79,6 @@ function rm_row(row_index) {
 }
 
 function append_stats(container, stats) {
-    stats_div = document.createElement('div')
     for (let i=0; i<stats.length; i++) {
         container.appendChild(stats_to_elem(stats[i]))
     }
@@ -72,7 +95,7 @@ function stats_to_elem(stats) {
     return stats_elem
 }
 
-function create_cell_content(data) {
+function create_cell_content(data, cell_id) {
     console.log(data)
     const best = data['best']
     const more_stats = data['more']
@@ -86,6 +109,7 @@ function create_cell_content(data) {
     timestamp.textContent = best.timestamp
     stats.textContent = best.cisc + "|" + best.ins + "|" + best.steps + "|" + best.cmps
     stats.href = 'game.html?level=' + best.level_src + '&solution=' + best.sol_src
+    stats.id = cell_id + "_best"
     show_more_bttn.textContent = '...'
     show_more_bttn.className = 'show_more_button'
     bubble.className = 'bubble'
@@ -94,6 +118,7 @@ function create_cell_content(data) {
     else
         bubble.textContent = "Bubble"
     bubble.hidden = true
+    bubble.id = cell_id + "_bubble"
 
     show_more_bttn.onclick = () => {
         bubble.hidden = !bubble.hidden;
@@ -106,6 +131,10 @@ function create_cell_content(data) {
     wrapper.appendChild(timestamp)
 
     return wrapper
+}
+
+function get_cell_id(level_name, uid, suffix="") {
+    return level_name + "_" + uid + suffix;
 }
 
 function add_row(level_name, student_data) {
@@ -129,7 +158,7 @@ function add_row(level_name, student_data) {
     bttn.textContent = 'X'
     bttn.className = 'row_rm_button'
     bttn.onclick = rm_row(rowCount - 1)
-    level_cell.id = level_name
+    row.id = level_name
     level_cell.appendChild(bttn)
     level_cell.appendChild(cell_text)
 
@@ -139,7 +168,7 @@ function add_row(level_name, student_data) {
         let name = ids[i]
         if (name in student_data && student_data[name] != []) {
             const stats = student_data[name];
-            cell.appendChild(create_cell_content(stats));
+            cell.appendChild(create_cell_content(stats, get_cell_id(level_name, name)));
         }
     }
 }
@@ -175,13 +204,19 @@ function update_username(uid, username) {
         add_new_user_column(uid, username)
 }
 
-function register_events() {
+function register_events(scoreManager) {
     let source = new EventSource("http://localhost:3000/stream");
     source.addEventListener('username_change', function(event) {
         var data = JSON.parse(event.data)
         console.log('got event!!!', event)
         update_username(data.uid, data.username)
     }, false);
+    source.addEventListener('new_solution', function(event) {
+        var data = JSON.parse(event.data)
+        console.log('got event!!!', event)
+        console.log(data)
+        scoreManager.add_new_submission(data)
+    })
 }
 
 $(document).ready(
@@ -201,7 +236,7 @@ $(document).ready(
             scoreManager = new ScoreManager(response.levels)
         }).then(() => {
             console.log('table head built')
-            register_events()
+            register_events(scoreManager)
         })
 
         const btn_add_row = document.getElementById("btn_add_row")

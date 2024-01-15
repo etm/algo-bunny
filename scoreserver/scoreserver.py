@@ -7,7 +7,7 @@ import json
 import datetime
 from itertools import groupby
 
-from fileobserver import observer_setup
+from fileobserver import username_observer_setup, solution_observer_setup
 from eventmanager import EventManager
 
 app = Flask(__name__)
@@ -118,8 +118,8 @@ def listen():
 if __name__ == '__main__':
     app.debug = True
     # Monitor username changes
-    observer_setup(send_event)
+    username_observer_setup(send_event)
     # TODO: Monitor new submissions
-
+    solution_observer_setup(send_event)
     app.run(host='localhost', port=3000, threaded=True)
 
