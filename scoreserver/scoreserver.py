@@ -16,7 +16,7 @@ CORS(app) # So bunny can access data
 path_root = '/var/www/bunny/'
 now = datetime.datetime.now()
 today = now.strftime("%y-%m-%d")
-today = '24-01-08'
+# today = '24-01-08'
 
 event_manager = EventManager()
 

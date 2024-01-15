@@ -11,13 +11,27 @@ class ScoreManager {
             this.hidden_data[level_name] = {}
             for (const [uid, level_stats] of Object.entries(students)) {
                 this.hidden_data[level_name][uid] = {}
-                // TODO: filter duplicate solutions and find best solution
-                this.hidden_data[level_name][uid]['best'] = level_stats[0]
-                this.hidden_data[level_name][uid]['more'] = level_stats.slice(1)
+                // TODO: filter duplicate solutions
+                const sorted_stats = level_stats.toSorted(this.stats_cmp)
+                console.log("unsorted: ", level_stats)
+                console.log('sorted: ', sorted_stats)
+                this.hidden_data[level_name][uid]['best'] = sorted_stats[0]
+                this.hidden_data[level_name][uid]['more'] = sorted_stats.slice(1)
             }
         }
 
         console.log(this.hidden_data)
+    }
+
+    stats_cmp(stats1, stats2) {
+        //     stats_elem.title = stats.cisc + "|" + stats.ins + "|" + stats.steps + "|" + stats.cmps
+        if (stats1.cisc === stats2.cisc && stats1.ins === stats2.ins &&
+            stats1.steps === stats2.steps && stats1.cmps === stats2.cmps)
+            return new Date(stats2.timestamp) - new Date(stats1.timestamp)
+        else if (stats1.cisc >= stats2.cisc && stats1.ins >= stats2.ins &&
+            stats1.steps >= stats2.steps && stats1.cmps >= stats2.cmps)
+            return 1
+        return new Date(stats2.timestamp) - new Date(stats1.timestamp)
     }
 
     show_next_levels() {
