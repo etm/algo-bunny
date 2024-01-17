@@ -225,8 +225,10 @@ function create_cell_content(data, cell_id) {
     bubble.id = cell_id + "_bubble"
 
     show_more_bttn.onclick = () => {
-        bubble.hidden = !bubble.hidden;
-        show_more_bttn.textContent = show_more_bttn.textContent === '\u22EF' ? '\u2A2F' : '\u22EF'
+        if (bubble.childElementCount !== 0) {
+            bubble.hidden = !bubble.hidden;
+            show_more_bttn.textContent = show_more_bttn.textContent === '\u22EF' ? '\u2A2F' : '\u22EF'
+        }
     }
 
     wrapper.appendChild(stats)
