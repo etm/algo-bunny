@@ -93,7 +93,7 @@ class ScoreManager {
         const cell_text = document.createElement('div')
         cell_text.textContent = level_name
         const bttn = document.createElement('button')
-        bttn.textContent = 'X'
+        bttn.textContent = '\u2A2F'
         bttn.className = 'row_rm_button'
         bttn.onclick = this.rm_row(level_cell, level_name)
         row.id = level_name
@@ -216,7 +216,7 @@ function create_cell_content(data, cell_id) {
     stats.textContent = best.cisc + "|" + best.ins + "|" + best.steps + "|" + best.cmps
     stats.href = 'game.html?level=' + best.level_src + '&solution=' + best.sol_src
     stats.id = cell_id + "_best"
-    show_more_bttn.textContent = '...'
+    show_more_bttn.textContent = '\u22EF'
     show_more_bttn.className = 'show_more_button'
     bubble.className = 'bubble'
     if (more_stats)
@@ -226,7 +226,7 @@ function create_cell_content(data, cell_id) {
 
     show_more_bttn.onclick = () => {
         bubble.hidden = !bubble.hidden;
-        show_more_bttn.textContent = show_more_bttn.textContent === '...' ? 'x' : '...'
+        show_more_bttn.textContent = show_more_bttn.textContent === '\u22EF' ? '\u2A2F' : '\u22EF'
     }
 
     wrapper.appendChild(stats)

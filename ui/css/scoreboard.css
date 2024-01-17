@@ -15,6 +15,8 @@ th, td {
 .show_more_button {
     float: left;
     margin-right: 0.3em;
+    width: 1.5em;
+    padding: 0px;
 }
 
 .bubble {
