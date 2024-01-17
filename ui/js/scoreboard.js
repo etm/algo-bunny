@@ -186,14 +186,25 @@ function append_stats(container, stats) {
 }
 
 function stats_to_elem(stats) {
+    const wrapper = document.createElement('div')
     const stats_elem = document.createElement('a')
+    const heart = document.createElement('button')
 
-    stats_elem.textContent = stats.timestamp
-    stats_elem.title = stats.cisc + "|" + stats.ins + "|" + stats.steps + "|" + stats.cmps
+    stats_elem.title = stats.timestamp
+    stats_elem.textContent = stats.cisc + "|" + stats.ins + "|" + stats.steps + "|" + stats.cmps
     stats_elem.href = 'game.html?level=' + stats.level_src + '&solution=' + stats.sol_src
-    stats_elem.style.display = "block"
+    // stats_elem.style.display = "block"
 
-    return stats_elem
+    heart.className = "heart_bttn"
+    heart.textContent = "\u2661"
+    heart.onclick = () => {
+        heart.textContent = heart.textContent === "\u2661" ? "\u2665" : "\u2661";
+    };
+
+    wrapper.appendChild(stats_elem)
+    wrapper.appendChild(heart)
+
+    return wrapper
 }
 
 function update_best(cell, stats) {
