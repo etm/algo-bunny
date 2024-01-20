@@ -13,13 +13,13 @@ class ScoreManager {
                 this.hidden_data[level_name][uid] = {}
                 const unique_solutions = this.filter_solutions(level_stats)
 
-                const extra_field_arr = unique_solutions.map((elem) => {
+                const added_missing_hearts = unique_solutions.map((elem) => {
                     if(!('heart' in elem))
                         elem['heart'] = false;
                     return elem;
                 })
 
-                const sorted_stats = unique_solutions.toSorted(this.stats_cmp)
+                const sorted_stats = added_missing_hearts.toSorted(this.stats_cmp)
                 this.hidden_data[level_name][uid]['best'] = sorted_stats[0]
                 this.hidden_data[level_name][uid]['more'] = sorted_stats
             }
@@ -80,9 +80,9 @@ class ScoreManager {
 
         return function () {
             let row_index = cell.parentNode.rowIndex;
-            scoremanager.hidden_data[level_name] = scoremanager.visible_data[level_name];
+            scoremanager.hidden_data[level_name] = {...scoremanager.visible_data[level_name]};
             document.getElementById("scoreboard_table").deleteRow(row_index);
-            scoremanager.visible_data[level_name] = {}
+            scoremanager.visible_data[level_name] = undefined
         }
     }
 
@@ -127,11 +127,12 @@ class ScoreManager {
         const stats = data['stats']
         
         // Already showing data for this level
-        if (data['level'] in this.visible_data) {
+        if (data['level'] in this.visible_data && this.visible_data[data['level']] !== undefined) {
             // User already has submissions for this level
             if (data['uid'] in this.visible_data[data['level']]) {
                 const current_best = this.visible_data[data['level']][data['uid']]['best']
                 const other_sols = this.visible_data[data['level']][data['uid']]['more']
+
                 // Check if solution already exists
                 const duplicate = other_sols.concat(current_best).find(({code}) => code === stats['code'])
                 if (duplicate !== undefined)
@@ -141,36 +142,32 @@ class ScoreManager {
                 const bubble = document.getElementById(get_cell_id(data['level'], data['uid'], "_bubble").cell_id)
                 const field_best = document.getElementById(get_cell_id(data['level'], data['uid'], "_best").cell_id)
 
-                // Check if it's a better solution
+                // Update stat list
+                this.visible_data[data['level']][data['uid']]['more'].push(stats)
+                const sorted_stats = this.visible_data[data['level']][data['uid']]['more'].toSorted(this.stats_cmp)
+                const new_bubble_children = this.append_stats(undefined, sorted_stats, cell_id)
+                bubble.replaceChildren(...new_bubble_children)
+
+                // Update best stats
                 if (this.stats_cmp(current_best, stats) > 0) {
-                    this.visible_data[data['level']][data['uid']]['more'].push(current_best)
                     this.visible_data[data['level']][data['uid']]['best'] = stats
                     update_best(field_best, stats)
-                    this.append_stats(bubble, [current_best], cell_id)
-                } else {
-                    this.visible_data[data['level']][data['uid']]['more'].push(stats)
-                    // Add solution to bubble
-                    this.append_stats(bubble, [data['stats']], cell_id)
                 }
             } else {
-                this.visible_data[data['level']][data['uid']] = {'best': stats, 'more': []}
+                this.visible_data[data['level']][data['uid']] = {'best': stats, 'more': [stats]}
                 const cell = document.getElementById(cell_id)
                 const cell_content = this.create_cell_content(this.visible_data[data['level']][data['uid']], cell_id)
                 cell.appendChild(cell_content)
             }
         } else { // Level not yet displayed
+            console.log("Checking here")
             if (!(data['level'] in this.hidden_data))
                 this.hidden_data[data['level']] = {}
             if (!(data['uid'] in this.hidden_data[data['level']])) {
                 this.hidden_data[data['level']][data['uid']] = {'best': stats, 'more': []}
-            } else {
-                const current_best = this.hidden_data[data['level']][data['uid']]['best']
-                if (this.stats_cmp(current_best, stats) > 0) {
-                    this.hidden_data[data['level']][data['uid']]['best'] = stats
-                } else {
-                    this.hidden_data[data['level']][data['uid']]['more'].push(stats)
-                }
             }
+            // Sort only when we need to show the data
+            this.hidden_data[data['level']][data['uid']]['more'].push(stats)
         }
     }
 
@@ -180,6 +177,16 @@ class ScoreManager {
         const entry = stats_list.find((stats) => stats.timestamp === timestamp)
         entry.heart = !entry.heart
 
+        // Store change
+        console.log("Heart changed for: ", entry);
+        const score_file = "scores" + entry['sol_src'].slice("data".length)
+        $.ajax({
+            type: 'POST',
+            url: 'update_heart.php',
+            data: { "file": score_file,
+                    "json_data": JSON.stringify({"heart": entry.heart})}
+          });
+
         // Sort list again
         const sorted_stats = stats_list.toSorted(this.stats_cmp)
         const field_best = document.getElementById(cell_id.cell_id + "_best")
@@ -188,6 +195,9 @@ class ScoreManager {
         const new_bubble_children = this.append_stats(undefined, sorted_stats, cell_id)
         console.log(new_bubble_children)
         bubble.replaceChildren(...new_bubble_children)
+
+        this.visible_data[cell_id.level][cell_id.uid]['more'] = sorted_stats
+        this.visible_data[cell_id.level][cell_id.uid]['best'] = sorted_stats[0]
     }
 
     stats_to_elem(stats, cell_id) {
@@ -230,6 +240,10 @@ class ScoreManager {
 
     create_cell_content(data, cell_id) {
         console.log(data)
+
+        const sorted_stats = data['more'].toSorted(this.stats_cmp)
+        data['best'] = sorted_stats[0]
+        data['more'] = sorted_stats
         const best = data['best']
         const more_stats = data['more']
 
@@ -372,5 +386,4 @@ $(document).ready(
         })
     }
 )
-
 

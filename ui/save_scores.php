@@ -12,8 +12,8 @@
   $stats = $_REQUEST['stats'];
   $solution = $_REQUEST['solution'];
 
-  file_put_contents('scores/' . $uid . '/' . $cdate . '/' . $level . '_' . $ctime . '.json', $stats);
   // Duplicate solution file for easy lookup (same name as the score file)
   file_put_contents('data/' . $uid . '/' . $cdate . '/' . $level . '_' . $ctime . '.json', $solution);
+  file_put_contents('scores/' . $uid . '/' . $cdate . '/' . $level . '_' . $ctime . '.json', $stats);
   exit;
 ?>
