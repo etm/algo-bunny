@@ -5,7 +5,6 @@ class ScoreManager {
     constructor(initial_data) {
         this.hidden_data = {};
         this.visible_data = {};
-        console.log(initial_data);
 
         for (const [level_name, students] of Object.entries(initial_data)) {
             this.hidden_data[level_name] = {}
@@ -24,8 +23,6 @@ class ScoreManager {
                 this.hidden_data[level_name][uid]['more'] = sorted_stats
             }
         }
-
-        console.log(this.hidden_data)
     }
 
     // Removes duplicate stats
@@ -63,19 +60,15 @@ class ScoreManager {
 
     // Reveals all hidden stats
     show_next_levels() {
-        if (Object.keys(this.hidden_data).length === 0) {
-            console.log("No more submissions");
+        if (Object.keys(this.hidden_data).length === 0)
             return;
-        }
 
         for (const [level, users] of Object.entries(this.hidden_data)) {
-            console.log(`${level}: ${users}`);
             this.add_row(level, users)
             this.visible_data[level] = users;
         }
 
         this.hidden_data = {}
-        console.log(this.visible_data)
     }
 
     // Hides a given level
@@ -99,7 +92,6 @@ class ScoreManager {
         // Get name order in table header
         const ids = Array.from(document.getElementById("scoreboard_head").children)
                         .map((cell) => cell.id)
-        console.log(ids)
     
         let table = document.getElementById("scoreboard_table");
         let row = table.insertRow(rowCount - 1);
@@ -173,7 +165,6 @@ class ScoreManager {
                 cell.appendChild(cell_content)
             }
         } else { // Level not yet displayed
-            console.log("Checking here")
             if (!(data['level'] in this.hidden_data))
                 this.hidden_data[data['level']] = {}
             if (!(data['uid'] in this.hidden_data[data['level']])) {
@@ -197,7 +188,6 @@ class ScoreManager {
         entry.heart = !entry.heart
 
         // Store change
-        console.log("Heart changed for: ", entry);
         const score_file = "scores" + entry['sol_src'].slice("data".length)
         $.ajax({
             type: 'POST',
@@ -212,7 +202,6 @@ class ScoreManager {
         this.update_best(field_best, sorted_stats[0])
         const bubble = document.getElementById(cell_id.cell_id + "_bubble")
         const new_bubble_children = this.append_stats(undefined, sorted_stats, cell_id)
-        console.log(new_bubble_children)
         bubble.replaceChildren(...new_bubble_children)
 
         this.visible_data[cell_id.level][cell_id.uid]['more'] = sorted_stats
@@ -221,7 +210,6 @@ class ScoreManager {
 
     // Creates a bubble entry for a set of stats
     stats_to_elem(stats, cell_id) {
-        console.log("cell id", cell_id)
         const scoremanager = this;
         const wrapper = document.createElement('div')
         const stats_elem = document.createElement('a')
@@ -260,8 +248,6 @@ class ScoreManager {
 
     // Builds the content of an entire scoreboard cell
     create_cell_content(data, cell_id) {
-        console.log(data)
-
         const sorted_stats = data['more'].toSorted(this.stats_cmp)
         data['best'] = sorted_stats[0]
         data['more'] = sorted_stats
