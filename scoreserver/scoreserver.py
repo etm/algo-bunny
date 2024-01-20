@@ -10,6 +10,8 @@ from itertools import groupby
 from fileobserver import username_observer_setup, solution_observer_setup
 from eventmanager import EventManager
 
+import utils
+
 app = Flask(__name__)
 CORS(app) # So bunny can access data
 
@@ -34,25 +36,8 @@ def get_name_by_id(id):
     f = open(username_path, 'r')
     return f.read()
 
-def extract_time_from_filename(filename):
-    ext = '.json'
-    time_len = 8
-    end = - len(ext)
-    start = end - time_len
-    time_str = filename[start:end].replace('-', ':')
-    return time_str
-
-def extract_stats(filename, day):
-    file = open(filename)
-    stats = json.load(file)
-    stats["sol_src"] = 'data/' + filename[len(path_root + 'scores/'):]
-    stats["code"] = open(path_root + stats["sol_src"], 'r').read()
-    stats["date"] = day
-    stats["timestamp"] = extract_time_from_filename(filename)
-    return stats
-
 def filter_stats(file_list, day):
-    all_stats = [extract_stats(filename, day) for filename in file_list]
+    all_stats = [utils.extract_stats(path_root, filename, day) for filename in file_list]
     return all_stats
 
 def get_stats_by_datetime(uid, day, time=None):

@@ -1,7 +1,9 @@
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 import os
-import json
+import utils
+
+path_root = '/var/www/bunny/'
 
 def on_username_change_helper(event):
     print(f"{event.src_path} has been modified")
@@ -16,29 +18,11 @@ def on_username_change(send_event):
         send_event('username_change', on_username_change_helper(event))
     )
 
-# TODO: move to utils
-def extract_time_from_filename(filename):
-    ext = '.json'
-    time_len = 8
-    end = - len(ext)
-    start = end - time_len
-    time_str = filename[start:end].replace('-', ':')
-    return time_str
-
-def extract_stats(filename):
-    path_root = '/var/www/bunny/'
-    file = open(filename)
-    stats = json.load(file)
-    stats["sol_src"] = 'data/' + filename[len(path_root + 'scores/'):]
-    stats["code"] = open(path_root + stats["sol_src"], 'r').read()
-    stats["timestamp"] = extract_time_from_filename(filename)
-    return stats
-
 def on_new_submission_helper(event):
     print(f"{event.src_path} was created")
     path = os.path.normpath(event.src_path)
     uid = path.split(os.sep)[-3]
-    stats = extract_stats(event.src_path)
+    stats = utils.extract_stats(path_root, event.src_path)
     stats['date'] = path.split(os.sep)[-2]
     level = path.split(os.sep)[-1][:-len(stats['timestamp']) - len(".json") - 1]
     print(uid, stats)
