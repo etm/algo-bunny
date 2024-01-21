@@ -17,3 +17,8 @@ def extract_stats(path_root, filename, day=""):
     stats["timestamp"] = extract_time_from_filename(filename)
     return stats
 
+def get_name_by_id(id, path_root=""):
+    username_path = path_root + 'data/' + id + '/username.txt'
+    f = open(username_path, 'r')
+    return f.read()
+

@@ -10,7 +10,6 @@ def on_username_change_helper(event):
     path = os.path.normpath(event.src_path)
     uid = path.split(os.sep)[-2]
     username = open(event.src_path, 'r').read()
-    print(uid, username)
     return {'uid': uid, 'username': username}
 
 def on_username_change(send_event):
@@ -22,11 +21,11 @@ def on_new_submission_helper(event):
     print(f"{event.src_path} was created")
     path = os.path.normpath(event.src_path)
     uid = path.split(os.sep)[-3]
+    username = utils.get_name_by_id(uid, path_root)
     stats = utils.extract_stats(path_root, event.src_path)
     stats['date'] = path.split(os.sep)[-2]
     level = path.split(os.sep)[-1][:-len(stats['timestamp']) - len(".json") - 1]
-    print(uid, stats)
-    return {'uid': uid, 'level': level, 'stats': stats}
+    return {'uid': uid, 'username': username, 'level': level, 'stats': stats}
 
 def on_new_submission(send_event):
     return (lambda event :

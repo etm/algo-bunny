@@ -26,15 +26,11 @@ event_manager = EventManager()
 def hello_world():
     return '<p>Hello, World!</p>'
 
-def get_student_ids():
+def get_student_ids(day):
     folder = path_root + 'scores'
-    sub_folders = [name for name in os.listdir(folder) if os.path.isdir(os.path.join(folder, name))]
+    sub_folders = [name for name in os.listdir(folder) if (os.path.isdir(os.path.join(folder, name))
+                                                           and os.path.exists(os.path.join(folder, name, day)))]
     return sub_folders
-
-def get_name_by_id(id):
-    username_path = path_root + 'data/' + id + '/username.txt'
-    f = open(username_path, 'r')
-    return f.read()
 
 def filter_stats(file_list, day):
     all_stats = [utils.extract_stats(path_root, filename, day) for filename in file_list]
@@ -50,16 +46,10 @@ def get_stats_by_datetime(uid, day, time=None):
         return grouped_lists
     return []
 
-@app.route('/init', methods=['GET'])
-def students():
-    table_data = {}
-    table_data['users'] = [{'id': id, 'username': get_name_by_id(id)} for id in get_student_ids()]
-    return json.dumps(table_data)
-
 @app.route('/init/today', methods=['GET'])
 def stats_today():
     table_data = {}
-    table_data['users'] = [{'id': id, 'username': get_name_by_id(id)} for id in get_student_ids()]
+    table_data['users'] = [{'id': id, 'username': utils.get_name_by_id(id, path_root)} for id in get_student_ids(today)]
     stats = {user['id']: get_stats_by_datetime(user['id'], today) for user in table_data['users']}
     table_data['levels'] = {}
 
@@ -70,14 +60,6 @@ def stats_today():
             table_data['levels'][level][uid] = stats[uid][level]
 
     return json.dumps(table_data)
-
-@app.route('/init/last_hour', methods=['GET'])
-def stats_hour():
-    pass
-
-@app.route('/get/student/<student>', methods=['GET'])
-def get_student_data(student):
-    return 'student: '+student
 
 # Broadcast an event to everyone viewing the scoreboard
 def send_event(event_type, data):
