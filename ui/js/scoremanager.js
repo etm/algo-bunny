@@ -300,7 +300,7 @@ class ScoreManager {
         const id = {
             level: level_name,
             uid: uid,
-            cell_id: level_name + "_" + uid + (suffix !== "" ? "_" + suffix : "")
+            cell_id: level_name + "_" + uid + (suffix !== "" ? suffix : "")
         }
         return id;
     }
