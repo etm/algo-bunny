@@ -4,7 +4,6 @@ from flask_cors import CORS
 import os
 import glob
 import json
-import datetime
 from itertools import groupby
 
 from fileobserver import username_observer_setup, solution_observer_setup
@@ -16,9 +15,6 @@ app = Flask(__name__)
 CORS(app) # So bunny can access data
 
 path_root = '/var/www/bunny/'
-now = datetime.datetime.now()
-today = now.strftime("%y-%m-%d")
-# today = '24-01-08'
 
 event_manager = EventManager()
 
@@ -46,11 +42,11 @@ def get_stats_by_datetime(uid, day, time=None):
         return grouped_lists
     return []
 
-@app.route('/init/today', methods=['GET'])
-def stats_today():
+@app.route('/init/<day>', methods=['GET'])
+def day_stats(day):
     table_data = {}
-    table_data['users'] = [{'id': id, 'username': utils.get_name_by_id(id, path_root)} for id in get_student_ids(today)]
-    stats = {user['id']: get_stats_by_datetime(user['id'], today) for user in table_data['users']}
+    table_data['users'] = [{'id': id, 'username': utils.get_name_by_id(id, path_root)} for id in get_student_ids(day)]
+    stats = {user['id']: get_stats_by_datetime(user['id'], day) for user in table_data['users']}
     table_data['levels'] = {}
 
     for uid in stats:

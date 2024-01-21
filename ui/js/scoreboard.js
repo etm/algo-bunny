@@ -30,7 +30,6 @@ function add_new_user_column(uid, username) {
         if (i < rowCount - 2) {
             const cell = document.createElement("td");
             const row_id = row.id
-            console.log(row, row.id)
             cell.id = ScoreManager.get_cell_id(row_id, uid).cell_id
             row.appendChild(cell);
         }
@@ -51,34 +50,39 @@ function update_username(uid, username) {
 }
 
 // Listen for events
-function register_events(scoreManager) {
+function register_events(scoreManager, liveStats = false) {
     let source = new EventSource("http://localhost:3000/stream");
     source.addEventListener('username_change', function(event) {
         var data = JSON.parse(event.data)
         update_username(data.uid, data.username)
     }, false);
-    source.addEventListener('new_solution', function(event) {
-        var data = JSON.parse(event.data)
-        console.log(data)
-        scoreManager.add_new_submission(data)
-    })
+    if (liveStats) {
+        source.addEventListener('new_solution', function(event) {
+            var data = JSON.parse(event.data)
+            scoreManager.add_new_submission(data)
+        }, false)
+    }
 }
 
 $(document).ready(
     async function() {
-        let scoreManager = undefined
+        let scoreManager = undefined;
+        const today = new Date().toJSON().slice(2,10);
+        let q = $.parseQuerySimple();
+        let day = q.day ? q.day : today;
 
         // Ask for current data
         $.ajax({
             type: "GET",
-            url: "http://localhost:3000/init/today",
+            url: "http://localhost:3000/init/"+day,
             error: () => { console.log("error") }
             }).then(res => {
             const response = JSON.parse(res)
-            console.log(response)
             add_table_head(response.users)
             scoreManager = new ScoreManager(response.levels)
         }).then(() => {
+            if (day === today)
+                register_events(scoreManager, true)
             register_events(scoreManager)
         })
 
