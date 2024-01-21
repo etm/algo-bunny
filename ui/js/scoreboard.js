@@ -29,6 +29,9 @@ function add_new_user_column(uid, username) {
     [...document.querySelectorAll('#scoreboard_table tbody tr')].forEach((row, i) => {
         if (i < rowCount - 2) {
             const cell = document.createElement("td");
+            const row_id = row.id
+            console.log(row, row.id)
+            cell.id = ScoreManager.get_cell_id(row_id, uid).cell_id
             row.appendChild(cell);
         }
     });

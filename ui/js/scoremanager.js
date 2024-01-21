@@ -112,10 +112,10 @@ class ScoreManager {
             let cell = row.insertCell(i);
             // Fill cells we have data about
             let name = ids[i];
-            cell.id = get_cell_id(level_name, name).cell_id;
+            cell.id = ScoreManager.get_cell_id(level_name, name).cell_id;
             if (name in student_data && student_data[name] != []) {
                 const stats = student_data[name];
-                cell.appendChild(this.create_cell_content(stats, get_cell_id(level_name, name)));
+                cell.appendChild(this.create_cell_content(stats, ScoreManager.get_cell_id(level_name, name)));
             }
         }
     }
@@ -142,10 +142,10 @@ class ScoreManager {
                 const duplicate = other_sols.find(({code}) => code === stats['code'])
                 if (duplicate !== undefined)
                     return
-                const cell_id = get_cell_id(data['level'], data['uid'])
+                const cell_id = ScoreManager.get_cell_id(data['level'], data['uid'])
 
-                const bubble = document.getElementById(get_cell_id(data['level'], data['uid'], "_bubble").cell_id)
-                const field_best = document.getElementById(get_cell_id(data['level'], data['uid'], "_best").cell_id)
+                const bubble = document.getElementById(ScoreManager.get_cell_id(data['level'], data['uid'], "_bubble").cell_id)
+                const field_best = document.getElementById(ScoreManager.get_cell_id(data['level'], data['uid'], "_best").cell_id)
 
                 // Update stat list
                 this.visible_data[data['level']][data['uid']]['more'].push(stats)
@@ -158,9 +158,17 @@ class ScoreManager {
                     this.visible_data[data['level']][data['uid']]['best'] = stats
                     this.update_best(field_best, stats)
                 }
-            } else {
+            } else { // First submission for this level
                 this.visible_data[data['level']][data['uid']] = {'best': stats, 'more': [stats]}
-                const cell = document.getElementById(cell_id)
+                const cell_id = ScoreManager.get_cell_id(data['level'], data['uid'])
+                let cell = document.getElementById(cell_id.cell_id)
+
+                // If this is the first submission for today, add the user's column in the scoreboard
+                if (!cell) {
+                    add_new_user_column(data['uid'], data['username'])
+                    cell = document.getElementById(cell_id.cell_id)
+                }
+
                 const cell_content = this.create_cell_content(this.visible_data[data['level']][data['uid']], cell_id)
                 cell.appendChild(cell_content)
             }
@@ -288,11 +296,11 @@ class ScoreManager {
     }
 
     // Generates ids for scoreboard components
-    get_cell_id(level_name, uid, suffix="") {
+    static get_cell_id(level_name, uid, suffix="") {
         const id = {
             level: level_name,
             uid: uid,
-            cell_id: level_name + "_" + uid + "_" + suffix
+            cell_id: level_name + "_" + uid + (suffix !== "" ? "_" + suffix : "")
         }
         return id;
     }
