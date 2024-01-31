@@ -135,6 +135,7 @@ function Assets() {
   this.texts.nocompareto = "There has to be something in front of me to do fancy size comparisons!"
   this.texts.fail = "All this work, still no success :-("
   this.texts.faultylevel = "Uh oh, level is b0rked :-/"
+  this.texts.faultysolution = "Can't load this solution :("
   this.texts.delete = "To delete an instruction, click on it!"
   this.texts.again = "Play it again to win!"
   this.texts.hurra = 'Victory'
@@ -691,6 +692,7 @@ function Assets() {
   this.lang['de'].texts.nocompareto = "Auf dem Feld vor mir muss was sein, damit ich einen Größenvergleich machen kann!"
   this.lang['de'].texts.fail = "So viel Arbeit, und immer noch nicht geschafft :-("
   this.lang['de'].texts.faultylevel = "Oh oh, das Level ist k4putt :-/"
+  this.lang['de'].texts.faultysolution = "Can't load this solution :("
   this.lang['de'].texts.delete = "Um eine Anweisung zu löschen, klick einfach drauf!"
   this.lang['de'].texts.again = "Lass mich das einfach nochmal machen, wenn du gewinnen willst!"
   this.lang['de'].texts.hurra = 'Hurra!'

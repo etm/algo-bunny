@@ -11,6 +11,7 @@ document.addEventListener('contextmenu', event => event.preventDefault())
 $(document).ready(async function() {
   let q = $.parseQuerySimple()
   let levelurl = q.level ? q.level : ''
+  let solurl = q.solution ? q.solution : ''
 
   let assets  = new Assets
   await assets.load()
@@ -37,11 +38,12 @@ $(document).ready(async function() {
       field.target.find('.bottom .ui.load').attr('title',assets.texts.load)
   let elements = new Elements($('div.elements'),assets,field,editor)
 
-  let loader = new Loader(assets, editor, field, elements, levelurl)
+  let loader = new Loader(assets, editor, field, elements, levelurl, solurl)
   if (!(await loader.load_level())) { return }
+  if (solurl !== '') {await loader.load_solution()}
 
   let prog
-  if (prog = window.localStorage.getItem(levelurl)) {
+  if (solurl === '' && (prog = window.localStorage.getItem(levelurl))) {
     editor.program = JSON.parse(prog)
   }
 
