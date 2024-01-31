@@ -1,3 +1,18 @@
+function build_head_cell_content(user_data) {
+    const wrapper = document.createElement('div')
+    const name = document.createElement('div')
+    name.innerText = user_data.username
+    name.id = ScoreManager.get_cell_id('head', user_data.id, '_name').cell_id
+
+    const progress = document.createElement('div')
+    progress.innerText = ''
+    progress.id = ScoreManager.get_cell_id('head', user_data.id, '_progress').cell_id
+
+    wrapper.appendChild(name)
+    wrapper.appendChild(progress)
+    return wrapper
+}
+
 // Inserts the current users
 // Type of name_list: [{id: string, username: string}]
 function add_table_head(name_list) {
@@ -6,7 +21,7 @@ function add_table_head(name_list) {
     name_list.forEach(function(user) {
         cell = document.createElement('th')
         cell.id = user.id
-        cell.innerHTML = user.username
+        cell.appendChild(build_head_cell_content(user))
         table_head.appendChild(cell)
     })
 
@@ -21,8 +36,8 @@ function add_new_user_column(uid, username) {
 
     // Add name in table head
     cell = document.createElement('th');
+    cell.appendChild(build_head_cell_content({username: username, id: uid}))
     cell.id = uid;
-    cell.innerHTML = username;
     table_head.appendChild(cell);
 
     // Add cells in rows already displayed
@@ -42,9 +57,9 @@ function add_new_user_column(uid, username) {
 
 // Reflect name changes in scoreboard header
 function update_username(uid, username) {
-    let username_cell = document.getElementById(uid)
+    let username_cell = document.getElementById(ScoreManager.get_cell_id('head', uid, '_name'.cell_id))
     if (username_cell)
-        username_cell.innerHTML = username
+        username_cell.innerText = username
     else
         add_new_user_column(uid, username)
 }

@@ -23,6 +23,8 @@ class ScoreManager {
                 this.hidden_data[level_name][uid]['more'] = sorted_stats
             }
         }
+
+        this.show_next_levels()
     }
 
     // Removes duplicate stats
@@ -58,6 +60,22 @@ class ScoreManager {
         return new Date(stats2.timestamp) - new Date(stats1.timestamp)
     }
 
+    update_user_progress(name_cell, max_levels, solved_levels) {
+        const progress = name_cell.lastChild.lastChild
+        progress.innerText = "\u25ae".repeat(solved_levels) + "\u25af".repeat(max_levels - solved_levels)
+    }
+
+    update_all_progress() {
+        const level_count = $("#scoreboard_table tr").length - 2;
+        const header_cells = Array.from(document.getElementById("scoreboard_head").children).slice(1)
+        const level_data_arr = Object.values(this.visible_data)
+
+        for (let name_cell of header_cells) {
+            const solved_level_count = level_data_arr.filter((elem) => elem && name_cell.id in elem).length
+            this.update_user_progress(name_cell, level_count, solved_level_count)
+        }
+    }
+
     // Reveals all hidden stats
     show_next_levels() {
         if (Object.keys(this.hidden_data).length === 0)
@@ -67,6 +85,8 @@ class ScoreManager {
             this.add_row(level, users)
             this.visible_data[level] = users;
         }
+
+        this.update_all_progress()
 
         this.hidden_data = {}
     }
@@ -80,6 +100,7 @@ class ScoreManager {
             scoremanager.hidden_data[level_name] = {...scoremanager.visible_data[level_name]};
             document.getElementById("scoreboard_table").deleteRow(row_index);
             scoremanager.visible_data[level_name] = undefined
+            scoremanager.update_all_progress()
         }
     }
 
@@ -186,6 +207,8 @@ class ScoreManager {
             // Sort only when we need to show the data
             this.hidden_data[data['level']][data['uid']]['more'].push(stats)
         }
+
+        this.update_all_progress()
     }
 
     // Changes state of heart on click
