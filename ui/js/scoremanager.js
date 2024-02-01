@@ -5,11 +5,12 @@ class ScoreManager {
     constructor(initial_data) {
         this.hidden_data = {};
         this.visible_data = {};
+        this.removed_data = {};
 
         for (const [level_name, students] of Object.entries(initial_data)) {
-            this.hidden_data[level_name] = {}
+            this.removed_data[level_name] = {}
             for (const [uid, level_stats] of Object.entries(students)) {
-                this.hidden_data[level_name][uid] = {}
+                this.removed_data[level_name][uid] = {}
                 const unique_solutions = this.filter_solutions(level_stats)
 
                 const added_missing_hearts = unique_solutions.map((elem) => {
@@ -19,8 +20,8 @@ class ScoreManager {
                 })
 
                 const sorted_stats = added_missing_hearts.toSorted(this.stats_cmp)
-                this.hidden_data[level_name][uid]['best'] = sorted_stats[0]
-                this.hidden_data[level_name][uid]['more'] = sorted_stats
+                this.removed_data[level_name][uid]['best'] = sorted_stats[0]
+                this.removed_data[level_name][uid]['more'] = sorted_stats
             }
         }
 
@@ -68,7 +69,7 @@ class ScoreManager {
     update_all_progress() {
         const level_count = $("#scoreboard_table tr").length - 2;
         const header_cells = Array.from(document.getElementById("scoreboard_head").children).slice(1)
-        const level_data_arr = Object.values(this.visible_data)
+        const level_data_arr = Object.values(this.visible_data).concat(Object.values(this.hidden_data))
 
         for (let name_cell of header_cells) {
             const solved_level_count = level_data_arr.filter((elem) => elem && name_cell.id in elem).length
@@ -78,45 +79,30 @@ class ScoreManager {
 
     // Reveals all hidden stats
     show_next_levels() {
-        if (Object.keys(this.hidden_data).length === 0)
+        console.log(this.visible_data)
+        console.log(this.hidden_data)
+        console.log(this.removed_data)
+        if (Object.keys(this.removed_data).length === 0)
             return;
 
-        for (const [level, users] of Object.entries(this.hidden_data)) {
+        for (const [level, users] of Object.entries(this.removed_data)) {
             this.add_row(level, users)
-            this.visible_data[level] = users;
+            this.hidden_data[level] = users;
         }
 
         this.update_all_progress()
 
-        this.hidden_data = {}
+        this.removed_data = {}
     }
 
-    // Hides a given level
-    rm_row(cell, level_name) {
-        const scoremanager = this;
-
-        return function () {
-            let row_index = cell.parentNode.rowIndex;
-            scoremanager.hidden_data[level_name] = {...scoremanager.visible_data[level_name]};
-            document.getElementById("scoreboard_table").deleteRow(row_index);
-            scoremanager.visible_data[level_name] = undefined
-            scoremanager.update_all_progress()
-        }
-    }
-
-    // Builds and inserts a level's data for all users
     add_row(level_name, student_data) {
         // Find position to insert row at
         const rowCount = $("#scoreboard_table tr").length;
         const colCount = $("#scoreboard_table tr th").length;
-    
-        // Get name order in table header
-        const ids = Array.from(document.getElementById("scoreboard_head").children)
-                        .map((cell) => cell.id)
-    
+
         let table = document.getElementById("scoreboard_table");
         let row = table.insertRow(rowCount - 1);
-    
+
         // Create row
         let level_cell = row.insertCell(0);
         const cell_text = document.createElement('div')
@@ -128,6 +114,46 @@ class ScoreManager {
         row.id = level_name
         level_cell.appendChild(bttn)
         level_cell.appendChild(cell_text)
+
+        // Add button hiding all level data at first
+        const row_bttn_cell = row.insertCell(1);
+        const row_bttn = document.createElement('input')
+        row_bttn.type = "button"
+        row_bttn.value = "Not yet!"
+        row_bttn.width = "100%"
+        row_bttn.height = "100%"
+        row_bttn.onclick = ((ev) => {
+            // Delete this cell and add all collected stats for this level
+            row.deleteCell(1)
+            this.add_row_data(level_name, student_data, row);
+            this.visible_data[level_name] = student_data;
+            this.hidden_data[level_name] = undefined;
+        })
+        row_bttn_cell.colSpan = "" + colCount - 1
+        row_bttn_cell.appendChild(row_bttn)
+    }
+
+    // Hides a given level
+    rm_row(cell, level_name) {
+        const scoremanager = this;
+
+        return function () {
+            let row_index = cell.parentNode.rowIndex;
+            scoremanager.removed_data[level_name] = {...scoremanager.visible_data[level_name], ...scoremanager.hidden_data[level_name]};
+            document.getElementById("scoreboard_table").deleteRow(row_index);
+            scoremanager.visible_data[level_name] = undefined
+            scoremanager.hidden_data[level_name] = undefined
+            scoremanager.update_all_progress()
+        }
+    }
+
+    // Builds and inserts a level's data for all users
+    add_row_data(level_name, student_data, row) {
+        const colCount = $("#scoreboard_table tr th").length;
+
+        // Get name order in table header
+        const ids = Array.from(document.getElementById("scoreboard_head").children)
+                .map((cell) => cell.id)        
     
         for (let i = 1; i <= colCount - 1; i++) {
             let cell = row.insertCell(i);
