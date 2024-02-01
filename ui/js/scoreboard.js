@@ -94,7 +94,7 @@ $(document).ready(
             }).then(res => {
             const response = JSON.parse(res)
             add_table_head(response.users)
-            scoreManager = new ScoreManager(response.levels)
+            scoreManager = new ScoreManager(response.levels, response.users.map((user) => user.id))
         }).then(() => {
             if (day === today)
                 register_events(scoreManager, true)

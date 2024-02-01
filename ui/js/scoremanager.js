@@ -2,10 +2,11 @@ class ScoreManager {
     #hidden_data
     #visible_data
 
-    constructor(initial_data) {
+    constructor(initial_data, initial_users) {
         this.hidden_data = {};
         this.visible_data = {};
         this.removed_data = {};
+        this.all_users = initial_users;
 
         for (const [level_name, students] of Object.entries(initial_data)) {
             this.removed_data[level_name] = {}
@@ -177,6 +178,12 @@ class ScoreManager {
     // if the same solution has already been submitted before
     add_new_submission(data) {
         const stats = data['stats']
+
+        // Is this the user's first submission?
+        if (!(this.all_users.includes(data['uid']))) {
+            add_new_user_column(data['uid'], data['username']);
+            this.all_users.push(data['uid']);
+        }
         
         // Already showing data for this level
         if (data['level'] in this.visible_data && this.visible_data[data['level']] !== undefined) {
@@ -209,19 +216,25 @@ class ScoreManager {
                 this.visible_data[data['level']][data['uid']] = {'best': stats, 'more': [stats]}
                 const cell_id = ScoreManager.get_cell_id(data['level'], data['uid'])
                 let cell = document.getElementById(cell_id.cell_id)
-
-                // If this is the first submission for today, add the user's column in the scoreboard
-                if (!cell) {
-                    add_new_user_column(data['uid'], data['username'])
-                    cell = document.getElementById(cell_id.cell_id)
-                }
-
                 const cell_content = this.create_cell_content(this.visible_data[data['level']][data['uid']], cell_id)
                 cell.appendChild(cell_content)
             }
-        } else { // Level not yet displayed
-            if (!(data['level'] in this.hidden_data))
+        } else if (data['level'] in this.removed_data) { // Don't show deleted levels back but save the data
+            if (!(data['uid'] in this.removed_data[data['level']]))
+                this.removed_data[data['level']][data['uid']] = {'best': stats, 'more': []}
+            const other_sols = this.removed_data[data['level']][data['uid']]['more']
+            // Check if solution already exists
+            const duplicate = other_sols.find(({code}) => code === stats['code'])
+            if (duplicate !== undefined)
+                return
+            this.removed_data[data['level']][data['uid']]['more'].push(stats)
+        } else { // Level not displayed
+            let insert_level = false
+            // Level data is hidden
+            if (!(data['level'] in this.hidden_data)) {
                 this.hidden_data[data['level']] = {}
+                insert_level = true
+            }
             if (!(data['uid'] in this.hidden_data[data['level']])) {
                 this.hidden_data[data['level']][data['uid']] = {'best': stats, 'more': []}
             }
@@ -232,6 +245,8 @@ class ScoreManager {
                 return
             // Sort only when we need to show the data
             this.hidden_data[data['level']][data['uid']]['more'].push(stats)
+            if (insert_level)
+                this.add_row(data['level'], this.hidden_data[data['level']])
         }
 
         this.update_all_progress()
