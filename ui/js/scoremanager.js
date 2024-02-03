@@ -80,9 +80,6 @@ class ScoreManager {
 
     // Reveals all hidden stats
     show_next_levels() {
-        console.log(this.visible_data)
-        console.log(this.hidden_data)
-        console.log(this.removed_data)
         if (Object.keys(this.removed_data).length === 0)
             return;
 

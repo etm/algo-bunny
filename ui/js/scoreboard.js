@@ -66,7 +66,7 @@ function update_username(uid, username) {
 
 // Listen for events
 function register_events(scoreManager, liveStats = false) {
-    let source = new EventSource("http://localhost:3000/stream");
+    let source = new EventSource("scoreboard/stream");
     source.addEventListener('username_change', function(event) {
         var data = JSON.parse(event.data)
         update_username(data.uid, data.username)
@@ -89,7 +89,7 @@ $(document).ready(
         // Ask for current data
         $.ajax({
             type: "GET",
-            url: "http://localhost:3000/init/"+day,
+            url: "scoreboard/init/"+day,
             error: () => { console.log("error") }
             }).then(res => {
             const response = JSON.parse(res)
