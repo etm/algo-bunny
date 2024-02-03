@@ -3,8 +3,6 @@ from watchdog.events import PatternMatchingEventHandler
 import os
 import utils
 
-path_root = '/var/www/bunny/'
-
 def on_username_change_helper(event):
     print(f"{event.src_path} has been modified")
     path = os.path.normpath(event.src_path)
@@ -17,7 +15,7 @@ def on_username_change(send_event):
         send_event('username_change', on_username_change_helper(event))
     )
 
-def on_new_submission_helper(event):
+def on_new_submission_helper(event, path_root):
     print(f"{event.src_path} was created")
     path = os.path.normpath(event.src_path)
     uid = path.split(os.sep)[-3]
@@ -27,13 +25,13 @@ def on_new_submission_helper(event):
     level = path.split(os.sep)[-1][:-len(stats['timestamp']) - len(".json") - 1]
     return {'uid': uid, 'username': username, 'level': level, 'stats': stats}
 
-def on_new_submission(send_event):
+def on_new_submission(send_event, path_root):
     return (lambda event :
-        send_event('new_solution', on_new_submission_helper(event))
+        send_event('new_solution', on_new_submission_helper(event, path_root))
     )
 
 # Configures an observer monitoring username changes
-def username_observer_setup(send_event):
+def username_observer_setup(path_root, send_event):
     patterns = ["*/username.txt"]
     ignore_patterns = None
     ignore_directories = False
@@ -42,7 +40,7 @@ def username_observer_setup(send_event):
     my_event_handler.on_modified = on_username_change(send_event)
     my_event_handler.on_created = on_username_change(send_event)
 
-    path = "/var/www/bunny/data"
+    path = path_root + "/data"
     go_recursively = True
     my_observer = Observer()
     my_observer.schedule(my_event_handler, path, recursive=go_recursively)
@@ -50,15 +48,15 @@ def username_observer_setup(send_event):
     my_observer.start()
 
 #  Configures an observer monitoring successful solution submission
-def solution_observer_setup(send_event):
+def solution_observer_setup(path_root, send_event):
     patterns = ["*/*/*.json"]
     ignore_patterns = None
     ignore_directories = False
     case_sensitive = True
     my_event_handler = PatternMatchingEventHandler(patterns, ignore_patterns, ignore_directories, case_sensitive)
-    my_event_handler.on_created = on_new_submission(send_event)
+    my_event_handler.on_created = on_new_submission(send_event, path_root)
 
-    path = "/var/www/bunny/scores"
+    path = path_root + "/scores"
     go_recursively = True
     my_observer = Observer()
     my_observer.schedule(my_event_handler, path, recursive=go_recursively)
