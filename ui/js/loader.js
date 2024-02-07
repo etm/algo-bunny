@@ -4,12 +4,13 @@ class Loader {
   #field
   #elements
 
-  constructor(assets, editor, field, elements, levelurl) { //{{{
+  constructor(assets, editor, field, elements, levelurl, solurl) { //{{{
     this.#assets = assets
     this.#editor = editor
     this.#field = field
     this.#elements = elements
     this.levelurl = levelurl
+    this.solurl = solurl
   } //}}}
 
   async load_level() { //{{{
@@ -73,6 +74,11 @@ class Loader {
     return true
   }  //}}}
 
+  async load_solution() {
+    let solution = await this.#get_solution(this.solurl)
+    this.#editor.program = solution
+  }
+
   #get_level(levelurl) { //{{{
     return new Promise( (resolve,reject) => {
       if (levelurl.match(/^http/)) {
@@ -90,4 +96,14 @@ class Loader {
       }
     })
   } //}}}
+
+  #get_solution(solurl) { //{{{
+    return new Promise( (resolve,reject) => {
+      $.ajax({
+        type: "GET",
+        url: solurl,
+        error: () => { this.#assets.say(this.#assets.texts.faultysolution,'div.speech'); reject() }
+      }).then(res => { resolve(res) })
+    }
+  )} //}}}
 }

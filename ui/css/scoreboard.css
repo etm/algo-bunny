@@ -1,0 +1,65 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: center;
+    padding: 15px;
+}
+
+.row_rm_button {
+    float: left;
+    cursor: pointer;
+}
+
+.show_more_button {
+    float: left;
+    margin-right: 0.3em;
+    width: 1.5em;
+    padding: 0px;
+    cursor: pointer;
+}
+
+.bubble {
+    z-index: 1001;
+      position: absolute;
+      max-width: 28em;
+
+      padding: 1.125em 1.5em;
+      font-size: 1em;
+      border-radius: 1em;
+    box-shadow:	0 0.125em 0.5em rgba(0, 0, 0, .3), 0 0.0625em 0.125em rgba(0, 0, 0, .2);
+    margin-top: 0.3em;
+    margin-right: 1em;
+
+    background-color: #98eae0;
+  }
+
+.bubble::before {
+    z-index: 1001;
+
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid #98eae0;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #98eae0;
+    border-bottom: 10px solid transparent;
+    left: 0px;
+    top: 0px;
+}
+
+.heart_bttn {
+    border: none;
+    background-color: inherit;
+    font-size: 1.15em;
+    color: #000000;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.heart_bttn:hover {
+    color: #ff0000;
+  }

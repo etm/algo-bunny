@@ -11,6 +11,7 @@ document.addEventListener('contextmenu', event => event.preventDefault())
 $(document).ready(async function() {
   let q = $.parseQuerySimple()
   let levelurl = q.level ? q.level : ''
+  let solurl = q.solution ? q.solution : ''
 
   let assets  = new Assets
   await assets.load()
@@ -37,11 +38,12 @@ $(document).ready(async function() {
       field.target.find('.bottom .ui.load').attr('title',assets.texts.load)
   let elements = new Elements($('div.elements'),assets,field,editor)
 
-  let loader = new Loader(assets, editor, field, elements, levelurl)
+  let loader = new Loader(assets, editor, field, elements, levelurl, solurl)
   if (!(await loader.load_level())) { return }
+  if (solurl !== '') {await loader.load_solution()}
 
   let prog
-  if (prog = window.localStorage.getItem(levelurl)) {
+  if (solurl === '' && (prog = window.localStorage.getItem(levelurl))) {
     editor.program = JSON.parse(prog)
   }
 
@@ -446,6 +448,13 @@ $(document).ready(async function() {
         let ins = walker.ins_count()
         let steps = walker.step_count()
         let cmps = walker.cmps_count()
+        let level_src = $.parseQuerySimple().level
+        let sol_stats = { "cisc": cisc,
+                          "ins": ins,
+                          "steps": steps,
+                          "cmps": cmps,
+                          "level_src": level_src
+                        }
 
         field.target.find('div.victory .text .title .value').text(field.title.trim())
         field.target.find('div.victory .text .steps .value').text(steps)
@@ -453,6 +462,13 @@ $(document).ready(async function() {
         field.target.find('div.victory .text .ins .value').text(ins)
         field.target.find('div.victory .text .cisc .value').text(cisc)
         field.target.find('div.victory .text .reference_rank .value').text(field.max_score)
+        $.ajax({
+          type: 'POST',
+          url: 'save_scores.php',
+          data: { "level": field.title.trim().replace(/[^a-zA-Z0-9!?()-]/g,'_'),
+                  "stats": JSON.stringify(sol_stats,null,2),
+                  "solution": JSON.stringify(editor.program,null,2)}
+        });
       },1000)
       assets.play_audio(assets.audio.yay.sounds.sample())
     } else {

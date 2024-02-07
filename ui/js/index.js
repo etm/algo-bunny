@@ -10,7 +10,9 @@ $(document).ready(()=>{
   $('form').submit(false)
   if (!$.cookie('username')) {
     $.cookie('username', $('input').val());
-    $.cookie('userid', $UUID());
+  }
+  if (!$.cookie('userid')) {
+    $.cookie('userid', $UUID(), { expires : 365, path: "/;SameSite=Lax", secure: true});
   }
   if ($.cookie('username')) {
     $('input').val($.cookie('username'))
@@ -29,5 +31,9 @@ $(document).ready(()=>{
     let name = $('input').val()
     assets.say($('div.speech').attr('data-prefix') + name,$('div.speech'))
     $.cookie('username',name,{ expires : 365, path: "/;SameSite=Lax", secure: true})
+    $.ajax({
+      type: 'POST',
+      url: 'save_username.php'
+    });
   })
 })
