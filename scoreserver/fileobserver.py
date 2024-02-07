@@ -57,6 +57,7 @@ def solution_observer_setup(path_root, send_event):
     my_event_handler.on_created = on_new_submission(send_event, path_root)
 
     path = path_root + "/scores"
+
     go_recursively = True
     my_observer = Observer()
     my_observer.schedule(my_event_handler, path, recursive=go_recursively)

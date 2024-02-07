@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from flask import Flask, Response
 from flask_cors import CORS
 
@@ -5,6 +6,7 @@ import sys
 import os
 import glob
 import json
+import os
 from itertools import groupby
 
 from fileobserver import username_observer_setup, solution_observer_setup
@@ -88,6 +90,10 @@ if __name__ == '__main__':
         path_root = sys.argv[1]
     else:
         print('Usage: python scoreserver.py [dir]\nDefault directory is ' + path_root)
+
+    if (not os.path.exists(path_root)):
+        print('But, we cant find the default directory. No carrots for you.')
+        exit()
 
     app.debug = True
     # Monitor username changes
