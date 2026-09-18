@@ -388,7 +388,7 @@ $(document).ready(async function() {
     if (ot.length > 0 && ot.parents('g[element-group=graph]').length == 1) {
       var ety = ot.first().attr('element-type')
       if (ety == 'execute') {
-        return false
+        return
       }
       var eid = ot.first().attr('element-id')
       let touchobj = ev.originalEvent.changedTouches[0]
