@@ -9,7 +9,9 @@ var active_element_drag = null
 document.addEventListener('contextmenu', event => event.preventDefault())
 
 document.addEventListener('touchmove', function (e) {
-  e.preventDefault();
+  if (active_element_drag || (active_drag_location && active_drag_location.engaged !== false)) {
+    e.preventDefault();
+  }
 }, { passive: false });
 
 $(document).ready(async function() {
@@ -21,6 +23,29 @@ $(document).ready(async function() {
   await assets.load()
 
   let editor = new Editor($('div.program'), assets, levelurl)
+
+  let autoscroll_timer = null
+  let autoscroll_y = 0
+  const autoscroll_zone = 60
+  const autoscroll_step = 12
+  const autoscroll_update = (clientY)=>{
+    autoscroll_y = clientY
+    if (autoscroll_timer == null) {
+      autoscroll_timer = setInterval(()=>{
+        let prog = editor.target[0]
+        let r = prog.getBoundingClientRect()
+        if (autoscroll_y < r.top + autoscroll_zone) {
+          prog.scrollTop -= autoscroll_step
+        } else if (autoscroll_y > r.bottom - autoscroll_zone) {
+          prog.scrollTop += autoscroll_step
+        }
+      },16)
+    }
+  }
+  const autoscroll_stop = ()=>{
+    clearInterval(autoscroll_timer)
+    autoscroll_timer = null
+  }
   let field = new Field($('div.field'), assets)
       field.target.find('.victory .hurra').text(assets.texts.hurra)
       field.target.find('.victory .text .title .label').text(assets.texts.victory_text_title)
@@ -191,6 +216,7 @@ $(document).ready(async function() {
       drag.classList.add('visible')
       drag.style.left = touchobj.pageX + 'px'
       drag.style.top = touchobj.pageY + 'px'
+      autoscroll_update(touchobj.clientY)
 
       let pos = document.elementsFromPoint(touchobj.clientX, touchobj.clientY)[0]
       let ot = $(pos).parents('g[element-type=jump]')
@@ -214,6 +240,7 @@ $(document).ready(async function() {
   }) //}}}
   field.target_svg.on('touchend','foreignObject div',(ev)=>{ //{{{
     if (active_drag_location && active_drag_location.target !== undefined) {
+      autoscroll_stop()
       document.querySelector('#drag').classList.remove('visible')
 
       let target = active_drag_location.target
@@ -386,6 +413,7 @@ $(document).ready(async function() {
       drag.classList.add('visible')
       drag.style.left = (touchobj.pageX - (drag.clientWidth/2)) + 'px'
       drag.style.top = touchobj.pageY + 'px'
+      autoscroll_update(touchobj.clientY)
 
       let pos = document.elementsFromPoint(touchobj.clientX, touchobj.clientY)[0]
       let ot = $(pos).parents('g[element-type=add]')
@@ -409,6 +437,7 @@ $(document).ready(async function() {
   }) //}}}
   editor.target_svg.on('touchend','foreignObject div',(ev)=>{ //{{{
     if (active_drag_location && active_drag_location.eid) {
+      autoscroll_stop()
       if (active_drag_location.engaged) {
         let eit = active_drag_location.eid
         let target = active_drag_location.target
@@ -455,6 +484,7 @@ $(document).ready(async function() {
     ev.preventDefault()
   }) //}}}
   elements.target.on('touchend','[draggable=true][data-type]',(ev)=>{ //{{{
+    autoscroll_stop()
     active_drag_location = null
     active_element_drag = false
     drag.classList.remove('visible')
@@ -491,6 +521,7 @@ $(document).ready(async function() {
       let posY = ev.originalEvent.changedTouches[0].pageY
       drag.style.left = posX + 'px'
       drag.style.top = posY + 'px'
+      autoscroll_update(ev.originalEvent.changedTouches[0].clientY)
 
       let pos = document.elementsFromPoint(ev.originalEvent.changedTouches[0].pageX,ev.originalEvent.changedTouches[0].pageY)[0]
       let ot = $(pos).parents('g[element-type=add]')

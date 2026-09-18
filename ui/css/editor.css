@@ -68,6 +68,14 @@ div.program {
 div.program::-webkit-scrollbar       { width: 0.5em; }
 div.program::-webkit-scrollbar-track { background-color: #72d4c8; }
 div.program::-webkit-scrollbar-thumb { background-color: #338c7b; }
+@media (pointer: coarse) {
+  div.program::-webkit-scrollbar       { width: 2.5em; }
+  div.program::-webkit-scrollbar-thumb { border-radius: 1.25em; border: 0.5em solid #72d4c8; }
+}
+
+div.program svg foreignObject div {
+  touch-action: none;
+}
 
 div.program svg g[element-group=drop] g[element-type=add] path {
   fill: #ffffff;
