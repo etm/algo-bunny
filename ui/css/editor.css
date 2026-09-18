@@ -57,7 +57,9 @@ div.program {
   background-color: #72d4c8;
   scrollbar-color: #338c7b #72d4c8;
   overflow-y: scroll;
-  overflow-x: visible;
+  overflow-x: hidden;
+
+  flex: 0 0 auto;
 
   display:flex;
   flex-direction: column;
