@@ -8,9 +8,22 @@ var active_element_drag = null
 
 document.addEventListener('contextmenu', event => event.preventDefault())
 
+var last_touch_y = 0
+document.addEventListener('touchstart', function (e) {
+  last_touch_y = e.touches[0].clientY
+}, { passive: true });
 document.addEventListener('touchmove', function (e) {
   let dragging = active_element_drag || (active_drag_location && active_drag_location.engaged !== false)
-  if (dragging || !e.target.closest('div.program')) {
+  let y = e.touches[0].clientY
+  let dy = y - last_touch_y
+  last_touch_y = y
+  let prog = e.target.closest('div.program')
+  let scrollable = false
+  if (prog && !dragging) {
+    let max = prog.scrollHeight - prog.clientHeight
+    scrollable = max > 0 && !(dy > 0 && prog.scrollTop <= 0) && !(dy < 0 && prog.scrollTop >= max - 1)
+  }
+  if (!scrollable) {
     e.preventDefault();
   }
 }, { passive: false });
