@@ -82,6 +82,17 @@ $(document).ready(async function() {
       field.target.find('.bottom .ui.load').attr('title',assets.texts.load)
   let elements = new Elements($('div.elements'),assets,field,editor)
 
+  const remove_program_item = (eid)=>{
+    let it = editor.get_item(eid)
+    if (it.item == 'execute') {
+      editor.remove_item_by_type(it.item + it.id)
+      elements.target.find('img[data-type=execute' + it.id + ']').hide()
+    }
+    editor.remove_item(eid)
+    editor.render_diff()
+    elements.show(editor.program_stats())
+  }
+
   let loader = new Loader(assets, editor, field, elements, levelurl, solurl)
   if (!(await loader.load_level())) { return }
   if (solurl !== '') {await loader.load_solution()}
@@ -151,14 +162,7 @@ $(document).ready(async function() {
   // click delete
   editor.target_svg.on('click','g[element-group=drop] g[element-type=delete].active',(ev)=>{ //{{{
     let eid = $(ev.currentTarget).attr('element-id')
-    let it = editor.get_item(eid)
-    if (it.item == 'execute') {
-      editor.remove_item_by_type(it.item + it.id)
-      elements.target.find('img[data-type=execute' + it.id + ']').hide()
-    }
-    editor.remove_item(eid)
-    editor.render_diff()
-    elements.show(editor.program_stats())
+    remove_program_item(eid)
     active_del = ''
     $(ev.currentTarget).removeClass('active')
     assets.say_reset('div.speech')
@@ -461,7 +465,11 @@ $(document).ready(async function() {
         editor.target_svg.find('g[element-type=add] .adder').hide()
         editor.target_svg.find('g[element-type=add]').removeClass('active')
 
-        if (target && target.length > 0) {
+        let touchobj = ev.originalEvent.changedTouches[0]
+        let over = document.elementsFromPoint(touchobj.clientX, touchobj.clientY)[0]
+        if ($(over).closest('div.elements').length > 0) {
+          remove_program_item(eit)
+        } else if (target && target.length > 0) {
           let eid = target.attr('element-id')
           let eop = target.attr('element-op')
           editor.move_item(eid,eop,eit)
@@ -473,6 +481,22 @@ $(document).ready(async function() {
         ev.preventDefault()
       }
       active_drag_location = null
+    }
+  }) //}}}
+
+  elements.target.on('dragover',(ev)=>{ //{{{
+    if (active_element_drag) {
+      ev.preventDefault()
+    }
+  }) //}}}
+  elements.target.on('drop',(ev)=>{ //{{{
+    ev.preventDefault()
+    let eit = ev.originalEvent.dataTransfer.getData("text/plain")
+    if (eit.match(/^a\d+$/)) {
+      remove_program_item(eit)
+      active_element_drag = false
+      editor.target_svg.find('g[element-type=add] .adder').hide()
+      editor.target_svg.find('g[element-type=add]').removeClass('active')
     }
   }) //}}}
 
