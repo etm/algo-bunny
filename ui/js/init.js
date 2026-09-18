@@ -9,7 +9,8 @@ var active_element_drag = null
 document.addEventListener('contextmenu', event => event.preventDefault())
 
 document.addEventListener('touchmove', function (e) {
-  if (active_element_drag || (active_drag_location && active_drag_location.engaged !== false)) {
+  let dragging = active_element_drag || (active_drag_location && active_drag_location.engaged !== false)
+  if (dragging || !e.target.closest('div.program')) {
     e.preventDefault();
   }
 }, { passive: false });
@@ -584,8 +585,6 @@ $(document).ready(async function() {
       $(ev.currentTarget).removeClass('active')
     }
   }) //}}}
-
-  console.log(window.devicePixelRatio)
 
   $('button.mission').click(ev=>{
     field.target.find('div.victory').removeClass('active')

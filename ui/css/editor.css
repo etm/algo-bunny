@@ -58,6 +58,7 @@ div.program {
   scrollbar-color: #338c7b #72d4c8;
   overflow-y: scroll;
   overflow-x: hidden;
+  overscroll-behavior: contain;
 
   flex: 0 0 auto;
 
