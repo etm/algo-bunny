@@ -150,6 +150,10 @@ div.program svg g[element-group=graph] g[element-type=jump].targeting .cutout {
   display: inline;
 }
 
-button.save {
+button.save, button.fullscreen {
   margin-left: 3em;
+}
+
+button img.hidden{
+  display: none;
 }
