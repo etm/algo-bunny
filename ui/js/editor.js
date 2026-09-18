@@ -555,6 +555,17 @@ class Editor {
     this.remove_ids = []
     let hei = parseFloat(this.target_svg.attr('height'))
     this.target_svg.attr('height', hei - aggr_shift * this.#scale_factor * this.#tile_height)
+    this.target_svg.attr('width', this.#width_rec(this.program,1) * this.#tile_width * this.#scale_factor + this.#width_add)
+  } //}}}
+  #width_rec(it,x) { //{{{
+    let width = x
+    for (const [k,v] of it) {
+      if (typeof(v) == 'object' && v != null && 'first' in v) {
+        if (v.first)  { width = Math.max(width, this.#width_rec(v.first,x+1)) }
+        if (v.second) { width = Math.max(width, this.#width_rec(v.second,x+1)) }
+      }
+    }
+    return width
   } //}}}
   #render_add() { //{{{
     let aggr_shift = 0;
