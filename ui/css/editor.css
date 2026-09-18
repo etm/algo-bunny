@@ -72,25 +72,8 @@ div.program::-webkit-scrollbar       { width: 0.5em; }
 div.program::-webkit-scrollbar-track { background-color: #72d4c8; }
 div.program::-webkit-scrollbar-thumb { background-color: #338c7b; }
 @media (pointer: coarse) {
-  div.program {
-    scrollbar-width: none;
-    padding-right: 3.5em;
-  }
-  div.program::-webkit-scrollbar { display: none; }
-}
-#program_scrollbar {
-  position: fixed;
-  width: 3em;
-  z-index: 1500;
-  background-color: #47baa4;
-  touch-action: none;
-}
-#program_scrollbar .thumb {
-  position: absolute;
-  left: 0.3em;
-  right: 0.3em;
-  border-radius: 1.2em;
-  background-color: #338c7b;
+  div.program::-webkit-scrollbar       { width: 2.5em; }
+  div.program::-webkit-scrollbar-thumb { border-radius: 1.25em; border: 0.5em solid #72d4c8; }
 }
 
 div.program svg foreignObject div {
