@@ -60,6 +60,53 @@ $(document).ready(async function() {
     clearInterval(autoscroll_timer)
     autoscroll_timer = null
   }
+
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    let prog = editor.target[0]
+    let track = $('<div id="program_scrollbar"><div class="thumb"></div></div>').appendTo('body')
+    let thumb = track.find('.thumb')
+    let grab = 0
+    const sb_metrics = ()=>{
+      let r = prog.getBoundingClientRect()
+      let max = prog.scrollHeight - prog.clientHeight
+      let th = max > 0 ? Math.max(64, r.height * prog.clientHeight / prog.scrollHeight) : 0
+      return { r: r, max: max, th: th }
+    }
+    const sb_update = ()=>{
+      let m = sb_metrics()
+      track.css({ top: m.r.top, left: m.r.right - track.outerWidth(), height: m.r.height })
+      if (m.max <= 0) {
+        thumb.hide()
+      } else {
+        thumb.css({ display: 'block', height: m.th, top: (m.r.height - m.th) * prog.scrollTop / m.max })
+      }
+    }
+    const sb_scroll_to = (y)=>{
+      let m = sb_metrics()
+      if (m.max <= 0) { return }
+      let ty = Math.min(Math.max(y - m.r.top - grab, 0), m.r.height - m.th)
+      prog.scrollTop = ty / (m.r.height - m.th) * m.max
+    }
+    track[0].addEventListener('touchstart', (ev)=>{
+      let m = sb_metrics()
+      let y = ev.touches[0].clientY
+      let tt = thumb[0].getBoundingClientRect().top
+      grab = (ev.target == thumb[0]) ? y - tt : m.th / 2
+      sb_scroll_to(y)
+      ev.preventDefault()
+    }, { passive: false })
+    track[0].addEventListener('touchmove', (ev)=>{
+      sb_scroll_to(ev.touches[0].clientY)
+      ev.preventDefault()
+    }, { passive: false })
+    prog.addEventListener('scroll', sb_update)
+    window.addEventListener('resize', sb_update)
+    let ro = new ResizeObserver(sb_update)
+    ro.observe(prog)
+    ro.observe(editor.target_svg[0])
+    sb_update()
+  }
+
   let field = new Field($('div.field'), assets)
       field.target.find('.victory .hurra').text(assets.texts.hurra)
       field.target.find('.victory .text .title .label').text(assets.texts.victory_text_title)
