@@ -17,11 +17,11 @@ document.addEventListener('touchmove', function (e) {
   let y = e.touches[0].clientY
   let dy = y - last_touch_y
   last_touch_y = y
-  let prog = e.target.closest('div.program')
+  let scrolling = e.target.closest('div.program, div.field > div.mission.active > .text, div.field > div.victory.active > .text')
   let scrollable = false
-  if (prog && !dragging) {
-    let max = prog.scrollHeight - prog.clientHeight
-    scrollable = max > 0 && !(dy > 0 && prog.scrollTop <= 0) && !(dy < 0 && prog.scrollTop >= max - 1)
+  if (scrolling && !dragging) {
+    let max = scrolling.scrollHeight - scrolling.clientHeight
+    scrollable = max > 0 && !(dy > 0 && scrolling.scrollTop <= 0) && !(dy < 0 && scrolling.scrollTop >= max - 1)
   }
   if (!scrollable) {
     e.preventDefault();
