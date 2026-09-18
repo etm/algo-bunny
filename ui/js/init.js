@@ -481,6 +481,9 @@ $(document).ready(async function() {
       let drag = document.querySelector('#drag')
       let elem = ev.currentTarget
       let clone = elem.cloneNode(true)
+      let elem_rect = elem.getBoundingClientRect()
+      clone.style.height = elem_rect.height + 'px'
+      clone.style.width = elem_rect.width + 'px'
 
       drag.replaceChildren(clone)
       drag.classList.add('visible')
