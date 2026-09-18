@@ -8,6 +8,10 @@ var active_element_drag = null
 
 document.addEventListener('contextmenu', event => event.preventDefault())
 
+document.addEventListener('touchmove', function (e) {
+  e.preventDefault();
+}, { passive: false });
+
 $(document).ready(async function() {
   let q = $.parseQuerySimple()
   let levelurl = q.level ? q.level : ''
