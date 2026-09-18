@@ -744,6 +744,21 @@ $(document).ready(async function() {
   $('button.load').click(ev=>{
     document.getElementById('loadinstructions').click()
   })
+  $('button.fullscreen').click(ev=>{
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document)
+    } else {
+      let root = document.documentElement;
+      (root.requestFullscreen || root.webkitRequestFullscreen).call(root)
+    }
+  })
+  const fullscreen_changed = ()=>{
+    let full = document.fullscreenElement || document.webkitFullscreenElement
+    $('button.fullscreen img:first-child').toggleClass('hidden', !!full)
+    $('button.fullscreen img:last-child').toggleClass('hidden', !full)
+  }
+  document.addEventListener('fullscreenchange', fullscreen_changed)
+  document.addEventListener('webkitfullscreenchange', fullscreen_changed)
   $("input[name=loadinstructions]").change(ev=>{
     if (typeof window.FileReader !== 'function') {
       alert('FileReader not yet supportet')
