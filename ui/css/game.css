@@ -2,6 +2,12 @@ body, html {
   height: 100%;
 }
 
+* {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
 #drag {
   position: fixed;
   z-index: 2000;
