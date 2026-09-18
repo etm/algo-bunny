@@ -6,6 +6,7 @@ body, html {
   position: fixed;
   z-index: 2000;
   display: none;
+  pointer-events: none;
 }
 #drag.visible {
   display: inline;

@@ -489,7 +489,7 @@ $(document).ready(async function() {
       drag.style.left = posX + 'px'
       drag.style.top = posY + 'px'
 
-      let pos = document.elementsFromPoint(ev.originalEvent.changedTouches[0].pageX,ev.originalEvent.changedTouches[0].pageY)[2]
+      let pos = document.elementsFromPoint(ev.originalEvent.changedTouches[0].pageX,ev.originalEvent.changedTouches[0].pageY)[0]
       let ot = $(pos).parents('g[element-type=add]')
 
       if (ot.length > 0) {
