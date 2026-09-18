@@ -34,9 +34,11 @@ class Editor {
     this.target_graph = t1
     this.target_drop = t2
 
+    let is_coarse_pointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches
+
     this.#tile_width = 26.4
     this.#tile_height = 27
-    this.#scale_factor = 2.21
+    this.#scale_factor = is_coarse_pointer ? 2.21 * 1.5 : 2.21
     this.#height_shift = 10
 
     this.#width_add = this.#tile_width + 12

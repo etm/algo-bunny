@@ -40,6 +40,12 @@ div.elements div.group > img[id] {
 
   cursor: pointer;
 }
+@media (pointer: coarse) {
+  div.elements div.group > img[data-type],
+  div.elements div.group > img[id] {
+    height: 6em;
+  }
+}
 
 div.program {
   margin: 0;
