@@ -157,6 +157,81 @@ $(document).ready(async function() {
       return false
     }
    }) //}}}
+  // touch fallback for the location-drag above: iOS/iPadOS requires a long-press
+  // before it will fire native dragstart on a touch, so we drive the same
+  // interaction off touch events instead, exactly like the elements panel below.
+  field.target_svg.on('touchstart','foreignObject div',(ev)=>{ //{{{
+    if (walker.walking) { return false }
+
+    let touchobj = ev.originalEvent.changedTouches[0]
+
+    editor.target_svg.find('g[element-group=drop] g[element-type=here]').removeClass('active')
+    let oes = document.elementsFromPoint(touchobj.clientX, touchobj.clientY)
+    let oe = oes[2]
+
+    let ot = $(oe).parents('g.tile')
+
+    if (ot.length == 1) {
+      let ox = ot.attr('element-x')
+      let oy = ot.attr('element-y')
+
+      let drag = document.querySelector('#drag')
+      let img = document.createElement('img')
+      img.src = 'assets/location.svg'
+      drag.replaceChildren(img)
+
+      active_drag_location = { x: ox, y: oy, target: null }
+      ev.preventDefault()
+    }
+  }) //}}}
+  field.target_svg.on('touchmove','foreignObject div',(ev)=>{ //{{{
+    if (active_drag_location && active_drag_location.target !== undefined) {
+      let touchobj = ev.originalEvent.changedTouches[0]
+      let drag = document.querySelector('#drag')
+      drag.classList.add('visible')
+      drag.style.left = touchobj.pageX + 'px'
+      drag.style.top = touchobj.pageY + 'px'
+
+      let pos = document.elementsFromPoint(touchobj.clientX, touchobj.clientY)[0]
+      let ot = $(pos).parents('g[element-type=jump]')
+
+      if (ot.length > 0) {
+        if (!ot.is(active_drag_location.target)) {
+          if (active_drag_location.target != null) {
+            active_drag_location.target.removeClass('active')
+          }
+          active_drag_location.target = ot
+          active_drag_location.target.addClass('active')
+        }
+      } else {
+        if (active_drag_location.target != null) {
+          active_drag_location.target.removeClass('active')
+          active_drag_location.target = null
+        }
+      }
+      ev.preventDefault()
+    }
+  }) //}}}
+  field.target_svg.on('touchend','foreignObject div',(ev)=>{ //{{{
+    if (active_drag_location && active_drag_location.target !== undefined) {
+      document.querySelector('#drag').classList.remove('visible')
+
+      let target = active_drag_location.target
+      if (target && target.length > 0) {
+        let eid = target.attr('element-id')
+        target.removeClass('active')
+        target.addClass('targeting')
+        target.attr('element-para',active_drag_location.x+','+active_drag_location.y)
+        editor.update_item(eid,'target',active_drag_location.x+','+active_drag_location.y)
+
+        field.target_svg.find('g.tile').removeClass('active')
+        field.target_svg.find('g.tile[element-x=' + active_drag_location.x + '][element-y=' + active_drag_location.y + ']').addClass('active')
+      }
+
+      active_drag_location = null
+      ev.preventDefault()
+    }
+  }) //}}}
   editor.target.on('drop','g[element-type=jump]',(ev)=>{ //{{{
     ev.preventDefault()
     ev.stopPropagation()
@@ -250,6 +325,110 @@ $(document).ready(async function() {
       active_element_drag = true
     } else {
       return false
+    }
+  }) //}}}
+  // touch fallback for moving/reordering an existing program element, same
+  // reasoning as the location-drag touch fallback above. Unlike that one,
+  // a plain tap on these foreignObjects is also used (see the 'click'
+  // handler above) to select the element for deletion, so we must not
+  // preventDefault/engage the drag until the touch has actually moved -
+  // otherwise we'd swallow the synthetic click that drives tap-to-delete.
+  const drag_move_threshold = 10 // px
+  editor.target_svg.on('touchstart','foreignObject div',(ev)=>{ //{{{
+    if (walker.walking) { return false }
+
+    let oe = $(ev.currentTarget)
+    let ot = $(oe).parents('g[element-type]')
+    if (ot.length > 0 && ot.parents('g[element-group=graph]').length == 1) {
+      var ety = ot.first().attr('element-type')
+      if (ety == 'execute') {
+        return false
+      }
+      var eid = ot.first().attr('element-id')
+      let touchobj = ev.originalEvent.changedTouches[0]
+
+      active_drag_location = { eid: eid, ety: ety, node: ot.first()[0], target: null, engaged: false, startX: touchobj.pageX, startY: touchobj.pageY }
+    }
+  }) //}}}
+  editor.target_svg.on('touchmove','foreignObject div',(ev)=>{ //{{{
+    if (active_drag_location && active_drag_location.eid) {
+      let touchobj = ev.originalEvent.changedTouches[0]
+
+      if (!active_drag_location.engaged) {
+        let dx = touchobj.pageX - active_drag_location.startX
+        let dy = touchobj.pageY - active_drag_location.startY
+        if (Math.sqrt(dx*dx + dy*dy) < drag_move_threshold) { return }
+
+        active_drag_location.engaged = true
+        active_element_drag = true
+
+        // Build the ghost from the live element being dragged rather than
+        // the matching palette icon: that palette icon is display:none
+        // whenever this element type's supply is fully placed already
+        // (the common case when reordering), and cloning a display:none
+        // node renders as a solid black box.
+        let drag = document.querySelector('#drag')
+        let svg_el = active_drag_location.node
+        let bbox = svg_el.getBBox()
+        let rect = svg_el.getBoundingClientRect()
+        let ghost = document.createElementNS('http://www.w3.org/2000/svg','svg')
+        ghost.setAttribute('viewBox', bbox.x+' '+bbox.y+' '+bbox.width+' '+bbox.height)
+        ghost.setAttribute('width', rect.width)
+        ghost.setAttribute('height', rect.height)
+        ghost.appendChild(svg_el.cloneNode(true))
+        drag.replaceChildren(ghost)
+
+        editor.target_svg.find('g[element-group=drop] g[element-type=here]').removeClass('active')
+        editor.target_svg.find('g[element-type=add] .adder').show()
+      }
+
+      let drag = document.querySelector('#drag')
+      drag.classList.add('visible')
+      drag.style.left = (touchobj.pageX - (drag.clientWidth/2)) + 'px'
+      drag.style.top = touchobj.pageY + 'px'
+
+      let pos = document.elementsFromPoint(touchobj.clientX, touchobj.clientY)[0]
+      let ot = $(pos).parents('g[element-type=add]')
+
+      if (ot.length > 0) {
+        if (!ot.is(active_drag_location.target)) {
+          if (active_drag_location.target != null) {
+            active_drag_location.target.removeClass('active')
+          }
+          active_drag_location.target = ot
+          active_drag_location.target.addClass('active')
+        }
+      } else {
+        if (active_drag_location.target != null) {
+          active_drag_location.target.removeClass('active')
+          active_drag_location.target = null
+        }
+      }
+      ev.preventDefault()
+    }
+  }) //}}}
+  editor.target_svg.on('touchend','foreignObject div',(ev)=>{ //{{{
+    if (active_drag_location && active_drag_location.eid) {
+      if (active_drag_location.engaged) {
+        let eit = active_drag_location.eid
+        let target = active_drag_location.target
+
+        document.querySelector('#drag').classList.remove('visible')
+        editor.target_svg.find('g[element-type=add] .adder').hide()
+        editor.target_svg.find('g[element-type=add]').removeClass('active')
+
+        if (target && target.length > 0) {
+          let eid = target.attr('element-id')
+          let eop = target.attr('element-op')
+          editor.move_item(eid,eop,eit)
+          editor.render()
+          elements.show(editor.program_stats())
+        }
+
+        active_element_drag = false
+        ev.preventDefault()
+      }
+      active_drag_location = null
     }
   }) //}}}
 
