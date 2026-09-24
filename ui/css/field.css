@@ -1,7 +1,8 @@
 div.field {
   position: relative;
 
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  min-width: 0;
   background-color: #98eae0;
 
   height: 100%;
