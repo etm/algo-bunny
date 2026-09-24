@@ -5,6 +5,7 @@ body, html {
 @media (pointer: coarse) and (max-width: 500px),
        (pointer: coarse) and (max-height: 500px) {
   html { font-size: 2.7svmin; }
+  button { font: inherit; }
 }
 
 * {
