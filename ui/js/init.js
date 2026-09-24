@@ -637,7 +637,7 @@ $(document).ready(async function() {
   $('button.control').click(ev=>{
     field.target.find('div.victory').removeClass('active')
     field.target.find('div.mission').removeClass('active')
-    if (editor.program.length > 0) {
+    if (editor.program.length > 0 || $(ev.currentTarget).hasClass('active')) {
       $('button.control img').removeClass('important')
       if ($(ev.currentTarget).hasClass('active')) {
         $('button.speed').hide()
