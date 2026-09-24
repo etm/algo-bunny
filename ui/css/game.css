@@ -32,7 +32,6 @@ body, html {
     justify-content: center;
   }
   #rotate img { height: 8em; margin-right: 1.5em; }
-  #rotate div.bubble { position: relative; top: auto; left: auto; max-width: 60%; }
 }
 
 #drag {

@@ -37,6 +37,13 @@ div.speech.front:after {
   border-right-color: #98eae0;
 }
 
+#rotate div.bubble {
+  position: relative;
+  top: auto;
+  left: auto;
+  max-width: 60%;
+}
+
 #rotate div.bubble:after {
   top: 50%;
   margin-top: -0.6em;
