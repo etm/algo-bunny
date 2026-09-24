@@ -11,7 +11,7 @@ Iss alle Karotten.
 Algo will die Karotte essen. Aber diese Mal ist die Karotte auf einer
 anderen Insel.
 
-Die Blume vor Algo ist sein Freundin und sagt ihm er hinspringen muss. Algo
+Die Blume vor Algo ist sein Freundin und sagt ihm wo er hinspringen muss. Algo
 muss sich merken was die Blume sagt ![](commands/memorize_flower.svg).
 
 Was die Blume sagt ist dann in seinem grossen Gehirn (rechts unten) gespeichert
