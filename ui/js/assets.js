@@ -163,7 +163,7 @@ function Assets() {
   this.texts.speed = 'Current Speed'
   this.texts.save = 'Save Instructions'
   this.texts.load = 'Load Instructions'
-  this.texts.rotate = 'Rotate to landscape'
+  this.texts.rotate = 'Algo likes landscape!'
   //}}}
 
   /*------------------------*/
@@ -723,7 +723,7 @@ function Assets() {
   this.lang['de'].texts.speed = 'Aktuelle Geschwindigkeit'
   this.lang['de'].texts.save = 'Speichern'
   this.lang['de'].texts.load = 'Laden'
-  this.lang['de'].texts.rotate = 'Bitte ins Querformat drehen'
+  this.lang['de'].texts.rotate = 'Algo mag Querformat!'
   //}}}
 
   this.lang['de'].raw_oneliners = [ //{{{
