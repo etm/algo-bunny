@@ -10,6 +10,10 @@ input, button {
   max-width: 50em;
   margin: auto;
 }
+.content > img {
+  width: 100%;
+  height: auto;
+}
 .inline {
   vertical-align: bottom;
   height: 1.6em;
