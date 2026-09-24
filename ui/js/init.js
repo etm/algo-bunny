@@ -38,6 +38,9 @@ $(document).ready(async function() {
   $('#rotate .bubble').text(assets.texts.rotate)
 
   let editor = new Editor($('div.program'), assets, levelurl)
+  window.addEventListener('resize', ()=>{
+    if (window.walker && !window.walker.walking && editor.rescale()) { editor.render() }
+  })
 
   let autoscroll_timer = null
   let autoscroll_y = 0

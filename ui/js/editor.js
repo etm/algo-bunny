@@ -34,12 +34,10 @@ class Editor {
     this.target_graph = t1
     this.target_drop = t2
 
-    let is_coarse_pointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches
-    let rem = parseFloat(getComputedStyle(document.documentElement).fontSize) / 16
-
     this.#tile_width = 26.4
     this.#tile_height = 27
-    this.#scale_factor = (is_coarse_pointer ? 2.21 * 1.5 : 2.21) * rem
+    this.#scale_factor = 0
+    this.rescale()
     this.#height_shift = 10
 
     this.#width_add = this.#tile_width + 12
@@ -52,6 +50,15 @@ class Editor {
     this.add_id = null
     this.remove_ids = []
   }  //}}}
+
+  rescale() { //{{{
+    let coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches
+    let rem = parseFloat(getComputedStyle(document.documentElement).fontSize) / 16
+    let scale = (coarse ? 2.21 * 1.5 : 2.21) * rem
+    if (scale == this.#scale_factor) { return false }
+    this.#scale_factor = scale
+    return true
+  } //}}}
 
   #draw_below(id,what,x,y,op='',shift_y=0) { //{{{
     let item = this.assets.placeholders[what]

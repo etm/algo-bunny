@@ -3,6 +3,9 @@ body {
   font-size: 1em;
   margin: 1em;
 }
+input, button {
+  font: inherit;
+}
 .content {
   max-width: 50em;
   margin: auto;
