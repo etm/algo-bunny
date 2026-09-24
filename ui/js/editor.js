@@ -374,6 +374,7 @@ class Editor {
   } //}}}
 
   #clear() { //{{{
+    this.target_below.empty()
     this.target_graph.empty()
     this.target_drop.empty()
   } //}}}
