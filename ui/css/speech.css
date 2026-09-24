@@ -38,6 +38,13 @@ div.speech.front:after {
   border-right-color: #98eae0;
 }
 
+@media (pointer: coarse) {
+  div.speech {
+    top: 2em;
+    left: 23.5em;
+  }
+}
+
 #rotate div.bubble {
   position: relative;
   top: auto;
