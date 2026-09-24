@@ -35,6 +35,7 @@ $(document).ready(async function() {
 
   let assets  = new Assets
   await assets.load()
+  $('#rotate .bubble').text(assets.texts.rotate)
 
   let editor = new Editor($('div.program'), assets, levelurl)
 

@@ -14,6 +14,27 @@ body, html {
   -webkit-touch-callout: none;
 }
 
+#rotate {
+  display: none;
+}
+@media (pointer: coarse) and (max-width: 500px) and (orientation: portrait) {
+  #rotate {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3000;
+    background-color: #47baa4;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  #rotate img { height: 8em; margin-right: 1.5em; }
+  #rotate div.bubble { position: relative; top: auto; left: auto; max-width: 60%; }
+}
+
 #drag {
   position: fixed;
   z-index: 2000;

@@ -1,4 +1,4 @@
-div.speech {
+div.speech, #rotate div.bubble {
   z-index: 1001;
 	position: absolute;
 	max-width: 28em;
@@ -20,7 +20,7 @@ div.speech.front {
 	background-color: #98eae0;
 }
 
-div.speech:after {
+div.speech:after, #rotate div.bubble:after {
   content: "";
   position: absolute;
   width: 0;
