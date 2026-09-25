@@ -9,7 +9,7 @@ body, html {
 }
 
 @media (pointer: coarse) and (min-width: 501px) and (min-height: 501px) {
-  html { font-size: 1.8svmin; }
+  html { font-size: 1.7svmin; }
   button { font: inherit; }
 }
 
