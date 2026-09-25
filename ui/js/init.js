@@ -153,15 +153,18 @@ $(document).ready(async function() {
 
   let prog_el = editor.target[0]
   let elem_el = elements.target[0]
-  const overflowing = ()=> prog_el.scrollHeight > prog_el.clientHeight + 1 || elem_el.scrollHeight > elem_el.clientHeight + 1
-  let was_overflowing = overflowing()
+  const overflows = (el)=> el.scrollHeight > el.clientHeight + 1
+  let prog_overflow = overflows(prog_el)
+  let elem_overflow = overflows(elem_el)
   const scroll_hint = ()=>{
-    let now = overflowing()
-    if (now && !was_overflowing) {
+    let prog_now = overflows(prog_el)
+    let elem_now = overflows(elem_el)
+    if ((prog_now && !prog_overflow) || (elem_now && !elem_overflow)) {
       let coarse = window.matchMedia('(pointer: coarse)').matches
       assets.say(coarse ? assets.texts.scroll_touch : assets.texts.scroll, 'div.speech')
     }
-    was_overflowing = now
+    prog_overflow = prog_now
+    elem_overflow = elem_now
   }
   new ResizeObserver(scroll_hint).observe(editor.target_svg[0])
   new ResizeObserver(scroll_hint).observe(elements.target.find('div.group')[0])
