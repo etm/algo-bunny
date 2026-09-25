@@ -192,23 +192,26 @@ $(document).ready(async function() {
   assets.say(field.order.trim(),'div.speech')
 
   // TEMP DEBUG: remove after the standalone strip is fixed
-  if (window.navigator.standalone) {
-    setTimeout(()=>{
+  setTimeout(()=>{
+    let lines = []
+    try {
       let probe = $('<div style="position:absolute;visibility:hidden;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)"></div>').appendTo('body')
       let cs = getComputedStyle(probe[0])
       let b = document.body.getBoundingClientRect()
       let f = $('div.field')[0].getBoundingClientRect()
-      assets.say([
-        'inner ' + innerWidth + 'x' + innerHeight,
-        'screen ' + screen.width + 'x' + screen.height,
-        'visualViewport ' + Math.round(visualViewport.width) + 'x' + Math.round(visualViewport.height),
-        'body y ' + Math.round(b.top) + ' to ' + Math.round(b.bottom),
-        'field y ' + Math.round(f.top) + ' to ' + Math.round(f.bottom),
-        'safe-area top ' + cs.paddingTop + ' bottom ' + cs.paddingBottom
-      ].join('<br>'), 'div.speech')
+      lines.push('standalone ' + window.navigator.standalone + ', mode ' + (window.matchMedia('(display-mode: standalone)').matches ? 'standalone' : window.matchMedia('(display-mode: fullscreen)').matches ? 'fullscreen' : 'browser'))
+      lines.push('inner ' + innerWidth + 'x' + innerHeight)
+      lines.push('screen ' + screen.width + 'x' + screen.height)
+      lines.push('visualViewport ' + (window.visualViewport ? Math.round(visualViewport.width) + 'x' + Math.round(visualViewport.height) : 'n/a'))
+      lines.push('body y ' + Math.round(b.top) + ' to ' + Math.round(b.bottom))
+      lines.push('field y ' + Math.round(f.top) + ' to ' + Math.round(f.bottom))
+      lines.push('safe-area top ' + cs.paddingTop + ' bottom ' + cs.paddingBottom)
       probe.remove()
-    }, 1500)
-  }
+    } catch (e) {
+      lines.push('debug error: ' + e.message)
+    }
+    assets.say(lines.join('<br>'), 'div.speech')
+  }, 1500)
 
   // one liners
   editor.target_svg.on('click','g[element-type=bunny]',()=>{ assets.oneliner('div.speech') })
