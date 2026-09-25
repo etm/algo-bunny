@@ -15,12 +15,6 @@ body {
   height: auto;
 }
 
-@media (display-mode: standalone), (display-mode: fullscreen) {
-  body {
-    height: 100vh;
-  }
-}
-
 html {
   touch-action: manipulation;
 }
