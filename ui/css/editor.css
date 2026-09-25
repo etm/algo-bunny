@@ -43,6 +43,10 @@ div.elements div.group > img[id] {
   cursor: pointer;
 }
 @media (pointer: coarse) {
+  div.elements {
+    width: 13.85em;
+    min-width: 13.85em;
+  }
   div.elements div.group > img[data-type],
   div.elements div.group > img[id] {
     height: 6em;
