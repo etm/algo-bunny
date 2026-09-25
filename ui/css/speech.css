@@ -40,7 +40,7 @@ div.speech.front:after {
 
 @media (pointer: coarse) {
   div.speech {
-    top: 2em;
+    top: calc(2em + env(safe-area-inset-top, 0px));
     left: 20.7em;
   }
 }
