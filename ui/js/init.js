@@ -65,6 +65,33 @@ $(document).ready(async function() {
     autoscroll_timer = null
   }
 
+  let two_finger_y = null
+  const two_finger_avg = (ev)=> (ev.touches[0].clientY + ev.touches[1].clientY) / 2
+  document.addEventListener('touchstart', (ev)=>{
+    if (ev.touches.length == 2 && ev.touches[0].target.closest('div.program') && ev.touches[1].target.closest('div.program')) {
+      two_finger_y = two_finger_avg(ev)
+      if (active_drag_location && active_drag_location.eid) {
+        autoscroll_stop()
+        document.querySelector('#drag').classList.remove('visible')
+        editor.target_svg.find('g[element-type=add] .adder').hide()
+        editor.target_svg.find('g[element-type=add]').removeClass('active')
+        active_drag_location = null
+        active_element_drag = false
+      }
+    }
+  }, { passive: true })
+  document.addEventListener('touchmove', (ev)=>{
+    if (two_finger_y != null && ev.touches.length >= 2) {
+      let y = two_finger_avg(ev)
+      editor.target[0].scrollTop -= y - two_finger_y
+      two_finger_y = y
+      ev.preventDefault()
+    }
+  }, { passive: false })
+  document.addEventListener('touchend', (ev)=>{
+    if (ev.touches.length < 2) { two_finger_y = null }
+  }, { passive: true })
+
   let field = new Field($('div.field'), assets)
       field.target.find('.victory .hurra').text(assets.texts.hurra)
       field.target.find('.victory .text .title .label').text(assets.texts.victory_text_title)
@@ -401,7 +428,7 @@ $(document).ready(async function() {
     }
   }) //}}}
   editor.target_svg.on('touchmove','foreignObject div',(ev)=>{ //{{{
-    if (active_drag_location && active_drag_location.eid) {
+    if (two_finger_y == null && active_drag_location && active_drag_location.eid) {
       let touchobj = ev.originalEvent.changedTouches[0]
 
       if (!active_drag_location.engaged) {
