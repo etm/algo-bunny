@@ -183,7 +183,7 @@ div.field > div.mission > .text img[alt=example], div.field > div.victory > .tex
 div.field > div.stats {
   z-index: 500;
   position: absolute;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   right: 0;
   display: block;
   padding: 1em;
