@@ -7,6 +7,7 @@ var active_drag_location = null // thany you chrome for security without reason.
 var active_element_drag = null
 
 document.addEventListener('contextmenu', event => event.preventDefault())
+document.addEventListener('gesturestart', event => event.preventDefault())
 
 var last_touch_y = 0
 document.addEventListener('touchstart', function (e) {

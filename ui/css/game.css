@@ -2,6 +2,10 @@ body, html {
   height: 100%;
 }
 
+html {
+  touch-action: manipulation;
+}
+
 @media (pointer: coarse) and (max-width: 500px),
        (pointer: coarse) and (max-height: 500px) {
   html { font-size: 2.7svmin; }
