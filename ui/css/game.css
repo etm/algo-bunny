@@ -4,10 +4,15 @@ body, html {
   overscroll-behavior: none;
 }
 
+html {
+  background-color: #72d4c8;
+}
+
 body {
   position: fixed;
   inset: 0;
   width: 100%;
+  height: auto;
 }
 
 html {
