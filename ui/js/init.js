@@ -191,31 +191,6 @@ $(document).ready(async function() {
   // order
   assets.say(field.order.trim(),'div.speech')
 
-  // TEMP DEBUG: remove after the standalone strip is fixed
-  let debug_box = $('<div style="position:fixed;left:0;top:50%;z-index:5000;pointer-events:none;background:rgba(0,0,0,0.75);color:#fff;font:12px/1.3 monospace;padding:4px 6px;white-space:pre"></div>').appendTo('body')
-  const debug_update = ()=>{
-    let lines = []
-    try {
-      let probe = $('<div style="position:absolute;visibility:hidden;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)"></div>').appendTo('body')
-      let cs = getComputedStyle(probe[0])
-      let b = document.body.getBoundingClientRect()
-      let f = $('div.field')[0].getBoundingClientRect()
-      lines.push('standalone ' + window.navigator.standalone + ', mode ' + (window.matchMedia('(display-mode: standalone)').matches ? 'standalone' : window.matchMedia('(display-mode: fullscreen)').matches ? 'fullscreen' : 'browser'))
-      lines.push('inner ' + innerWidth + 'x' + innerHeight)
-      lines.push('screen ' + screen.width + 'x' + screen.height)
-      lines.push('visualViewport ' + (window.visualViewport ? Math.round(visualViewport.width) + 'x' + Math.round(visualViewport.height) : 'n/a'))
-      lines.push('body y ' + Math.round(b.top) + ' to ' + Math.round(b.bottom))
-      lines.push('field y ' + Math.round(f.top) + ' to ' + Math.round(f.bottom))
-      lines.push('safe-area top ' + cs.paddingTop + ' bottom ' + cs.paddingBottom)
-      probe.remove()
-    } catch (e) {
-      lines.push('debug error: ' + e.message)
-    }
-    debug_box.text(lines.join('\n'))
-  }
-  debug_update()
-  setInterval(debug_update, 1000)
-
   // one liners
   editor.target_svg.on('click','g[element-type=bunny]',()=>{ assets.oneliner('div.speech') })
 
