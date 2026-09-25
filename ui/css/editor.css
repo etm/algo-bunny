@@ -4,7 +4,7 @@ div.elements {
   background-color: #47baa4;
   scrollbar-color: #338c7b #47baa4;
   scrollbar-width: none;
-  padding: calc(0.5em + env(safe-area-inset-top, 0px)) 0.5em 0.5em;
+  padding: calc(0.5em + env(safe-area-inset-top, 0px)) 0.5em calc(0.5em + env(safe-area-inset-bottom, 0px));
 
   height: 100%;
 
@@ -56,7 +56,7 @@ div.elements div.group > img[id] {
 div.program {
   margin: 0;
   box-sizing: border-box;
-  padding: calc(0.5em + env(safe-area-inset-top, 0px)) 0.5em 0.5em;
+  padding: calc(0.5em + env(safe-area-inset-top, 0px)) 0.5em calc(0.5em + env(safe-area-inset-bottom, 0px));
 
   height: 100%;
 
