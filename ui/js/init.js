@@ -153,13 +153,11 @@ $(document).ready(async function() {
 
   // when overflow the bunny tells that you can scroll
   let prog_el = editor.target[0]
-  let elem_el = elements.target[0]
   const overflows = (el)=> el.scrollHeight > el.clientHeight + 1
   document.addEventListener('cisc:changed', ()=>{
     let prog_was = overflows(prog_el)
-    let elem_was = overflows(elem_el)
     setTimeout(()=>{
-      if ((overflows(prog_el) && !prog_was) || (overflows(elem_el) && !elem_was)) {
+      if (overflows(prog_el) && !prog_was) {
         let coarse = window.matchMedia('(pointer: coarse)').matches
         assets.say(coarse ? assets.texts.scroll_touch : assets.texts.scroll, 'div.speech')
       }

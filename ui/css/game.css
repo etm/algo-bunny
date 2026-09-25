@@ -22,7 +22,7 @@ body, html {
 #rotate {
   display: none;
 }
-@media (pointer: coarse) and (max-width: 500px) and (orientation: portrait) {
+@media (pointer: coarse) and (orientation: portrait) {
   #rotate {
     position: absolute;
     top: 0;
