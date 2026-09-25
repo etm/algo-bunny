@@ -1,5 +1,7 @@
 div.field {
   position: relative;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
 
   flex: 1 1 0;
   min-width: 0;
