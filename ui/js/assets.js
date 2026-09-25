@@ -164,6 +164,8 @@ function Assets() {
   this.texts.save = 'Save Instructions'
   this.texts.load = 'Load Instructions'
   this.texts.rotate = 'Algo likes landscape!'
+  this.texts.scroll = 'You can scroll.'
+  this.texts.scroll_touch = 'You can scroll with 2 fingers.'
   //}}}
 
   /*------------------------*/
@@ -724,6 +726,8 @@ function Assets() {
   this.lang['de'].texts.save = 'Speichern'
   this.lang['de'].texts.load = 'Laden'
   this.lang['de'].texts.rotate = 'Algo mag Querformat!'
+  this.lang['de'].texts.scroll = 'Du kannst scrollen.'
+  this.lang['de'].texts.scroll_touch = 'Du kannst mit 2 Fingern scrollen.'
   //}}}
 
   this.lang['de'].raw_oneliners = [ //{{{

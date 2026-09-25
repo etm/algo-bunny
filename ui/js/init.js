@@ -65,12 +65,19 @@ $(document).ready(async function() {
     autoscroll_timer = null
   }
 
+  let two_finger_target = null
   let two_finger_y = null
+  let two_finger_gesture = false
   const two_finger_avg = (ev)=> (ev.touches[0].clientY + ev.touches[1].clientY) / 2
   document.addEventListener('touchstart', (ev)=>{
-    if (ev.touches.length == 2 && ev.touches[0].target.closest('div.program') && ev.touches[1].target.closest('div.program')) {
+    if (ev.touches.length != 2) { return }
+    let c0 = ev.touches[0].target.closest('div.program, div.elements')
+    let c1 = ev.touches[1].target.closest('div.program, div.elements')
+    if (c0 && c0 === c1) {
+      two_finger_target = c0
       two_finger_y = two_finger_avg(ev)
-      if (active_drag_location && active_drag_location.eid) {
+      two_finger_gesture = true
+      if (active_element_drag || active_drag_location) {
         autoscroll_stop()
         document.querySelector('#drag').classList.remove('visible')
         editor.target_svg.find('g[element-type=add] .adder').hide()
@@ -81,15 +88,16 @@ $(document).ready(async function() {
     }
   }, { passive: true })
   document.addEventListener('touchmove', (ev)=>{
-    if (two_finger_y != null && ev.touches.length >= 2) {
+    if (two_finger_target && ev.touches.length >= 2) {
       let y = two_finger_avg(ev)
-      editor.target[0].scrollTop -= y - two_finger_y
+      two_finger_target.scrollTop -= y - two_finger_y
       two_finger_y = y
       ev.preventDefault()
     }
   }, { passive: false })
   document.addEventListener('touchend', (ev)=>{
-    if (ev.touches.length < 2) { two_finger_y = null }
+    if (ev.touches.length < 2) { two_finger_target = null; two_finger_y = null }
+    if (ev.touches.length == 0) { two_finger_gesture = false }
   }, { passive: true })
 
   let field = new Field($('div.field'), assets)
@@ -142,6 +150,21 @@ $(document).ready(async function() {
   editor.get_pids().forEach(pid => {
     elements.target.find('img[data-type=execute' + pid + ']').show()
   })
+
+  let prog_el = editor.target[0]
+  let elem_el = elements.target[0]
+  const overflowing = ()=> prog_el.scrollHeight > prog_el.clientHeight + 1 || elem_el.scrollHeight > elem_el.clientHeight + 1
+  let was_overflowing = overflowing()
+  const scroll_hint = ()=>{
+    let now = overflowing()
+    if (now && !was_overflowing) {
+      let coarse = window.matchMedia('(pointer: coarse)').matches
+      assets.say(coarse ? assets.texts.scroll_touch : assets.texts.scroll, 'div.speech')
+    }
+    was_overflowing = now
+  }
+  new ResizeObserver(scroll_hint).observe(editor.target_svg[0])
+  new ResizeObserver(scroll_hint).observe(elements.target.find('div.group')[0])
 
   walker = new Walker(assets,editor,field)
 
@@ -428,7 +451,7 @@ $(document).ready(async function() {
     }
   }) //}}}
   editor.target_svg.on('touchmove','foreignObject div',(ev)=>{ //{{{
-    if (two_finger_y == null && active_drag_location && active_drag_location.eid) {
+    if (!two_finger_gesture && active_drag_location && active_drag_location.eid) {
       let touchobj = ev.originalEvent.changedTouches[0]
 
       if (!active_drag_location.engaged) {
@@ -542,6 +565,7 @@ $(document).ready(async function() {
   }) //}}}
 
   elements.target.on('touchstart','[draggable=true][data-type]',(ev)=>{ //{{{
+    if (ev.originalEvent.touches.length > 1) { return }
     let touchobj = ev.changedTouches[0]
     active_drag_location = {
       x: parseInt(touchobj.clientX),
@@ -554,6 +578,7 @@ $(document).ready(async function() {
     ev.preventDefault()
   }) //}}}
   elements.target.on('touchend','[draggable=true][data-type]',(ev)=>{ //{{{
+    if (two_finger_gesture) { return }
     autoscroll_stop()
     active_drag_location = null
     active_element_drag = false
