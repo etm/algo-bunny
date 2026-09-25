@@ -192,7 +192,8 @@ $(document).ready(async function() {
   assets.say(field.order.trim(),'div.speech')
 
   // TEMP DEBUG: remove after the standalone strip is fixed
-  setTimeout(()=>{
+  let debug_box = $('<div style="position:fixed;left:0;top:50%;z-index:5000;pointer-events:none;background:rgba(0,0,0,0.75);color:#fff;font:12px/1.3 monospace;padding:4px 6px;white-space:pre"></div>').appendTo('body')
+  const debug_update = ()=>{
     let lines = []
     try {
       let probe = $('<div style="position:absolute;visibility:hidden;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)"></div>').appendTo('body')
@@ -210,8 +211,10 @@ $(document).ready(async function() {
     } catch (e) {
       lines.push('debug error: ' + e.message)
     }
-    assets.say(lines.join('<br>'), 'div.speech')
-  }, 1500)
+    debug_box.text(lines.join('\n'))
+  }
+  debug_update()
+  setInterval(debug_update, 1000)
 
   // one liners
   editor.target_svg.on('click','g[element-type=bunny]',()=>{ assets.oneliner('div.speech') })
