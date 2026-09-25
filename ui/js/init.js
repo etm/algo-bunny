@@ -151,6 +151,7 @@ $(document).ready(async function() {
     elements.target.find('img[data-type=execute' + pid + ']').show()
   })
 
+  // when overflow the bunny tells that you can scroll
   let prog_el = editor.target[0]
   let elem_el = elements.target[0]
   const overflows = (el)=> el.scrollHeight > el.clientHeight + 1
