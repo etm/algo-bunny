@@ -40,9 +40,6 @@ class Editor {
     this.rescale()
     this.#height_shift = 10
 
-    this.#width_add = this.#tile_width + 12
-    this.#height_add = this.#tile_height + 8
-
     this.#changed = new Event("cisc:changed", {"bubbles":false, "cancelable":false})
 
     this.program = []
@@ -57,6 +54,8 @@ class Editor {
     let scale = (coarse ? 2.21 * 1.5 : 2.21) * rem
     if (scale == this.#scale_factor) { return false }
     this.#scale_factor = scale
+    this.#width_add = (this.#tile_width + 12) * scale / 2.21
+    this.#height_add = (this.#tile_height + 8) * scale / 2.21
     return true
   } //}}}
 
