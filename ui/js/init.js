@@ -191,6 +191,25 @@ $(document).ready(async function() {
   // order
   assets.say(field.order.trim(),'div.speech')
 
+  // TEMP DEBUG: remove after the standalone strip is fixed
+  if (window.navigator.standalone) {
+    setTimeout(()=>{
+      let probe = $('<div style="position:absolute;visibility:hidden;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)"></div>').appendTo('body')
+      let cs = getComputedStyle(probe[0])
+      let b = document.body.getBoundingClientRect()
+      let f = $('div.field')[0].getBoundingClientRect()
+      assets.say([
+        'inner ' + innerWidth + 'x' + innerHeight,
+        'screen ' + screen.width + 'x' + screen.height,
+        'visualViewport ' + Math.round(visualViewport.width) + 'x' + Math.round(visualViewport.height),
+        'body y ' + Math.round(b.top) + ' to ' + Math.round(b.bottom),
+        'field y ' + Math.round(f.top) + ' to ' + Math.round(f.bottom),
+        'safe-area top ' + cs.paddingTop + ' bottom ' + cs.paddingBottom
+      ].join('<br>'), 'div.speech')
+      probe.remove()
+    }, 1500)
+  }
+
   // one liners
   editor.target_svg.on('click','g[element-type=bunny]',()=>{ assets.oneliner('div.speech') })
 
