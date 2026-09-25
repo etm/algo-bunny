@@ -155,20 +155,16 @@ $(document).ready(async function() {
   let prog_el = editor.target[0]
   let elem_el = elements.target[0]
   const overflows = (el)=> el.scrollHeight > el.clientHeight + 1
-  let prog_overflow = overflows(prog_el)
-  let elem_overflow = overflows(elem_el)
-  const scroll_hint = ()=>{
-    let prog_now = overflows(prog_el)
-    let elem_now = overflows(elem_el)
-    if ((prog_now && !prog_overflow) || (elem_now && !elem_overflow)) {
-      let coarse = window.matchMedia('(pointer: coarse)').matches
-      assets.say(coarse ? assets.texts.scroll_touch : assets.texts.scroll, 'div.speech')
-    }
-    prog_overflow = prog_now
-    elem_overflow = elem_now
-  }
-  new ResizeObserver(scroll_hint).observe(editor.target_svg[0])
-  new ResizeObserver(scroll_hint).observe(elements.target.find('div.group')[0])
+  document.addEventListener('cisc:changed', ()=>{
+    let prog_was = overflows(prog_el)
+    let elem_was = overflows(elem_el)
+    setTimeout(()=>{
+      if ((overflows(prog_el) && !prog_was) || (overflows(elem_el) && !elem_was)) {
+        let coarse = window.matchMedia('(pointer: coarse)').matches
+        assets.say(coarse ? assets.texts.scroll_touch : assets.texts.scroll, 'div.speech')
+      }
+    }, 0)
+  })
 
   walker = new Walker(assets,editor,field)
 
