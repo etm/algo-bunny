@@ -54,13 +54,22 @@ function Assets() {
         item.graphics = {};
         promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
       }
-      if (item.type == 'complex_one' || item.type == 'complex_three' || item.type == 'complex_three_end' || item.type == 'execute') {
+      if (item.type == 'complex_one' || item.type == 'complex_three' || item.type == 'execute') {
         item.graphics = {};
         promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
         promises.push(load_svg(item.first,       item.graphics, "first"      ));
         promises.push(load_svg(item.first_icon,  item.graphics, "first_icon" ));
         promises.push(load_svg(item.middle,      item.graphics, "middle"     ));
         promises.push(load_svg(item.end,         item.graphics, "end"        ));
+      }
+      if (item.type == 'complex_three_end') {
+        item.graphics = {};
+        promises.push(load_svg(item.icon,        item.graphics, "icon"        ));
+        promises.push(load_svg(item.first,       item.graphics, "first"       ));
+        promises.push(load_svg(item.first_icon,  item.graphics, "first_icon"  ));
+        promises.push(load_svg(item.middle_first,item.graphics, "middle_first"));
+        promises.push(load_svg(item.middle,      item.graphics, "middle"      ));
+        promises.push(load_svg(item.end,         item.graphics, "end"         ));
       }
       if (item.type == 'complex_two') {
         item.graphics = {};
@@ -453,9 +462,10 @@ function Assets() {
     'label': 'Else',
     'desc': 'I do this when the check before was not true.',
     'icon': 'commands/else.svg',
-    'first': 'commands/else/top.svg',
+    'first': 'commands/else/first.svg',
     'first_icon': 'commands/else/y.svg',
-    'middle': 'commands/else/middle.svg',
+    'middle_first': 'commands/else/middle_first.svg',
+    'middle': 'commands/else/middle_second.svg',
     'end': 'commands/else/end.svg'
   }; /*}}}*/
   this.commands.break = { /*{{{*/
