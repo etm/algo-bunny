@@ -5,6 +5,7 @@ var success = 0
 
 var active_drag_location = null // thany you chrome for security without reason. Dragover and dragleave can not getData.
 var active_element_drag = null
+var active_move_id = null
 
 document.addEventListener('contextmenu', event => event.preventDefault())
 document.addEventListener('gesturestart', event => event.preventDefault())
@@ -381,11 +382,24 @@ $(document).ready(async function() {
     }
   }) //}}}
   $(document).on('dragend',ev=>{ //{{{
+    if (active_element_drag) {
+      // the drag never landed on a valid target - including being dropped
+      // outside the browser window, where no 'drop' event reaches us at
+      // all. Clean up what a successful drop would have (nothing else
+      // does), and treat an existing block dropped nowhere the same as
+      // dragging it onto the palette: remove it.
+      editor.target_svg.find('g[element-type=add] .adder').hide()
+      editor.target_svg.find('g[element-type=add]').removeClass('active')
+      if (active_move_id) {
+        remove_program_item(active_move_id)
+      }
+    }
     if (active_drag_location == null && active_element_drag == null) {
       assets.say(assets.texts.delete,'div.speech')
     }
     active_drag_location = null // thanks again chrome.
     active_element_drag = null
+    active_move_id = null
   }) //}}}
 
   editor.target_svg.on('click','foreignObject div',(ev)=>{ //{{{
@@ -442,6 +456,7 @@ $(document).ready(async function() {
         show_adders(ety)
       },100)
       active_element_drag = true
+      active_move_id = eid
     } else {
       return false
     }
@@ -670,11 +685,11 @@ $(document).ready(async function() {
       let eop = $(ev.currentTarget).attr('element-op')
       let ety = ev.originalEvent.dataTransfer.getData("text/plain")
       editor.insert_item(eid,eop,ety)
+      editor.render_diff()
+      elements.show(editor.program_stats())
       active_element_drag = false
       editor.target_svg.find('g[element-type=add] .adder').hide()
       editor.target_svg.find('g[element-type=add]').removeClass('active')
-      editor.render_diff()
-      elements.show(editor.program_stats())
     }
     if (ev.originalEvent.dataTransfer.getData("text/plain").match(/^a\d+$/)) {
       let eid = $(ev.currentTarget).attr('element-id')
