@@ -621,7 +621,10 @@ $(document).ready(async function() {
       let ot = $(pos).parents('g[element-type=add]')
 
       if (ot.length > 0) {
-        if (!ot.hasClass('active')) {
+        if (!ot.is(active_drag_location.add)) {
+          if (active_drag_location.add != null) {
+            active_drag_location.add.removeClass('active')
+          }
           active_drag_location.add = ot
           active_drag_location.add.addClass('active')
         }
