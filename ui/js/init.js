@@ -100,6 +100,18 @@ $(document).ready(async function() {
     if (ev.touches.length < 2) { two_finger_target = null; two_finger_y = null }
     if (ev.touches.length == 0) { two_finger_gesture = false }
   }, { passive: true })
+  document.addEventListener('touchcancel', ()=>{
+    autoscroll_stop()
+    document.querySelector('#drag').classList.remove('visible')
+    editor.target_svg.find('g[element-type=add] .adder').hide()
+    editor.target_svg.find('g[element-type=add]').removeClass('active')
+    editor.target_svg.find('g[element-type=jump]').removeClass('active')
+    active_drag_location = null
+    active_element_drag = false
+    two_finger_target = null
+    two_finger_y = null
+    two_finger_gesture = false
+  }, { passive: true })
 
   let field = new Field($('div.field'), assets)
       field.target.find('.victory .hurra').text(assets.texts.hurra)
@@ -565,6 +577,7 @@ $(document).ready(async function() {
 
   elements.target.on('touchstart','[draggable=true][data-type]',(ev)=>{ //{{{
     if (ev.originalEvent.touches.length > 1) { return }
+    if (walker.walking) { return false }
     let touchobj = ev.changedTouches[0]
     active_drag_location = {
       x: parseInt(touchobj.clientX),
@@ -581,22 +594,23 @@ $(document).ready(async function() {
     autoscroll_stop()
     active_drag_location = null
     active_element_drag = false
-    drag.classList.remove('visible')
+    document.querySelector('#drag').classList.remove('visible')
 
     let pos = document.elementsFromPoint(ev.originalEvent.changedTouches[0].pageX,ev.originalEvent.changedTouches[0].pageY)[0]
     let ot = $(pos).parents('g[element-type=add]')
 
-    let eid = $(ot).attr('element-id')
-    let eop = $(ot).attr('element-op')
-    let ety = $(ev.currentTarget).attr('data-type')
-
-    editor.insert_item(eid,eop,ety)
-
     editor.target_svg.find('g[element-type=add] .adder').hide()
     editor.target_svg.find('g[element-type=add]').removeClass('active')
 
-    editor.render_diff()
-    elements.show(editor.program_stats())
+    if (ot.length > 0) {
+      let eid = $(ot).attr('element-id')
+      let eop = $(ot).attr('element-op')
+      let ety = $(ev.currentTarget).attr('data-type')
+
+      editor.insert_item(eid,eop,ety)
+      editor.render_diff()
+      elements.show(editor.program_stats())
+    }
 
     ev.preventDefault()
   }) //}}}
