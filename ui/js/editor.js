@@ -197,7 +197,7 @@ class Editor {
       y = dy
       if (w > width) { width = w }
     }
-    if (sub.second) {
+    if (sub.second && this.assets.commands[sub.item].type == 'complex_two') {
       y += 1
       if (particular === undefined || particular == id) {
         this.#draw(id,sub,x,y,'second',id,particular == id ? true : null)
@@ -372,6 +372,14 @@ class Editor {
     document.dispatchEvent(this.#changed)
   } //}}}
 
+  can_drop(ety,eid,eop) { //{{{
+    let cmd = this.assets.commands[ety]
+    if (!cmd || cmd.type != 'complex_three_end') { return true }
+    if (eop != 'after') { return false }
+    let it = this.get_item(eid)
+    return typeof(it) == 'object' && it != null && this.assets.commands[it.item].type == 'complex_three'
+  } //}}}
+
   #clear() { //{{{
     this.target_below.empty()
     this.target_graph.empty()
@@ -385,7 +393,7 @@ class Editor {
     if (item.type == 'simple') {
       return ety
     }
-    if (item.type == 'complex_one') {
+    if (item.type == 'complex_one' || item.type == 'complex_three' || item.type == 'complex_three_end') {
       return { "item": ety, "first": [] }
     }
     if (item.type == 'complex_two') {

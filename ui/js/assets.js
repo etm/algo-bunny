@@ -54,7 +54,7 @@ function Assets() {
         item.graphics = {};
         promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
       }
-      if (item.type == 'complex_one' || item.type == 'execute') {
+      if (item.type == 'complex_one' || item.type == 'complex_three' || item.type == 'complex_three_end' || item.type == 'execute') {
         item.graphics = {};
         promises.push(load_svg(item.icon,        item.graphics, "icon"       ));
         promises.push(load_svg(item.first,       item.graphics, "first"      ));
@@ -448,6 +448,16 @@ function Assets() {
     'middle': 'commands/loop/middle.svg',
     'end': 'commands/loop/end.svg'
   }; /*}}}*/
+  this.commands.else = { /*{{{*/
+    'type': 'complex_three_end',
+    'label': 'Else',
+    'desc': 'I do this when the check before was not true.',
+    'icon': 'commands/else.svg',
+    'first': 'commands/else/top.svg',
+    'first_icon': 'commands/else/y.svg',
+    'middle': 'commands/else/middle.svg',
+    'end': 'commands/else/end.svg'
+  }; /*}}}*/
   this.commands.break = { /*{{{*/
     'type': 'simple',
     'label': 'Stop',
@@ -456,7 +466,7 @@ function Assets() {
   }; /*}}}*/
 
   this.commands.if_carrot = { /*{{{*/
-    'type': 'complex_two',
+    'type': 'complex_three',
     'label': 'Check If Carrot',
     'desc': 'I check if there is a carrot in front of me.',
     'icon': 'commands/if_carrot.svg',
@@ -468,7 +478,7 @@ function Assets() {
     'end': 'commands/if_carrot/end.svg'
   }; /*}}}*/
   this.commands.if_empty = { /*{{{*/
-    'type': 'complex_two',
+    'type': 'complex_three',
     'label': 'Check If Empty',
     'desc': 'I check if there is only grass in front of me.',
     'icon': 'commands/if_empty.svg',
@@ -480,7 +490,7 @@ function Assets() {
     'end': 'commands/if_empty/end.svg'
   }; /*}}}*/
   this.commands.if_flower = { /*{{{*/
-    'type': 'complex_two',
+    'type': 'complex_three',
     'label': 'Check If Flower',
     'desc': 'I check if there is any flower in front of me.',
     'icon': 'commands/if_flower.svg',
@@ -492,7 +502,7 @@ function Assets() {
     'end': 'commands/if_flower/end.svg'
   }; /*}}}*/
   this.commands.if_hole = { /*{{{*/
-    'type': 'complex_two',
+    'type': 'complex_three',
     'label': 'Check If Hole',
     'desc': 'I check if there is a hole in front of me.',
     'icon': 'commands/if_hole.svg',
@@ -504,7 +514,7 @@ function Assets() {
     'end': 'commands/if_hole/end.svg'
   }; /*}}}*/
   this.commands.if_hold = { /*{{{*/
-    'type': 'complex_two',
+    'type': 'complex_three',
     'label': 'Check Carrot In Hand',
     'desc': 'I check if I hold a carrot in my hand.',
     'icon': 'commands/if_hold.svg',
@@ -516,7 +526,7 @@ function Assets() {
     'end': 'commands/if_hold/end.svg'
   }; /*}}}*/
   this.commands.if_same = { /*{{{*/
-    'type': 'complex_two',
+    'type': 'complex_three',
     'label': 'Check If Equal',
     'desc': '<strong>Same:</strong> I can compare the thing I hold in my hand or remember in my brain with the flower or carrot in front of me.<p>Each carrot has a size between 1 and 9. Each flower containes a number or a coordinate.',
     'icon': 'commands/if_same.svg',
@@ -528,7 +538,7 @@ function Assets() {
     'end': 'commands/if_same/end.svg'
   }; /*}}}*/
   this.commands.if_smaller = { /*{{{*/
-    'type': 'complex_two',
+    'type': 'complex_three',
     'label': 'Check If Smaller',
     'desc': '<strong>Smaller:</strong> I can compare the thing I hold in my hand or remember in my brain with the flower or carrot in front of me.<p>Each carrot has a size between 1 and 9. Each flower containes a number or a coordinate.',
     'icon': 'commands/if_smaller.svg',
@@ -540,7 +550,7 @@ function Assets() {
     'end': 'commands/if_smaller/end.svg'
   }; /*}}}*/
   this.commands.if_bigger = { /*{{{*/
-    'type': 'complex_two',
+    'type': 'complex_three',
     'label': 'Check If Bigger',
     'desc': '<strong>Bigger:</strong> I can compare the thing I hold in my hand or remember in my brain with the flower or carrot in front of me.<p>Each carrot has a size between 1 and 9. Each flower containes a number or a coordinate.',
     'icon': 'commands/if_bigger.svg',
@@ -552,7 +562,7 @@ function Assets() {
     'end': 'commands/if_bigger/end.svg'
   }; /*}}}*/
   this.commands.if_jump = { /*{{{*/
-    'type': 'complex_two',
+    'type': 'complex_one',
     'label': 'Check If Jump Is Possible',
     'desc': 'I check if can jump to the location I memorized.',
     'icon': 'commands/if_jump.svg',
@@ -812,6 +822,10 @@ function Assets() {
     'desc': 'I höre mit der aktuelle Schleife auf.'
   }; /*}}}*/
 
+  this.lang['de'].commands.else = { /*{{{*/
+    'label': 'Sonst',
+    'desc': 'Ich mache das, wenn die Prüfung davor nicht zugetroffen hat.'
+  }; /*}}}*/
   this.lang['de'].commands.if_carrot = { /*{{{*/
     'label': 'Wenn Karotte',
     'desc': 'Ich checke ob auf dem Feld vor mit eine Karotte steht.'

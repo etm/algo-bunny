@@ -134,6 +134,14 @@ $(document).ready(async function() {
       field.target.find('.bottom .ui.load').attr('title',assets.texts.load)
   let elements = new Elements($('div.elements'),assets,field,editor)
 
+  const show_adders = (ety)=>{
+    editor.target_svg.find('g[element-type=add]').each((i,g)=>{
+      if (editor.can_drop(ety, $(g).attr('element-id'), $(g).attr('element-op'))) {
+        $(g).find('.adder').show()
+      }
+    })
+  }
+
   const remove_program_item = (eid)=>{
     let it = editor.get_item(eid)
     if (it.item == 'execute') {
@@ -431,7 +439,7 @@ $(document).ready(async function() {
 
       editor.target_svg.find('g[element-group=drop] g[element-type=here]').removeClass('active')
       setTimeout(ev=>{ // yes, chrome, you are an idiot
-        editor.target_svg.find('g[element-type=add] .adder').show()
+        show_adders(ety)
       },100)
       active_element_drag = true
     } else {
@@ -490,7 +498,7 @@ $(document).ready(async function() {
         drag.replaceChildren(ghost)
 
         editor.target_svg.find('g[element-group=drop] g[element-type=here]').removeClass('active')
-        editor.target_svg.find('g[element-type=add] .adder').show()
+        show_adders(active_drag_location.ety)
       }
 
       let drag = document.querySelector('#drag')
@@ -571,7 +579,7 @@ $(document).ready(async function() {
     ev.originalEvent.dataTransfer.setData("text/plain", $(ev.currentTarget).attr('data-type'))
     ev.originalEvent.dataTransfer.setDragImage(ev.originalEvent.srcElement, 28, 0)
     editor.target_svg.find('g[element-group=drop] g[element-type=here]').removeClass('active')
-    editor.target_svg.find('g[element-type=add] .adder').show()
+    show_adders($(ev.currentTarget).attr('data-type'))
     active_element_drag = true
   }) //}}}
 
@@ -585,7 +593,7 @@ $(document).ready(async function() {
       add: null
     }
     editor.target_svg.find('g[element-group=drop] g[element-type=here]').removeClass('active')
-    editor.target_svg.find('g[element-type=add] .adder').show()
+    show_adders($(ev.currentTarget).attr('data-type'))
     active_element_drag = true
     ev.preventDefault()
   }) //}}}

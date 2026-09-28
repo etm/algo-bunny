@@ -67,6 +67,7 @@ class Walker {
   async #walk_rec(it) { //{{{
     if (this.#pause) { await new Promise(resolve => { this.#continue = resolve}) }
 
+    if (!it) { return 'continue' }
     let res;
     for (const [k,v] of it) {
       if (!this.walking) { return false }
