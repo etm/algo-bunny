@@ -146,6 +146,13 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(6.614646,122.69184)">
+    <rect
+       id="hitarea"
+       x="-5.82"
+       y="-132.6"
+       width="40.2"
+       height="32.6"
+       style="fill:#ffffff;fill-opacity:0;stroke:none" />
     <path
        id="rect833-9-41-4-7"
        style="stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stop-color:#000000;"
