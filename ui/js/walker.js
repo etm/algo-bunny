@@ -72,6 +72,7 @@ class Walker {
     for (const [k,v] of it) {
       if (!this.walking) { return false }
       if (v == null) { return true }
+      if (typeof(v) == 'object' && v.item == 'else') { continue }
 
       this.#ins_count += 1
       document.dispatchEvent(this.#changed_ins)
@@ -524,6 +525,7 @@ class Walker {
   } //}}}
   async walk() { //{{{
     this.walking = true
+    this.editor.sync_branches()
     let res = await this.#walk_rec(this.editor.program)
     this.assets.mute = false
     if (res == true) {

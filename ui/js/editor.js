@@ -8,6 +8,7 @@ class Editor {
   #height_add
 
   #changed
+  #reshapes_branch
 
   constructor(target,assets,id) { //{{{
     this.assets = assets
@@ -46,7 +47,13 @@ class Editor {
 
     this.add_id = null
     this.remove_ids = []
+    this.#reshapes_branch = false
   }  //}}}
+
+  #is_branch(item_name) { //{{{
+    let cmd = this.assets.commands[item_name]
+    return !!cmd && cmd.type == 'complex_three_end'
+  } //}}}
 
   rescale() { //{{{
     let coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches
@@ -132,6 +139,7 @@ class Editor {
         g2.attr('transform-t-x',(x-1) * this.#tile_width)
         g2.attr('transform-t-y',(y-1) * this.#tile_height)
         if (mark!=null) { g2.attr('element-mark','true') }
+        if (what == 'first_icon') { g2.addClass('row-overlay') }
         g2.append(grax)
         g1.append(g2)
     if (parent) {
@@ -171,6 +179,9 @@ class Editor {
   } //}}}
   #dig(id,sub,x,y,parent,particular) { //{{{
     let width = x
+    if (sub != null && this.#is_branch(sub.item)) {
+      return this.#dig_branch(id,sub,x,y,parent,particular)
+    }
     y += 1
     let gpart = (particular == id)
     if (sub == null) { return [y,width] }
@@ -231,6 +242,70 @@ class Editor {
     return [y,width,gpart]
   } //}}}
 
+  #dig_branch(id,sub,x,y,parent,particular) { //{{{
+    let width = x
+    let gpart = (particular == id)
+    if (sub == null) { return [y,width] }
+
+    if (sub.first.length == 0) {
+      y += 1
+      if (particular === undefined || particular == id) {
+        this.#draw(id,sub,x,y,'first',parent,particular == id ? true : null)
+        this.#draw(id,sub,x,y-1,'first_icon',id,particular == id ? true : null)
+        this.#draw_drag(x,y,id,particular == id ? true : null)
+        this.#draw_drag(x+1,y,id,particular == id ? true : null)
+        this.#draw_asset(id,'delete',x+1,y,'at',0,particular == id ? true : null)
+        this.#draw_asset(id,'here',x+1,y,'at',0,particular == id ? true : null)
+        this.#draw_asset(id,'add',x+1,y-1,'insert_first',this.#tile_height/2,particular == id ? true : null)
+        this.#draw_asset(id,'add',x,y,'after',this.#tile_height/2,particular == id ? true : null)
+      }
+      return [y,width,gpart]
+    }
+
+    let force = particular == id
+    if (!force && sub.first.length == 1 && sub.first[0][0] == particular) {
+      // this else just went from empty to its first child: the empty-state
+      // 'first' row is the wrong shape now, and the normal incremental path
+      // only shifts existing rows, it never replaces them - so drop the old
+      // container and force a full redraw of this block instead of a diff.
+      this.target_graph.find('g[element-id=' + id + ']').remove()
+      this.target_drop.find('g[element-id=' + id + ']').remove()
+      force = true
+    }
+    if (particular === undefined || force) {
+      this.#draw(id,sub,x,y+1,'middle_first',parent,force ? true : null)
+      this.#draw(id,sub,x,y,'first_icon',id,force ? true : null)
+      this.#draw_asset(id,'add',x+1,y,'insert_first',this.#tile_height/2,force ? true : null)
+    }
+    let [dy, w, part] = this.#iter(sub.first,x+1,y,id,particular)
+    gpart = part || gpart ? true : false
+    if (w > width) { width = w }
+    for (let i = y+1; i <= dy; i++) {
+      if (particular === undefined || force || part) {
+        if (i != y+1) {
+          this.#draw(id,sub,x,i,'middle',id,gpart ? true : null)
+        }
+        this.#draw_drag(x,i,id,gpart ? true : null)
+      }
+    }
+    y = dy
+
+    y += 1
+    if (particular === undefined || force) {
+      this.#draw(id,sub,x,y,'end',id,force ? true : null)
+      this.#draw_drag(x,y,id,force ? true : null)
+      this.#draw_drag(x+1,y,id,force ? true : null)
+      this.#draw_asset(id,'delete',x+1,y,'at',0,force ? true : null)
+      this.#draw_asset(id,'here',x+1,y,'at',0,force ? true : null)
+    }
+    if (sub.item != 'execute') {
+      if (particular === undefined || force) {
+        this.#draw_asset(id,'add',x,y,'after',this.#tile_height/2,force ? true : null)
+      }
+    }
+    return [y,width,gpart]
+  } //}}}
+
   #remove_item_rec(it,eid){ //{{{
     let newp = []
     for (const [k,v] of it) {
@@ -253,6 +328,13 @@ class Editor {
     return newp
   } //}}}
   remove_item(eid) { //{{{
+    // removing an else's first child changes its shape - either back to
+    // the empty placeholder, or the new first row needs 'middle_first'
+    // instead of 'middle'. render_diff()'s incremental path can't redraw
+    // either change, it only shifts existing rows, so flag it here (before
+    // the item and its parent link are gone) to force a full redraw.
+    let parent = this.parent_of(eid)
+    this.#reshapes_branch = parent && this.#is_branch(parent.item) && parent.first.length > 0 && parent.first[0][0] == eid
     this.program = this.#remove_item_rec(this.program,eid)
     this.remove_ids.push(eid)
     document.dispatchEvent(this.#changed)
@@ -310,6 +392,65 @@ class Editor {
   } //}}}
   get_item(eid) { //{{{
     return this.#get_item_rec(this.program,eid)
+  } //}}}
+  #next_item_rec(it,eid) { //{{{
+    for (let i = 0; i < it.length; i++) {
+      const [k,v] = it[i]
+      if (k == eid) {
+        return i+1 < it.length ? it[i+1][1] : null
+      }
+      if (typeof(v) == 'object' && v != null) {
+        if (v.first) {
+          let r = this.#next_item_rec(v.first,eid)
+          if (r !== undefined) { return r }
+        }
+        if (v.second) {
+          let r = this.#next_item_rec(v.second,eid)
+          if (r !== undefined) { return r }
+        }
+      }
+    }
+    return undefined
+  } //}}}
+  next_item(eid) { //{{{
+    return this.#next_item_rec(this.program,eid)
+  } //}}}
+  #sync_branches_rec(it) { //{{{
+    for (let i = 0; i < it.length; i++) {
+      const [k,v] = it[i]
+      if (typeof(v) == 'object' && v != null) {
+        let next = it[i+1]
+        if (next && typeof(next[1]) == 'object' && next[1] != null && next[1].item == 'else') {
+          v.second = next[1].first
+        } else {
+          delete v.second
+        }
+        if (v.first)  { this.#sync_branches_rec(v.first) }
+        if (v.second) { this.#sync_branches_rec(v.second) }
+      }
+    }
+  } //}}}
+  sync_branches() { //{{{
+    this.#sync_branches_rec(this.program)
+  } //}}}
+  #parent_of_rec(it,eid,parentObj) { //{{{
+    for (const [k,v] of it) {
+      if (k == eid) { return parentObj }
+      if (typeof(v) == 'object' && v != null) {
+        if (v.first) {
+          let r = this.#parent_of_rec(v.first,eid,v)
+          if (r !== undefined) { return r }
+        }
+        if (v.second) {
+          let r = this.#parent_of_rec(v.second,eid,v)
+          if (r !== undefined) { return r }
+        }
+      }
+    }
+    return undefined
+  } //}}}
+  parent_of(eid) { //{{{
+    return this.#parent_of_rec(this.program,eid,null)
   } //}}}
   #get_item_by_pid_rec(it,pid){ //{{{
     let ret
@@ -373,10 +514,15 @@ class Editor {
   } //}}}
 
   can_drop(ety,eid,eop) { //{{{
-    let cmd = this.assets.commands[ety]
-    if (!cmd || cmd.type != 'complex_three_end') { return true }
-    if (eop != 'after') { return false }
     let it = this.get_item(eid)
+    if (eop == 'after' && typeof(it) == 'object' && it != null && this.assets.commands[it.item].type == 'complex_three') {
+      let next = this.next_item(eid)
+      if (typeof(next) == 'object' && next != null && this.#is_branch(next.item)) {
+        return false
+      }
+    }
+    if (!this.#is_branch(ety)) { return true }
+    if (eop != 'after') { return false }
     return typeof(it) == 'object' && it != null && this.assets.commands[it.item].type == 'complex_three'
   } //}}}
 
@@ -455,6 +601,11 @@ class Editor {
   insert_item(eid,eop,ety) { //{{{
     let nid = this.#newid()
     this.add_id = nid
+    // inserting before an else's existing first child bumps that child
+    // down to the 'middle' row and gives the new one 'middle_first' - see
+    // the matching note in remove_item().
+    let target = this.get_item(eid)
+    this.#reshapes_branch = eop == 'insert_first' && typeof(target) == 'object' && target != null && this.#is_branch(target.item)
     if (eid == '' && eop == 'insert_first') {
       this.program.unshift([nid,this.#insert_rec_item(ety)])
     } else if (eid == '' && eop == 'insert_last') {
@@ -542,7 +693,7 @@ class Editor {
     this.remove_ids.forEach(e=>{
       let ele = $('div.program svg g[element-id=' + e + ']')
       let ys = []
-      ele.find('g[element-y]').each((i,e)=>{
+      ele.find('g[element-y]').not('.row-overlay').each((i,e)=>{
         ys.push(parseInt($(e).attr('element-y')))
       });
       let shift = Math.max(...ys) + 1 - Math.min(...ys)
@@ -554,7 +705,7 @@ class Editor {
       rest.each((i,rr) => {
         let r = $(rr)
         let ry = parseInt(r.attr('element-y'))
-        if (ys.includes(ry)) {
+        if (ys.includes(ry) && !r.hasClass('element')) {
           r.remove()
         }
         if (ry > maxy) {
@@ -589,7 +740,7 @@ class Editor {
     let ele = $('div.program svg g[element-id=' + this.add_id + ']')
     let x = parseInt(ele.attr('element-x'))
     let ys = []
-    ele.find('g[element-y]').each((i,e)=>{
+    ele.find('g[element-y]').not('.row-overlay').each((i,e)=>{
       ys.push(parseInt($(e).attr('element-y')))
     });
     let shift = Math.max(...ys) + 1 - Math.min(...ys)
@@ -623,6 +774,7 @@ class Editor {
 
   render() { //{{{
     this.add_id = null
+    this.#reshapes_branch = false
     this.#render_remove()
     this.#clear()
     this.#draw_asset('','bunny',1,1,'start')
@@ -638,6 +790,11 @@ class Editor {
 
   } //}}}
   render_diff() { //{{{
+    if (this.#reshapes_branch) {
+      this.#reshapes_branch = false
+      this.render()
+      return
+    }
     if (this.add_id != null) {
       let [y,w] = this.#iter(this.program,1,1,undefined,this.add_id)
       this.#render_add()

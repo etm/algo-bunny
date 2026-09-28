@@ -45,9 +45,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="91.339286"
-     inkscape:cy="42.321429"
+     inkscape:zoom="2.0619633"
+     inkscape:cx="138.94525"
+     inkscape:cy="37.585539"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -61,8 +61,8 @@
      inkscape:guide-bbox="true"
      inkscape:snap-nodes="true"
      inkscape:snap-object-midpoints="true"
-     inkscape:window-width="3440"
-     inkscape:window-height="1371"
+     inkscape:window-width="1600"
+     inkscape:window-height="839"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -133,7 +133,7 @@
        sodipodi:nodetypes="ccccc" />
     <g
        id="layer1-3"
-       transform="translate(44.317701,48.980762)">
+       transform="translate(44.317701,48.339182)">
       <path
          style="fill:#98eae0;fill-opacity:1;stroke:none;stroke-width:1.32292;stop-color:#000000"
          d="m -50.932281,-293.03042 v 4.74193 h 2.645827 l 11.90625,3.96875 11.90625,-3.96875 2e-6,-4.74193"

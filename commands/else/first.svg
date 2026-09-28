@@ -66,9 +66,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="229.375"
-     inkscape:cy="54.821429"
+     inkscape:zoom="7.2174825"
+     inkscape:cx="155.24804"
+     inkscape:cy="-3.6716403"
      inkscape:document-units="mm"
      inkscape:current-layer="g1373"
      inkscape:document-rotation="0"
@@ -82,8 +82,8 @@
      inkscape:guide-bbox="true"
      inkscape:snap-nodes="true"
      inkscape:snap-object-midpoints="true"
-     inkscape:window-width="3440"
-     inkscape:window-height="1371"
+     inkscape:window-width="1600"
+     inkscape:window-height="839"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -128,7 +128,7 @@
        id="guide2"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="24.473959,28.47849"
+       position="50.932292,29.13734"
        orientation="0,-1"
        id="guide3"
        inkscape:locked="false" />
@@ -160,16 +160,16 @@
       <path
          id="path1323"
          style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
-         d="m 66.145829,-103.1875 h 2.645834 l 11.906249,3.968749 11.90625,-3.968749 v 23.812498 l -26.458333,2e-6 -11.90625,3.96875 -11.90625,-3.96875 v -23.8125"
+         d="m 66.145829,-103.84635 h 2.645834 l 11.906249,3.96875 11.90625,-3.96875 v 24.471348 l -26.458333,2e-6 -11.90625,3.96875 -11.90625,-3.96875 v -24.47135"
          sodipodi:nodetypes="ccccccccc" />
       <path
          id="rect833-3-2-2"
          style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000"
-         d="m 66.145829,-103.1875 -11.90625,3.968747 -11.90625,-3.968747"
+         d="m 66.145829,-103.84635 -11.90625,3.968748 -11.90625,-3.968748"
          sodipodi:nodetypes="ccc" />
       <g
          id="layer1-3"
-         transform="translate(117.07811,182.06534)">
+         transform="translate(117.07811,181.40546)">
         <path
            style="fill:#98eae0;fill-opacity:1;stroke:none;stroke-width:1.32292;stop-color:#000000"
            d="m -50.932281,-293.03042 v 4.74193 h 2.645827 l 11.90625,3.96875 11.90625,-3.96875 2e-6,-4.74193"
