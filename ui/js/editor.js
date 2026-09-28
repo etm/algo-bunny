@@ -9,6 +9,7 @@ class Editor {
 
   #changed
   #reshapes_branch
+  #walk_program
 
   constructor(target,assets,id) { //{{{
     this.assets = assets
@@ -48,6 +49,7 @@ class Editor {
     this.add_id = null
     this.remove_ids = []
     this.#reshapes_branch = false
+    this.#walk_program = null
   }  //}}}
 
   #is_branch(item_name) { //{{{
@@ -431,7 +433,9 @@ class Editor {
     }
   } //}}}
   sync_branches() { //{{{
-    this.#sync_branches_rec(this.program)
+    this.#walk_program = JSON.parse(JSON.stringify(this.program))
+    this.#sync_branches_rec(this.#walk_program)
+    return this.#walk_program
   } //}}}
   #parent_of_rec(it,eid,parentObj) { //{{{
     for (const [k,v] of it) {
@@ -471,7 +475,7 @@ class Editor {
     return ret
   } //}}}
   get_item_by_pid(pid) { //{{{
-    return this.#get_item_by_pid_rec(this.program,pid)
+    return this.#get_item_by_pid_rec(this.#walk_program || this.program,pid)
   } //}}}
   #move_rec(it,eid,eop,eco,nid) { //{{{
     let newp = []

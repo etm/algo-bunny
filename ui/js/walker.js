@@ -525,8 +525,8 @@ class Walker {
   } //}}}
   async walk() { //{{{
     this.walking = true
-    this.editor.sync_branches()
-    let res = await this.#walk_rec(this.editor.program)
+    let program = this.editor.sync_branches()
+    let res = await this.#walk_rec(program)
     this.assets.mute = false
     if (res == true) {
       $('button.speed').hide()
