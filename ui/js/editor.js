@@ -141,7 +141,7 @@ class Editor {
         g2.attr('transform-t-x',(x-1) * this.#tile_width)
         g2.attr('transform-t-y',(y-1) * this.#tile_height)
         if (mark!=null) { g2.attr('element-mark','true') }
-        if (what == 'first_icon') { g2.addClass('row-overlay') }
+        if (what == 'first_icon' || what == 'second_icon') { g2.addClass('row-overlay') }
         g2.append(grax)
         g1.append(g2)
     if (parent) {
@@ -248,12 +248,13 @@ class Editor {
     let width = x
     let gpart = (particular == id)
     if (sub == null) { return [y,width] }
+    let branch_of = this.previous_item(id)
 
     if (sub.first.length == 0) {
       y += 1
       if (particular === undefined || particular == id) {
         this.#draw(id,sub,x,y,'first',parent,particular == id ? true : null)
-        this.#draw(id,sub,x,y-1,'first_icon',id,particular == id ? true : null)
+        this.#draw(id,branch_of,x,y-1,'second_icon',id,particular == id ? true : null)
         this.#draw_drag(x,y,id,particular == id ? true : null)
         this.#draw_drag(x+1,y,id,particular == id ? true : null)
         this.#draw_asset(id,'delete',x+1,y,'at',0,particular == id ? true : null)
@@ -276,7 +277,7 @@ class Editor {
     }
     if (particular === undefined || force) {
       this.#draw(id,sub,x,y+1,'middle_first',parent,force ? true : null)
-      this.#draw(id,sub,x,y,'first_icon',id,force ? true : null)
+      this.#draw(id,branch_of,x,y,'second_icon',id,force ? true : null)
       this.#draw_asset(id,'add',x+1,y,'insert_first',this.#tile_height/2,force ? true : null)
     }
     let [dy, w, part] = this.#iter(sub.first,x+1,y,id,particular)
@@ -416,6 +417,28 @@ class Editor {
   } //}}}
   next_item(eid) { //{{{
     return this.#next_item_rec(this.program,eid)
+  } //}}}
+  #previous_item_rec(it,eid) { //{{{
+    for (let i = 0; i < it.length; i++) {
+      const [k,v] = it[i]
+      if (k == eid) {
+        return i > 0 ? it[i-1][1] : null
+      }
+      if (typeof(v) == 'object' && v != null) {
+        if (v.first) {
+          let r = this.#previous_item_rec(v.first,eid)
+          if (r !== undefined) { return r }
+        }
+        if (v.second) {
+          let r = this.#previous_item_rec(v.second,eid)
+          if (r !== undefined) { return r }
+        }
+      }
+    }
+    return undefined
+  } //}}}
+  previous_item(eid) { //{{{
+    return this.#previous_item_rec(this.program,eid)
   } //}}}
   #sync_branches_rec(it) { //{{{
     for (let i = 0; i < it.length; i++) {
