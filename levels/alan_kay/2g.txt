@@ -1,0 +1,52 @@
+#!
+function generateLabyrinth(width, height, startX = width - 1, startY = height - 1) {
+  const grid = Array.from({length: height}, () => Array(width).fill(false))
+  const dirs = [[0,-1],[0,1],[-1,0],[1,0]]
+  const inBounds = (x,y) => x >= 0 && x < width && y >= 0 && y < height
+  const visitedNeighbors = (x,y) => dirs.reduce((n,[dx,dy]) => {
+    const nx = x+dx, ny = y+dy
+    return n + (inBounds(nx,ny) && grid[ny][nx] ? 1 : 0)
+  }, 0)
+
+  grid[startY][startX] = true
+  const stack = [[startX,startY]]
+  let last = [startX,startY]
+
+  while (stack.length) {
+    const [x,y] = stack[stack.length-1]
+    const candidates = dirs
+      .map(([dx,dy]) => [x+dx,y+dy])
+      .filter(([nx,ny]) => inBounds(nx,ny) && !grid[ny][nx] && visitedNeighbors(nx,ny) === 1)
+    if (candidates.length === 0) {
+      stack.pop()
+      continue
+    }
+    const [nx,ny] = candidates[Math.floor(Math.random()*candidates.length)]
+    grid[ny][nx] = true
+    stack.push([nx,ny])
+    last = [nx,ny]
+  }
+
+  const rows = grid.map(row => row.map(v => v ? 'T' : ' ').join(''))
+  rows[startY] = rows[startY].substring(0,startX) + 'B' + rows[startY].substring(startX+1)
+  rows[last[1]] = rows[last[1]].substring(0,last[0]) + '1' + rows[last[1]].substring(last[0]+1)
+  return rows.map(r => r.replace(/\s+$/,'')).join('\n')
+}
+generateLabyrinth(12,12)
+---
+---
+Random Dungeons and Carrots!
+---
+Eat the carrot.
+---
+A simple wall walker will do the job here. Just follow either the left or the
+right wall. If you are stuck read about [maze-solving
+algorithms](https://en.wikipedia.org/wiki/Maze-solving_algorithm).
+---
+1
+---
+2
+---
+Good job. Decide for yourself if you can improve.
+---
+eat_carrot,forward,left,right,loop,break,if_empty,if_hole,if_carrot,fast,normal,pause,else
