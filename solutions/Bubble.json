@@ -21,8 +21,14 @@
                 "a17",
                 "break"
               ]
-            ],
-            "second": []
+            ]
+          }
+        ],
+        [
+          "a28",
+          {
+            "item": "else",
+            "first": []
           }
         ],
         [
@@ -60,8 +66,14 @@
                             "a27",
                             "step_left"
                           ]
-                        ],
-                        "second": [
+                        ]
+                      }
+                    ],
+                    [
+                      "a29",
+                      {
+                        "item": "else",
+                        "first": [
                           [
                             "a15",
                             "step_left"
@@ -69,8 +81,14 @@
                         ]
                       }
                     ]
-                  ],
-                  "second": [
+                  ]
+                }
+              ],
+              [
+                "a30",
+                {
+                  "item": "else",
+                  "first": [
                     [
                       "a26",
                       "eat_carrot"
