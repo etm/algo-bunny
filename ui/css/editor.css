@@ -90,6 +90,9 @@ div.program svg g[element-group=drop] g[element-type=add] path {
   fill-opacity: 0;
   pointer-events: none;
 }
+div.program svg .row-overlay {
+  pointer-events: none;
+}
 div.program svg g[element-group=drop] g[element-type=add].active path {
   animation: pulse 1s infinite;
 }

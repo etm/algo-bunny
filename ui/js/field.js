@@ -285,7 +285,7 @@ class Field {
           if (this.#save_state_assignments[i] && this.assignments[i].value == this.#save_state_assignments[i].value) { repeat = true }
         } else if (s.length == 1 && s[0].match(/^f/)) {
           this.assignments[i] = { 'type': 'number', 'value': this.assignments[s[0].substring(1)].value }
-        } else if (s.length == 1 && s[0].match(/^[1-9]/)) {
+        } else if (s.length == 1 && s[0].match(/^[0-9]/)) {
           this.assignments[i] = { 'type': 'number', 'value': parseInt(s[0]) }
         } else if (s.length == 3) {
           this.assignments[i] = { 'type': 'position', 'x': parseInt(s[0]), 'y': parseInt(s[1]), 'face': s[2] }
