@@ -1,4 +1,22 @@
 #!
+// Recursive backtracker, run directly on the single-resolution tile grid
+// (every tile is a node; there is no separate row/column of wall tiles).
+//
+// Start at one tile and push it on a stack. At each step, look at the
+// tile on top of the stack and list its unvisited neighbors that have
+// EXACTLY ONE already-visited neighbor (namely the current tile). If
+// none exist, pop the stack (backtrack); otherwise carve into a random
+// one of them, mark it visited, and push it. Because the algorithm
+// always extends the newest tile until it gets stuck before backtracking,
+// this produces long, twisty corridors with comparatively few branch
+// points, unlike a room-based generator (e.g. randomized Prim's) which
+// grows outward from many points at once.
+//
+// The "exactly one visited neighbor" rule is what keeps this loop-free
+// at single resolution: a double-resolution maze gets this for free from
+// its dedicated wall tiles, but here a candidate with two or more visited
+// neighbors would short-circuit two branches together and create a
+// cycle, so it's excluded.
 function generateLabyrinth(width, height, startX = width - 1, startY = height - 1) {
   const grid = Array.from({length: height}, () => Array(width).fill(false))
   const dirs = [[0,-1],[0,1],[-1,0],[1,0]]
@@ -45,7 +63,7 @@ algorithms](https://en.wikipedia.org/wiki/Maze-solving_algorithm).
 ---
 1
 ---
-2
+1
 ---
 Nice. Decide for yourself if you can improve.
 ---

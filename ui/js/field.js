@@ -647,7 +647,7 @@ class Field {
     $('g.flower,g.carrot,g.bunny',this.target_field).remove()
   } //}}}
   reset_full() { //{{{
-    if (this.tile_generator) {
+    if (this.tile_generator && this.success > 0) {
       this.render()
       return
     }
