@@ -56,6 +56,7 @@ class Field {
     this.timing = 500
 
     this.#nodraw = false
+    this.tile_generator = null
 
     this.#save_state_carrots = []
     this.#save_state_flowers = []
@@ -269,6 +270,31 @@ class Field {
     $('#bunnyani')[0].beginElement()
   } //}}}
 
+  build_tiles(text) { //{{{
+    this.state_flowers = []
+    this.state_carrots = []
+    this.state_op = []
+    this.state_dir = []
+    this.state_nocount = []
+    this.x = 0
+    this.raw_tiles = text.trimRight().split(/\r?\n/).map( x => {
+      this.state_flowers.push([])
+      this.state_carrots.push([])
+      this.state_op.push([])
+      this.state_dir.push([])
+      this.state_nocount.push([])
+      let s = x.split('')
+      if (this.x < s.length) { this.x = s.length }
+      return s
+    })
+    this.tiles = JSON.parse(JSON.stringify(this.raw_tiles))
+    this.y = this.raw_tiles.length
+    this.max_carrots = this.raw_tiles.reduce((total,arr) => {
+      return total + arr.reduce((total,ele) => {
+        return total + (ele.match(/[1-9c]/) ? 1 : 0)
+      },0)
+    },0)
+  } //}}}
   #init_carrots_and_flowers() { //{{{
     let counter
     let flower_count
@@ -621,6 +647,10 @@ class Field {
     $('g.flower,g.carrot,g.bunny',this.target_field).remove()
   } //}}}
   reset_full() { //{{{
+    if (this.tile_generator) {
+      this.render()
+      return
+    }
     this.reset_state()
     for (const[y,line] of this.state_carrots.entries()) {
       for (const [x,v] of line.entries()) {
@@ -636,6 +666,10 @@ class Field {
   } //}}}
   render() { //{{{
     let counter = 0
+    if (this.tile_generator) {
+      this.build_tiles(eval(this.tile_generator))
+      this.target_field.empty()
+    }
     this.#init_carrots_and_flowers()
     for (let i=0;i<Math.max(this.x,this.y)*2;i++) {
       for (let j = counter; j >= 0; j--) {

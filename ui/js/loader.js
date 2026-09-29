@@ -15,6 +15,13 @@ class Loader {
 
   async load_level() { //{{{
     let level = await this.#get_level(this.levelurl)
+    let generator = null
+    if (level.substring(0,2) == '#!') {
+      let start = level.indexOf('\n') + 1
+      let end = level.indexOf('\n---')
+      generator = level.substring(start,end)
+      level = eval(generator) + level.substring(end)
+    }
     let pieces = level.split(/---\s*\r?\n/)
     if (pieces.length != 9) {
       this.#assets.say(this.#assets.texts.faultylevel,'div.speech')
@@ -31,8 +38,7 @@ class Loader {
       this.#field.max_score,
       this.#elements.elements
     ] = pieces
-    this.#field.x = 0
-    this.#field.y = 0
+    this.#field.tile_generator = generator
 
     this.#elements.elements = this.#elements.elements.trim().split(',')
     this.#elements.elements_avail = []
@@ -41,36 +47,13 @@ class Loader {
       this.#elements.elements_avail.push(t.length > 1 ? parseInt(t[1]) : 0)
       return t.length > 1 ? t[0] : e
     })
-    this.#field.state_flowers = []
-    this.#field.state_carrots = []
-    this.#field.state_op = []
-    this.#field.state_dir = []
-    this.#field.state_nocount = []
-    this.#field.raw_tiles = this.#field.raw_tiles.trimRight().split(/\r?\n/)
     this.#field.success = parseInt(this.#field.times)
     this.#field.success = this.#field.success > 1 ? this.#field.success : 0
-
-    this.#field.raw_tiles = this.#field.raw_tiles.map( x => {
-      this.#field.state_flowers.push([])
-      this.#field.state_carrots.push([])
-      this.#field.state_op.push([])
-      this.#field.state_dir.push([])
-      this.#field.state_nocount.push([])
-      let s = x.split('')
-      if (this.#field.x < s.length) { this.#field.x = s.length }
-      return s
-    })
     this.#field.carrots = ''
-    this.#field.tiles = JSON.parse(JSON.stringify(this.#field.raw_tiles))
-    this.#field.y = this.#field.raw_tiles.length
+    this.#field.build_tiles(this.#field.raw_tiles)
 
     this.#field.raw_assignments = this.#field.raw_assignments.split(/\r?\n/)
     this.#field.assignments = []
-    this.#field.max_carrots = this.#field.raw_tiles.reduce((total,arr) => {
-      return total + arr.reduce((total,ele) => {
-        return total + (ele.match(/[1-9c]/) ? 1 : 0)
-      },0)
-    },0)
     return true
   }  //}}}
 
