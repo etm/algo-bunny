@@ -1,0 +1,66 @@
+[
+  [
+    "a1",
+    {
+      "item": "loop",
+      "first": [
+        [
+          "a25",
+          {
+            "item": "if_carrot",
+            "first": [
+              [
+                "a14",
+                "break"
+              ]
+            ]
+          }
+        ],
+        [
+          "a31",
+          "right"
+        ],
+        [
+          "a3",
+          {
+            "item": "if_hole",
+            "first": [
+              [
+                "a32",
+                "left"
+              ]
+            ]
+          }
+        ],
+        [
+          "a26",
+          {
+            "item": "if_hole",
+            "first": [
+              [
+                "a33",
+                "left"
+              ]
+            ]
+          }
+        ],
+        [
+          "a18",
+          {
+            "item": "if_empty",
+            "first": [
+              [
+                "a19",
+                "forward"
+              ]
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  [
+    "a34",
+    "eat_carrot"
+  ]
+]
