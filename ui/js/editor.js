@@ -567,11 +567,31 @@ class Editor {
     let nid = this.#newid()
     this.add_id = nid
     let eco = JSON.parse(JSON.stringify(this.#get_item_rec(this.program,eit)))
+
+    let branch_id = null
+    let bco = null
+    if (typeof(eco) == 'object' && eco != null && this.#is_if(eco.item)) {
+      let next = this.next_item(eit)
+      if (typeof(next) == 'object' && next != null && this.#is_branch(next.item)) {
+        branch_id = this.next_id(eit)
+        bco = JSON.parse(JSON.stringify(next))
+      }
+    }
+
     if (eid == '' && eop == 'insert_first') {
       this.program.unshift([nid,eco])
     } else {
       this.program = this.#move_rec(this.program,eid,eop,eco,nid)
     }
+
+    if (branch_id) {
+      let bnid = this.#newid()
+      this.program = this.#move_rec(this.program,nid,'after',bco,bnid)
+      this.program = this.#remove_item_rec(this.program,branch_id)
+      this.remove_ids.push(branch_id)
+      this.#reshapes_branch = true
+    }
+
     this.program = this.#remove_item_rec(this.program,eit)
     this.remove_ids.push(eit)
     document.dispatchEvent(this.#changed)
