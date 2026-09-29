@@ -207,7 +207,7 @@ $(document).ready(async function() {
   field.target.find('div.mission div.top .order').text(field.order)
   field.target.find('div.mission div.text').html(marked(field.mission))
   field.target.find('div.mission div.text a[href]').attr('target','_blank')
-  field.target.find('div.mission').toggleClass('active')
+  if ($.cookie('popups') != 'off') { field.target.find('div.mission').toggleClass('active') }
 
   // order
   assets.say(field.order.trim(),'div.speech')
@@ -756,6 +756,8 @@ $(document).ready(async function() {
         });
       }
       $(ev.currentTarget).toggleClass('active')
+    } else {
+      assets.say(field.order.trim(),'div.speech')
     }
   })
   $('button.speed').click(ev=>{
@@ -792,7 +794,7 @@ $(document).ready(async function() {
     if (success >= field.success) {
       setTimeout(()=>{
         field.target.find('div.mission').removeClass('active')
-        field.target.find('div.victory').toggleClass('active')
+        if ($.cookie('popups') != 'off') { field.target.find('div.victory').toggleClass('active') }
         let cisc = editor.cisc_length()
         let ins = walker.ins_count()
         let steps = walker.step_count()

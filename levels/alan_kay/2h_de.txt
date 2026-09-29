@@ -1,0 +1,121 @@
+#!
+// Randomized Prim's algorithm, on a grid of rooms spaced 2 tiles apart.
+//
+// Start with one room marked visited, and its neighboring rooms on a
+// "frontier" list. Repeatedly pick a random room off the frontier: if it
+// is already visited, drop it (it can be queued more than once); if not,
+// connect it to one random already-visited neighbor, mark it visited, and
+// add its own unvisited neighbors to the frontier. This grows a spanning
+// tree outward from many points at once rather than extending one long
+// path, so it produces short, bushy branches with several forks, unlike
+// a depth-first "recursive backtracker" (which favors long corridors and
+// rarely branches).
+//
+// Rooms sit at even (x,y) and are always open; the odd-odd tile between
+// four rooms is always a wall; the corridor tiles between two rooms are
+// open only where that edge was carved by the algorithm above. Since two
+// walkable corridor tiles can only ever be diagonal to each other via a
+// shared room (also always open), this layout can never produce tiles
+// that touch only at a corner.
+function generateLabyrinth2(width, height, minForks = 0) {
+  const roomsW = Math.max(1, Math.ceil(width / 2))
+  const roomsH = Math.max(1, Math.ceil(height / 2))
+  const sx = roomsW - 1
+  const sy = roomsH - 1
+
+  const dirs = [[1,0],[-1,0],[0,1],[0,-1]]
+  let visited, hWalls, vWalls, forks
+  let attempts = 0
+  do {
+    visited = Array.from({length: roomsH}, () => Array(roomsW).fill(false))
+    hWalls = Array.from({length: roomsH}, () => Array(roomsW-1).fill(false))
+    vWalls = Array.from({length: roomsH-1}, () => Array(roomsW).fill(false))
+    visited[sy][sx] = true
+    let frontier = []
+    dirs.forEach(([dx,dy]) => {
+      const nx = sx+dx, ny = sy+dy
+      if (nx >= 0 && nx < roomsW && ny >= 0 && ny < roomsH) frontier.push([nx,ny])
+    })
+
+    while (frontier.length) {
+      const pick = Math.floor(Math.random()*frontier.length)
+      const [x,y] = frontier[pick]
+      frontier.splice(pick,1)
+      if (visited[y][x]) { continue }
+      const visitedNbrs = dirs.filter(([dx,dy]) => {
+        const nx = x+dx, ny = y+dy
+        return nx >= 0 && nx < roomsW && ny >= 0 && ny < roomsH && visited[ny][nx]
+      })
+      if (visitedNbrs.length === 0) { continue }
+      const [dx,dy] = visitedNbrs[Math.floor(Math.random()*visitedNbrs.length)]
+      visited[y][x] = true
+      if (dx === 1) hWalls[y][x] = true
+      else if (dx === -1) hWalls[y][x+dx] = true
+      else if (dy === 1) vWalls[y][x] = true
+      else if (dy === -1) vWalls[y+dy][x] = true
+      dirs.forEach(([ddx,ddy]) => {
+        const nx = x+ddx, ny = y+ddy
+        if (nx >= 0 && nx < roomsW && ny >= 0 && ny < roomsH && !visited[ny][nx]) { frontier.push([nx,ny]) }
+      })
+    }
+
+    forks = 0
+    for (let ry=0; ry<roomsH; ry++) {
+      for (let rx=0; rx<roomsW; rx++) {
+        let deg = 0
+        if (rx>0 && hWalls[ry][rx-1]) deg++
+        if (rx<roomsW-1 && hWalls[ry][rx]) deg++
+        if (ry>0 && vWalls[ry-1][rx]) deg++
+        if (ry<roomsH-1 && vWalls[ry][rx]) deg++
+        if (deg >= 3) forks++
+      }
+    }
+    attempts++
+  } while (forks < minForks && attempts < 500)
+
+  let last = [sx,sy]
+  for (let ry=0; ry<roomsH; ry++) {
+    for (let rx=0; rx<roomsW; rx++) {
+      let deg = 0
+      if (rx>0 && hWalls[ry][rx-1]) deg++
+      if (rx<roomsW-1 && hWalls[ry][rx]) deg++
+      if (ry>0 && vWalls[ry-1][rx]) deg++
+      if (ry<roomsH-1 && vWalls[ry][rx]) deg++
+      if (deg === 1 && (rx !== sx || ry !== sy)) { last = [rx,ry] }
+    }
+  }
+
+  const outW = 2*roomsW - 1
+  const outH = 2*roomsH - 1
+  const grid = Array.from({length: outH}, () => Array(outW).fill(' '))
+  for (let ry=0; ry<roomsH; ry++) {
+    for (let rx=0; rx<roomsW; rx++) {
+      grid[2*ry][2*rx] = 'T'
+      if (rx < roomsW-1 && hWalls[ry][rx]) grid[2*ry][2*rx+1] = 'T'
+      if (ry < roomsH-1 && vWalls[ry][rx]) grid[2*ry+1][2*rx] = 'T'
+    }
+  }
+
+  grid[2*sy][2*sx] = 'B'
+  grid[2*last[1]][2*last[0]] = '1'
+
+  return grid.map(row => row.join('').replace(/\s+$/,'')).join('\n')
+}
+generateLabyrinth2(8,8,4)
+---
+---
+Zufällige Dungeons und Karotten!
+---
+Iss die Karotte.
+---
+Benutze die "Hand" Methode für Labyrinthe. Folge einfach entweder der linken
+oder der rechten Wand. Falls du nicht weiterkommst, lies über [Algorithmen zum
+Lösen von Labyrinthen])https://de.wikipedia.org/wiki/L%C3%B6sungsalgorithmen_f%C3%BCr_Irrg%C3%A4rten).
+---
+1
+---
+1
+---
+Gut gemacht. Entscheide selbst, ob du dich noch verbessern kannst.
+---
+eat_carrot,forward,left,right,loop,break,if_empty,if_hole,if_carrot,fast,normal,pause,else

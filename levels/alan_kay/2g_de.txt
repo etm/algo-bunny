@@ -1,0 +1,70 @@
+#!
+// Recursive backtracker, run directly on the single-resolution tile grid
+// (every tile is a node; there is no separate row/column of wall tiles).
+//
+// Start at one tile and push it on a stack. At each step, look at the
+// tile on top of the stack and list its unvisited neighbors that have
+// EXACTLY ONE already-visited neighbor (namely the current tile). If
+// none exist, pop the stack (backtrack); otherwise carve into a random
+// one of them, mark it visited, and push it. Because the algorithm
+// always extends the newest tile until it gets stuck before backtracking,
+// this produces long, twisty corridors with comparatively few branch
+// points, unlike a room-based generator (e.g. randomized Prim's) which
+// grows outward from many points at once.
+//
+// The "exactly one visited neighbor" rule is what keeps this loop-free
+// at single resolution: a double-resolution maze gets this for free from
+// its dedicated wall tiles, but here a candidate with two or more visited
+// neighbors would short-circuit two branches together and create a
+// cycle, so it's excluded.
+function generateLabyrinth(width, height, startX = width - 1, startY = height - 1) {
+  const grid = Array.from({length: height}, () => Array(width).fill(false))
+  const dirs = [[0,-1],[0,1],[-1,0],[1,0]]
+  const inBounds = (x,y) => x >= 0 && x < width && y >= 0 && y < height
+  const visitedNeighbors = (x,y) => dirs.reduce((n,[dx,dy]) => {
+    const nx = x+dx, ny = y+dy
+    return n + (inBounds(nx,ny) && grid[ny][nx] ? 1 : 0)
+  }, 0)
+
+  grid[startY][startX] = true
+  const stack = [[startX,startY]]
+  let last = [startX,startY]
+
+  while (stack.length) {
+    const [x,y] = stack[stack.length-1]
+    const candidates = dirs
+      .map(([dx,dy]) => [x+dx,y+dy])
+      .filter(([nx,ny]) => inBounds(nx,ny) && !grid[ny][nx] && visitedNeighbors(nx,ny) === 1)
+    if (candidates.length === 0) {
+      stack.pop()
+      continue
+    }
+    const [nx,ny] = candidates[Math.floor(Math.random()*candidates.length)]
+    grid[ny][nx] = true
+    stack.push([nx,ny])
+    last = [nx,ny]
+  }
+
+  const rows = grid.map(row => row.map(v => v ? 'T' : ' ').join(''))
+  rows[startY] = rows[startY].substring(0,startX) + 'B' + rows[startY].substring(startX+1)
+  rows[last[1]] = rows[last[1]].substring(0,last[0]) + '1' + rows[last[1]].substring(last[0]+1)
+  return rows.map(r => r.replace(/\s+$/,'')).join('\n')
+}
+generateLabyrinth(10,10)
+---
+---
+Zufällige Dungeons und Karotten!
+---
+Iss die Karotte.
+---
+Benutze die "Hand" Methode für Labyrinthe. Folge einfach entweder der linken
+oder der rechten Wand. Falls du nicht weiterkommst, lies über [Algorithmen zum
+Lösen von Labyrinthen](https://en.wikipedia.org/wiki/Maze-solving_algorithm).
+---
+1
+---
+1
+---
+Gut gemacht. Entscheide selbst, ob du dich noch verbessern kannst.
+---
+eat_carrot,forward,left,right,loop,break,if_empty,if_hole,if_carrot,fast,normal,pause,else
