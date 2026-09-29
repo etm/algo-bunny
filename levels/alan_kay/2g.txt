@@ -47,6 +47,6 @@ algorithms](https://en.wikipedia.org/wiki/Maze-solving_algorithm).
 ---
 2
 ---
-Good job. Decide for yourself if you can improve.
+Nice. Decide for yourself if you can improve.
 ---
 eat_carrot,forward,left,right,loop,break,if_empty,if_hole,if_carrot,fast,normal,pause,else
