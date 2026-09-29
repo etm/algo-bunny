@@ -12,7 +12,8 @@ Again Algo has to eat all carrots. Again Algo has to turn
 ![](commands/loop.svg)!
 
 In order to stop the loop ![](commands/loop.svg)! Algo has to check
-if there is ___NO___ carrot in front of him  ![](commands/if_carrot.svg).
+if there is ___NO___ carrot in front of him ![](commands/if_carrot.svg). This is only possible if you add an __ELSE__ ![](commands/else.svg), which
+when connected to the bottom of the carrot ![](commands/if_carrot.svg), allows you to check for everything __EXECPT__ a carrot.
 
 Because when there is grass, he has to stop eating.
 ---

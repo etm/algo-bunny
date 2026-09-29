@@ -16,4 +16,4 @@ right ![](commands/right.svg) to get the job done.
 ---
 3 steps taken, 8 CISC length.
 ---
-eat_carrot,forward,left,right,execute
+eat_carrot,forward,left,right

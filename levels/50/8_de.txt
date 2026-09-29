@@ -26,4 +26,4 @@ aussteigen musst.
 ---
 13 Schritte, 7 CISC Länge.
 ---
-eat_carrot*3,forward*3,left,right,loop,break,if_empty,if_hole,if_carrot,loop,break
+eat_carrot*3,forward*3,left,right,loop,break,if_empty,if_hole,loop,break

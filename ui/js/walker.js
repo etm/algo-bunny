@@ -129,6 +129,7 @@ class Walker {
             return false
           }
 
+          await this.#sleep(this.timing/2)
           if (this.#brain.toString().match(/\d+,\d+,[NEWS]/)) {
             this.#jump_back.push(JSON.stringify(this.field.state_bunny))
             let [wx,wy,wface] = this.#brain.split(',')
@@ -140,12 +141,15 @@ class Walker {
             res = await this.field.jump_forward(this.#brain)
             if (res === false) { return false }
           }
+          await this.#sleep(this.timing/2)
         //}}}
         } else if (v == 'jump_back') { //{{{
           if (this.#jump_back.length > 0) {
+            await this.#sleep(this.timing/2)
             let [wx,wy,wface] = JSON.parse(this.#jump_back.pop())
             res = await this.field.jump(wx,wy,wface)
             if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false; }
+            await this.#sleep(this.timing/2)
           } else {
             this.assets.say(this.assets.texts.neverjump,'div.speech')
             return false
@@ -304,10 +308,12 @@ class Walker {
       if (typeof(v) == 'object' && v != null) {
         switch (v.item) {
           case 'jump': //{{{
+            await this.#sleep(this.timing/2)
             this.#jump_back.push(JSON.stringify(this.field.state_bunny))
             let [wx,wy] = v.target.split(',')
             res = await this.field.jump(parseInt(wx),parseInt(wy),this.field.check_dir(wx,wy))
             if (res === false) { this.assets.say(this.assets.texts.nostep,'div.speech'); return false }
+            await this.#sleep(this.timing/2)
             break //}}}
           case 'loop': //{{{
             res = true

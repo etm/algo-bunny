@@ -22,4 +22,4 @@ Weil: Algo will nur Karotten, und kein Gras essen :-)
 ---
 0 Schritte, 5 CISC Länge.
 ---
-eat_carrot*1,left*1,right*1,loop*1,break*1,if_carrot*1
+eat_carrot*1,left*1,right*1,loop*1,break*1,if_carrot*1,else*1

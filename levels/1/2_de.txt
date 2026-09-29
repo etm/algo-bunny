@@ -16,4 +16,4 @@ und nach rechts ![](commands/right.svg) drehen um den Job zu erledigen.
 ---
 3 Schritte, 8 CISC Länge.
 ---
-eat_carrot,forward,left,right,execute
+eat_carrot,forward,left,right
