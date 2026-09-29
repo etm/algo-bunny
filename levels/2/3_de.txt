@@ -23,6 +23,6 @@ Leider hat eine anderer Hase schon die schönsten Karotten geklaut.
 ---
 1
 ---
-0 steps taken, 5 CISC length.
+23 steps taken, 25 CISC length.
 ---
-eat_carrot,forward,left,right,loop,break,if_carrot,if_hole,execute
+eat_carrot,forward,left,right,loop,break,if_carrot,if_hole,execute,else

@@ -20,4 +20,4 @@ Schleife ![](commands/loop.svg) links ![](commands/left.svg) oder
 ---
 16 steps taken, 7 CISC length.
 ---
-eat_carrot*3,forward*3,left*3,right*1,loop,break,if_carrot
+eat_carrot*3,forward*3,left*3,right*1,loop,break,if_carrot,else

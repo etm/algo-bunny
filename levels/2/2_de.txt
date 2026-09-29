@@ -33,4 +33,4 @@ Dann fehlt nur noch die Abbruchbedingung :-)
 ---
 16 Schritte, 16 CISC Länge.
 ---
-eat_carrot*4,forward*4,left,right,loop,break,if_carrot,execute
+eat_carrot*4,forward*4,left,right,loop,break,if_carrot,execute,else

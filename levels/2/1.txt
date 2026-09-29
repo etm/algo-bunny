@@ -1,0 +1,23 @@
+TTTTTT
+B1111T
+T1111T
+T1111T
+T1111T
+TTTTTT
+---
+---
+Fields of carrots!
+---
+Eat all carrots.
+---
+Again Algo wants to eat all the carrots. Again Algo has to turn left
+![](commands/left.svg) or right ![](commands/right.svg) inside a
+loop ![](commands/loop.svg).
+---
+1111111111111111
+---
+1
+---
+16 steps taken, 7 CISC length.
+---
+eat_carrot*3,forward*3,left*3,right*1,loop,break,if_carrot,else

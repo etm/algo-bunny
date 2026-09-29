@@ -1,0 +1,30 @@
+ T   T
+TBf TT1
+ T   T
+---
+5,1,E
+---
+Flower friend!
+---
+Eat all carrots.
+---
+Algo wants to eat the carrot. But this time the carrot is on a
+different island.
+
+The flower in front of Algo is his friend and tells him where he has
+to jump to. Algo has to remember what the flower says
+![](commands/memorize_flower.svg).
+
+What the flower says is then stored in his big brain (bottom right)
+![](assets/brain.svg).
+
+When Algo jumps to the spot he remembered
+![](commands/jump_brain.svg), he can eat the carrot.
+---
+1
+---
+1
+---
+0 steps taken, 3 CISC length.
+---
+eat_carrot*1,memorize_flower*1,jump_brain*1

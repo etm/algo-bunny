@@ -56,6 +56,10 @@ class Editor {
     let cmd = this.assets.commands[item_name]
     return !!cmd && cmd.type == 'complex_three_end'
   } //}}}
+  #is_if(item_name) { //{{{
+    let cmd = this.assets.commands[item_name]
+    return !!cmd && cmd.type == 'complex_three'
+  } //}}}
 
   rescale() { //{{{
     let coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches
@@ -338,6 +342,17 @@ class Editor {
     // the item and its parent link are gone) to force a full redraw.
     let parent = this.parent_of(eid)
     this.#reshapes_branch = parent && this.#is_branch(parent.item) && parent.first.length > 0 && parent.first[0][0] == eid
+
+    let it = this.get_item(eid)
+    if (typeof(it) == 'object' && it != null && this.#is_if(it.item)) {
+      let next = this.next_item(eid)
+      if (typeof(next) == 'object' && next != null && this.#is_branch(next.item)) {
+        let next_id = this.next_id(eid)
+        this.program = this.#remove_item_rec(this.program,next_id)
+        this.remove_ids.push(next_id)
+      }
+    }
+
     this.program = this.#remove_item_rec(this.program,eid)
     this.remove_ids.push(eid)
     document.dispatchEvent(this.#changed)
@@ -417,6 +432,28 @@ class Editor {
   } //}}}
   next_item(eid) { //{{{
     return this.#next_item_rec(this.program,eid)
+  } //}}}
+  #next_id_rec(it,eid) { //{{{
+    for (let i = 0; i < it.length; i++) {
+      const [k,v] = it[i]
+      if (k == eid) {
+        return i+1 < it.length ? it[i+1][0] : null
+      }
+      if (typeof(v) == 'object' && v != null) {
+        if (v.first) {
+          let r = this.#next_id_rec(v.first,eid)
+          if (r !== undefined) { return r }
+        }
+        if (v.second) {
+          let r = this.#next_id_rec(v.second,eid)
+          if (r !== undefined) { return r }
+        }
+      }
+    }
+    return undefined
+  } //}}}
+  next_id(eid) { //{{{
+    return this.#next_id_rec(this.program,eid)
   } //}}}
   #previous_item_rec(it,eid) { //{{{
     for (let i = 0; i < it.length; i++) {
@@ -542,7 +579,7 @@ class Editor {
 
   can_drop(ety,eid,eop) { //{{{
     let it = this.get_item(eid)
-    if (eop == 'after' && typeof(it) == 'object' && it != null && this.assets.commands[it.item].type == 'complex_three') {
+    if (eop == 'after' && typeof(it) == 'object' && it != null && this.#is_if(it.item)) {
       let next = this.next_item(eid)
       if (typeof(next) == 'object' && next != null && this.#is_branch(next.item)) {
         return false
@@ -550,7 +587,7 @@ class Editor {
     }
     if (!this.#is_branch(ety)) { return true }
     if (eop != 'after') { return false }
-    return typeof(it) == 'object' && it != null && this.assets.commands[it.item].type == 'complex_three'
+    return typeof(it) == 'object' && it != null && this.#is_if(it.item)
   } //}}}
 
   #clear() { //{{{

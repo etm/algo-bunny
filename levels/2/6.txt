@@ -1,0 +1,29 @@
+ 1 1
+1B1T1
+ 1 1
+---
+---
+Twoflower, twoloops!
+---
+Eat all carrots.
+---
+Again Algo wants to eat all the carrots. Algo has to turn left
+![](commands/left.svg) or right ![](commands/right.svg) inside a
+loop ![](commands/loop.svg).
+
+To end the loop ![](commands/loop.svg), Algo has to check whether
+there is grass ![](commands/if_empty.svg) in front of him instead of
+a carrot.
+
+After that he has to move forward 2 steps, and do the same thing
+again :-)
+
+But this time it's harder.
+---
+1111111
+---
+1
+---
+4 steps taken, 9 CISC length.
+---
+forward*2,eat_carrot*1,left*1,right*1,loop*1,break*1,if_empty*1,execute

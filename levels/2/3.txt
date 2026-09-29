@@ -1,0 +1,28 @@
+TTTTTT
+B1111T
+T1111T
+T1T11T
+T11T1T
+TTTTTT
+---
+---
+Who nicked the carrots?
+---
+Eat all carrots.
+---
+Again Algo wants to eat all the carrots. Again Algo has to turn left
+![](commands/left.svg) or right ![](commands/right.svg) inside a
+loop ![](commands/loop.svg).
+
+Algo could either alternate turning left and right, or he could just
+search the whole field.
+
+Sadly, another rabbit has already stolen the nicest carrots.
+---
+11111111111111
+---
+1
+---
+23 steps taken, 25 CISC length.
+---
+eat_carrot,forward,left,right,loop,break,if_carrot,if_hole,execute,else

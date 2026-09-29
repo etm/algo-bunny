@@ -1,0 +1,30 @@
+TTTTTT
+B1111T
+T3333T
+T5555T
+T7777T
+TTTTTT
+---
+---
+Engage!
+---
+Eat the carrots in order of size.
+---
+This time it matters that Algo eats the small carrots first, and only
+then the big ones.
+
+Algo has to remember where he is ![](commands/memorize_position.svg).
+When he's at the end of the row he can jump back to the remembered
+position ![](commands/jump_brain.svg), and then take one step to the
+right.
+
+He has to keep doing this ![](commands/loop.svg) until he has eaten
+all the carrots.
+---
+1111333355557777
+---
+1
+---
+20 steps taken, 11 CISC length.
+---
+eat_carrot*1,forward*1,step_right,jump_brain,memorize_position,loop,break,if_carrot,else

@@ -1,0 +1,35 @@
+TTTTTT
+B1111T
+T3333T
+T5555T
+T7777T
+TTTTTT
+---
+---
+Small and big carrots!
+---
+Eat the carrots in order of size.
+---
+Again Algo wants to eat all the carrots. Again Algo has to turn left
+![](commands/left.svg) or right ![](commands/right.svg) inside a
+loop ![](commands/loop.svg).
+
+This time it matters that Algo eats the small carrots first, and only
+then the big ones.
+
+Algo MUST alternate turning left and right. Make a loop in which Algo
+eats one row, and at the end of the row use ![](commands/break.svg).
+Then turn right. Then do the same loop again and turn right.
+
+By putting both loops and the turns inside another loop, Algo does
+both of them twice.
+
+Then all that's missing is the stop condition :-)
+---
+1111333355557777
+---
+1
+---
+16 steps taken, 16 CISC length.
+---
+eat_carrot*4,forward*4,left,right,loop,break,if_carrot,execute,else

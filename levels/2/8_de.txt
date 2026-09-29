@@ -24,4 +24,4 @@ Dann gehts weiter.
 ---
 0 Schritte, 12 CISC Länge.
 ---
-br,eat_carrot*1,left,right,loop,break,if_carrot,if_empty,if_flower,memorize_flower,jump_brain
+br,eat_carrot*1,left,right,loop,break,if_empty,if_flower,memorize_flower,jump_brain

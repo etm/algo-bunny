@@ -25,4 +25,4 @@ Das muss er so lange machen ![](commands/loop.svg) bis er alle Karotten gegessen
 ---
 20 Schritte, 11 CISC Länge.
 ---
-eat_carrot*1,forward*1,step_right,jump_brain,memorize_position,loop,break,if_carrot
+eat_carrot*1,forward*1,step_right,jump_brain,memorize_position,loop,break,if_carrot,else
