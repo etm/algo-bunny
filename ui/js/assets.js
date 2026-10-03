@@ -60,6 +60,7 @@ function Assets() {
         promises.push(load_svg(item.first,       item.graphics, "first"      ));
         promises.push(load_svg(item.first_icon,  item.graphics, "first_icon" ));
         promises.push(load_svg(item.middle,      item.graphics, "middle"     ));
+        if (item.second_icon) promises.push(load_svg(item.second_icon, item.graphics, "second_icon"));
         promises.push(load_svg(item.end,         item.graphics, "end"        ));
       }
       if (item.type == 'complex_three') {
