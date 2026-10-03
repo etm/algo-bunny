@@ -7,3 +7,20 @@ T T   T T
 T TTTTT T
 T       T
 TTTTTTTTB
+---
+---
+Dungeons And Carrots!
+---
+Eat the carrot.
+---
+A simple wall walker will do the job here. Just follow either the left or the
+right wall. If you are stuck read about [maze-solving
+algorithms](https://en.wikipedia.org/wiki/Maze-solving_algorithm).
+---
+1
+---
+1
+---
+42 steps taken, 11 CISC length. We took a right-hand approach. A Left-hand approach would be more efficient.
+---
+eat_carrot,forward,left,right,loop,break,if_empty,if_hole,if_carrot,fast,normal,pause,else
