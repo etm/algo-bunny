@@ -26,6 +26,13 @@ $(document).ready(()=>{
   $('.language a').click((e)=>{
     $.cookie('language',$(e.target).attr('lang'),{ expires : 365, path: "/;SameSite=Lax", secure: true})
   })
+  $('.instructor a').click((e)=>{
+    let assets = new Assets
+    let popups = ($.cookie('popups') == 'off') ? 'on' : 'off'
+    $.cookie('popups',popups,{ expires : 365, path: "/;SameSite=Lax", secure: true})
+    let instructor = (popups == 'off') ? 'on' : 'off'
+    assets.say($(e.target).attr(instructor == 'on' ? 'data-say-on' : 'data-say-off'),$('div.speech'))
+  })
   $('button').click(()=>{
     let assets  = new Assets
     let name = $('input').val()
