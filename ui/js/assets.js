@@ -959,8 +959,8 @@ function Assets() {
   /* Load Translation       */
   /*------------------------*/
 
-  if ($.cookie('language')) {
-    let lang = $.cookie('language')
+  if (Cookies.get('language')) {
+    let lang = Cookies.get('language')
     if (this.lang[lang]) {
       this.raw_oneliners = this.lang[lang].raw_oneliners
       for (const k in this.lang[lang].placeholders) {
