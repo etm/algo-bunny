@@ -83,7 +83,7 @@ $(document).ready(
     async function() {
         let scoreManager = undefined;
         const today = new Date().toJSON().slice(2,10);
-        let q = $.parseQuerySimple();
+        let q = $.query_params();
         let day = q.day ? q.day : today;
 
         // Ask for current data

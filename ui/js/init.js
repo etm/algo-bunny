@@ -31,7 +31,7 @@ document.addEventListener('touchmove', function (e) {
 }, { passive: false });
 
 $(document).ready(async function() {
-  let q = $.parseQuerySimple()
+  let q = $.query_params()
   let levelurl = q.level ? q.level : ''
   let solurl = q.solution ? q.solution : ''
 
@@ -799,7 +799,7 @@ $(document).ready(async function() {
         let ins = walker.ins_count()
         let steps = walker.step_count()
         let cmps = walker.cmps_count()
-        let level_src = $.parseQuerySimple().level
+        let level_src = $.query_params().level
         let sol_stats = { "cisc": cisc,
                           "ins": ins,
                           "steps": steps,
